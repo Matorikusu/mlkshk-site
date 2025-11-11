@@ -223,3 +223,30 @@ body {
     height: auto;
     margin-bottom: 1rem;
 }
+
+/* -------------------------------------------------
+   SCROLL ARROW FOR RELEASE STRIP
+------------------------------------------------- */
+.scroll-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    z-index: 50;
+    transition: 0.2s;
+}
+
+.scroll-arrow:hover {
+    background: rgba(255,255,255,0.25);
+    color: var(--pink-hover);
+}
+
