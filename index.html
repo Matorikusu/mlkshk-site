@@ -22,7 +22,7 @@
         <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
     </a>
 
-    <!-- NAV BAR -->
+    <!-- FLOATING NAV BAR -->
     <header class="nav-bar">
         <a href="#releases" class="nav-link">Releases</a>
         <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
@@ -91,19 +91,28 @@
 
         </div>
 
-        <!-- SCROLL ARROW -->
-        <button id="scrollRight" class="scroll-arrow">›</button>
+        <!-- SCROLL ARROWS -->
+        <button id="scrollLeft" class="scroll-arrow scroll-left">‹</button>
+        <button id="scrollRight" class="scroll-arrow scroll-right">›</button>
 
     </section>
 
     <!-- SCROLL SCRIPT -->
     <script>
         const strip = document.getElementById("releaseStrip");
-        const button = document.getElementById("scrollRight");
+        const rightBtn = document.getElementById("scrollRight");
+        const leftBtn = document.getElementById("scrollLeft");
 
-        button.addEventListener("click", () => {
+        rightBtn.addEventListener("click", () => {
             strip.scrollBy({
                 left: 350,
+                behavior: "smooth"
+            });
+        });
+
+        leftBtn.addEventListener("click", () => {
+            strip.scrollBy({
+                left: -350,
                 behavior: "smooth"
             });
         });
