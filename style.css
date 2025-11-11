@@ -200,7 +200,7 @@ body {
     background: rgba(255,255,255,0.25);
     color: var(--pink-hover);
 }
-.scroll-arrow.left { left: -60px; } /* position to left of container */
+.scroll-arrow.left { left: 150px; } /* position to left of container */
 .scroll-arrow.right { right: -60px; } /* position to right of container */
 
 /* -------------------------------------------------
