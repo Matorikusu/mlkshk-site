@@ -99,6 +99,19 @@
         </div>
     </section>
 
+    <script>
+    const strip = document.getElementById('autoScroll');
+    const scrollButton = document.getElementById('scrollRight');
+
+    scrollButton.addEventListener('click', () => {
+        strip.scrollBy({
+            left: 350,     // scroll one card at a time
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-content">
