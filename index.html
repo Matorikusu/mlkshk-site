@@ -103,20 +103,5 @@
         </div>
     </footer>
 
-    <!-- AUTO SCROLL SCRIPT -->
-    <script>
-        const scroller = document.getElementById('autoScroll');
-        let scrollSpeed = 1.2;
-
-        function autoScroll() {
-            scroller.scrollLeft += scrollSpeed;
-            if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
-                scroller.scrollLeft = 0;
-            }
-            requestAnimationFrame(autoScroll);
-        }
-        autoScroll();
-    </script>
-
 </body>
 </html>
