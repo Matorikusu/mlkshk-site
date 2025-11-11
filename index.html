@@ -1,125 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLKSHK</title>
-    <!-- Favicon for browser tab -->
-<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<!-- RELEASES SECTION -->
+<section id="releases" class="releases-wrap">
 
+    <!-- SIDE LABEL -->
+    <div class="side-label">
+        <span>LATEST<br>RELEASES</span>
+    </div>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+    <!-- SCROLLABLE STRIP -->
+    <div class="release-strip" id="releaseStrip">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico">
-</head>
+        <!-- RELEASE CARDS -->
+        <a class="release-card" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_ONE.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
 
-<body>
+        <a class="release-card" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_TWO.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
 
-    <!-- FIXED LOGO -->
-    <a href="index.html" class="logo-link">
-        <img src="/images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
-    </a>
+        <a class="release-card" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_THREE.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
 
-    <!-- FLOATING NAV BAR -->
-    <header class="nav-bar">
-        <a href="#releases" class="nav-link">Releases</a>
-        <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
-        <a href="#" class="nav-link">Merch</a>
-    </header>
+        <a class="release-card" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_FOUR.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
 
-    <!-- HERO -->
-<section class="section hero">
-    <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
+        <!-- CLONES -->
+        <a class="release-card clone" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_FIVE.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
+
+        <a class="release-card clone" href="#" target="_blank">
+            <div class="release-cover">
+                <img src="images/COVER_SIX.png" alt="Coming Soon">
+            </div>
+            <p class="release-title">Coming Soon</p>
+        </a>
+
+    </div>
+
+    <!-- SCROLL BUTTON -->
+    <button id="scrollRight" class="scroll-arrow">›</button>
+
 </section>
-
-    <!-- RELEASES SECTION -->
-    <section id="releases" class="releases-wrap">
-
-        <!-- SIDE LABEL -->
-        <div class="side-label">
-            <span>LATEST<br>RELEASES</span>
-        </div>
-
-        <!-- AUTO-SCROLL STRIP -->
-        <div class="release-strip" id="autoScroll">
-    <!-- your release cards -->
-</div>
-
-<button id="scrollRight" class="scroll-arrow">›</button>
-
-
-            <!-- RELEASE CARDS -->
-            <a class="release-card" href="#" target="_blank">
-                <div class="release-cover">
-                    <img src="images/COVER_ONE.png" alt="Coming Soon">
-                </div>
-                <p class="release-title">Coming Soon</p>
-            </a>
-
-            <a class="release-card" href="#" target="_blank">
-                <div class="release-cover">
-                    <img src="images/COVER_TWO.png" alt="Coming Soon">
-                </div>
-                <p class="release-title">Coming Soon</p>
-            </a>
-
-            <a class="release-card" href="#" target="_blank">
-                <div class="release-cover">
-                    <img src="images/COVER_THREE.png" alt="Coming Soon">
-                </div>
-                <p class="release-title">Coming Soon</p>
-            </a>
-
-            <a class="release-card" href="#" target="_blank">
-                <div class="release-cover">
-                    <img src="images/COVER_FOUR.png" alt="Coming Soon">
-                </div>
-                <p class="release-title">Coming Soon</p>
-            </a>
-
-            <!-- LOOPING CLONES -->
-<a class="release-card clone" href="#" target="_blank">
-    <div class="release-cover">
-        <img src="images/COVER_FIVE.png" alt="Coming Soon">
-    </div>
-    <p class="release-title">Coming Soon</p>
-</a>
-
-<a class="release-card clone" href="#" target="_blank">
-    <div class="release-cover">
-        <img src="images/COVER_SIX.png" alt="Coming Soon">
-    </div>
-    <p class="release-title">Coming Soon</p>
-</a>
-
-
-        </div>
-    </section>
-
-    <script>
-    const strip = document.getElementById('autoScroll');
-    const scrollButton = document.getElementById('scrollRight');
-
-    scrollButton.addEventListener('click', () => {
-        strip.scrollBy({
-            left: 350,     // scroll one card at a time
-            behavior: 'smooth'
-        });
-    });
-</script>
-
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-left">© 2025</div>
-            <div class="footer-center">MLKSHK MEDIA</div>
-            <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
-        </div>
-    </footer>
-
-</body>
-</html>
