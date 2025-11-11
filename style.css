@@ -13,7 +13,7 @@ body {
 }
 
 /* -------------------------------------------------
-   VARIABLES
+   FLAMINGO PINK VARIABLES
 ------------------------------------------------- */
 :root {
     --pink: #ff2d95;
@@ -29,7 +29,6 @@ body {
     left: 1rem;
     z-index: 2000;
 }
-
 .logo {
     width: 140px;
     filter: drop-shadow(0 0 10px rgba(22, 22, 22, 0.6));
@@ -38,7 +37,7 @@ body {
 .logo:hover { transform: scale(1.05); }
 
 /* -------------------------------------------------
-   NAV BAR
+   FLOATING NAV BAR
 ------------------------------------------------- */
 .nav-bar {
     position: fixed;
@@ -75,15 +74,18 @@ body {
     padding-top: 9rem;
     text-align: center;
 }
-
 .hero-logo {
     max-width: 80%;
     height: auto;
     margin-bottom: 1rem;
 }
+.hero p {
+    opacity: 0.9;
+    font-size: 1.2rem;
+}
 
 /* -------------------------------------------------
-   RELEASES
+   RELEASES SECTION
 ------------------------------------------------- */
 .releases-wrap {
     position: relative;
@@ -91,7 +93,6 @@ body {
     padding-bottom: 3rem;
 }
 
-/* SIDE LABEL */
 .side-label {
     position: absolute;
     left: 0;
@@ -109,18 +110,19 @@ body {
     letter-spacing: .15em;
 }
 
-/* SCROLLING STRIP */
+.release-container {
+    position: relative;
+    margin-left: 220px; /* space for side-label */
+}
+
 .release-strip {
     display: flex;
     gap: 2.5rem;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding: 2rem 0 2rem 220px;
+    overflow-x: auto;
     scroll-behavior: smooth;
+    padding: 2rem 0;
 }
 
-/* CARDS */
 .release-card {
     width: 340px;
     height: 340px;
@@ -132,7 +134,6 @@ body {
     flex: 0 0 auto;
     transition: transform .3s;
 }
-
 .release-card:hover { transform: scale(1.05); }
 
 .release-card::before {
@@ -150,6 +151,12 @@ body {
 @keyframes borderGlow {
     0% { filter: hue-rotate(0deg); }
     100% { filter: hue-rotate(360deg); }
+}
+
+.release-cover {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .release-cover img {
@@ -189,19 +196,12 @@ body {
     z-index: 50;
     transition: 0.2s;
 }
-
 .scroll-arrow:hover {
     background: rgba(255,255,255,0.25);
     color: var(--pink-hover);
 }
-
-/* FIX: move left arrow away from label */
-.scroll-left {
-    left: 200px;
-}
-.scroll-right {
-    right: 15px;
-}
+.scroll-arrow.left { left: -60px; } /* position to left of container */
+.scroll-arrow.right { right: -60px; } /* position to right of container */
 
 /* -------------------------------------------------
    FOOTER
@@ -211,6 +211,7 @@ body {
     padding: 1.5rem 2rem;
     background: #111;
     color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.50rem;
 }
 
@@ -223,5 +224,16 @@ body {
 }
 
 .footer-left { text-align: left; }
-.footer-center { text-align: center; flex: 1; }
+.footer-center { 
+    text-align: center; 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
 .footer-right { text-align: right; }
+
+.footer-logo {
+    width: 120px;
+    margin-bottom: 0.3rem;
+}
