@@ -47,24 +47,22 @@ body {
 }
 .nav-link:hover { color: var(--pink-hover); }
 
-/* LOGO BELOW NAV */
+/* LOGO LEFT UNDER NAV */
 .logo-container {
     position: fixed;
     top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 20px;
     z-index: 1999;
-    padding: 10px 0;
 }
 
 .logo {
-    width: 220px;
+    width: 180px; /* slightly smaller */
     height: auto;
 }
 
 /* HERO */
 .hero {
-    padding-top: 150px; /* space for nav + logo */
+    padding-top: 140px; /* space for nav + logo */
     text-align: center;
 }
 
