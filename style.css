@@ -216,3 +216,77 @@ body {
     height: 250px;
   }
 }
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLKSHK | Artists</title>
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAV BAR (same as before) -->
+  <header class="nav-bar">
+    <div class="nav-left">
+      <a href="index.html" class="logo-link">
+        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+      </a>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html#releases" class="nav-link">Releases</a>
+      <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
+      <a href="artists.html" class="nav-link active">Artists</a>
+      <a href="#" class="nav-link">Merch</a>
+    </nav>
+  </header>
+
+  <!-- ARTISTS SECTION -->
+  <section class="artist-section">
+    <h1 class="artist-heading">ARTISTS</h1>
+
+    <div class="artist-card">
+      <div class="artist-image">
+        <img src="images/ARTIST_ONE.png" alt="Artist One">
+      </div>
+      <div class="artist-info">
+        <h2>ARTIST ONE</h2>
+        <p>Bold electronic soundscapes and heavy bass lines define this unique producer’s style. Expect fresh drops and remixes in 2026.</p>
+        <a href="#" class="artist-link">Spotify</a>
+      </div>
+    </div>
+
+    <div class="artist-card">
+      <div class="artist-image">
+        <img src="images/ARTIST_TWO.png" alt="Artist Two">
+      </div>
+      <div class="artist-info">
+        <h2>ARTIST TWO</h2>
+        <p>Mixing retro nostalgia with modern beats — a perfect fit for MLKSHK’s next wave. New EP coming soon.</p>
+        <a href="#" class="artist-link">Instagram</a>
+      </div>
+    </div>
+
+    <!-- Duplicate artist-card blocks for more artists -->
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-left">© 2025</div>
+      <div class="footer-center">MLKSHK MEDIA</div>
+      <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
+    </div>
+  </footer>
+
+</body>
+</html>
