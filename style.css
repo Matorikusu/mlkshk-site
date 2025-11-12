@@ -203,7 +203,7 @@ body {
 
 /* Position arrows so they don't overlap side-label */
 .scroll-arrow.left { 
-    left: -60px; /* adjust as needed */
+    left: -150px; /* adjust as needed */
 }
 .scroll-arrow.right { 
     right: 0; 
