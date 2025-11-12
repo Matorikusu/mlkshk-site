@@ -3,7 +3,6 @@
 ------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
     margin: 0;
     background: #000;
@@ -31,7 +30,7 @@ body {
 }
 .logo {
     width: 140px;
-    filter: drop-shadow(0 0 10px rgba(22, 22, 22, 0.6));
+    filter: drop-shadow(0 0 10px rgba(22,22,22,0.6));
     transition: 0.25s;
 }
 .logo:hover { transform: scale(1.05); }
@@ -45,8 +44,8 @@ body {
     width: 100%;
     height: 70px;
     backdrop-filter: blur(12px);
-    background: rgba(25, 25, 25, 0.85);
-    border-bottom: 1px solid rgba(23, 23, 23, 0.926);
+    background: rgba(25,25,25,0.85);
+    border-bottom: 1px solid rgba(23,23,23,0.926);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,7 +91,6 @@ body {
     margin-top: 4rem;
     padding-bottom: 3rem;
 }
-
 .side-label {
     position: absolute;
     left: 0;
@@ -103,24 +101,24 @@ body {
     border-right: 2px solid var(--pink);
     z-index: 20;
 }
-
 .side-label span {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.4rem;
     letter-spacing: .15em;
 }
 
+/* Release container for arrows overlay */
 .release-container {
     position: relative;
-    margin-left: 220px; /* space for side-label */
+    margin-left: 220px;
 }
-
 .release-strip {
     display: flex;
     gap: 2.5rem;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 2rem 0;
+    position: relative;
 }
 
 .release-card {
@@ -147,23 +145,13 @@ body {
     -webkit-mask-composite: xor;
     animation: borderGlow 4s linear infinite;
 }
-
 @keyframes borderGlow {
     0% { filter: hue-rotate(0deg); }
     100% { filter: hue-rotate(360deg); }
 }
 
-.release-cover {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.release-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+.release-cover { width: 100%; height: 100%; overflow: hidden; }
+.release-cover img { width: 100%; height: 100%; object-fit: cover; }
 
 .release-title {
     position: absolute;
@@ -178,7 +166,7 @@ body {
 }
 
 /* -------------------------------------------------
-   SCROLL ARROWS
+   SCROLL ARROWS OVERLAY
 ------------------------------------------------- */
 .scroll-arrow {
     position: absolute;
@@ -187,9 +175,9 @@ body {
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.25);
     color: #fff;
-    font-size: 2rem;
-    width: 48px;
-    height: 48px;
+    font-size: 1.5rem;
+    width: 36px;
+    height: 36px;
     border-radius: 6px;
     cursor: pointer;
     backdrop-filter: blur(6px);
@@ -200,14 +188,8 @@ body {
     background: rgba(255,255,255,0.25);
     color: var(--pink-hover);
 }
-
-/* Position arrows so they don't overlap side-label */
-.scroll-arrow.left { 
-    left: -150px; /* adjust as needed */
-}
-.scroll-arrow.right { 
-    right: 0; 
-}
+.scroll-arrow.left { left: 0; }
+.scroll-arrow.right { right: 0; }
 
 /* -------------------------------------------------
    FOOTER
@@ -220,7 +202,6 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.50rem;
 }
-
 .footer-content {
     display: flex;
     justify-content: space-between;
@@ -228,10 +209,6 @@ body {
     max-width: 960px;
     margin: 0 auto;
 }
-
 .footer-left { text-align: left; }
-.footer-center { 
-    text-align: center; 
-    flex: 1; 
-}
+.footer-center { text-align: center; flex: 1; }
 .footer-right { text-align: right; }
