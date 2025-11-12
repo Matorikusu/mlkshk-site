@@ -1,5 +1,5 @@
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behaviour: smooth; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -19,52 +19,57 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 50px; /* smaller height */
-  background: rgba(25,25,25,0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 45px; /* smaller height */
+  background: rgba(25,25,25,0.95);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
   z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0 2rem;
 }
 
+/* LOGO INSIDE NAVBAR */
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 110px;
+  height: auto;
+  transition: 0.3s;
+}
+.logo:hover { transform: scale(1.05); }
+
+/* NAV LINKS */
 .nav-links {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 900px;
+  gap: 3rem; /* spacing between links */
 }
-
 .nav-link {
   font-family: 'Orbitron', sans-serif;
   letter-spacing: .12em;
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 0.85rem; /* smaller text */
+  font-size: 0.85rem;
   color: #fff;
   text-decoration: none;
   transition: 0.2s;
 }
 .nav-link:hover { color: var(--pink-hover); }
 
-/* FIXED LOGO */
-.fixed-logo {
-  position: fixed;
-  top: 60px; /* slightly below navbar */
-  left: 1rem;
-  z-index: 1400;
-}
-.logo {
-  width: 110px;
-  transition: 0.3s;
-}
-.logo:hover { transform: scale(1.05); }
-
 /* HERO */
 .hero {
-  padding-top: 10rem;
+  padding-top: 8rem;
   text-align: center;
 }
 .hero-logo {
@@ -174,12 +179,24 @@ body {
 
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
-  .nav-bar { height: 45px; }
-  .nav-links { gap: 1.5rem; justify-content: center; }
-  .nav-link { font-size: 0.8rem; }
-  .fixed-logo { top: 55px; left: 0.5rem; }
-  .logo { width: 85px; }
-  .hero { padding-top: 9rem; }
+  .nav-bar {
+    height: 50px;
+  }
+  .nav-content {
+    padding: 0 1rem;
+  }
+  .logo {
+    width: 90px;
+  }
+  .nav-links {
+    gap: 1.5rem;
+  }
+  .nav-link {
+    font-size: 0.75rem;
+  }
+  .hero {
+    padding-top: 8rem;
+  }
   .side-label {
     position: relative;
     text-align: center;
