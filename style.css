@@ -96,8 +96,7 @@ body {
 .release-strip {
     display: flex;
     gap: 2.5rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
+    overflow-x: hidden;
     padding: 2rem 0;
 }
 .release-card {
@@ -138,26 +137,6 @@ body {
     color: #fff;
 }
 
-/* SCROLL ARROWS */
-.scroll-arrow {
-    position: absolute;
-    top: -60px; /* above cards */
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    font-size: 2rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 6px;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
-    z-index: 50;
-    transition: 0.2s;
-}
-.scroll-arrow:hover { background: rgba(255,255,255,0.25); color: var(--pink-hover); }
-.scroll-arrow.left { left: 0; }
-.scroll-arrow.right { right: 0; }
-
 /* FOOTER */
 .site-footer {
     margin-top: 4rem;
@@ -181,6 +160,5 @@ body {
     .release-container { margin-left: 0; }
     .release-strip { gap: 1rem; padding-left: 10px; padding-right: 10px; }
     .release-card { width: 200px; height: 200px; }
-    .scroll-arrow { width: 36px; height: 36px; font-size: 1.5rem; top: -50px; }
     .side-label { display: none; }
 }
