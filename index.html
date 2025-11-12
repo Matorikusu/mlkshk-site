@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MLKSHK</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- Stylesheet -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +19,7 @@
     <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
 </a>
 
-<!-- NAV BAR -->
+<!-- FLOATING NAV BAR -->
 <header class="nav-bar">
     <a href="#releases" class="nav-link">Releases</a>
     <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
@@ -23,29 +27,67 @@
 </header>
 
 <!-- HERO -->
-<section class="hero">
+<section class="section hero">
     <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
+    <p>Fresh music fuelled by milkshakes.</p>
 </section>
 
-<!-- RELEASES -->
+<!-- RELEASES SECTION -->
 <section id="releases" class="releases-wrap">
     <div class="side-label">
         <span>LATEST<br>RELEASES</span>
     </div>
 
     <div class="release-container">
-        <button class="scroll-arrow left">‹</button>
+        <!-- Scroll arrows -->
+        <button class="scroll-arrow left" id="scrollLeft">‹</button>
+        <button class="scroll-arrow right" id="scrollRight">›</button>
+
+        <!-- Release cards -->
         <div class="release-strip" id="releaseStrip">
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_ONE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
 
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_ONE.png" alt=""></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_TWO.png" alt=""></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_THREE.png" alt=""></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_FOUR.png" alt=""></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_FIVE.png" alt=""></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card" href="#"><div class="release-cover"><img src="images/COVER_SIX.png" alt=""></div><p class="release-title">Coming Soon</p></a>
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_TWO.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
 
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_THREE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_FOUR.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+
+            <!-- Looping clones -->
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_FIVE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+
+            <a class="release-card" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_SIX.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
         </div>
-        <button class="scroll-arrow right">›</button>
     </div>
 </section>
 
@@ -58,13 +100,15 @@
     </div>
 </footer>
 
+<!-- Scroll script -->
 <script>
 const strip = document.getElementById('releaseStrip');
-const btnLeft = document.querySelector('.scroll-arrow.left');
-const btnRight = document.querySelector('.scroll-arrow.right');
-
-btnRight.addEventListener('click', () => strip.scrollBy({ left: 350, behavior: 'smooth' }));
-btnLeft.addEventListener('click', () => strip.scrollBy({ left: -350, behavior: 'smooth' }));
+document.getElementById('scrollRight').addEventListener('click', () => {
+    strip.scrollBy({ left: 350, behavior: 'smooth' });
+});
+document.getElementById('scrollLeft').addEventListener('click', () => {
+    strip.scrollBy({ left: -350, behavior: 'smooth' });
+});
 </script>
 
 </body>
