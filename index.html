@@ -9,18 +9,19 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-    <!-- Stylesheet -->
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-left">
-            <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+    <!-- NAV BAR -->
+    <header class="nav-bar">
+        <div class="nav-left">
+            <a href="index.html">
+                <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+            </a>
         </div>
-        <nav class="nav-bar">
+        <nav class="nav-links">
             <a href="#releases" class="nav-link">Releases</a>
             <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
             <a href="#" class="nav-link">Merch</a>
@@ -30,36 +31,46 @@
     <!-- HERO -->
     <section class="section hero">
         <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
-        <p class="hero-text">TASTY RELEASES COMING NEW YEAR 2026</p>
+        <p class="hero-tagline">TASTY RELEASES COMING 2026</p>
+        <p class="hero-sub">Stay tuned for details.</p>
     </section>
 
-    <!-- RELEASES SECTION -->
+    <!-- RELEASES -->
     <section id="releases" class="releases-wrap">
         <div class="side-label">
             <span>LATEST<br>RELEASES</span>
         </div>
 
         <div class="release-strip" id="autoScroll">
-            <a class="release-card" href="#" target="_blank">
+            <a class="release-card" href="#">
                 <div class="release-cover"><img src="images/COVER_ONE.png" alt="Coming Soon"></div>
                 <p class="release-title">Coming Soon</p>
             </a>
-            <a class="release-card" href="#" target="_blank">
+
+            <a class="release-card" href="#">
                 <div class="release-cover"><img src="images/COVER_TWO.png" alt="Coming Soon"></div>
                 <p class="release-title">Coming Soon</p>
             </a>
-            <a class="release-card" href="#" target="_blank">
+
+            <a class="release-card" href="#">
                 <div class="release-cover"><img src="images/COVER_THREE.png" alt="Coming Soon"></div>
                 <p class="release-title">Coming Soon</p>
             </a>
-            <a class="release-card" href="#" target="_blank">
+
+            <a class="release-card" href="#">
                 <div class="release-cover"><img src="images/COVER_FOUR.png" alt="Coming Soon"></div>
                 <p class="release-title">Coming Soon</p>
             </a>
 
-            <!-- Clones for seamless loop -->
-            <a class="release-card clone" href="#"><div class="release-cover"><img src="images/COVER_ONE.png" alt="Coming Soon"></div><p class="release-title">Coming Soon</p></a>
-            <a class="release-card clone" href="#"><div class="release-cover"><img src="images/COVER_TWO.png" alt="Coming Soon"></div><p class="release-title">Coming Soon</p></a>
+            <a class="release-card" href="#">
+                <div class="release-cover"><img src="images/COVER_FIVE.png" alt="Coming Soon"></div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+
+            <a class="release-card" href="#">
+                <div class="release-cover"><img src="images/COVER_SIX.png" alt="Coming Soon"></div>
+                <p class="release-title">Coming Soon</p>
+            </a>
         </div>
     </section>
 
@@ -72,19 +83,19 @@
         </div>
     </footer>
 
-    <!-- AUTO-SCROLL SCRIPT -->
+    <!-- AUTO SCROLL SCRIPT -->
     <script>
         const scroller = document.getElementById('autoScroll');
-        let scrollSpeed = 0.8;
-        let isHovered = false;
+        let scrollSpeed = 1.2;
+        let isPaused = false;
 
-        scroller.addEventListener('mouseenter', () => { isHovered = true; });
-        scroller.addEventListener('mouseleave', () => { isHovered = false; });
+        scroller.addEventListener('mouseenter', () => isPaused = true);
+        scroller.addEventListener('mouseleave', () => isPaused = false);
 
         function autoScroll() {
-            if(!isHovered) {
+            if (!isPaused) {
                 scroller.scrollLeft += scrollSpeed;
-                if(scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
+                if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
                     scroller.scrollLeft = 0;
                 }
             }
