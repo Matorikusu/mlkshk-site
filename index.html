@@ -1,107 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLKSHK</title>
-    <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLKSHK</title>
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- NAV BAR -->
-    <header class="nav-bar">
-        <div class="nav-left">
-            <a href="index.html">
-                <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
-            </a>
-        </div>
-        <nav class="nav-links">
-            <a href="#releases" class="nav-link">Releases</a>
-            <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
-            <a href="#" class="nav-link">Merch</a>
-        </nav>
-    </header>
+  <!-- NAV BAR -->
+  <header class="nav-bar">
+    <nav class="nav-links">
+      <a href="#releases" class="nav-link">Releases</a>
+      <a href="https://open.spotify.com" target="_blank" class="nav-link">Playlist</a>
+      <a href="#" class="nav-link">Merch</a>
+    </nav>
+  </header>
 
-    <!-- HERO -->
-    <section class="section hero">
-        <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
-        <p class="hero-tagline">TASTY RELEASES COMING 2026</p>
-    </section>
+  <!-- FIXED LOGO BELOW NAV -->
+  <div class="fixed-logo">
+    <a href="index.html">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+    </a>
+  </div>
 
-    <!-- RELEASES -->
-    <section id="releases" class="releases-wrap">
-        <div class="side-label">
-            <span>LATEST<br>RELEASES</span>
-        </div>
+  <!-- HERO -->
+  <section class="section hero">
+    <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
+    <p class="hero-tagline">TASTY RELEASES COMING 2026</p>
+    <p class="hero-sub">Stay tuned for details.</p>
+  </section>
 
-        <div class="release-strip" id="autoScroll">
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_ONE.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
+  <!-- RELEASES -->
+  <section id="releases" class="releases-wrap">
+    <div class="side-label">
+      <span>LATEST<br>RELEASES</span>
+    </div>
 
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_TWO.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
+    <div class="release-strip" id="autoScroll">
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_ONE.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
 
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_THREE.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_TWO.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
 
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_FOUR.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_THREE.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
 
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_FIVE.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_FOUR.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
 
-            <a class="release-card" href="#">
-                <div class="release-cover"><img src="images/COVER_SIX.png" alt="Coming Soon"></div>
-                <p class="release-title">Coming Soon</p>
-            </a>
-        </div>
-    </section>
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_FIVE.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-left">© 2025</div>
-            <div class="footer-center">MLKSHK MEDIA</div>
-            <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
-        </div>
-    </footer>
+      <a class="release-card" href="#">
+        <div class="release-cover"><img src="images/COVER_SIX.png" alt="Coming Soon"></div>
+        <p class="release-title">Coming Soon</p>
+      </a>
+    </div>
+  </section>
 
-    <!-- AUTO SCROLL SCRIPT -->
-    <script>
-        const scroller = document.getElementById('autoScroll');
-        let scrollSpeed = 1.2;
-        let isPaused = false;
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-left">© 2025</div>
+      <div class="footer-center">MLKSHK MEDIA</div>
+      <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
+    </div>
+  </footer>
 
-        scroller.addEventListener('mouseenter', () => isPaused = true);
-        scroller.addEventListener('mouseleave', () => isPaused = false);
+  <!-- AUTO SCROLL SCRIPT -->
+  <script>
+    const scroller = document.getElementById('autoScroll');
+    let scrollSpeed = 1.2;
+    let isPaused = false;
 
-        function autoScroll() {
-            if (!isPaused) {
-                scroller.scrollLeft += scrollSpeed;
-                if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
-                    scroller.scrollLeft = 0;
-                }
-            }
-            requestAnimationFrame(autoScroll);
+    scroller.addEventListener('mouseenter', () => isPaused = true);
+    scroller.addEventListener('mouseleave', () => isPaused = false);
+
+    function autoScroll() {
+      if (!isPaused) {
+        scroller.scrollLeft += scrollSpeed;
+        if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
+          scroller.scrollLeft = 0;
         }
-        autoScroll();
-    </script>
+      }
+      requestAnimationFrame(autoScroll);
+    }
+    autoScroll();
+  </script>
 
 </body>
 </html>
