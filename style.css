@@ -1,6 +1,4 @@
-/* -------------------------------------------------
-   BASE SETTINGS
-------------------------------------------------- */
+/* BASE SETTINGS */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -11,17 +9,13 @@ body {
     overflow-x: hidden;
 }
 
-/* -------------------------------------------------
-   FLAMINGO PINK VARIABLES
-------------------------------------------------- */
+/* COLORS */
 :root {
     --pink: #ff2d95;
     --pink-hover: #ff5ab3;
 }
 
-/* -------------------------------------------------
-   FIXED LOGO
-------------------------------------------------- */
+/* FIXED LOGO */
 .logo-link {
     position: fixed;
     top: 1rem;
@@ -35,9 +29,7 @@ body {
 }
 .logo:hover { transform: scale(1.05); }
 
-/* -------------------------------------------------
-   FLOATING NAV BAR
-------------------------------------------------- */
+/* NAV BAR */
 .nav-bar {
     position: fixed;
     top: 0;
@@ -53,7 +45,6 @@ body {
     z-index: 1500;
     padding-left: 160px;
 }
-
 .nav-link {
     font-family: 'Orbitron', sans-serif;
     letter-spacing: .12em;
@@ -66,9 +57,7 @@ body {
 }
 .nav-link:hover { color: var(--pink-hover); }
 
-/* -------------------------------------------------
-   HERO
-------------------------------------------------- */
+/* HERO */
 .hero {
     padding-top: 9rem;
     text-align: center;
@@ -83,14 +72,8 @@ body {
     font-size: 1.2rem;
 }
 
-/* -------------------------------------------------
-   RELEASES SECTION
-------------------------------------------------- */
-.releases-wrap {
-    position: relative;
-    margin-top: 4rem;
-    padding-bottom: 3rem;
-}
+/* RELEASES */
+.releases-wrap { position: relative; margin-top: 4rem; padding-bottom: 3rem; }
 .side-label {
     position: absolute;
     left: 0;
@@ -106,8 +89,6 @@ body {
     font-size: 1.4rem;
     letter-spacing: .15em;
 }
-
-/* Release container for arrows overlay */
 .release-container {
     position: relative;
     margin-left: 220px;
@@ -118,9 +99,7 @@ body {
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 2rem 0;
-    position: relative;
 }
-
 .release-card {
     width: 340px;
     height: 340px;
@@ -133,7 +112,6 @@ body {
     transition: transform .3s;
 }
 .release-card:hover { transform: scale(1.05); }
-
 .release-card::before {
     content: "";
     position: absolute;
@@ -145,14 +123,9 @@ body {
     -webkit-mask-composite: xor;
     animation: borderGlow 4s linear infinite;
 }
-@keyframes borderGlow {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-}
-
+@keyframes borderGlow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
 .release-cover { width: 100%; height: 100%; overflow: hidden; }
 .release-cover img { width: 100%; height: 100%; object-fit: cover; }
-
 .release-title {
     position: absolute;
     bottom: 0;
@@ -165,35 +138,27 @@ body {
     color: #fff;
 }
 
-/* -------------------------------------------------
-   SCROLL ARROWS OVERLAY
-------------------------------------------------- */
+/* SCROLL ARROWS */
 .scroll-arrow {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: -60px; /* above cards */
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.25);
     color: #fff;
-    font-size: 1.5rem;
-    width: 36px;
-    height: 36px;
+    font-size: 2rem;
+    width: 42px;
+    height: 42px;
     border-radius: 6px;
     cursor: pointer;
     backdrop-filter: blur(6px);
     z-index: 50;
     transition: 0.2s;
 }
-.scroll-arrow:hover {
-    background: rgba(255,255,255,0.25);
-    color: var(--pink-hover);
-}
+.scroll-arrow:hover { background: rgba(255,255,255,0.25); color: var(--pink-hover); }
 .scroll-arrow.left { left: 0; }
 .scroll-arrow.right { right: 0; }
 
-/* -------------------------------------------------
-   FOOTER
-------------------------------------------------- */
+/* FOOTER */
 .site-footer {
     margin-top: 4rem;
     padding: 1.5rem 2rem;
@@ -202,13 +167,20 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.50rem;
 }
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 960px;
-    margin: 0 auto;
-}
+.footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 960px; margin: 0 auto; }
 .footer-left { text-align: left; }
 .footer-center { text-align: center; flex: 1; }
 .footer-right { text-align: right; }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+    .logo { width: 100px; }
+    .nav-bar { gap: 1rem; padding-left: 120px; }
+    .nav-link { font-size: 0.8rem; }
+    .hero-logo { max-width: 90%; margin-top: 1rem; }
+    .release-container { margin-left: 0; }
+    .release-strip { gap: 1rem; padding-left: 10px; padding-right: 10px; }
+    .release-card { width: 200px; height: 200px; }
+    .scroll-arrow { width: 36px; height: 36px; font-size: 1.5rem; top: -50px; }
+    .side-label { display: none; }
+}
