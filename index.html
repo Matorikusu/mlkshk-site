@@ -30,6 +30,7 @@
     <!-- HERO -->
     <section class="section hero">
         <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
+        <p>Fresh music fuelled by milkshakes.</p>
     </section>
 
     <!-- RELEASES SECTION -->
@@ -37,10 +38,6 @@
         <div class="side-label">
             <span>LATEST<br>RELEASES</span>
         </div>
-
-        <!-- SCROLL ARROWS -->
-        <button id="scrollLeft" class="scroll-arrow left">‹</button>
-        <button id="scrollRight" class="scroll-arrow right">›</button>
 
         <div class="release-container">
             <div class="release-strip" id="releaseStrip">
@@ -73,16 +70,17 @@
                     <p class="release-title">Coming Soon</p>
                 </a>
 
+                <!-- duplicate for seamless looping -->
                 <a class="release-card" href="#" target="_blank">
                     <div class="release-cover">
-                        <img src="images/COVER_FIVE.png" alt="Coming Soon">
+                        <img src="images/COVER_ONE.png" alt="Coming Soon">
                     </div>
                     <p class="release-title">Coming Soon</p>
                 </a>
 
                 <a class="release-card" href="#" target="_blank">
                     <div class="release-cover">
-                        <img src="images/COVER_SIX.png" alt="Coming Soon">
+                        <img src="images/COVER_TWO.png" alt="Coming Soon">
                     </div>
                     <p class="release-title">Coming Soon</p>
                 </a>
@@ -100,19 +98,25 @@
         </div>
     </footer>
 
-    <!-- SCROLL SCRIPT -->
+    <!-- AUTO SCROLL SCRIPT -->
     <script>
         const strip = document.getElementById('releaseStrip');
-        const scrollRight = document.getElementById('scrollRight');
-        const scrollLeft = document.getElementById('scrollLeft');
+        let scrollSpeed = 1.2;
+        let isHovered = false;
 
-        scrollRight.addEventListener('click', () => {
-            strip.scrollBy({ left: 350, behavior: 'smooth' });
-        });
+        strip.addEventListener('mouseenter', () => { isHovered = true; });
+        strip.addEventListener('mouseleave', () => { isHovered = false; });
 
-        scrollLeft.addEventListener('click', () => {
-            strip.scrollBy({ left: -350, behavior: 'smooth' });
-        });
+        function autoScroll() {
+            if (!isHovered) {
+                strip.scrollLeft += scrollSpeed;
+                if (strip.scrollLeft >= strip.scrollWidth / 2) {
+                    strip.scrollLeft = 0;
+                }
+            }
+            requestAnimationFrame(autoScroll);
+        }
+        autoScroll();
     </script>
 
 </body>
