@@ -15,77 +15,77 @@
 
 <body>
 
-    <!-- FIXED LOGO -->
-    <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
-    </a>
-
-    <!-- FLOATING NAV BAR -->
+    <!-- FIXED NAV BAR -->
     <header class="nav-bar">
-        <a href="#releases" class="nav-link">Releases</a>
-        <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
-        <a href="#" class="nav-link">Merch</a>
+        <nav class="nav-links">
+            <a href="#releases" class="nav-link">Releases</a>
+            <a href="https://open.spotify.com" class="nav-link" target="_blank">Playlist</a>
+            <a href="#" class="nav-link">Merch</a>
+        </nav>
     </header>
+
+    <!-- FIXED LOGO BELOW NAV -->
+    <div class="logo-container">
+        <a href="index.html" class="logo-link">
+            <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+        </a>
+    </div>
 
     <!-- HERO -->
     <section class="section hero">
         <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
-        <p>Releases coming fall 2025.</p>
+        <p>Tasty releases coming New Year 2026</p>
+        <p class="hero-subtext">Stay tuned for details</p>
     </section>
 
     <!-- RELEASES SECTION -->
     <section id="releases" class="releases-wrap">
+
+        <!-- SIDE LABEL -->
         <div class="side-label">
             <span>LATEST<br>RELEASES</span>
         </div>
 
-        <div class="release-container">
-            <div class="release-strip" id="releaseStrip">
+        <!-- AUTO-SCROLLING STRIP -->
+        <div class="release-strip" id="autoScroll">
+            <a class="release-card" href="#" target="_blank">
+                <div class="release-cover">
+                    <img src="images/COVER_ONE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+            <a class="release-card" href="#" target="_blank">
+                <div class="release-cover">
+                    <img src="images/COVER_TWO.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+            <a class="release-card" href="#" target="_blank">
+                <div class="release-cover">
+                    <img src="images/COVER_THREE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+            <a class="release-card" href="#" target="_blank">
+                <div class="release-cover">
+                    <img src="images/COVER_FOUR.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
 
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_ONE.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_TWO.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_THREE.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_FOUR.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-                <!-- duplicate for seamless looping -->
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_ONE.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-                <a class="release-card" href="#" target="_blank">
-                    <div class="release-cover">
-                        <img src="images/COVER_TWO.png" alt="Coming Soon">
-                    </div>
-                    <p class="release-title">Coming Soon</p>
-                </a>
-
-            </div>
+            <!-- CLONES FOR SEAMLESS LOOP -->
+            <a class="release-card clone" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_ONE.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
+            <a class="release-card clone" href="#">
+                <div class="release-cover">
+                    <img src="images/COVER_TWO.png" alt="Coming Soon">
+                </div>
+                <p class="release-title">Coming Soon</p>
+            </a>
         </div>
     </section>
 
@@ -98,20 +98,20 @@
         </div>
     </footer>
 
-    <!-- AUTO SCROLL SCRIPT -->
+    <!-- AUTO-SCROLL SCRIPT -->
     <script>
-        const strip = document.getElementById('releaseStrip');
-        let scrollSpeed = 1.2;
+        const scroller = document.getElementById('autoScroll');
+        let scrollSpeed = 0.8;
         let isHovered = false;
 
-        strip.addEventListener('mouseenter', () => { isHovered = true; });
-        strip.addEventListener('mouseleave', () => { isHovered = false; });
+        scroller.addEventListener('mouseenter', () => { isHovered = true; });
+        scroller.addEventListener('mouseleave', () => { isHovered = false; });
 
         function autoScroll() {
-            if (!isHovered) {
-                strip.scrollLeft += scrollSpeed;
-                if (strip.scrollLeft >= strip.scrollWidth / 2) {
-                    strip.scrollLeft = 0;
+            if(!isHovered) {
+                scroller.scrollLeft += scrollSpeed;
+                if(scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
+                    scroller.scrollLeft = 0;
                 }
             }
             requestAnimationFrame(autoScroll);
