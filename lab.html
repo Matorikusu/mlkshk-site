@@ -19,20 +19,19 @@
     }
 
     .lab-container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 40px 20px;
-      text-align: centre;
+      padding: 40px 0;
     }
 
     .lab-header {
       text-align: centre;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     .lab-header h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 38px;
+      font-size: 36px;
       margin-bottom: 10px;
     }
 
@@ -42,57 +41,45 @@
 
     .rules-box {
       border: 1px solid #444;
-      padding: 25px;
-      border-radius: 12px;
-      margin: 0 auto 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
       background: rgba(0,0,0,0.4);
-      text-align: centre;
-      max-width: 700px;
     }
 
     .rules-box p {
-      margin-bottom: 12px;
+      margin-bottom: 15px;
       line-height: 1.5;
     }
 
     .section {
-      margin-bottom: 70px;
-      text-align: centre;
+      margin-bottom: 60px;
     }
 
     .section h2 {
       font-family: 'Orbitron', sans-serif;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .note {
       font-size: 14px;
       opacity: 0.7;
-      margin-bottom: 20px;
-    }
-
-    iframe {
-      max-width: 760px;
-      margin: 0 auto;
-      display: block;
+      margin-bottom: 15px;
     }
 
     .lyric-box {
       width: 100%;
-      max-width: 760px;
-      min-height: 320px;
+      min-height: 300px;
       padding: 20px;
-      border-radius: 12px;
+      border-radius: 10px;
       border: none;
       resize: vertical;
       font-family: 'Rajdhani', sans-serif;
       font-size: 16px;
-      display: block;
-      margin: 0 auto;
     }
 
     .button {
-      padding: 15px 40px;
+      padding: 15px 30px;
       border-radius: 30px;
       border: none;
       background: #fff;
@@ -106,54 +93,45 @@
       cursor: not-allowed;
     }
 
-    .archive-list {
-      padding: 0;
-      margin: 0 auto;
-      max-width: 500px;
-    }
-
     .archive-list li {
       list-style: none;
-      margin: 10px 0;
+      margin: 8px 0;
       opacity: 0.7;
     }
 
     .chat-window {
       width: 100%;
-      max-width: 760px;
-      height: 220px;
+      height: 200px;
       border: 1px solid #333;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 15px;
-      margin: 0 auto 20px auto;
+      margin-bottom: 15px;
       background: rgba(0,0,0,0.3);
     }
 
     .chat-inputs {
-      max-width: 760px;
-      margin: 0 auto;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .chat-inputs input,
+    .chat-inputs input, 
     .chat-inputs textarea {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
       border: none;
       font-family: 'Rajdhani', sans-serif;
     }
 
     .chat-inputs textarea {
-      min-height: 70px;
+      min-height: 60px;
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV BAR (unchanged from main site) -->
+  <!-- NAV BAR (matches main site) -->
   <header class="nav-bar">
     <div class="nav-content">
       <a href="index.html" class="logo-link">
@@ -175,7 +153,7 @@
       <p>A writing space for vocalists, lyricists and raw talent.</p>
     </section>
 
-    <!-- 2. RULES BOX -->
+    <!-- 2. RULES / DISCLAIMER -->
     <section class="rules-box">
       <p>All instrumentals on this page belong to MLKSHK Digital.</p>
       <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
@@ -188,10 +166,11 @@
       </label>
     </section>
 
-    <!-- 3. BEAT PLAYER -->
+    <!-- 3. BEAT PLAYER SECTION -->
     <section class="section">
       <h2>Select a Beat</h2>
 
+      <!-- Example Spotify Embed (replace later if needed) -->
       <iframe style="border-radius:12px" 
         src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
         width="100%" 
@@ -209,7 +188,7 @@
       <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
     </section>
 
-    <!-- 5. UPLOAD -->
+    <!-- 5. UPLOAD SECTION -->
     <section class="section">
       <h2>Upload Your Vocal</h2>
       <p class="note">If your take is strong, it may be released through MLKSHK.</p>
@@ -217,7 +196,7 @@
       <button class="button" disabled>Upload Vocal</button>
     </section>
 
-    <!-- 6. ARCHIVE -->
+    <!-- 6. PROJECT ARCHIVE -->
     <section class="section">
       <h2>Lab Releases</h2>
       <ul class="archive-list">
@@ -232,7 +211,9 @@
       <h2>Live Lab Chat</h2>
       <p class="note">Talk shit. Trade bars. Stay sharp.</p>
 
-      <div class="chat-window"></div>
+      <div class="chat-window">
+        <!-- Messages will appear here later -->
+      </div>
 
       <div class="chat-inputs">
         <input type="text" placeholder="Username (coming soon)" disabled>
