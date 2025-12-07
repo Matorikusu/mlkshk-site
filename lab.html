@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLKSHK LAB</title>
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      padding: 0 20px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .lab-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    .lab-header {
+      text-align: centre;
+      margin-bottom: 30px;
+    }
+
+    .lab-header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .lab-header p {
+      opacity: 0.7;
+    }
+
+    .rules-box {
+      border: 1px solid #444;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .rules-box p {
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section h2 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .note {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 15px;
+    }
+
+    .lyric-box {
+      width: 100%;
+      min-height: 300px;
+      padding: 20px;
+      border-radius: 10px;
+      border: none;
+      resize: vertical;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+    }
+
+    .button {
+      padding: 15px 30px;
+      border-radius: 30px;
+      border: none;
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .archive-list li {
+      list-style: none;
+      margin: 8px 0;
+      opacity: 0.7;
+    }
+
+    .chat-window {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .chat-inputs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chat-inputs input, 
+    .chat-inputs textarea {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .chat-inputs textarea {
+      min-height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV BAR (matches main site) -->
+  <header class="nav-bar">
+    <div class="nav-content">
+      <a href="index.html" class="logo-link">
+        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="playlists.html" class="nav-link">Playlists</a>
+        <a href="lab.html" class="nav-link">LAB</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="lab-container">
+
+    <!-- 1. HEADER -->
+    <section class="lab-header">
+      <h1>MLKSHK LAB</h1>
+      <p>A writing space for vocalists, lyricists and raw talent.</p>
+    </section>
+
+    <!-- 2. RULES / DISCLAIMER -->
+    <section class="rules-box">
+      <p>All instrumentals on this page belong to MLKSHK Digital.</p>
+      <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
+      <p>You keep credit. We keep structure.</p>
+      <p>No reposts. No theft. No drama.</p>
+
+      <label>
+        <input type="checkbox" id="agreeRules">
+        I understand and agree to the MLKSHK LAB rules
+      </label>
+    </section>
+
+    <!-- 3. BEAT PLAYER SECTION -->
+    <section class="section">
+      <h2>Select a Beat</h2>
+
+      <!-- Example Spotify Embed (replace later if needed) -->
+      <iframe style="border-radius:12px" 
+        src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
+        width="100%" 
+        height="152" 
+        frameborder="0" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>
+    </section>
+
+    <!-- 4. LYRIC LAB -->
+    <section class="section">
+      <h2>Write Your Lyrics</h2>
+      <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
+
+      <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
+    </section>
+
+    <!-- 5. UPLOAD SECTION -->
+    <section class="section">
+      <h2>Upload Your Vocal</h2>
+      <p class="note">If your take is strong, it may be released through MLKSHK.</p>
+
+      <button class="button" disabled>Upload Vocal</button>
+    </section>
+
+    <!-- 6. PROJECT ARCHIVE -->
+    <section class="section">
+      <h2>Lab Releases</h2>
+      <ul class="archive-list">
+        <li>Track 001 — Coming Soon</li>
+        <li>Track 002 — Coming Soon</li>
+        <li>Track 003 — Coming Soon</li>
+      </ul>
+    </section>
+
+    <!-- 7. LIVE CHAT -->
+    <section class="section">
+      <h2>Live Lab Chat</h2>
+      <p class="note">Talk shit. Trade bars. Stay sharp.</p>
+
+      <div class="chat-window">
+        <!-- Messages will appear here later -->
+      </div>
+
+      <div class="chat-inputs">
+        <input type="text" placeholder="Username (coming soon)" disabled>
+        <textarea placeholder="Type message (coming soon)" disabled></textarea>
+        <button class="button" disabled>Send</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-left">© 2025</div>
+      <div class="footer-center">MLKSHK MEDIA</div>
+      <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
+    </div>
+  </footer>
+
+</body>
+</html>
