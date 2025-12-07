@@ -11,6 +11,87 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Socials Dropdown */
+    .nav-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background: #000;
+      min-width: 160px;
+      border: 1px solid #ff2aa1;
+      z-index: 1000;
+      top: 100%;
+      left: 0;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .dropdown-menu a:hover {
+      background: #ff2aa1;
+      color: black;
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* ENTER THE LAB SECTION */
+    .lab-break {
+      margin: 80px 0 40px;
+      border-top: 2px solid #ff2aa1;
+      opacity: 0.6;
+    }
+
+    .enter-lab {
+      text-align: center;
+      padding: 60px 20px 80px;
+      background: linear-gradient(180deg, rgba(255,42,161,0.12), rgba(0,0,0,0));
+    }
+
+    .enter-lab h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 48px;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .enter-lab p {
+      font-size: 18px;
+      margin-bottom: 25px;
+      opacity: 0.85;
+    }
+
+    .lab-btn {
+      display: inline-block;
+      padding: 16px 50px;
+      border-radius: 40px;
+      border: 2px solid #ff2aa1;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .lab-btn:hover {
+      background: #ff2aa1;
+      color: black;
+      box-shadow: 0 0 25px rgba(255,42,161,0.6);
+    }
+  </style>
 </head>
 <body>
 
@@ -20,15 +101,26 @@
       <a href="index.html" class="logo-link">
         <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
       </a>
-   <nav class="nav-links">
-  <a href="https://open.spotify.com/user/31nd5sxxglajkl4cuwpcegtdchgi?si=d272f22fe9984eaf" target="_blank" class="nav-link">Releases</a>
-  <a href="playlists.html" class="nav-link">Playlists</a>
-  <a href="lab.html" class="nav-link">The Lab</a>
-</nav>
+      <nav class="nav-links">
+        <a href="https://open.spotify.com/user/31nd5sxxglajkl4cuwpcegtdchgi?si=d272f22fe9984eaf" target="_blank" class="nav-link">Releases</a>
+        <a href="playlists.html" class="nav-link">Playlists</a>
+        <a href="lab.html" class="nav-link">The Lab</a>
+
+        <!-- Socials Dropdown -->
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link">Socials</a>
+          <div class="dropdown-menu">
+            <a href="#" target="_blank">Spotify</a>
+            <a href="#" target="_blank">TikTok</a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">YouTube</a>
+          </div>
+        </div>
+      </nav>
     </div>
   </header>
 
-      <!-- HERO -->
+  <!-- HERO -->
   <section class="section hero">
     <img src="images/MLKSHK_HEADER2.png" alt="MLKSHK Header" class="hero-logo">
     <p class="hero-tagline">Fuelled By MLKSHK</p>
@@ -57,6 +149,16 @@
         <div class="release-cover"><img src="Releases/Cover Art/SCARBOROUGH FAIR COVER.png" alt="Coming Soon"></div>
       </a>
     </div>
+  </section>
+
+  <!-- ENTER THE LAB SECTION -->
+  <div class="lab-break"></div>
+
+  <section class="enter-lab">
+    <h2>Enter The Lab</h2>
+    <p>Think you’ve got what it takes?</p>
+    <p>Step inside. Make something real.</p>
+    <a href="lab.html" class="lab-btn">Enter The Lab</a>
   </section>
 
   <!-- FOOTER -->
@@ -91,4 +193,3 @@
 
 </body>
 </html>
-
