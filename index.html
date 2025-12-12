@@ -71,9 +71,14 @@
 
     /* UNIVERSE SECTION - removed pink tint overlay */
     .universe-teaser {
-      padding:60px 20px;
-      text-align:center;
-      background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat;
+  padding:60px 20px;
+  text-align:center;
+
+  /* Tint restored ONLY for this section */
+  background:
+    linear-gradient(180deg, rgba(255,42,161,0.10), rgba(0,0,0,0.40)),
+    url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat;
+
     }
     .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
     .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
