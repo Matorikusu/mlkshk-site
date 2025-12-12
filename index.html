@@ -39,9 +39,23 @@
     .nav-links { display: flex; gap: 14px; align-items: center; }
     .nav-link { font-weight: 600; padding: 6px 10px; border-radius: 8px; }
     .nav-link:hover { background: rgba(255,255,255,0.02); color: var(--text); }
+
     .nav-dropdown { position: relative; display: inline-block; }
-    .dropdown-menu { display: none; position: absolute; background: #000; min-width: 160px; border: 1px solid var(--accent); z-index: 1000; top: 100%; left: 0; }
-    .dropdown-menu a { display: block; padding: 10px 15px; color: white; font-size: 14px; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background: #000;
+      min-width: 160px;
+      border: 1px solid var(--accent);
+      z-index: 1000;
+      top: 100%; left: 0;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 15px;
+      color: white;
+      font-size: 14px;
+    }
     .dropdown-menu a:hover { background: var(--accent); color: black; }
     .nav-dropdown:hover .dropdown-menu { display: block; }
 
@@ -90,7 +104,7 @@
         <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
       </a>
       <nav class="nav-links">
-        <a href="https://open.spotify.com/user/31nd5sxxglajkl4cuwpcegtdchgi?si=d272f22fe9984eaf" target="_blank" class="nav-link">Releases</a>
+        <a href="releases.html" class="nav-link">Releases</a>
         <a href="playlists.html" class="nav-link">Playlists</a>
         <a href="universe.html" class="nav-link">The Universe</a>
         <a href="lab.html" class="nav-link">The Lab</a>
