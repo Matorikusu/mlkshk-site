@@ -18,7 +18,6 @@
       position: relative;
       display: inline-block;
     }
-
     .dropdown-menu {
       display: none;
       position: absolute;
@@ -29,7 +28,6 @@
       top: 100%;
       left: 0;
     }
-
     .dropdown-menu a {
       display: block;
       padding: 10px 15px;
@@ -37,60 +35,58 @@
       text-decoration: none;
       font-size: 14px;
     }
-
     .dropdown-menu a:hover {
       background: #ff2aa1;
       color: black;
     }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
 
-    .nav-dropdown:hover .dropdown-menu {
-      display: block;
-    }
-
-    /* ENTER THE LAB SECTION */
-    .lab-break {
-      margin: 80px 0 40px;
-      border-top: 2px solid #ff2aa1;
-      opacity: 0.6;
-    }
-
-    .enter-lab {
+    /* HERO */
+    .hero {
+      padding: 60px 20px;
       text-align: center;
-      padding: 60px 20px 80px;
+      background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)), url('images/hero-bg.png') center/cover no-repeat;
+      color: white;
+    }
+    .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; text-transform:uppercase; letter-spacing:2px; }
+    .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
+
+    /* RELEASES */
+    .releases-wrap {
+      position:relative;
+      margin: 60px 0;
+    }
+    .side-label { position:absolute; left:0; top:0; font-family:'Orbitron', sans-serif; font-size:24px; writing-mode: vertical-rl; transform: rotate(180deg); opacity:0.6; }
+    .release-strip { display:flex; overflow-x:auto; scroll-behavior:smooth; gap:20px; padding-left:60px; }
+    .release-card { min-width:220px; border-radius:12px; overflow:hidden; flex-shrink:0; transition: transform 0.2s; cursor:pointer; }
+    .release-card:hover { transform:translateY(-5px); }
+    .release-cover img { width:100%; display:block; border-radius:12px; }
+
+    /* ENTER THE LAB */
+    .lab-section {
+      text-align:center;
+      padding:60px 20px;
       background: linear-gradient(180deg, rgba(255,42,161,0.12), rgba(0,0,0,0));
     }
+    .lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; }
+    .lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
+    .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid #ff2aa1; color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
+    .lab-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
 
-    .enter-lab h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 48px;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-      text-transform: uppercase;
+    /* UNIVERSE TEASER SECTION */
+    .universe-teaser {
+      padding:60px 20px;
+      background: rgba(255,255,255,0.02);
+      text-align:center;
     }
+    .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color:#ff2aa1; }
+    .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
+    .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid #ff2aa1; color:white; text-transform:uppercase; font-weight:700; letter-spacing:1px; transition:0.2s; }
+    .universe-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
 
-    .enter-lab p {
-      font-size: 18px;
-      margin-bottom: 25px;
-      opacity: 0.85;
-    }
+    /* FOOTER */
+    footer { padding:28px 20px; color: #c0c0c0; text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
 
-    .lab-btn {
-      display: inline-block;
-      padding: 16px 50px;
-      border-radius: 40px;
-      border: 2px solid #ff2aa1;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      letter-spacing: 1px;
-      transition: all 0.2s ease;
-    }
-
-    .lab-btn:hover {
-      background: #ff2aa1;
-      color: black;
-      box-shadow: 0 0 25px rgba(255,42,161,0.6);
-    }
   </style>
 </head>
 <body>
@@ -122,9 +118,9 @@
   </header>
 
   <!-- HERO -->
-  <section class="section hero">
-    <img src="images/MLKSHK_HEADER.png" alt="MLKSHK Header" class="hero-logo">
-    <p class="hero-tagline">Fuelled By MLKSHK</p>
+  <section class="hero">
+    <h1>Fuelled By MLKSHK</h1>
+    <p>Street culture inspired by skate parks, B-Boy anthems and the electric energy of music. Discover your crew, explore your vibe.</p>
   </section>
 
   <!-- RELEASES -->
@@ -132,7 +128,6 @@
     <div class="side-label">
       <span>LATEST<br>RELEASES</span>
     </div>
-
     <div class="release-strip" id="autoScroll">
       <a class="release-card" href="#">
         <div class="release-cover"><img src="Releases/Cover Art/Microdose Moments Cover.png" alt="Coming Soon"></div>
@@ -146,46 +141,40 @@
       <a class="release-card" href="#">
         <div class="release-cover"><img src="Releases/Cover Art/Fractured Reality Cover.png" alt="Coming Soon"></div>
       </a>
-      <a class="release-card" href="#">
-        <div class="release-cover"><img src="Releases/Cover Art/SCARBOROUGH FAIR COVER.png" alt="Coming Soon"></div>
-      </a>
     </div>
   </section>
 
-  <!-- ENTER THE LAB SECTION -->
-  <div class="lab-break"></div>
+  <!-- UNIVERSE TEASER -->
+  <section class="universe-teaser">
+    <h2>The Universe</h2>
+    <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
+    <a href="universe.html" class="universe-btn">Enter The Universe</a>
+  </section>
 
-  <section class="enter-lab">
+  <!-- ENTER THE LAB -->
+  <section class="lab-section">
     <h2>Enter The Lab</h2>
-    <p>Think you’ve got what it takes?</p>
-    <p>Step inside. Make something real.</p>
+    <p>Think you’ve got what it takes? Step inside. Make something real.</p>
     <a href="lab.html" class="lab-btn">Enter The Lab</a>
   </section>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-content">
-      <div class="footer-left">© 2025</div>
-      <div class="footer-center">MLKSHK MEDIA</div>
-      <div class="footer-right">DESIGN & BUILD MATORIKUSU</div>
-    </div>
+  <footer>
+    MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
   </footer>
 
   <!-- AUTO SCROLL SCRIPT -->
   <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
     const scroller = document.getElementById('autoScroll');
     let scrollSpeed = 1.2;
     let isPaused = false;
-
     scroller.addEventListener('mouseenter', () => isPaused = true);
     scroller.addEventListener('mouseleave', () => isPaused = false);
-
     function autoScroll() {
       if (!isPaused) {
         scroller.scrollLeft += scrollSpeed;
-        if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) {
-          scroller.scrollLeft = 0;
-        }
+        if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) scroller.scrollLeft = 0;
       }
       requestAnimationFrame(autoScroll);
     }
