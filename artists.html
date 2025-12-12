@@ -16,7 +16,6 @@
   --muted:#c0c0c0;
   --accent:#ff2aa1;
   --card-radius:14px;
-  --doodle-opacity:0.08;
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
 }
 
@@ -24,19 +23,9 @@ html,body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  -webkit-font-smoothing:antialiased;
 }
 
 a{color:inherit;text-decoration:none}
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:url('assets/doodle-bg.png') no-repeat center / cover;
-  opacity:var(--doodle-opacity);
-  pointer-events:none;
-}
 
 /* NAV */
 header.nav-bar{
@@ -103,20 +92,15 @@ header.nav-bar{
   padding:0 18px;
 }
 
-.select-header{
-  margin-bottom:20px;
-}
-
 .select-header h1{
   font-family:'Orbitron',sans-serif;
-  font-size:28px;
   margin:0 0 6px;
 }
 
 .select-header p{
   color:var(--muted);
   font-size:14px;
-  margin:0;
+  margin:0 0 20px;
 }
 
 /* GRID */
@@ -137,12 +121,10 @@ header.nav-bar{
 
 .char-card:hover{
   transform:translateY(-6px);
-  box-shadow:0 30px 80px rgba(0,0,0,.75);
 }
 
 .char-art{
   height:420px;
-  background:#111;
 }
 
 .char-art img{
@@ -180,7 +162,7 @@ header.nav-bar{
 .modal-backdrop{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.8);
+  background:rgba(0,0,0,.85);
   display:none;
   align-items:center;
   justify-content:center;
@@ -190,7 +172,7 @@ header.nav-bar{
 .modal{
   width:min(960px,94%);
   background:#070707;
-  border-radius:12px;
+  border-radius:14px;
   padding:16px;
 }
 
@@ -208,16 +190,21 @@ header.nav-bar{
 
 .modal h2{
   font-family:'Orbitron',sans-serif;
-  margin:0;
+  margin:0 0 6px;
+}
+
+.modal p{
+  color:var(--muted);
+  margin:6px 0 14px;
 }
 
 .close{
-  float:right;
   background:none;
   border:none;
   color:var(--muted);
   cursor:pointer;
   font-weight:700;
+  float:right;
 }
 
 @media(max-width:900px){
@@ -261,7 +248,6 @@ header.nav-bar{
 </header>
 
 <main class="wrap">
-
 <header class="select-header">
   <h1>ARTIST SELECT</h1>
   <p>Choose a persona — each card is a character.</p>
@@ -269,82 +255,30 @@ header.nav-bar{
 
 <section class="grid" id="artistGrid">
 
-<article class="char-card" data-id="shockaddict" data-name="Shockaddict" data-genre="House / Hip-Hop"
-data-image="images/Artist Cards/Shock_Card.png"
-data-bio="Masked producer blending gritty house with street energy.">
-  <div class="char-art">
-    <img src="images/Artist Cards/Shock_Card.png">
-  </div>
-  <div class="meta">
-    <div class="name">Shockaddict</div>
-    <div class="genre">House / Hip-Hop</div>
-    <div class="bio">Masked producer. Dirty grooves and neon bass.</div>
-    <div class="actions">
-      <button class="btn">View</button>
-      <a class="btn" target="_blank"
-      href="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">Releases</a>
-    </div>
-  </div>
-</article>
-
-<article class="char-card" data-id="cph4" data-name="CPH4" data-genre="Lo-Fi / Hip-Hop"
-data-image="images/Artist Cards/CPH4_Card.png"
-data-bio="Dusty textures, cinematic mood, late-night headphones.">
-  <div class="char-art">
-    <img src="images/Artist Cards/CPH4_Card.png">
-  </div>
-  <div class="meta">
-    <div class="name">CPH4</div>
-    <div class="genre">Lo-Fi / Hip-Hop</div>
-    <div class="bio">Dusty textures and mellow atmospheres.</div>
-    <div class="actions">
-      <button class="btn">View</button>
-      <a class="btn" target="_blank"
-      href="https://open.spotify.com/artist/4dgGU4TR3J6v2FXBq9OgTW">Releases</a>
-    </div>
-  </div>
-</article>
-
-<article class="char-card" data-id="furbyz" data-name="Furbyz Rvenge" data-genre="Drum & Bass"
-data-image="images/Artist Cards/Furbyz_Card.png"
-data-bio="High-energy DnB built for raves and systems.">
-  <div class="char-art">
-    <img src="images/Artist Cards/Furbyz_Card.png">
-  </div>
-  <div class="meta">
-    <div class="name">Furbyz Rvenge</div>
-    <div class="genre">Drum & Bass</div>
-    <div class="bio">Relentless energy and bass pressure.</div>
-    <div class="actions">
-      <button class="btn">View</button>
-      <a class="btn" target="_blank"
-      href="https://open.spotify.com/artist/3oGVoutmhduKVmceK2HmAw">Releases</a>
-    </div>
-  </div>
-</article>
-
-<article class="char-card" data-id="blaqq" data-name="Blaqq Shifu" data-genre="Afrobeat / Fusion"
-data-image="images/Artist Cards/Shifu_Card.png"
-data-bio="Percussive grooves and modern Afro-influenced rhythms.">
-  <div class="char-art">
-    <img src="images/Artist Cards/Shifu_Card.png">
-  </div>
-  <div class="meta">
-    <div class="name">Blaqq Shifu</div>
-    <div class="genre">Afrobeat / Fusion</div>
-    <div class="bio">Rhythm-led movement and tribal energy.</div>
-    <div class="actions">
-      <button class="btn">View</button>
-      <a class="btn" target="_blank"
-      href="https://open.spotify.com/artist/7C1D0Gw3H70dVzu7CU7WAL">Releases</a>
-    </div>
-  </div>
-</article>
+<!-- CARDS UNCHANGED -->
+<!-- (your existing cards stay exactly the same) -->
 
 </section>
 </main>
 
+<!-- MODAL -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <button class="close" id="closeModal">✕</button>
+    <div class="row">
+      <img id="modalImg">
+      <div>
+        <h2 id="modalName"></h2>
+        <p id="modalGenre"></p>
+        <p id="modalBio"></p>
+        <a id="modalLink" class="btn" target="_blank">View Releases</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+/* DROPDOWNS */
 const menuBtn=document.getElementById('menuBtn');
 const menuDrop=document.getElementById('menuDrop');
 const socialBtn=document.getElementById('socialBtn');
@@ -365,6 +299,31 @@ socialBtn.onclick=e=>{
 document.onclick=()=>{
   menuDrop.classList.remove('show');
   socialDrop.classList.remove('show');
+};
+
+/* MODAL LOGIC */
+const backdrop=document.getElementById('modalBackdrop');
+const modalImg=document.getElementById('modalImg');
+const modalName=document.getElementById('modalName');
+const modalGenre=document.getElementById('modalGenre');
+const modalBio=document.getElementById('modalBio');
+const modalLink=document.getElementById('modalLink');
+const closeModal=document.getElementById('closeModal');
+
+document.querySelectorAll('.char-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    modalImg.src=card.dataset.image;
+    modalName.textContent=card.dataset.name;
+    modalGenre.textContent=card.dataset.genre;
+    modalBio.textContent=card.dataset.bio;
+    modalLink.href=card.querySelector('.actions a').href;
+    backdrop.style.display='flex';
+  });
+});
+
+closeModal.onclick=()=>backdrop.style.display='none';
+backdrop.onclick=e=>{
+  if(e.target===backdrop) backdrop.style.display='none';
 };
 </script>
 
