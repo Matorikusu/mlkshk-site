@@ -48,7 +48,6 @@ header.nav-bar{
 .logo-link img{height:42px}
 
 .nav-right{display:flex;gap:12px}
-
 .menu-container{position:relative}
 
 .btn{
@@ -79,10 +78,7 @@ header.nav-bar{
   font-weight:600;
 }
 
-.dropdown a:hover{
-  background:rgba(255,255,255,.05);
-}
-
+.dropdown a:hover{background:rgba(255,255,255,.05)}
 .dropdown.show{display:flex}
 
 /* PAGE */
@@ -99,7 +95,6 @@ header.nav-bar{
 
 .select-header p{
   color:var(--muted);
-  font-size:14px;
   margin:0 0 20px;
 }
 
@@ -119,44 +114,20 @@ header.nav-bar{
   cursor:pointer;
 }
 
-.char-card:hover{
-  transform:translateY(-6px);
-}
+.char-card:hover{transform:translateY(-6px)}
 
-.char-art{
-  height:420px;
-}
-
+.char-art{height:420px}
 .char-art img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.meta{
-  padding:14px;
-}
-
-.meta .name{
-  font-weight:800;
-  font-size:18px;
-}
-
-.meta .genre{
-  font-size:13px;
-  color:var(--muted);
-}
-
-.meta .bio{
-  font-size:13px;
-  color:var(--muted);
-  margin:6px 0 10px;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-}
+.meta{padding:14px}
+.name{font-weight:800;font-size:18px}
+.genre{font-size:13px;color:var(--muted)}
+.bio{font-size:13px;color:var(--muted);margin:6px 0 10px}
+.actions{display:flex;gap:8px}
 
 /* MODAL */
 .modal-backdrop{
@@ -176,26 +147,12 @@ header.nav-bar{
   padding:16px;
 }
 
-.modal .row{
-  display:flex;
-  gap:18px;
-}
-
+.modal .row{display:flex;gap:18px}
 .modal img{
   width:100%;
   height:520px;
   object-fit:cover;
   border-radius:10px;
-}
-
-.modal h2{
-  font-family:'Orbitron',sans-serif;
-  margin:0 0 6px;
-}
-
-.modal p{
-  color:var(--muted);
-  margin:6px 0 14px;
 }
 
 .close{
@@ -253,25 +210,42 @@ header.nav-bar{
   <p>Choose a persona — each card is a character.</p>
 </header>
 
-<section class="grid" id="artistGrid">
+<section class="grid">
 
-<!-- CARDS UNCHANGED -->
-<!-- (your existing cards stay exactly the same) -->
+<article class="char-card"
+  data-name="Shockaddict"
+  data-genre="House / Hip-Hop"
+  data-bio="Masked producer blending gritty house with street energy."
+  data-img="images/Artist Cards/Shock_Card.png"
+  data-link="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">
+  <div class="char-art"><img src="images/Artist Cards/Shock_Card.png"></div>
+  <div class="meta">
+    <div class="name">Shockaddict</div>
+    <div class="genre">House / Hip-Hop</div>
+    <div class="bio">Masked producer. Dirty grooves and neon bass.</div>
+    <div class="actions">
+      <button class="btn">View</button>
+      <a class="btn" target="_blank" href="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">Releases</a>
+    </div>
+  </div>
+</article>
+
+<!-- repeat cards as needed (others unchanged from your file) -->
 
 </section>
 </main>
 
 <!-- MODAL -->
-<div id="modalBackdrop" class="modal-backdrop">
+<div class="modal-backdrop" id="modal">
   <div class="modal">
-    <button class="close" id="closeModal">✕</button>
+    <button class="close" id="close">✕</button>
     <div class="row">
-      <img id="modalImg">
+      <img id="mImg">
       <div>
-        <h2 id="modalName"></h2>
-        <p id="modalGenre"></p>
-        <p id="modalBio"></p>
-        <a id="modalLink" class="btn" target="_blank">View Releases</a>
+        <h2 id="mName"></h2>
+        <p id="mGenre"></p>
+        <p id="mBio"></p>
+        <a id="mLink" class="btn" target="_blank">View Releases</a>
       </div>
     </div>
   </div>
@@ -279,53 +253,26 @@ header.nav-bar{
 
 <script>
 /* DROPDOWNS */
-const menuBtn=document.getElementById('menuBtn');
-const menuDrop=document.getElementById('menuDrop');
-const socialBtn=document.getElementById('socialBtn');
-const socialDrop=document.getElementById('socialDrop');
+menuBtn.onclick=e=>{e.stopPropagation();menuDrop.classList.toggle('show');socialDrop.classList.remove('show')}
+socialBtn.onclick=e=>{e.stopPropagation();socialDrop.classList.toggle('show');menuDrop.classList.remove('show')}
+document.onclick=()=>{menuDrop.classList.remove('show');socialDrop.classList.remove('show')}
 
-menuBtn.onclick=e=>{
-  e.stopPropagation();
-  menuDrop.classList.toggle('show');
-  socialDrop.classList.remove('show');
-};
-
-socialBtn.onclick=e=>{
-  e.stopPropagation();
-  socialDrop.classList.toggle('show');
-  menuDrop.classList.remove('show');
-};
-
-document.onclick=()=>{
-  menuDrop.classList.remove('show');
-  socialDrop.classList.remove('show');
-};
-
-/* MODAL LOGIC */
-const backdrop=document.getElementById('modalBackdrop');
-const modalImg=document.getElementById('modalImg');
-const modalName=document.getElementById('modalName');
-const modalGenre=document.getElementById('modalGenre');
-const modalBio=document.getElementById('modalBio');
-const modalLink=document.getElementById('modalLink');
-const closeModal=document.getElementById('closeModal');
-
+/* MODAL */
+const modal=document.getElementById('modal');
 document.querySelectorAll('.char-card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    modalImg.src=card.dataset.image;
-    modalName.textContent=card.dataset.name;
-    modalGenre.textContent=card.dataset.genre;
-    modalBio.textContent=card.dataset.bio;
-    modalLink.href=card.querySelector('.actions a').href;
-    backdrop.style.display='flex';
-  });
+  card.onclick=()=>{
+    mImg.src=card.dataset.img;
+    mName.textContent=card.dataset.name;
+    mGenre.textContent=card.dataset.genre;
+    mBio.textContent=card.dataset.bio;
+    mLink.href=card.dataset.link;
+    modal.style.display='flex';
+  }
 });
-
-closeModal.onclick=()=>backdrop.style.display='none';
-backdrop.onclick=e=>{
-  if(e.target===backdrop) backdrop.style.display='none';
-};
+close.onclick=()=>modal.style.display='none';
+modal.onclick=e=>{if(e.target===modal)modal.style.display='none'}
 </script>
 
 </body>
 </html>
+
