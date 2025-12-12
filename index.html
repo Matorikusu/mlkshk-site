@@ -1,185 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MLKSHK</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLKSHK</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
+<style>
+  :root {
+    --bg: #000;
+    --panel: #0b0b0b;
+    --text: #f5f5f5;
+    --muted: #c0c0c0;
+    --accent: #ff2aa1;
+    --card-radius: 12px;
+    font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  }
 
-  <style>
-    /* Socials Dropdown */
-    .nav-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      background: #000;
-      min-width: 160px;
-      border: 1px solid #ff2aa1;
-      z-index: 1000;
-      top: 100%;
-      left: 0;
-    }
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 15px;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .dropdown-menu a:hover {
-      background: #ff2aa1;
-      color: black;
-    }
-    .nav-dropdown:hover .dropdown-menu { display: block; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--text); }
+  a { color:inherit; text-decoration:none; }
+  body::before {
+    content:""; position:fixed; inset:0;
+    background-image:url('images/page-bg.png'); /* optional base background */
+    background-repeat:no-repeat; background-size:cover;
+    opacity:0.04; pointer-events:none;
+  }
 
-    /* HERO */
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)), url('images/hero-bg.png') center/cover no-repeat;
-      color: white;
-    }
-    .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; text-transform:uppercase; letter-spacing:2px; }
-    .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
+  /* NAV BAR */
+  header.nav-bar {
+    border-bottom:1px solid rgba(255,42,161,0.04);
+    padding:18px 24px; 
+    background:linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+    position:sticky; top:0; z-index:30;
+  }
+  .nav-content { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+  .logo-link img { height:42px; display:block; }
+  .nav-right { display:flex; gap:12px; align-items:center; }
+  .menu-container { position: relative; }
+  .btn.primary { cursor:pointer; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); padding:8px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); color:var(--text); font-weight:700; font-size:13px; }
+  .dropdown {
+    display: none; position: absolute; top:100%; right:0; background: var(--panel);
+    border:1px solid rgba(255,42,161,0.1); border-radius:8px; padding:8px 0; min-width:140px; z-index:100;
+    flex-direction: column;
+  }
+  .dropdown a { display:block; padding:8px 16px; color: var(--text); font-weight:600; }
+  .dropdown a:hover { background: rgba(255,42,161,0.1); }
 
-    /* RELEASES */
-    .releases-wrap {
-      position:relative;
-      margin: 60px 0;
-    }
-    .side-label { position:absolute; left:0; top:0; font-family:'Orbitron', sans-serif; font-size:24px; writing-mode: vertical-rl; transform: rotate(180deg); opacity:0.6; }
-    .release-strip { display:flex; overflow-x:auto; scroll-behavior:smooth; gap:20px; padding-left:60px; }
-    .release-card { min-width:220px; border-radius:12px; overflow:hidden; flex-shrink:0; transition: transform 0.2s; cursor:pointer; }
-    .release-card:hover { transform:translateY(-5px); }
-    .release-cover img { width:100%; display:block; border-radius:12px; }
+  /* HERO */
+  .hero {
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)), url('images/hero-bg.png') center/cover no-repeat;
+    color:white;
+  }
+  .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; text-transform:uppercase; letter-spacing:2px; }
+  .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
 
-    /* ENTER THE LAB */
-    .lab-section {
-      text-align:center;
-      padding:60px 20px;
-      background: linear-gradient(180deg, rgba(255,42,161,0.12), rgba(0,0,0,0));
-    }
-    .lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; }
-    .lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
-    .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid #ff2aa1; color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
-    .lab-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
+  /* UNIVERSE SECTION */
+  .universe-teaser {
+    padding:60px 20px;
+    text-align:center;
+    position:relative;
+    z-index:1;
+    color:white;
+    background: url('images/universe-bg.png') center/cover no-repeat;
+    background-size:cover;
+  }
+  .universe-teaser::before {
+    content:""; position:absolute; inset:0; background:rgba(0,0,0,0.7); z-index:-1;
+  }
+  .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color:#ff2aa1; }
+  .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
+  .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid #ff2aa1; color:white; text-transform:uppercase; font-weight:700; letter-spacing:1px; transition:0.2s; }
+  .universe-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
 
-    /* UNIVERSE TEASER SECTION */
-    .universe-teaser {
-      padding:60px 20px;
-      background: rgba(255,255,255,0.02);
-      text-align:center;
-    }
-    .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color:#ff2aa1; }
-    .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
-    .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid #ff2aa1; color:white; text-transform:uppercase; font-weight:700; letter-spacing:1px; transition:0.2s; }
-    .universe-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
+  /* LAB SECTION */
+  .lab-section {
+    text-align:center;
+    padding:60px 20px;
+    position:relative;
+    z-index:1;
+    color:white;
+    background: url('images/lab-bg.png') center/cover no-repeat;
+    background-size:cover;
+  }
+  .lab-section::before {
+    content:""; position:absolute; inset:0; background:rgba(0,0,0,0.7); z-index:-1;
+  }
+  .lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; }
+  .lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
+  .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid #ff2aa1; color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
+  .lab-btn:hover { background:#ff2aa1; color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
 
-    /* FOOTER */
-    footer { padding:28px 20px; color: #c0c0c0; text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
-
-  </style>
+  /* FOOTER */
+  footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
+</style>
 </head>
 <body>
 
-  <!-- NAV BAR -->
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo" class="logo">
-      </a>
-      <nav class="nav-links">
-        <a href="https://open.spotify.com/user/31nd5sxxglajkl4cuwpcegtdchgi?si=d272f22fe9984eaf" target="_blank" class="nav-link">Releases</a>
-        <a href="playlists.html" class="nav-link">Playlists</a>
-        <a href="universe.html" class="nav-link">The Universe</a>
-        <a href="lab.html" class="nav-link">The Lab</a>
-       
-        <!-- Socials Dropdown -->
-        <div class="nav-dropdown">
-          <a href="#" class="nav-link">Socials</a>
-          <div class="dropdown-menu">
-            <a href="#" target="_blank">Spotify</a>
-            <a href="#" target="_blank">TikTok</a>
-            <a href="#" target="_blank">Instagram</a>
-            <a href="#" target="_blank">YouTube</a>
-          </div>
-        </div>
-      </nav>
+<!-- NAV BAR -->
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link"><img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo"></a>
+    <div class="nav-right">
+      <!-- Main Menu -->
+      <div class="menu-container">
+        <button id="menuButton" class="btn primary" aria-haspopup="true" aria-expanded="false">Menu ▼</button>
+        <nav id="menuDropdown" class="dropdown">
+          <a href="#">Releases</a>
+          <a href="#">Playlists</a>
+          <a href="universe.html">The Universe</a>
+          <a href="lab.html">The Lab</a>
+        </nav>
+      </div>
+      <!-- Socials Dropdown -->
+      <div class="menu-container">
+        <button id="socialsButton" class="btn primary" aria-haspopup="true" aria-expanded="false">Socials ▼</button>
+        <nav id="socialsDropdown" class="dropdown">
+          <a href="#" target="_blank">Spotify</a>
+          <a href="#" target="_blank">TikTok</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">YouTube</a>
+        </nav>
+      </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Fuelled By MLKSHK</h1>
-    <p>Street culture inspired by skate parks, B-Boy anthems and the electric energy of music. Discover your crew, explore your vibe.</p>
-  </section>
+<!-- HERO -->
+<section class="hero">
+  <h1>Fuelled By MLKSHK</h1>
+  <p>Street culture inspired by skate parks, B-Boy anthems and the electric energy of music. Discover your crew, explore your vibe.</p>
+</section>
 
-  <!-- RELEASES -->
-  <section id="releases" class="releases-wrap">
-    <div class="side-label">
-      <span>LATEST<br>RELEASES</span>
-    </div>
-    <div class="release-strip" id="autoScroll">
-      <a class="release-card" href="#">
-        <div class="release-cover"><img src="Releases/Cover Art/Microdose Moments Cover.png" alt="Coming Soon"></div>
-      </a>
-      <a class="release-card" href="#">
-        <div class="release-cover"><img src="Releases/Cover Art/Obsidian Cover.png" alt="Coming Soon"></div>
-      </a>
-      <a class="release-card" href="#">
-        <div class="release-cover"><img src="Releases/Cover Art/Broken Idol Cover.png" alt="Coming Soon"></div>
-      </a>
-      <a class="release-card" href="#">
-        <div class="release-cover"><img src="Releases/Cover Art/Fractured Reality Cover.png" alt="Coming Soon"></div>
-      </a>
-    </div>
-  </section>
+<!-- UNIVERSE TEASER -->
+<section class="universe-teaser">
+  <h2>The Universe</h2>
+  <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
+  <a href="universe.html" class="universe-btn">Enter The Universe</a>
+</section>
 
-  <!-- UNIVERSE TEASER -->
-  <section class="universe-teaser">
-    <h2>The Universe</h2>
-    <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
-    <a href="universe.html" class="universe-btn">Enter The Universe</a>
-  </section>
+<!-- ENTER THE LAB -->
+<section class="lab-section">
+  <h2>Enter The Lab</h2>
+  <p>Think you’ve got what it takes? Step inside. Make something real.</p>
+  <a href="lab.html" class="lab-btn">Enter The Lab</a>
+</section>
 
-  <!-- ENTER THE LAB -->
-  <section class="lab-section">
-    <h2>Enter The Lab</h2>
-    <p>Think you’ve got what it takes? Step inside. Make something real.</p>
-    <a href="lab.html" class="lab-btn">Enter The Lab</a>
-  </section>
+<!-- FOOTER -->
+<footer>
+  MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+</footer>
 
-  <!-- FOOTER -->
-  <footer>
-    MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
-  </footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  <!-- AUTO SCROLL SCRIPT -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const scroller = document.getElementById('autoScroll');
-    let scrollSpeed = 1.2;
-    let isPaused = false;
-    scroller.addEventListener('mouseenter', () => isPaused = true);
-    scroller.addEventListener('mouseleave', () => isPaused = false);
-    function autoScroll() {
-      if (!isPaused) {
-        scroller.scrollLeft += scrollSpeed;
-        if (scroller.scrollLeft >= scroller.scrollWidth - scroller.clientWidth) scroller.scrollLeft = 0;
-      }
-      requestAnimationFrame(autoScroll);
+  // Dropdown logic
+  const menuButton = document.getElementById('menuButton');
+  const menuDropdown = document.getElementById('menuDropdown');
+  const socialsButton = document.getElementById('socialsButton');
+  const socialsDropdown = document.getElementById('socialsDropdown');
+
+  menuButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+    menuDropdown.classList.toggle('show');
+    menuButton.setAttribute('aria-expanded', !expanded);
+    socialsDropdown.classList.remove('show');
+    socialsButton.setAttribute('aria-expanded', 'false');
+  });
+
+  socialsButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = socialsButton.getAttribute('aria-expanded') === 'true';
+    socialsDropdown.classList.toggle('show');
+    socialsButton.setAttribute('aria-expanded', !expanded);
+    menuDropdown.classList.remove('show');
+    menuButton.setAttribute('aria-expanded', 'false');
+  });
+
+  document.addEventListener('click', () => {
+    menuDropdown.classList.remove('show'); menuButton.setAttribute('aria-expanded', 'false');
+    socialsDropdown.classList.remove('show'); socialsButton.setAttribute('aria-expanded', 'false');
+  });
+
+  window.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') {
+      menuDropdown.classList.remove('show'); socialsDropdown.classList.remove('show');
+      menuButton.setAttribute('aria-expanded', 'false'); socialsButton.setAttribute('aria-expanded', 'false');
     }
-    autoScroll();
-  </script>
-
+  });
+</script>
 </body>
 </html>
