@@ -4,85 +4,120 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>MLKSHK — Artist Select</title>
+
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#000;
+  --panel:#0b0b0b;
   --text:#f5f5f5;
   --muted:#c0c0c0;
   --accent:#ff2aa1;
-  --card-radius:12px;
+  --card-radius:14px;
   --doodle-opacity:0.08;
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
 }
-html,body{margin:0;background:var(--bg);color:var(--text);}
-a{text-decoration:none;color:inherit}
 
-/* doodle */
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit;text-decoration:none}
+
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:url('assets/doodle-bg.png') no-repeat center/cover;
+  background:url('assets/doodle-bg.png') no-repeat center / cover;
   opacity:var(--doodle-opacity);
   pointer-events:none;
 }
 
 /* NAV */
 header.nav-bar{
-  position:sticky;top:0;z-index:50;
+  position:sticky;
+  top:0;
+  z-index:50;
   padding:18px 24px;
-  border-bottom:1px solid rgba(255,42,161,.04);
-  background:linear-gradient(180deg,rgba(0,0,0,.3),transparent);
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  background:linear-gradient(180deg,rgba(0,0,0,.25),transparent);
 }
+
 .nav-content{
   max-width:1200px;
   margin:0 auto;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
+
 .logo-link img{height:42px}
 
-.nav-right{display:flex;gap:12px;align-items:center}
+.nav-right{display:flex;gap:12px}
 
-.menu-wrap{position:relative}
-.menu-btn{
+.menu-container{position:relative}
+
+.btn{
   background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
   border:1px solid rgba(255,255,255,.06);
   border-radius:12px;
   padding:8px 14px;
   font-weight:700;
   cursor:pointer;
+  color:var(--text);
 }
+
 .dropdown{
-  display:none;
   position:absolute;
-  top:100%;right:0;
-  background:#000;
+  top:110%;
+  right:0;
+  background:var(--panel);
   border:1px solid rgba(255,42,161,.15);
   border-radius:10px;
   min-width:160px;
-  overflow:hidden;
+  display:none;
+  flex-direction:column;
+  z-index:100;
 }
+
 .dropdown a{
-  display:block;
   padding:10px 16px;
   font-weight:600;
 }
-.dropdown a:hover{background:rgba(255,255,255,.06)}
-.dropdown.show{display:block}
+
+.dropdown a:hover{
+  background:rgba(255,255,255,.05);
+}
+
+.dropdown.show{display:flex}
 
 /* PAGE */
-.wrap{max-width:1200px;margin:20px auto;padding:18px}
-.select-title{
+.wrap{
+  max-width:1200px;
+  margin:24px auto;
+  padding:0 18px;
+}
+
+.select-header{
+  margin-bottom:20px;
+}
+
+.select-header h1{
   font-family:'Orbitron',sans-serif;
   font-size:28px;
+  margin:0 0 6px;
+}
+
+.select-header p{
+  color:var(--muted);
+  font-size:14px;
   margin:0;
 }
-.select-sub{color:var(--muted);margin:6px 0 18px}
 
 /* GRID */
 .grid{
@@ -93,53 +128,102 @@ header.nav-bar{
 
 .char-card{
   background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border-radius:14px;
+  border-radius:var(--card-radius);
   overflow:hidden;
+  box-shadow:0 14px 40px rgba(0,0,0,.6);
+  transition:.15s ease;
   cursor:pointer;
-  transition:.15s;
-  box-shadow:0 12px 40px rgba(0,0,0,.6);
 }
-.char-card:hover{transform:translateY(-6px)}
 
-.char-art{height:420px;background:#111}
-.char-art img{width:100%;height:100%;object-fit:cover}
-
-.meta{padding:14px;display:flex;flex-direction:column;gap:8px}
-.name{font-size:18px;font-weight:800}
-.genre,.bio{font-size:13px;color:var(--muted)}
-
-.actions{display:flex;gap:8px;margin-top:8px}
-.btn{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.06);
-  background:transparent;
-  font-weight:700;
+.char-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 30px 80px rgba(0,0,0,.75);
 }
-.btn.primary{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.01))}
+
+.char-art{
+  height:420px;
+  background:#111;
+}
+
+.char-art img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.meta{
+  padding:14px;
+}
+
+.meta .name{
+  font-weight:800;
+  font-size:18px;
+}
+
+.meta .genre{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.meta .bio{
+  font-size:13px;
+  color:var(--muted);
+  margin:6px 0 10px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
 
 /* MODAL */
 .modal-backdrop{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.78);
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:100;
+  z-index:200;
 }
+
 .modal{
-  width:min(980px,94%);
+  width:min(960px,94%);
   background:#070707;
   border-radius:12px;
   padding:16px;
 }
-.modal .row{display:flex;gap:18px}
-.modal img{width:100%;height:520px;object-fit:cover;border-radius:8px}
-.close{float:right;background:none;border:0;color:var(--muted);cursor:pointer}
+
+.modal .row{
+  display:flex;
+  gap:18px;
+}
+
+.modal img{
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.modal h2{
+  font-family:'Orbitron',sans-serif;
+  margin:0;
+}
+
+.close{
+  float:right;
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-weight:700;
+}
 
 @media(max-width:900px){
   .modal .row{flex-direction:column}
   .char-art{height:320px}
+  .modal img{height:300px}
 }
 </style>
 </head>
@@ -148,113 +232,140 @@ header.nav-bar{
 
 <header class="nav-bar">
   <div class="nav-content">
-    <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
+    <a class="logo-link" href="index.html">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png">
     </a>
 
     <div class="nav-right">
-      <div class="menu-wrap">
-        <button class="menu-btn" id="menuBtn">Menu ▼</button>
-        <div class="dropdown" id="menuDrop">
+      <div class="menu-container">
+        <button id="menuBtn" class="btn">Menu ▼</button>
+        <nav id="menuDrop" class="dropdown">
           <a href="index.html">Home</a>
           <a href="universe.html">Universe</a>
           <a href="playlists.html">Playlists</a>
           <a href="lab.html">The Lab</a>
-        </div>
+        </nav>
       </div>
 
-      <div class="menu-wrap">
-        <button class="menu-btn" id="socialBtn">Socials ▼</button>
-        <div class="dropdown" id="socialDrop">
+      <div class="menu-container">
+        <button id="socialBtn" class="btn">Socials ▼</button>
+        <nav id="socialDrop" class="dropdown">
           <a href="https://open.spotify.com" target="_blank">Spotify</a>
-          <a href="#" target="_blank">Instagram</a>
-          <a href="#" target="_blank">TikTok</a>
-          <a href="#" target="_blank">YouTube</a>
-        </div>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">YouTube</a>
+        </nav>
       </div>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-  <h1 class="select-title">ARTIST SELECT</h1>
-  <p class="select-sub">Choose a persona — each card is a character.</p>
 
-  <section class="grid" id="artistGrid">
+<header class="select-header">
+  <h1>ARTIST SELECT</h1>
+  <p>Choose a persona — each card is a character.</p>
+</header>
 
-    <!-- Shockaddict -->
-    <article class="char-card" data-name="Shockaddict" data-genre="House / Hip-Hop"
-      data-image="images/Artist Cards/Shock_Card.png"
-      data-bio="Masked producer blending gritty house with street-leaning hip-hop.">
-      <div class="char-art"><img src="images/Artist Cards/Shock_Card.png"></div>
-      <div class="meta">
-        <div class="name">Shockaddict</div>
-        <div class="genre">House / Hip-Hop</div>
-        <div class="actions">
-          <button class="btn primary" data-open>View</button>
-          <a class="btn" href="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch" target="_blank">Releases</a>
-        </div>
-      </div>
-    </article>
+<section class="grid" id="artistGrid">
 
-    <!-- CPH4 -->
-    <article class="char-card" data-name="CPH4" data-genre="Lo-Fi / Hip-Hop"
-      data-image="images/Artist Cards/CPH4_Card.png"
-      data-bio="Dusty lo-fi textures and late-night grooves.">
-      <div class="char-art"><img src="images/Artist Cards/CPH4_Card.png"></div>
-      <div class="meta">
-        <div class="name">CPH4</div>
-        <div class="genre">Lo-Fi / Hip-Hop</div>
-        <div class="actions">
-          <button class="btn primary" data-open>View</button>
-          <a class="btn" href="https://open.spotify.com/artist/4dgGU4TR3J6v2FXBq9OgTW" target="_blank">Releases</a>
-        </div>
-      </div>
-    </article>
+<article class="char-card" data-id="shockaddict" data-name="Shockaddict" data-genre="House / Hip-Hop"
+data-image="images/Artist Cards/Shock_Card.png"
+data-bio="Masked producer blending gritty house with street energy.">
+  <div class="char-art">
+    <img src="images/Artist Cards/Shock_Card.png">
+  </div>
+  <div class="meta">
+    <div class="name">Shockaddict</div>
+    <div class="genre">House / Hip-Hop</div>
+    <div class="bio">Masked producer. Dirty grooves and neon bass.</div>
+    <div class="actions">
+      <button class="btn">View</button>
+      <a class="btn" target="_blank"
+      href="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">Releases</a>
+    </div>
+  </div>
+</article>
 
-    <!-- Furbyz -->
-    <article class="char-card" data-name="Furbyz Rvenge" data-genre="Drum & Bass"
-      data-image="images/Artist Cards/Furbyz_Card.png"
-      data-bio="High-energy bass music built for raves.">
-      <div class="char-art"><img src="images/Artist Cards/Furbyz_Card.png"></div>
-      <div class="meta">
-        <div class="name">Furbyz Rvenge</div>
-        <div class="genre">Drum & Bass</div>
-        <div class="actions">
-          <button class="btn primary" data-open>View</button>
-          <a class="btn" href="https://open.spotify.com/artist/3oGVoutmhduKVmceK2HmAw" target="_blank">Releases</a>
-        </div>
-      </div>
-    </article>
+<article class="char-card" data-id="cph4" data-name="CPH4" data-genre="Lo-Fi / Hip-Hop"
+data-image="images/Artist Cards/CPH4_Card.png"
+data-bio="Dusty textures, cinematic mood, late-night headphones.">
+  <div class="char-art">
+    <img src="images/Artist Cards/CPH4_Card.png">
+  </div>
+  <div class="meta">
+    <div class="name">CPH4</div>
+    <div class="genre">Lo-Fi / Hip-Hop</div>
+    <div class="bio">Dusty textures and mellow atmospheres.</div>
+    <div class="actions">
+      <button class="btn">View</button>
+      <a class="btn" target="_blank"
+      href="https://open.spotify.com/artist/4dgGU4TR3J6v2FXBq9OgTW">Releases</a>
+    </div>
+  </div>
+</article>
 
-    <!-- Blaqq Shifu -->
-    <article class="char-card" data-name="Blaqq Shifu" data-genre="Afrobeat / Fusion"
-      data-image="images/Artist Cards/Shifu_Card.png"
-      data-bio="Percussive rhythms and modern Afro energy.">
-      <div class="char-art"><img src="images/Artist Cards/Shifu_Card.png"></div>
-      <div class="meta">
-        <div class="name">Blaqq Shifu</div>
-        <div class="genre">Afrobeat / Fusion</div>
-        <div class="actions">
-          <button class="btn primary" data-open>View</button>
-          <a class="btn" href="https://open.spotify.com/artist/7C1D0Gw3H70dVzu7CU7WAL" target="_blank">Releases</a>
-        </div>
-      </div>
-    </article>
+<article class="char-card" data-id="furbyz" data-name="Furbyz Rvenge" data-genre="Drum & Bass"
+data-image="images/Artist Cards/Furbyz_Card.png"
+data-bio="High-energy DnB built for raves and systems.">
+  <div class="char-art">
+    <img src="images/Artist Cards/Furbyz_Card.png">
+  </div>
+  <div class="meta">
+    <div class="name">Furbyz Rvenge</div>
+    <div class="genre">Drum & Bass</div>
+    <div class="bio">Relentless energy and bass pressure.</div>
+    <div class="actions">
+      <button class="btn">View</button>
+      <a class="btn" target="_blank"
+      href="https://open.spotify.com/artist/3oGVoutmhduKVmceK2HmAw">Releases</a>
+    </div>
+  </div>
+</article>
 
-  </section>
+<article class="char-card" data-id="blaqq" data-name="Blaqq Shifu" data-genre="Afrobeat / Fusion"
+data-image="images/Artist Cards/Shifu_Card.png"
+data-bio="Percussive grooves and modern Afro-influenced rhythms.">
+  <div class="char-art">
+    <img src="images/Artist Cards/Shifu_Card.png">
+  </div>
+  <div class="meta">
+    <div class="name">Blaqq Shifu</div>
+    <div class="genre">Afrobeat / Fusion</div>
+    <div class="bio">Rhythm-led movement and tribal energy.</div>
+    <div class="actions">
+      <button class="btn">View</button>
+      <a class="btn" target="_blank"
+      href="https://open.spotify.com/artist/7C1D0Gw3H70dVzu7CU7WAL">Releases</a>
+    </div>
+  </div>
+</article>
+
+</section>
 </main>
 
 <script>
-const toggle=(b,d)=>{
-  b.onclick=e=>{
-    e.stopPropagation();
-    d.classList.toggle('show');
-  }
-}
-toggle(menuBtn,menuDrop);
-toggle(socialBtn,socialDrop);
-document.onclick=()=>{menuDrop.classList.remove('show');socialDrop.classList.remove('show')}
+const menuBtn=document.getElementById('menuBtn');
+const menuDrop=document.getElementById('menuDrop');
+const socialBtn=document.getElementById('socialBtn');
+const socialDrop=document.getElementById('socialDrop');
+
+menuBtn.onclick=e=>{
+  e.stopPropagation();
+  menuDrop.classList.toggle('show');
+  socialDrop.classList.remove('show');
+};
+
+socialBtn.onclick=e=>{
+  e.stopPropagation();
+  socialDrop.classList.toggle('show');
+  menuDrop.classList.remove('show');
+};
+
+document.onclick=()=>{
+  menuDrop.classList.remove('show');
+  socialDrop.classList.remove('show');
+};
 </script>
 
 </body>
