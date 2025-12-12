@@ -99,26 +99,32 @@
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <div class="nav-right">
-      <!-- Main Menu Dropdown -->
-      <div class="menu-container">
-        <button id="menuButton" class="btn primary" aria-haspopup="true" aria-expanded="false">Menu ▼</button>
-        <nav id="menuDropdown" class="dropdown" aria-label="Main menu">
-          <a href="#">Releases</a>
-          <a href="#">Playlists</a>
-          <a href="#">The Lab</a>
-          <a href="#">Home</a>
-        </nav>
-      </div>
-      <!-- Socials Dropdown -->
-      <div class="menu-container">
-        <button id="socialsButton" class="btn primary" aria-haspopup="true" aria-expanded="false">Socials ▼</button>
-        <nav id="socialsDropdown" class="dropdown" aria-label="Social links">
-          <a href="#" target="_blank">Spotify</a>
-          <a href="#" target="_blank">TikTok</a>
-          <a href="#" target="_blank">Instagram</a>
-          <a href="#" target="_blank">YouTube</a>
-        </nav>
+      <nav class="nav-links" aria-label="Main navigation">
+
+        <!-- Menu dropdown (releases / playlists / universe / lab) -->
+        <div class="nav-dropdown">
+          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+          <div class="dropdown-menu" role="menu" aria-label="Menu">
+            <a role="menuitem" href="index.html">Home</a>            
+             <a role="menuitem" href="artists.html">Artists</a>
+            <a role="menuitem" href="releases.html">Releases</a>
+            <a role="menuitem" href="playlists.html">Playlists</a>
+            <a role="menuitem" href="lab.html">The Lab</a>
+          </div>
+        </div>
+
+        <!-- Socials dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+          <div class="dropdown-menu" role="menu" aria-label="Social links">
+            <a role="menuitem" href="#" target="_blank">Spotify</a>
+            <a role="menuitem" href="#" target="_blank">TikTok</a>
+            <a role="menuitem" href="#" target="_blank">Instagram</a>
+            <a role="menuitem" href="#" target="_blank">YouTube</a>
+          </div>
+        </div>
+
+      </nav>
       </div>
     </div>
   </div>
