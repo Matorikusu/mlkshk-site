@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MLKSHK — The Universe</title>
   <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -27,18 +26,18 @@
       background-repeat:no-repeat; background-size:cover;
       opacity:var(--doodle-opacity); pointer-events:none; mix-blend-mode:screen;
     }
+
+    /* Header and dropdowns */
     header.nav-bar{
       border-bottom:1px solid rgba(255,42,161,0.04);
       padding:18px 24px; 
       background:linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-      position:sticky; top:0; z-index:30;
+      position:sticky; top:0; z-index:30; overflow:visible;
     }
     .nav-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;}
     .logo-link img{height:42px;display:block}
-
-    /* Dropdown styling */
     .nav-right { display:flex; gap:12px; align-items:center; }
-    .menu-container { position: relative; }
+    .menu-container { position: relative; z-index: 50; }
     .btn.primary { cursor:pointer; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); padding:8px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); color:var(--text); font-weight:700; font-size:13px; }
     .dropdown {
       display: none;
@@ -50,7 +49,7 @@
       border-radius: 8px;
       padding: 8px 0;
       min-width: 140px;
-      z-index: 50;
+      z-index: 100;
       flex-direction: column;
     }
     .dropdown a {
@@ -140,7 +139,7 @@
 
     <!-- Grid -->
     <section class="grid" id="universeGrid">
-      <!-- Example Card: Drum & Bass -->
+      <!-- Drum & Bass example card -->
       <article class="card" data-genre="drum-bass" data-title="Drum & Bass" data-desc="High-voltage energy. Crew playlist, releases and sample packs.">
         <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass crew carton art"></div>
         <div class="meta">
@@ -158,7 +157,7 @@
         </div>
       </article>
 
-      <!-- Repeat cards for House, Lo-Fi, Hip-Hop, Afrobeat as in your original HTML -->
+      <!-- Repeat cards for House, Lo-Fi, Hip-Hop, Afrobeat etc. -->
     </section>
   </main>
 
@@ -238,7 +237,8 @@
     const socialsButton = document.getElementById('socialsButton');
     const socialsDropdown = document.getElementById('socialsDropdown');
 
-    menuButton.addEventListener('click', () => {
+    menuButton.addEventListener('click', (e) => {
+      e.stopPropagation();
       const expanded = menuButton.getAttribute('aria-expanded') === 'true';
       menuDropdown.classList.toggle('show');
       menuButton.setAttribute('aria-expanded', !expanded);
@@ -246,7 +246,8 @@
       socialsButton.setAttribute('aria-expanded', 'false');
     });
 
-    socialsButton.addEventListener('click', () => {
+    socialsButton.addEventListener('click', (e) => {
+      e.stopPropagation();
       const expanded = socialsButton.getAttribute('aria-expanded') === 'true';
       socialsDropdown.classList.toggle('show');
       socialsButton.setAttribute('aria-expanded', !expanded);
