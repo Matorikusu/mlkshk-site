@@ -147,38 +147,41 @@
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- NAV BAR -->
   <header class="nav-bar">
     <div class="nav-content">
-      <a href="index.html" class="logo-link"><img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK logo"></a>
-      <nav class="nav-dropdown">
-        <a href="#" class="nav-link">Menu</a>  
-        <div class="dropdown-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="https://open.spotify.com/user/31nd5sxxglajkl4cuwpcegtdchgi?si=d272f22fe9984eaf" target="_blank" class="nav-link">Releases</a>
-        <a href="playlists.html" class="nav-link">Playlists</a>
-        <a href="universe.html" class="nav-link">Universe</a>
-        <a href="lab.html" class="nav-link">The Lab</a>
+      <a href="index.html" class="logo-link">
+        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+
+        <!-- Menu dropdown (releases / playlists / universe / lab) -->
         <div class="nav-dropdown">
-          <a href="#" class="nav-link">Socials</a>
-          <div class="dropdown-menu">
-            <a href="#" target="_blank">Spotify</a>
-            <a href="#" target="_blank">TikTok</a>
-            <a href="#" target="_blank">Instagram</a>
-            <a href="#" target="_blank">YouTube</a>
+          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+          <div class="dropdown-menu" role="menu" aria-label="Menu">
+             <a role="menuitem" href="index.html">Home</a>
+            <a role="menuitem" href="releases.html">Releases</a>
+            <a role="menuitem" href="playlists.html">Playlists</a>
+            <a role="menuitem" href="universe.html">The Universe</a>
+            <a role="menuitem" href="lab.html">The Lab</a>
           </div>
         </div>
+
+        <!-- Socials dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+          <div class="dropdown-menu" role="menu" aria-label="Social links">
+            <a role="menuitem" href="#" target="_blank">Spotify</a>
+            <a role="menuitem" href="#" target="_blank">TikTok</a>
+            <a role="menuitem" href="#" target="_blank">Instagram</a>
+            <a role="menuitem" href="#" target="_blank">YouTube</a>
+          </div>
+        </div>
+
       </nav>
     </div>
   </header>
-
-  <main class="wrap">
-    <header class="select-header">
-      <div>
-        <h1 class="select-title">ARTIST SELECT</h1>
-        <p class="select-sub">Choose a persona — each card is a character. Click to view the character card and previews.</p>
-      </div>
-    </header>
 
     <section class="grid" id="artistGrid">
       <!-- Shockaddict -->
