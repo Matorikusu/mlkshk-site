@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>MLKSHK — Artist Select</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLKSHK — Artist Universe</title>
 
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
@@ -13,10 +13,9 @@
   --bg:#000;
   --panel:#0b0b0b;
   --text:#f5f5f5;
-  --muted:#c0c0c0;
+  --muted:#bdbdbd;
   --accent:#ff2aa1;
-  --card-radius:14px;
-  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+  font-family:'Rajdhani',system-ui,-apple-system,Arial;
 }
 
 html,body{
@@ -25,19 +24,19 @@ html,body{
   color:var(--text);
 }
 
-a{color:inherit;text-decoration:none}
+a{text-decoration:none;color:inherit}
 
 /* NAV */
-header.nav-bar{
+header{
   position:sticky;
   top:0;
   z-index:50;
   padding:18px 24px;
-  border-bottom:1px solid rgba(255,42,161,0.04);
-  background:linear-gradient(180deg,rgba(0,0,0,.25),transparent);
+  border-bottom:1px solid rgba(255,42,161,.05);
+  background:linear-gradient(180deg,rgba(0,0,0,.35),transparent);
 }
 
-.nav-content{
+.nav-inner{
   max-width:1200px;
   margin:0 auto;
   display:flex;
@@ -45,89 +44,99 @@ header.nav-bar{
   align-items:center;
 }
 
-.logo-link img{height:42px}
+.logo{height:42px}
 
 .nav-right{display:flex;gap:12px}
-.menu-container{position:relative}
+.menu{position:relative}
 
 .btn{
-  background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
-  border:1px solid rgba(255,255,255,.06);
+  background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.08);
   border-radius:12px;
   padding:8px 14px;
   font-weight:700;
   cursor:pointer;
-  color:var(--text);
 }
 
 .dropdown{
+  display:none;
   position:absolute;
   top:110%;
   right:0;
   background:var(--panel);
-  border:1px solid rgba(255,42,161,.15);
+  border:1px solid rgba(255,42,161,.2);
   border-radius:10px;
   min-width:160px;
-  display:none;
-  flex-direction:column;
   z-index:100;
 }
 
 .dropdown a{
+  display:block;
   padding:10px 16px;
   font-weight:600;
 }
 
 .dropdown a:hover{background:rgba(255,255,255,.05)}
-.dropdown.show{display:flex}
+.dropdown.show{display:block}
 
 /* PAGE */
 .wrap{
   max-width:1200px;
-  margin:24px auto;
+  margin:28px auto;
   padding:0 18px;
 }
 
-.select-header h1{
+h1{
   font-family:'Orbitron',sans-serif;
-  margin:0 0 6px;
+  margin:0 0 8px;
 }
 
-.select-header p{
+.sub{
   color:var(--muted);
-  margin:0 0 20px;
+  margin-bottom:24px;
+  font-size:14px;
 }
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
 }
 
-.char-card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border-radius:var(--card-radius);
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));
+  border-radius:16px;
   overflow:hidden;
-  box-shadow:0 14px 40px rgba(0,0,0,.6);
-  transition:.15s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
   cursor:pointer;
+  transition:.18s ease;
 }
 
-.char-card:hover{transform:translateY(-6px)}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 36px 90px rgba(0,0,0,.9);
+}
 
-.char-art{height:420px}
-.char-art img{
+.card img{
   width:100%;
-  height:100%;
+  height:420px;
   object-fit:cover;
 }
 
-.meta{padding:14px}
-.name{font-weight:800;font-size:18px}
-.genre{font-size:13px;color:var(--muted)}
-.bio{font-size:13px;color:var(--muted);margin:6px 0 10px}
-.actions{display:flex;gap:8px}
+.card-meta{
+  padding:14px;
+}
+
+.card-name{
+  font-weight:800;
+  font-size:18px;
+}
+
+.card-genre{
+  font-size:13px;
+  color:var(--muted);
+}
 
 /* MODAL */
 .modal-backdrop{
@@ -141,32 +150,45 @@ header.nav-bar{
 }
 
 .modal{
-  width:min(960px,94%);
+  width:min(900px,94%);
   background:#070707;
-  border-radius:14px;
-  padding:16px;
+  border-radius:16px;
+  padding:18px;
 }
 
-.modal .row{display:flex;gap:18px}
+.modal-row{
+  display:flex;
+  gap:20px;
+}
+
 .modal img{
   width:100%;
   height:520px;
   object-fit:cover;
-  border-radius:10px;
+  border-radius:12px;
+}
+
+.modal h2{
+  font-family:'Orbitron',sans-serif;
+  margin:0 0 6px;
+}
+
+.modal p{
+  color:var(--muted);
+  line-height:1.6;
 }
 
 .close{
   background:none;
   border:none;
   color:var(--muted);
-  cursor:pointer;
   font-weight:700;
+  cursor:pointer;
   float:right;
 }
 
 @media(max-width:900px){
-  .modal .row{flex-direction:column}
-  .char-art{height:320px}
+  .modal-row{flex-direction:column}
   .modal img{height:300px}
 }
 </style>
@@ -174,92 +196,131 @@ header.nav-bar{
 
 <body>
 
-<header class="nav-bar">
-  <div class="nav-content">
-    <a class="logo-link" href="index.html">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png">
-    </a>
+<header>
+  <div class="nav-inner">
+    <a href="index.html"><img class="logo" src="images/MLKSHK_LOGO_1500_X_500.png"></a>
 
     <div class="nav-right">
-      <div class="menu-container">
+      <div class="menu">
         <button id="menuBtn" class="btn">Menu ▼</button>
-        <nav id="menuDrop" class="dropdown">
+        <div id="menuDrop" class="dropdown">
           <a href="index.html">Home</a>
           <a href="universe.html">Universe</a>
           <a href="playlists.html">Playlists</a>
           <a href="lab.html">The Lab</a>
-        </nav>
+        </div>
       </div>
 
-      <div class="menu-container">
+      <div class="menu">
         <button id="socialBtn" class="btn">Socials ▼</button>
-        <nav id="socialDrop" class="dropdown">
+        <div id="socialDrop" class="dropdown">
           <a href="https://open.spotify.com" target="_blank">Spotify</a>
           <a href="#">Instagram</a>
           <a href="#">TikTok</a>
           <a href="#">YouTube</a>
-        </nav>
+        </div>
       </div>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-<header class="select-header">
-  <h1>ARTIST SELECT</h1>
-  <p>Choose a persona — each card is a character.</p>
-</header>
+  <h1>ARTIST UNIVERSE</h1>
+  <p class="sub">Each artist exists as a character within the MLKSHK universe.</p>
 
-<section class="grid">
+  <section class="grid">
 
-<article class="char-card"
-  data-name="Shockaddict"
-  data-genre="House / Hip-Hop"
-  data-bio="Masked producer blending gritty house with street energy."
-  data-img="images/Artist Cards/Shock_Card.png"
-  data-link="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">
-  <div class="char-art"><img src="images/Artist Cards/Shock_Card.png"></div>
-  <div class="meta">
-    <div class="name">Shockaddict</div>
-    <div class="genre">House / Hip-Hop</div>
-    <div class="bio">Masked producer. Dirty grooves and neon bass.</div>
-    <div class="actions">
-      <button class="btn">View</button>
-      <a class="btn" target="_blank" href="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">Releases</a>
+    <div class="card"
+      data-name="Shockaddict"
+      data-genre="House / Hip-Hop"
+      data-bio="Masked producer blending gritty house with street-leaning hip-hop. Built for clubs and underground rooms."
+      data-img="images/Artist Cards/Shock_Card.png"
+      data-link="https://open.spotify.com/artist/0j2IfSOkCR0owOFF6Ducch">
+      <img src="images/Artist Cards/Shock_Card.png">
+      <div class="card-meta">
+        <div class="card-name">Shockaddict</div>
+        <div class="card-genre">House / Hip-Hop</div>
+      </div>
     </div>
-  </div>
-</article>
 
-<!-- repeat cards as needed (others unchanged from your file) -->
+    <div class="card"
+      data-name="CPH4"
+      data-genre="Lo-Fi / Hip-Hop"
+      data-bio="Dusty textures, late-night loops and cinematic atmosphere."
+      data-img="images/Artist Cards/CPH4_Card.png"
+      data-link="https://open.spotify.com/artist/4dgGU4TR3J6v2FXBq9OgTW">
+      <img src="images/Artist Cards/CPH4_Card.png">
+      <div class="card-meta">
+        <div class="card-name">CPH4</div>
+        <div class="card-genre">Lo-Fi / Hip-Hop</div>
+      </div>
+    </div>
 
-</section>
+    <div class="card"
+      data-name="Furbyz Rvenge"
+      data-genre="Drum & Bass"
+      data-bio="High-energy bass pressure engineered for raves and systems."
+      data-img="images/Artist Cards/Furbyz_Card.png"
+      data-link="https://open.spotify.com/artist/3oGVoutmhduKVmceK2HmAw">
+      <img src="images/Artist Cards/Furbyz_Card.png">
+      <div class="card-meta">
+        <div class="card-name">Furbyz Rvenge</div>
+        <div class="card-genre">Drum & Bass</div>
+      </div>
+    </div>
+
+    <div class="card"
+      data-name="Blaqq Shifu"
+      data-genre="Afrobeat / Fusion"
+      data-bio="Percussive grooves, tribal rhythm and modern Afro influence."
+      data-img="images/Artist Cards/Shifu_Card.png"
+      data-link="https://open.spotify.com/artist/7C1D0Gw3H70dVzu7CU7WAL">
+      <img src="images/Artist Cards/Shifu_Card.png">
+      <div class="card-meta">
+        <div class="card-name">Blaqq Shifu</div>
+        <div class="card-genre">Afrobeat / Fusion</div>
+      </div>
+    </div>
+
+  </section>
 </main>
 
 <!-- MODAL -->
 <div class="modal-backdrop" id="modal">
   <div class="modal">
-    <button class="close" id="close">✕</button>
-    <div class="row">
+    <button class="close" id="closeBtn">✕</button>
+    <div class="modal-row">
       <img id="mImg">
       <div>
         <h2 id="mName"></h2>
         <p id="mGenre"></p>
         <p id="mBio"></p>
-        <a id="mLink" class="btn" target="_blank">View Releases</a>
+        <a id="mLink" class="btn" target="_blank">Open on Spotify</a>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-/* DROPDOWNS */
-menuBtn.onclick=e=>{e.stopPropagation();menuDrop.classList.toggle('show');socialDrop.classList.remove('show')}
-socialBtn.onclick=e=>{e.stopPropagation();socialDrop.classList.toggle('show');menuDrop.classList.remove('show')}
-document.onclick=()=>{menuDrop.classList.remove('show');socialDrop.classList.remove('show')}
+/* NAV DROPDOWNS */
+menuBtn.onclick=e=>{
+  e.stopPropagation();
+  menuDrop.classList.toggle('show');
+  socialDrop.classList.remove('show');
+}
+socialBtn.onclick=e=>{
+  e.stopPropagation();
+  socialDrop.classList.toggle('show');
+  menuDrop.classList.remove('show');
+}
+document.onclick=()=>{
+  menuDrop.classList.remove('show');
+  socialDrop.classList.remove('show');
+}
 
 /* MODAL */
 const modal=document.getElementById('modal');
-document.querySelectorAll('.char-card').forEach(card=>{
+document.querySelectorAll('.card').forEach(card=>{
   card.onclick=()=>{
     mImg.src=card.dataset.img;
     mName.textContent=card.dataset.name;
@@ -269,10 +330,9 @@ document.querySelectorAll('.char-card').forEach(card=>{
     modal.style.display='flex';
   }
 });
-close.onclick=()=>modal.style.display='none';
-modal.onclick=e=>{if(e.target===modal)modal.style.display='none'}
+closeBtn.onclick=()=>modal.style.display='none';
+modal.onclick=e=>{if(e.target===modal)modal.style.display='none'};
 </script>
 
 </body>
 </html>
-
