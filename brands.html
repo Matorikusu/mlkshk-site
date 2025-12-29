@@ -6,6 +6,7 @@
 <title>MLKSHK — Brands</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -14,129 +15,243 @@
   --text:#f5f5f5;
   --muted:#c0c0c0;
   --accent:#ff2aa1;
-  --card-radius:14px;
+}
+
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
 }
 
-html, body{margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none;}
+a{color:inherit;text-decoration:none}
 
+/* NAV */
 header.nav-bar{
-  border-bottom:1px solid rgba(255,42,161,0.04);
+  position:sticky;
+  top:0;
+  z-index:50;
   padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-  position: sticky; top: 0; z-index:30;
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  background:linear-gradient(180deg,rgba(0,0,0,.25),transparent);
 }
-.nav-content{display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;}
-.logo-link img{height:42px; display:block;}
-.nav-links{display:flex; gap:14px; align-items:center;}
 
-.section-divider{width:100%; height:5px; background:#000;}
+.nav-content{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-.wrap{max-width:1200px; margin:24px auto; padding:0 18px;}
+.logo-link img{height:42px}
+
+.nav-links{display:flex;gap:12px}
+
+/* Dropdowns */
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  color:var(--muted);
+  padding:6px 10px;
+}
+.nav-toggle::after{
+  content:"";
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform:rotate(45deg);
+  margin-left:4px;
+  transition:.2s;
+}
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after{
+  transform: rotate(-135deg);
+  border-color:var(--text);
+}
+
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  background:#0b0b0b;
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:160px;
+  padding:6px 0;
+  z-index:100;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu{
+  display:block;
+}
+
+/* Page wrapper */
+.wrap{
+  max-width:1200px;
+  margin:24px auto;
+  padding:0 18px;
+}
+
+/* Brands grid */
+.brands-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+  margin-top:40px;
+}
+
 .brand-card{
-  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-  border-radius:var(--card-radius);
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border-radius:14px;
   overflow:hidden;
-  box-shadow:0 14px 40px rgba(0,0,0,.6);
-  margin-bottom:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  transition:.2s;
 }
-.brand-card:hover{transform:translateY(-4px); box-shadow:0 30px 80px rgba(0,0,0,.75);}
-.brand-header{display:flex; align-items:center; padding:16px; gap:16px;}
-.brand-header img{width:120px; height:120px; object-fit:cover; border-radius:12px;}
-.brand-info h2{margin:0; font-family:'Orbitron',sans-serif;}
-.brand-info p{margin:6px 0; color:var(--muted);}
-.brand-playlists, .brand-events{padding:0 16px 16px;}
-.brand-section-title{font-weight:700; margin-bottom:8px; color:var(--accent);}
+.brand-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,.7);
+}
+
+.brand-card img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+}
+
+.brand-info{
+  padding:16px;
+}
+.brand-info h2{
+  margin:0 0 6px;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+}
+.brand-info p{
+  margin:0 0 10px;
+  font-size:14px;
+  color:var(--muted);
+}
+.brand-info .playlist{
+  display:inline-block;
+  padding:6px 12px;
+  border:1px solid var(--accent);
+  border-radius:10px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--accent);
+  margin-right:6px;
+  text-decoration:none;
+  transition:.2s;
+}
+.brand-info .playlist:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+footer{
+  padding:28px 20px;
+  color:var(--muted);
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(255,42,161,0.03);
+  margin-top:40px;
+}
 </style>
 </head>
 <body>
 
+<!-- NAV BAR -->
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
+
     <nav class="nav-links">
-      <a href="artists.html">Artists</a>
-      <a href="playlists.html">Playlists</a>
-      <a href="universe.html">The Universe</a>
-      <a href="lab.html">The Lab</a>
+      <div class="nav-dropdown">
+        <button class="nav-toggle">Menu</button>
+        <div class="dropdown-menu">
+          <a href="artists.html">Artists</a>
+          <a href="playlists.html">Playlists</a>
+          <a href="universe.html">The Universe</a>
+          <a href="lab.html">The Lab</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-toggle">Socials</button>
+        <div class="dropdown-menu">
+          <a href="#" target="_blank">Spotify</a>
+          <a href="#" target="_blank">TikTok</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">YouTube</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
 
-<div class="section-divider"></div>
+<div class="wrap">
+  <h1 style="text-align:center;font-family:'Orbitron',sans-serif;">MLKSHK Brands</h1>
+  <p style="text-align:center;color:var(--muted);max-width:700px;margin:0 auto;">Revitalised clubs and music brands from the past — modernised and curated by MLKSHK.</p>
 
-<main class="wrap">
+  <div class="brands-grid">
 
-  <!-- BRAND: Rum Runner 1967 -->
-  <article class="brand-card">
-    <div class="brand-header">
-      <img src="images/brands/rumrunner_placeholder.jpg" alt="Rum Runner Logo">
+    <!-- Brand 1 -->
+    <article class="brand-card">
+      <img src="images/rumrunner1967banner.png" alt="RumRunner 1967">
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
-        <p>Iconic indie/disco club from the Black Country era. Revived as part of MLKSHK digital universe.</p>
+        <p>Indie disco vibes from Birmingham’s legendary club. Reborn in playlists and curated events.</p>
+        <a href="#" class="playlist">Playlist</a>
+        <a href="#" class="playlist">Events</a>
       </div>
-    </div>
-    <div class="brand-playlists">
-      <div class="brand-section-title">Playlists</div>
-      <p>Placeholder playlist info — link your curated Rum Runner tracks here.</p>
-    </div>
-    <div class="brand-events">
-      <div class="brand-section-title">Events</div>
-      <p>Placeholder for Rum Runner-themed events and shows.</p>
-    </div>
-  </article>
+    </article>
 
-  <!-- BRAND: The Warehouse 1977 -->
-  <article class="brand-card">
-    <div class="brand-header">
-      <img src="images/brands/warehouse_placeholder.jpg" alt="The Warehouse Logo">
+    <!-- Brand 2 -->
+    <article class="brand-card">
+      <img src="images/warehouse1977banner.png" alt="The Warehouse 1977">
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
-        <p>House music legend. Founded in 1977, reimagined under MLKSHK to host underground house playlists and events.</p>
+        <p>The UK house music legend reimagined — classic grooves, modern soundscapes.</p>
+        <a href="#" class="playlist">Playlist</a>
+        <a href="#" class="playlist">Events</a>
       </div>
-    </div>
-    <div class="brand-playlists">
-      <div class="brand-section-title">Playlists</div>
-      <p>Placeholder playlist info — curate your house sets here.</p>
-    </div>
-    <div class="brand-events">
-      <div class="brand-section-title">Events</div>
-      <p>Placeholder for Warehouse-inspired parties and live sets.</p>
-    </div>
-  </article>
+    </article>
 
-  <!-- BRAND: LivingElectro -->
-  <article class="brand-card">
-    <div class="brand-header">
-      <img src="images/brands/livingelectro_placeholder.jpg" alt="LivingElectro Logo">
+    <!-- Brand 3 -->
+    <article class="brand-card">
+      <img src="images/livingelectrobanner.png" alt="Living Electro">
       <div class="brand-info">
-        <h2>LivingElectro</h2>
-        <p>The harder electronic side — revitalized under MLKSHK with curated playlists and digital events.</p>
+        <h2>Living Electro</h2>
+        <p>Hard-hitting electronic sounds — revitalising the original digital brand for modern ears.</p>
+        <a href="#" class="playlist">Playlist</a>
+        <a href="#" class="playlist">Events</a>
       </div>
-    </div>
-    <div class="brand-playlists">
-      <div class="brand-section-title">Playlists</div>
-      <p>Placeholder playlist info — throw in your harder electro and electronic tracks.</p>
-    </div>
-    <div class="brand-events">
-      <div class="brand-section-title">Events</div>
-      <p>Placeholder for digital or virtual events, raves, and collabs.</p>
-    </div>
-  </article>
+    </article>
 
-</main>
-
-<div class="section-divider"></div>
+    <!-- Add more brand cards below in the same format -->
+    
+  </div>
+</div>
 
 <footer>
   MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
