@@ -1,262 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MLKSHK</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK — Brands</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg: #000;
-      --text: #f5f5f5;
-      --muted: #c0c0c0;
-      --accent: #ff2aa1;
-      --dropdown-bg: #000;
-    }
+<style>
+:root{
+  --bg:#000;
+  --text:#f5f5f5;
+  --muted:#c0c0c0;
+  --accent:#ff2aa1;
+  --card-radius:14px;
+  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+}
 
-    html, body {
-      margin: 0;
-      height: 100%;
-      font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
-      background: var(--bg);
-      color: var(--text);
-    }
+html, body{margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
 
-    a { color: inherit; text-decoration: none; }
+header.nav-bar{
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top: 0; z-index:30;
+}
+.nav-content{display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;}
+.logo-link img{height:42px; display:block;}
+.nav-links{display:flex; gap:14px; align-items:center;}
 
-    /* NAV BAR */
-    header.nav-bar {
-      border-bottom:1px solid rgba(255,42,161,0.04);
-      padding:18px 24px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-      position: sticky; top: 0; z-index: 30;
-    }
-    .nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 18px; }
-    .logo-link img { height: 42px; display:block; }
-    .nav-links { display: flex; gap: 14px; align-items: center; }
+.section-divider{width:100%; height:5px; background:#000;}
 
-    /* compact dropdowns with little arrow indicator */
-    .nav-dropdown {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-    .nav-toggle {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:8px;
-      cursor:pointer;
-      color:var(--muted);
-      font-weight:600;
-      background:transparent;
-      border:0;
-    }
-    .nav-toggle:focus { outline:2px solid rgba(255,42,161,0.12); outline-offset:3px; }
-
-    /* little arrow */
-    .nav-toggle::after {
-      content: "";
-      display:inline-block;
-      width:8px;
-      height:8px;
-      border-right:2px solid var(--muted);
-      border-bottom:2px solid var(--muted);
-      transform: rotate(45deg);
-      margin-left:4px;
-      transition: transform .18s ease, border-color .18s ease;
-    }
-
-    /* dropdown menu */
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      background: var(--dropdown-bg);
-      min-width: 200px;
-      border: 1px solid var(--accent);
-      border-radius:8px;
-      padding:6px 0;
-      z-index:1000;
-      box-shadow:0 10px 30px rgba(0,0,0,0.6);
-    }
-    .dropdown-menu a {
-      display:block;
-      padding:10px 14px;
-      font-size:14px;
-      color:#fff;
-    }
-    .dropdown-menu a:hover { background: var(--accent); color: #000; }
-
-    /* show dropdown on hover/focus within */
-    .nav-dropdown:hover .dropdown-menu,
-    .nav-dropdown:focus-within .dropdown-menu {
-      display:block;
-    }
-    .nav-dropdown:hover .nav-toggle::after,
-    .nav-dropdown:focus-within .nav-toggle::after {
-      transform: rotate(-135deg); /* arrow points up when open */
-      border-color: var(--text);
-    }
-
-    /* small responsive collapse: stack right-side nav items */
-    @media (max-width:760px){
-      .nav-content{padding-right:14px;padding-left:14px}
-      .nav-links{gap:8px}
-    }
-
-    /* SECTION DIVIDER */
-    .section-divider {
-      width: 100%;
-      height: 5px;
-      background: black;
-    }
-
-    /* HERO */
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)),
-                  url('images/MLKSHK_HERO_HEADER_1920X800.png') center/cover no-repeat;
-      color: white;
-    }
-    .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase; }
-    .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
-
-    /* UNIVERSE SECTION */
-    .universe-teaser {
-      padding:60px 20px;
-      text-align:center;
-      background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat;
-    }
-    .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
-    .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
-    .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--accent); color:white; text-transform:uppercase; font-weight:700; transition:0.2s; }
-    .universe-btn:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
-
-    /* LAB SECTION */
-    .lab-section {
-      text-align:center;
-      padding:60px 20px;
-      background: url('images/THE_LAB_HEADER 1920 x 800.png') center/cover no-repeat;
-    }
-    .lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; }
-    .lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
-    .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--accent); color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
-    .lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
-
-    footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
-  </style>
+.wrap{max-width:1200px; margin:24px auto; padding:0 18px;}
+.brand-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  box-shadow:0 14px 40px rgba(0,0,0,.6);
+  margin-bottom:24px;
+}
+.brand-card:hover{transform:translateY(-4px); box-shadow:0 30px 80px rgba(0,0,0,.75);}
+.brand-header{display:flex; align-items:center; padding:16px; gap:16px;}
+.brand-header img{width:120px; height:120px; object-fit:cover; border-radius:12px;}
+.brand-info h2{margin:0; font-family:'Orbitron',sans-serif;}
+.brand-info p{margin:6px 0; color:var(--muted);}
+.brand-playlists, .brand-events{padding:0 16px 16px;}
+.brand-section-title{font-weight:700; margin-bottom:8px; color:var(--accent);}
+</style>
 </head>
 <body>
 
-  <!-- NAV BAR -->
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
-      </a>
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <nav class="nav-links">
+      <a href="artists.html">Artists</a>
+      <a href="playlists.html">Playlists</a>
+      <a href="universe.html">The Universe</a>
+      <a href="lab.html">The Lab</a>
+    </nav>
+  </div>
+</header>
 
-      <nav class="nav-links" aria-label="Main navigation">
+<div class="section-divider"></div>
 
-        <!-- Menu dropdown (releases / playlists / universe / lab) -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
-          <div class="dropdown-menu" role="menu" aria-label="Menu">
-             <a role="menuitem" href="artists.html">Artists</a>
-            <a role="menuitem" href="playlists.html">Playlists</a>
-            <a role="menuitem" href="universe.html">The Universe</a>
-            <a role="menuitem" href="lab.html">The Lab</a>
-          </div>
-        </div>
+<main class="wrap">
 
-        <!-- Socials dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
-          <div class="dropdown-menu" role="menu" aria-label="Social links">
-            <a role="menuitem" href="#" target="_blank">Spotify</a>
-            <a role="menuitem" href="#" target="_blank">TikTok</a>
-            <a role="menuitem" href="#" target="_blank">Instagram</a>
-            <a role="menuitem" href="#" target="_blank">YouTube</a>
-          </div>
-        </div>
-
-      </nav>
+  <!-- BRAND: Rum Runner 1967 -->
+  <article class="brand-card">
+    <div class="brand-header">
+      <img src="images/brands/rumrunner_placeholder.jpg" alt="Rum Runner Logo">
+      <div class="brand-info">
+        <h2>Rum Runner 1967</h2>
+        <p>Iconic indie/disco club from the Black Country era. Revived as part of MLKSHK digital universe.</p>
+      </div>
     </div>
-  </header>
+    <div class="brand-playlists">
+      <div class="brand-section-title">Playlists</div>
+      <p>Placeholder playlist info — link your curated Rum Runner tracks here.</p>
+    </div>
+    <div class="brand-events">
+      <div class="brand-section-title">Events</div>
+      <p>Placeholder for Rum Runner-themed events and shows.</p>
+    </div>
+  </article>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1></h1>
-    <p></p>
-  </section>
+  <!-- BRAND: The Warehouse 1977 -->
+  <article class="brand-card">
+    <div class="brand-header">
+      <img src="images/brands/warehouse_placeholder.jpg" alt="The Warehouse Logo">
+      <div class="brand-info">
+        <h2>The Warehouse 1977</h2>
+        <p>House music legend. Founded in 1977, reimagined under MLKSHK to host underground house playlists and events.</p>
+      </div>
+    </div>
+    <div class="brand-playlists">
+      <div class="brand-section-title">Playlists</div>
+      <p>Placeholder playlist info — curate your house sets here.</p>
+    </div>
+    <div class="brand-events">
+      <div class="brand-section-title">Events</div>
+      <p>Placeholder for Warehouse-inspired parties and live sets.</p>
+    </div>
+  </article>
 
-  <div class="section-divider"></div>
+  <!-- BRAND: LivingElectro -->
+  <article class="brand-card">
+    <div class="brand-header">
+      <img src="images/brands/livingelectro_placeholder.jpg" alt="LivingElectro Logo">
+      <div class="brand-info">
+        <h2>LivingElectro</h2>
+        <p>The harder electronic side — revitalized under MLKSHK with curated playlists and digital events.</p>
+      </div>
+    </div>
+    <div class="brand-playlists">
+      <div class="brand-section-title">Playlists</div>
+      <p>Placeholder playlist info — throw in your harder electro and electronic tracks.</p>
+    </div>
+    <div class="brand-events">
+      <div class="brand-section-title">Events</div>
+      <p>Placeholder for digital or virtual events, raves, and collabs.</p>
+    </div>
+  </article>
 
-  <!-- UNIVERSE TEASER -->
-  <section class="universe-teaser">
-    <h2>The Universe</h2>
-    <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
-    <a href="universe.html" class="universe-btn">Enter The Universe</a>
-  </section>
+</main>
 
-  <div class="section-divider"></div>
+<div class="section-divider"></div>
 
-  <!-- ENTER THE LAB -->
-  <section class="lab-section">
-    <h2>Enter The Lab</h2>
-    <p>Think you’ve got what it takes? Step inside. Make something real.</p>
-    <a href="lab.html" class="lab-btn">Enter The Lab</a>
-  </section>
+<footer>
+  MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+</footer>
 
-  <div class="section-divider"></div>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
-  <!-- FOOTER -->
-  <footer>
-    MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
-  </footer>
-
-  <script>
-    // small accessibility: update aria-expanded when menu/focus toggles show via :focus-within/hover
-    document.querySelectorAll('.nav-dropdown').forEach(dd => {
-      const btn = dd.querySelector('.nav-toggle');
-      const menu = dd.querySelector('.dropdown-menu');
-      if (!btn || !menu) return;
-
-      // open state toggles for keyboard users
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const isOpen = menu.style.display === 'block';
-          menu.style.display = isOpen ? '' : 'block';
-          btn.setAttribute('aria-expanded', String(!isOpen));
-        } else if (e.key === 'Escape') {
-          menu.style.display = '';
-          btn.setAttribute('aria-expanded', 'false');
-          btn.blur();
-        }
-      });
-
-      // hide menu on focusout to keep keyboard nav tidy
-      dd.addEventListener('focusout', (e) => {
-        // small delay to allow focus to move inside menu
-        setTimeout(() => {
-          if (!dd.contains(document.activeElement)) {
-            menu.style.display = '';
-            btn.setAttribute('aria-expanded', 'false');
-          }
-        }, 10);
-      });
-    });
-
-    // set year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
