@@ -151,6 +151,39 @@
     .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--accent); color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
     .lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
 
+    /* BRANDS ARCHIVE SECTION */
+    .brands-archive {
+      padding:60px 20px;
+      text-align:center;
+      background: #111;
+    }
+    .brands-archive h2 {
+      font-family:'Orbitron',sans-serif;
+      font-size:36px;
+      margin-bottom:15px;
+      color: var(--accent);
+    }
+    .brands-archive p {
+      font-size:16px;
+      margin-bottom:20px;
+      color: var(--muted);
+      max-width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .brands-archive a {
+      display:inline-block;
+      padding:12px 28px;
+      border-radius:30px;
+      border:2px solid var(--accent);
+      color:white;
+      font-weight:700;
+      text-transform:uppercase;
+      transition:0.2s;
+      text-decoration:none;
+    }
+    .brands-archive a:hover { background: var(--accent); color:black; box-shadow:0 0 15px rgba(255,42,161,0.5); }
+
     footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
   </style>
 </head>
@@ -165,14 +198,15 @@
 
       <nav class="nav-links" aria-label="Main navigation">
 
-        <!-- Menu dropdown (releases / playlists / universe / lab) -->
+        <!-- Menu dropdown (releases / playlists / universe / lab / brands) -->
         <div class="nav-dropdown">
           <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
           <div class="dropdown-menu" role="menu" aria-label="Menu">
-             <a role="menuitem" href="artists.html">Artists</a>
+            <a role="menuitem" href="artists.html">Artists</a>
             <a role="menuitem" href="playlists.html">Playlists</a>
             <a role="menuitem" href="universe.html">The Universe</a>
             <a role="menuitem" href="lab.html">The Lab</a>
+            <a role="menuitem" href="brands.html">Brands</a>
           </div>
         </div>
 
@@ -217,6 +251,15 @@
 
   <div class="section-divider"></div>
 
+  <!-- BRANDS ARCHIVE SECTION -->
+  <section class="brands-archive">
+    <h2>Explore Our Brands</h2>
+    <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
+    <a href="brands.html">Enter the Brands Archive</a>
+  </section>
+
+  <div class="section-divider"></div>
+
   <!-- FOOTER -->
   <footer>
     MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
@@ -229,7 +272,6 @@
       const menu = dd.querySelector('.dropdown-menu');
       if (!btn || !menu) return;
 
-      // open state toggles for keyboard users
       btn.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -243,9 +285,7 @@
         }
       });
 
-      // hide menu on focusout to keep keyboard nav tidy
       dd.addEventListener('focusout', (e) => {
-        // small delay to allow focus to move inside menu
         setTimeout(() => {
           if (!dd.contains(document.activeElement)) {
             menu.style.display = '';
@@ -258,5 +298,6 @@
     // set year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
