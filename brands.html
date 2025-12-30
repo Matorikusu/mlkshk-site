@@ -132,30 +132,37 @@ header.nav-bar{
 
 .brand-info{
   padding:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center; /* centre the Explore button */
 }
+
 .brand-info h2{
   margin:0 0 6px;
   font-family:'Orbitron',sans-serif;
   font-size:22px;
+  text-align:center;
 }
+
 .brand-info p{
-  margin:0 0 10px;
+  margin:0 0 12px;
   font-size:14px;
   color:var(--muted);
+  text-align:center;
 }
-.brand-info .playlist{
+
+.brand-info .explore-button{
   display:inline-block;
-  padding:6px 12px;
-  border:1px solid var(--accent);
-  border-radius:10px;
-  font-size:13px;
+  padding:10px 20px;
+  border:2px solid var(--accent);
+  border-radius:12px;
+  font-size:14px;
   font-weight:600;
   color:var(--accent);
-  margin-right:6px;
   text-decoration:none;
   transition:.2s;
 }
-.brand-info .playlist:hover{
+.brand-info .explore-button:hover{
   background:var(--accent);
   color:#000;
 }
@@ -214,8 +221,7 @@ footer{
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
         <p>Indie disco vibes from Birmingham’s legendary Rum Runner club. Reborn in playlists and curated events.</p>
-        <a href="#" class="playlist">Playlist</a>
-        <a href="#" class="playlist">Events</a>
+        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -224,9 +230,8 @@ footer{
       <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
-        <p>The legendary Chicago nighclub reimagined — classic grooves, modern soundscapes.</p>
-        <a href="#" class="playlist">Playlist</a>
-        <a href="#" class="playlist">Events</a>
+        <p>The legendary Chicago nightclub reimagined — classic grooves, modern soundscapes.</p>
+        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -236,13 +241,12 @@ footer{
       <div class="brand-info">
         <h2>Living Electro 2008</h2>
         <p>Hard-hitting electronic sounds — revitalising the original digital brand for modern ears.</p>
-        <a href="#" class="playlist">Playlist</a>
-        <a href="#" class="playlist">Events</a>
+        <a href="archive-livingelectro-2008.html" class="explore-button">Explore</a>
       </div>
     </article>
 
     <!-- Add more brand cards below in the same format -->
-    
+
   </div>
 </div>
 
