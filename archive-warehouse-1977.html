@@ -22,6 +22,7 @@
       background:var(--bg);
       color:var(--text);
       font-family:'Rajdhani', system-ui, -apple-system, Arial;
+      text-align:center;
     }
 
     a{color:inherit;text-decoration:none;}
@@ -84,6 +85,7 @@
 
     /* HERO */
     .archive-hero{
+      width:100%;
       height:75vh;
       background:
         linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.9)),
@@ -91,16 +93,15 @@
       display:flex;
       align-items:flex-end;
       justify-content:center;
-      text-align:center;
       padding:40px 20px;
     }
-
     .archive-hero h1{
       font-family:'Orbitron',sans-serif;
       font-size:48px;
       letter-spacing:2px;
       text-transform:uppercase;
       max-width:900px;
+      margin:0 auto;
     }
 
     /* CONTENT */
@@ -109,7 +110,6 @@
       margin:0 auto;
       padding:60px 20px;
     }
-
     .archive-kicker{
       color:var(--accent);
       text-transform:uppercase;
@@ -117,18 +117,15 @@
       letter-spacing:1px;
       margin-bottom:10px;
     }
-
     .archive-description{
       font-size:18px;
       line-height:1.6;
       color:var(--muted);
       margin-bottom:40px;
     }
-
     .archive-section{
       margin-bottom:70px;
     }
-
     .archive-section h2{
       font-family:'Orbitron',sans-serif;
       font-size:28px;
@@ -150,7 +147,6 @@
       gap:18px;
       margin-top:30px;
     }
-
     .history-grid img{
       width:100%;
       height:260px;
@@ -163,7 +159,6 @@
     footer{
       border-top:1px solid rgba(255,42,161,.05);
       padding:30px 20px;
-      text-align:center;
       font-size:13px;
       color:var(--muted);
     }
@@ -203,47 +198,28 @@
   <div class="archive-section">
     <div class="archive-kicker">Archive Revival</div>
     <p class="archive-description">
-      <strong>MLKSHK Archive: The Warehouse 1977</strong> is a modern interpretation of the legendary Chicago nightclub —
-      widely regarded as the birthplace of house music.
-      <br><br>
-      This archive explores what The Warehouse might sound like today, reimagined through contemporary production while
-      remaining faithful to its roots in disco, rhythm, repetition, and community.
+      <strong>MLKSHK Archive: The Warehouse 1977</strong> revives the legendary Chicago nightclub widely regarded as the birthplace of house music. This page explores the sound, spirit, and legacy of the venue, reinterpreted through modern production while staying true to its original vibe.
     </p>
   </div>
 
-  <div class="archive-section">
-    <h2>The Sound</h2>
-    <p class="archive-description">
-      Built around groove-first philosophy, drum machines, bass movement, and hypnotic repetition.
-      This is functional dance music — designed for bodies, not algorithms.
-    </p>
-  </div>
-
-  <div class="archive-section">
-    <h2>Archive Release</h2>
-    <p class="archive-description">
-      <em>The Warehouse 1977</em> is a living archive. New sessions, reinterpretations, and contributors will continue to
-      expand the sound — preserving the spirit while evolving the form.
-    </p>
-
-    <div class="playlist-embed">
-      <!-- Replace with Spotify / SoundCloud embed -->
-      <iframe src="" width="100%" height="380" style="border:0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-    </div>
-  </div>
-
-  <!-- HISTORY -->
   <div class="archive-section">
     <h2>History & Legacy</h2>
     <p class="archive-description">
-      Opened in the late 1970s, The Warehouse became a cultural nucleus for Chicago’s underground dance scene.
-      Through extended DJ sets, reworked disco records, and emerging drum machine technology,
-      it quietly reshaped the future of electronic music.
+      After the “Disco Sucks” campaign, disco music faced decline on mainstream stages. DJs struggled to find work in upscale clubs, and disco returned to its roots in underground warehouse parties. In 1977, a young promoter opened The Warehouse in Chicago, managed by Robbie Williams, bringing in Frankie Knuckles as head DJ. The venue quickly became a cultural hub for the city’s diverse communities, blending ethnicities, genders, and sexualities, and fostering a sense of acceptance around the love of music.<br><br>
+      The Warehouse played extended sets, reworked disco records, and incorporated emerging electronic tools. Fans and record stores began referring to the unique sound emerging there as “Warehouse music,” which was soon shortened to simply “House Music.” Today, The Warehouse remains a cornerstone of electronic music history, credited with giving birth to house music as we know it.
     </p>
 
     <div class="history-grid">
       <!-- TEMP PLACEHOLDERS -->
       <img src="images/Brands/thewarehouse-archive-mlkshk.png" alt="The Warehouse interior (placeholder)">
+    </div>
+  </div>
+
+  <div class="archive-section">
+    <h2>Playlist</h2>
+    <div class="playlist-embed">
+      <!-- Replace with Spotify / SoundCloud embed -->
+      <iframe src="" width="100%" height="380" style="border:0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </div>
   </div>
 
