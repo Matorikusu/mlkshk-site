@@ -100,7 +100,25 @@ header.nav-bar {
 .card[data-element="Fire"] .swatch { background: linear-gradient(180deg,#ff3b00,#ffd166); }
 .card[data-element="Force"] .swatch { background: linear-gradient(180deg,#00ffea,#0066ff); }
 
-/* FOOTER */
+/* EXTRA SECTION: Featured / Stats / Videos */
+.featured-section { margin-top:60px; padding-top:20px; border-top:1px solid rgba(255,42,161,0.04); }
+.featured-section h2 { font-family:'Orbitron', sans-serif; text-align:center; font-size:32px; margin-bottom:24px; }
+.featured-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+.featured-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--card-radius);
+  padding:14px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transition:transform .14s ease, box-shadow .14s ease;
+}
+.featured-card:hover { transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,0.6); }
+.featured-card img { width:100%; height:160px; object-fit:cover; border-radius:10px; margin-bottom:12px; }
+.featured-card .f-title { font-weight:700; font-size:16px; margin-bottom:6px; }
+.featured-card .f-sub { font-size:13px; color:var(--muted); margin-bottom:6px; }
+.featured-card .f-actions a { display:inline-block; padding:8px 14px; border:1px solid var(--accent); border-radius:10px; font-weight:600; color:var(--accent); margin:0 3px; text-decoration:none; transition:.2s; }
+.featured-card .f-actions a:hover { background:var(--accent); color:#000; }
+
 footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
 </style>
 </head>
@@ -137,7 +155,7 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
 <main class="wrap">
   <section class="hero">
     <h1>OUR ARTISTS</h1>
-    <p>Explore the MLKSHK roster. Click to hear playlists, follow socials, or enter The Lab.</p>
+    <p>Explore the MLKSHK roster. Click to hear playlists or follow socials.</p>
   </section>
 
   <section class="grid">
@@ -151,7 +169,6 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
         <div class="bio">Masked producer blending gritty house with street-leaning hip-hop.</div>
         <div class="actions">
           <a href="https://open.spotify.com/playlist/10vNHB1I3QsP8w76dCPpH8" target="_blank">Playlist</a>
-          <a href="/lab">Enter Lab</a>
           <a href="#">Socials</a>
         </div>
       </div>
@@ -167,7 +184,6 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
         <div class="bio">Dusty textures and mellow late-night vibes.</div>
         <div class="actions">
           <a href="https://open.spotify.com/playlist/62mIJIjCHEhSJhHtegakEp" target="_blank">Playlist</a>
-          <a href="/lab">Enter Lab</a>
           <a href="#">Socials</a>
         </div>
       </div>
@@ -183,7 +199,6 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
         <div class="bio">Dark, high-energy drops and live-ready heat.</div>
         <div class="actions">
           <a href="https://open.spotify.com/playlist/6rR5q7HkkjAUEnEU2vErfd" target="_blank">Playlist</a>
-          <a href="/lab">Enter Lab</a>
           <a href="#">Socials</a>
         </div>
       </div>
@@ -199,11 +214,58 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
         <div class="bio">Rhythm-driven hybrid bridging dance and street culture.</div>
         <div class="actions">
           <a href="https://open.spotify.com/playlist/19YLuKSvktPAukX6wh40yJ" target="_blank">Playlist</a>
-          <a href="/lab">Enter Lab</a>
           <a href="#">Socials</a>
         </div>
       </div>
     </article>
+  </section>
+
+  <!-- NEW FEATURED SECTION -->
+  <section class="featured-section">
+    <h2>WHAT'S MISSING?</h2>
+    <div class="featured-grid">
+      <!-- Featured Track -->
+      <div class="featured-card">
+        <img src="images/featured/track-thumb.jpg" alt="Featured Track">
+        <div class="f-title">Featured Track</div>
+        <div class="f-sub">Listen to the hottest drop this week</div>
+        <div class="f-actions">
+          <a href="#">Play</a>
+          <a href="#">Add to Playlist</a>
+        </div>
+      </div>
+      <!-- Top Socials -->
+      <div class="featured-card">
+        <img src="images/featured/social-thumb.jpg" alt="Top Socials">
+        <div class="f-title">Top Socials</div>
+        <div class="f-sub">Follow artists trending on socials</div>
+        <div class="f-actions">
+          <a href="#">Spotify</a>
+          <a href="#">TikTok</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+      <!-- Artist Stats -->
+      <div class="featured-card">
+        <img src="images/featured/stats-thumb.jpg" alt="Artist Stats">
+        <div class="f-title">Artist Stats</div>
+        <div class="f-sub">Streams, followers, and live sets</div>
+        <div class="f-actions">
+          <a href="#">View Stats</a>
+          <a href="#">Top Tracks</a>
+        </div>
+      </div>
+      <!-- Featured Video -->
+      <div class="featured-card">
+        <img src="images/featured/video-thumb.jpg" alt="Featured Video">
+        <div class="f-title">Featured Video</div>
+        <div class="f-sub">Watch latest visuals and sessions</div>
+        <div class="f-actions">
+          <a href="#">Watch</a>
+          <a href="#">Share</a>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -240,4 +302,3 @@ document.addEventListener('click', ()=>dropdowns.forEach(dd=>{
 
 </body>
 </html>
-
