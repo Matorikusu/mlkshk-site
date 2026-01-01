@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -6,90 +6,97 @@
 <title>MLKSHK — The Universe</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg: #000; 
-    --panel: #0b0b0b; 
-    --text: #f5f5f5; 
-    --muted: #c0c0c0; 
-    --accent: #ff2aa1; 
-    --card-radius: 12px; 
-    --doodle-opacity: 0.08; 
-    font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
-  }
-  html, body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1200px;margin:0 auto;padding:20px;}
-  body::before{
-    content:""; position:fixed; inset:0;
-    background-image:url('assets/doodle-bg.png'); 
-    background-repeat:no-repeat; background-size:cover;
-    opacity:var(--doodle-opacity); pointer-events:none; mix-blend-mode:normal;
-  }
+:root {
+  --bg:#000;
+  --text:#f5f5f5;
+  --muted:#c0c0c0;
+  --accent:#ff2aa1;
+  --card-radius:12px;
+}
 
-  /* Header and dropdowns */
-  header.nav-bar{
-    border-bottom:1px solid rgba(255,42,161,0.04);
-    padding:18px 24px; 
-    background:linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-    position:sticky; top:0; z-index:30; overflow:visible;
-  }
-  .nav-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;}
-  .logo-link img{height:42px;display:block}
-  .nav-right { display:flex; gap:12px; align-items:center; }
-  .menu-container { position: relative; z-index: 50; }
-  .btn.primary { cursor:pointer; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); padding:8px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); color:var(--text); font-weight:700; font-size:13px; }
-  .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--panel);
-    border: 1px solid rgba(255,42,161,0.1);
-    border-radius: 8px;
-    padding: 8px 0;
-    min-width: 140px;
-    z-index: 100;
-    flex-direction: column;
-  }
-  .dropdown a { display: block; padding: 8px 16px; color: var(--text); font-weight: 600; }
-  .dropdown a:hover { background: rgba(255,255,255,0.05); }
-  .dropdown.show { display: flex; }
+/* Global */
+html, body {
+  margin:0; padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+}
+a { text-decoration:none; color:inherit; }
 
-  /* Hero & Grid */
-  .hero{ padding:42px 20px 12px;text-align:left; }
-  .hero h1{font-family:'Orbitron', sans-serif;font-size:28px;margin:0 0 6px;letter-spacing:1px}
-  .hero p{color:var(--muted);margin:0;font-size:14px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px;padding-bottom:48px}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.6);cursor:pointer;transition:transform .14s ease, box-shadow .14s ease}
-  .card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.7)}
-  .art{height:62%;background:#111;display:flex;align-items:center;justify-content:center}
-  .art img{width:100%;height:100%;object-fit:cover;display:block}
-  .meta{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
-  .row{display:flex;align-items:center;gap:10px}
-  .swatch{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex:0 0 40px}
-  .title{font-weight:700}
-  .sub{color:var(--muted);font-size:13px;margin-top:2px}
-  .actions{display:flex;gap:8px;margin-top:6px}
+/* NAVIGATION - match index page */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top:0; z-index:30;
+}
+.nav-content {
+  max-width:1200px; margin:0 auto;
+  display:flex; justify-content:space-between; align-items:center; gap:18px;
+}
+.logo-link img { height:42px; display:block; }
+.nav-links { display:flex; gap:14px; align-items:center; }
+.nav-dropdown { position: relative; display:inline-flex; align-items:center; }
+.nav-toggle {
+  display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
+  border-radius:8px; cursor:pointer; color:var(--muted); font-weight:600; background:transparent; border:0;
+}
+.nav-toggle::after {
+  content:""; display:inline-block; width:8px; height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform: rotate(45deg);
+  margin-left:4px; transition: transform .18s ease, border-color .18s ease;
+}
+.dropdown-menu {
+  display:none; position:absolute; top:calc(100% + 8px); left:0;
+  background:#000; min-width:200px; border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+.dropdown-menu a { display:block; padding:10px 14px; font-size:14px; color:#fff; }
+.dropdown-menu a:hover { background: var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
 
-  /* Card genre swatches */
-  .card[data-genre="drum-bass"] .swatch{background:linear-gradient(180deg,#00b3ff,#0050ff)}
-  .card[data-genre="house"] .swatch{background:linear-gradient(180deg,#ff49c8,#00d2c2)}
-  .card[data-genre="lofi"] .swatch{background:linear-gradient(180deg,#e7d8c2,#d95b2f)}
-  .card[data-genre="hiphop"] .swatch{background:linear-gradient(180deg,#222,#b58b00)}
-  .card[data-genre="afrobeat"] .swatch{background:linear-gradient(180deg,#ff3b00,#ffd166)}
+/* MAIN CONTENT */
+.wrap { max-width:1200px; margin:0 auto; padding:40px 20px; }
 
-  /* Modal */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.78);display:none;align-items:center;justify-content:center;z-index:60}
-  .modal{width:min(980px,94%);background:#060606;border-radius:10px;padding:16px;color:var(--text);box-shadow:0 30px 90px rgba(0,0,0,0.8)}
-  .modal .row{display:flex;gap:18px;align-items:flex-start}
-  .modal .left{flex:0 0 320px}
-  .modal .left img{width:100%;height:420px;object-fit:cover;border-radius:8px}
-  .modal .right{flex:1}
-  .close{background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer;float:right;font-size:14px}
+.hero { text-align:center; margin-bottom:40px; }
+.hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:12px; }
+.hero p { font-size:18px; color:var(--muted); max-width:600px; margin:0 auto; }
 
-  footer{padding:28px 20px;color:var(--muted);text-align:center;font-size:13px;border-top:1px solid rgba(255,42,161,0.03)}
-  @media (max-width:820px){.modal .row{flex-direction:column}.modal .left img{height:220px}}
+/* GRID CARDS */
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; }
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--card-radius);
+  overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  transition:transform .14s ease, box-shadow .14s ease;
+}
+.card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,0.7); }
+.art { height:250px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.art img { width:100%; height:100%; object-fit:cover; display:block; }
+.meta { padding:12px 14px; display:flex; flex-direction:column; gap:6px; text-align:center; }
+.title { font-weight:700; font-family:'Orbitron', sans-serif; font-size:18px; }
+.sub { font-size:13px; color:var(--muted); margin-top:2px; }
+.actions { margin-top:8px; }
+.actions a { display:inline-block; padding:10px 18px; border:2px solid var(--accent); border-radius:12px; font-weight:600; color:var(--accent); text-decoration:none; transition:.2s; }
+.actions a:hover { background:var(--accent); color:#000; }
+
+/* Swatches */
+.swatch { width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; margin:0 auto 6px; }
+.card[data-genre="drum-bass"] .swatch{background:linear-gradient(180deg,#00b3ff,#0050ff);}
+.card[data-genre="house"] .swatch{background:linear-gradient(180deg,#ff49c8,#00d2c2);}
+.card[data-genre="lofi"] .swatch{background:linear-gradient(180deg,#e7d8c2,#d95b2f);}
+.card[data-genre="hiphop"] .swatch{background:linear-gradient(180deg,#222,#b58b00);}
+.card[data-genre="afrobeat"] .swatch{background:linear-gradient(180deg,#ff3b00,#ffd166);}
+
+/* FOOTER */
+footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
 </style>
 </head>
 <body>
@@ -99,202 +106,101 @@
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-      <nav class="nav-links" aria-label="Main navigation">
-
-        <!-- Menu dropdown (releases / playlists / universe / lab) -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
-          <div class="dropdown-menu" role="menu" aria-label="Menu">
-            <a role="menuitem" href="index.html">Home</a>            
-             <a role="menuitem" href="artists.html">Artists</a>
-            <a role="menuitem" href="releases.html">Releases</a>
-            <a role="menuitem" href="playlists.html">Playlists</a>
-            <a role="menuitem" href="lab.html">The Lab</a>
-          </div>
+    <nav class="nav-links" aria-label="Main navigation">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="artists.html">Artists</a>
+          <a href="releases.html">Releases</a>
+          <a href="playlists.html">Playlists</a>
+          <a href="lab.html">The Lab</a>
+          <a href="brands.html">Brands</a>
         </div>
-
-        <!-- Socials dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
-          <div class="dropdown-menu" role="menu" aria-label="Social links">
-            <a role="menuitem" href="#" target="_blank">Spotify</a>
-            <a role="menuitem" href="#" target="_blank">TikTok</a>
-            <a role="menuitem" href="#" target="_blank">Instagram</a>
-            <a role="menuitem" href="#" target="_blank">YouTube</a>
-          </div>
-        </div>
-
-      </nav>
       </div>
-    </div>
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+        <div class="dropdown-menu">
+          <a href="#" target="_blank">Spotify</a>
+          <a href="#" target="_blank">TikTok</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">YouTube</a>
+        </div>
+      </div>
+    </nav>
   </div>
 </header>
 
 <main class="wrap">
   <section class="hero">
     <h1>THE UNIVERSE</h1>
-    <p>Pick your crew. Each carton is a genre — an element, a colour and a sound. Click a card to enter the crew page, open playlist or visit The Lab.</p>
+    <p>Explore the crews and genres of MLKSHK — each carton is a world, each playlist is a journey.</p>
   </section>
 
-  <section class="grid" id="universeGrid">
+  <section class="grid">
     <!-- Drum & Bass -->
-    <article class="card" data-genre="drum-bass" data-title="Drum & Bass" data-desc="High-voltage energy. Crew playlist, releases and sample packs.">
-      <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass crew carton art"></div>
+    <article class="card" data-genre="drum-bass">
+      <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
       <div class="meta">
-        <div class="row"><div class="swatch">DNB</div><div><div class="title">Drum & Bass</div><div class="sub">Electric — Energy Crew</div></div></div>
-        <div class="actions"><button class="btn primary" data-open>Enter Crew</button><a class="btn" href="/playlist/dnb">Open playlist</a></div>
+        <div class="swatch">DNB</div>
+        <div class="title">Drum & Bass</div>
+        <div class="sub">Electric — Energy Crew</div>
+        <div class="actions"><a href="/playlist/dnb">Explore</a></div>
       </div>
     </article>
 
     <!-- House -->
-    <article class="card" data-genre="house" data-title="House" data-desc="Hypnotic energy and club-ready drops.">
-      <div class="art"><img src="images/Cartons/House Carton.png" alt="House crew carton art"></div>
+    <article class="card" data-genre="house">
+      <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
       <div class="meta">
-        <div class="row"><div class="swatch">HSE</div><div><div class="title">House</div><div class="sub">Psychic — Club Crew</div></div></div>
-        <div class="actions"><button class="btn primary" data-open>Enter Crew</button><a class="btn" href="/playlist/house">Open playlist</a></div>
+        <div class="swatch">HSE</div>
+        <div class="title">House</div>
+        <div class="sub">Psychic — Club Crew</div>
+        <div class="actions"><a href="/playlist/house">Explore</a></div>
       </div>
     </article>
 
     <!-- Lo-Fi -->
-    <article class="card" data-genre="lofi" data-title="Lo-Fi" data-desc="Dusty, warm textures for late-night sessions.">
-      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi crew carton art"></div>
+    <article class="card" data-genre="lofi">
+      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi"></div>
       <div class="meta">
-        <div class="row"><div class="swatch">LOF</div><div><div class="title">Lo-Fi</div><div class="sub">Wind — Chilled Crew</div></div></div>
-        <div class="actions"><button class="btn primary" data-open>Enter Crew</button><a class="btn" href="/playlist/lofi">Open playlist</a></div>
+        <div class="swatch">LOF</div>
+        <div class="title">Lo-Fi</div>
+        <div class="sub">Wind — Chilled Crew</div>
+        <div class="actions"><a href="/playlist/lofi">Explore</a></div>
       </div>
     </article>
 
     <!-- Hip-Hop -->
-    <article class="card" data-genre="hiphop" data-title="Hip-Hop" data-desc="Grounded, classic street energy.">
-      <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop crew carton art"></div>
+    <article class="card" data-genre="hiphop">
+      <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
       <div class="meta">
-        <div class="row"><div class="swatch">HH</div><div><div class="title">Hip-Hop</div><div class="sub">Earth — Hip Hop Crew</div></div></div>
-        <div class="actions"><button class="btn primary" data-open>Enter Crew</button><a class="btn" href="/playlist/hiphop">Open playlist</a></div>
+        <div class="swatch">HH</div>
+        <div class="title">Hip-Hop</div>
+        <div class="sub">Earth — Hip Hop Crew</div>
+        <div class="actions"><a href="/playlist/hiphop">Explore</a></div>
       </div>
     </article>
 
     <!-- Afrobeat -->
-    <article class="card" data-genre="afrobeat" data-title="Afrobeat" data-desc="Warm percussive grooves and movement.">
-      <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat crew carton art"></div>
+    <article class="card" data-genre="afrobeat">
+      <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
       <div class="meta">
-        <div class="row"><div class="swatch">AFR</div><div><div class="title">Afrobeat</div><div class="sub">Fire — Afro Crew</div></div></div>
-        <div class="actions"><button class="btn primary" data-open>Enter Crew</button><a class="btn" href="/playlist/afrobeat">Open playlist</a></div>
+        <div class="swatch">AFR</div>
+        <div class="title">Afrobeat</div>
+        <div class="sub">Fire — Afro Crew</div>
+        <div class="actions"><a href="/playlist/afrobeat">Explore</a></div>
       </div>
     </article>
   </section>
 </main>
 
-<!-- Modal -->
-<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-    <button class="close" id="closeModal">Close ✕</button>
-    <div class="row">
-      <div class="left"><img id="modalArt" src="assets/carton-placeholder.jpg" alt="Carton artwork"></div>
-      <div class="right">
-        <h2 id="modalTitle">Crew</h2>
-        <p id="modalDesc" style="color:var(--muted)">Short description — element, vibe and playlist links.</p>
-        <div style="margin-top:12px;">
-          <a class="btn primary" id="modalEnter" href="#">Enter Crew</a>
-          <a class="btn" id="modalPlaylist" href="#" style="margin-left:8px">Open Playlist</a>
-        </div>
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:16px 0">
-        <div id="modalExtra" style="color:var(--muted);font-size:0.95rem;">
-          <strong>Featured:</strong> Shock Addict × CPH-4 — B-Boy Anthems: Vol. 1
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <footer>
-  <div style="padding:18px 10px;color:var(--muted);text-align:center">
-    MLKSHK — Built for the misfits. © <span id="year"></span>
-  </div>
+  MLKSHK — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  const grid = document.getElementById('universeGrid');
-  const modal = document.getElementById('modalBackdrop');
-  const modalArt = document.getElementById('modalArt');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalEnter = document.getElementById('modalEnter');
-  const modalPlaylist = document.getElementById('modalPlaylist');
-  const closeModal = document.getElementById('closeModal');
-
-  // Card modal
-  grid.addEventListener('click', (e) => {
-    const card = e.target.closest('.card');
-    if (!card) return;
-    const title = card.getAttribute('data-title') || 'Crew';
-    const desc = card.getAttribute('data-desc') || '';
-    const img = card.querySelector('.art img')?.src || 'assets/carton-placeholder.jpg';
-    const genre = card.getAttribute('data-genre') || '';
-    modalArt.src = img;
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-    modalEnter.href = '/genre/' + encodeURIComponent(genre);
-    modalPlaylist.href = '/playlist/' + encodeURIComponent(genre);
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden', 'false');
-  });
-
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden','true');
-  });
-  modal.addEventListener('click', (ev) => {
-    if (ev.target === modal) { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
-  });
-  window.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
-  });
-
-  // Dropdowns
-  const menuButton = document.getElementById('menuButton');
-  const menuDropdown = document.getElementById('menuDropdown');
-  const socialsButton = document.getElementById('socialsButton');
-  const socialsDropdown = document.getElementById('socialsDropdown');
-
-  menuButton.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const expanded = menuButton.getAttribute('aria-expanded') === 'true';
-    menuDropdown.classList.toggle('show');
-    menuButton.setAttribute('aria-expanded', !expanded);
-    socialsDropdown.classList.remove('show');
-    socialsButton.setAttribute('aria-expanded', 'false');
-  });
-
-  socialsButton.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const expanded = socialsButton.getAttribute('aria-expanded') === 'true';
-    socialsDropdown.classList.toggle('show');
-    socialsButton.setAttribute('aria-expanded', !expanded);
-    menuDropdown.classList.remove('show');
-    menuButton.setAttribute('aria-expanded', 'false');
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
-      menuDropdown.classList.remove('show');
-      menuButton.setAttribute('aria-expanded', 'false');
-    }
-    if (!socialsButton.contains(e.target) && !socialsDropdown.contains(e.target)) {
-      socialsDropdown.classList.remove('show');
-      socialsButton.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  window.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') {
-      menuDropdown.classList.remove('show');
-      socialsDropdown.classList.remove('show');
-      menuButton.setAttribute('aria-expanded', 'false');
-      socialsButton.setAttribute('aria-expanded', 'false');
-    }
-  });
 </script>
 </body>
 </html>
