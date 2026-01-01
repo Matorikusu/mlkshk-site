@@ -1,303 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MLKSHK</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg: #000;
-      --text: #f5f5f5;
-      --muted: #c0c0c0;
-      --accent: #ff2aa1;
-      --dropdown-bg: #000;
-    }
+<style>
+:root{
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --dropdown-bg: #000;
+}
 
-    html, body {
-      margin: 0;
-      height: 100%;
-      font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
-      background: var(--bg);
-      color: var(--text);
-    }
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
+}
 
-    a { color: inherit; text-decoration: none; }
+a { color: inherit; text-decoration: none; }
 
-    /* NAV BAR */
-    header.nav-bar {
-      border-bottom:1px solid rgba(255,42,161,0.04);
-      padding:18px 24px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-      position: sticky; top: 0; z-index: 30;
-    }
-    .nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 18px; }
-    .logo-link img { height: 42px; display:block; }
-    .nav-links { display: flex; gap: 14px; align-items: center; }
+/* NAV BAR */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top: 0; z-index: 30;
+}
+.nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 18px; }
+.logo-link img { height: 42px; display:block; }
+.nav-links { display: flex; gap: 14px; align-items: center; }
 
-    /* compact dropdowns with little arrow indicator */
-    .nav-dropdown {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-    .nav-toggle {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:8px;
-      cursor:pointer;
-      color:var(--muted);
-      font-weight:600;
-      background:transparent;
-      border:0;
-    }
-    .nav-toggle:focus { outline:2px solid rgba(255,42,161,0.12); outline-offset:3px; }
+/* Dropdowns */
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.nav-toggle { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; cursor:pointer; color:var(--muted); font-weight:600; background:transparent; border:0; }
+.nav-toggle:focus { outline:2px solid rgba(255,42,161,0.12); outline-offset:3px; }
+.nav-toggle::after { content: ""; display:inline-block; width:8px; height:8px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform: rotate(45deg); margin-left:4px; transition: transform .18s ease, border-color .18s ease; }
+.dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--dropdown-bg); min-width: 200px; border: 1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+.dropdown-menu a { display:block; padding:10px 14px; font-size:14px; color:#fff; }
+.dropdown-menu a:hover { background: var(--accent); color: #000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform: rotate(-135deg); border-color: var(--text); }
 
-    /* little arrow */
-    .nav-toggle::after {
-      content: "";
-      display:inline-block;
-      width:8px;
-      height:8px;
-      border-right:2px solid var(--muted);
-      border-bottom:2px solid var(--muted);
-      transform: rotate(45deg);
-      margin-left:4px;
-      transition: transform .18s ease, border-color .18s ease;
-    }
+/* small responsive collapse */
+@media (max-width:760px){
+  .nav-content{padding-right:14px;padding-left:14px}
+  .nav-links{gap:8px}
+}
 
-    /* dropdown menu */
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      background: var(--dropdown-bg);
-      min-width: 200px;
-      border: 1px solid var(--accent);
-      border-radius:8px;
-      padding:6px 0;
-      z-index:1000;
-      box-shadow:0 10px 30px rgba(0,0,0,0.6);
-    }
-    .dropdown-menu a {
-      display:block;
-      padding:10px 14px;
-      font-size:14px;
-      color:#fff;
-    }
-    .dropdown-menu a:hover { background: var(--accent); color: #000; }
+/* SECTION DIVIDER */
+.section-divider { width: 100%; height: 5px; background: black; }
 
-    /* show dropdown on hover/focus within */
-    .nav-dropdown:hover .dropdown-menu,
-    .nav-dropdown:focus-within .dropdown-menu {
-      display:block;
-    }
-    .nav-dropdown:hover .nav-toggle::after,
-    .nav-dropdown:focus-within .nav-toggle::after {
-      transform: rotate(-135deg); /* arrow points up when open */
-      border-color: var(--text);
-    }
+/* HERO */
+.hero { padding: 60px 20px; text-align: center; background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)), url('images/MLKSHK_HERO_HEADER_1920X800.png') center/cover no-repeat; color: white; }
+.hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase; }
+.hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
 
-    /* small responsive collapse: stack right-side nav items */
-    @media (max-width:760px){
-      .nav-content{padding-right:14px;padding-left:14px}
-      .nav-links{gap:8px}
-    }
+/* BRANDS / ARCHIVE GRID */
+.brands-archive { padding:60px 20px; text-align:center; background: #111; }
+.brands-archive h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
+.brands-archive p { font-size:16px; margin-bottom:40px; color: var(--muted); max-width:600px; margin-left:auto; margin-right:auto; }
+.brands-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:0; }
+.brand-card { background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)); border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.5); transition:.2s; }
+.brand-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.7); }
+.brand-card img { width:100%; height:auto; display:block; object-fit:cover; }
+.brand-info { padding:16px; display:flex; flex-direction:column; align-items:center; }
+.brand-info h2 { margin:0 0 6px; font-family:'Orbitron',sans-serif; font-size:22px; text-align:center; }
+.brand-info p { margin:0 0 12px; font-size:14px; color:var(--muted); text-align:center; }
+.brand-info .explore-button { display:inline-block; padding:10px 20px; border:2px solid var(--accent); border-radius:12px; font-size:14px; font-weight:600; color:var(--accent); text-decoration:none; transition:.2s; }
+.brand-info .explore-button:hover { background:var(--accent); color:#000; }
 
-    /* SECTION DIVIDER */
-    .section-divider {
-      width: 100%;
-      height: 5px;
-      background: black;
-    }
+/* UNIVERSE SECTION */
+.universe-teaser { padding:60px 20px; text-align:center; background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat; }
+.universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
+.universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
+.universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--accent); color:white; text-transform:uppercase; font-weight:700; transition:0.2s; }
+.universe-btn:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
 
-    /* HERO */
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(255,42,161,0.1), rgba(0,0,0,0.5)),
-                  url('images/MLKSHK_HERO_HEADER_1920X800.png') center/cover no-repeat;
-      color: white;
-    }
-    .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase; }
-    .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
+/* LAB SECTION */
+.lab-section { text-align:center; padding:60px 20px; background: url('images/THE_LAB_HEADER 1920 x 800.png') center/cover no-repeat; }
+.lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; }
+.lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
+.lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--accent); color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
+.lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
 
-    /* UNIVERSE SECTION */
-    .universe-teaser {
-      padding:60px 20px;
-      text-align:center;
-      background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat;
-    }
-    .universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
-    .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
-    .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--accent); color:white; text-transform:uppercase; font-weight:700; transition:0.2s; }
-    .universe-btn:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
-
-    /* LAB SECTION */
-    .lab-section {
-      text-align:center;
-      padding:60px 20px;
-      background: url('images/THE_LAB_HEADER 1920 x 800.png') center/cover no-repeat;
-    }
-    .lab-section h2 { font-family:'Orbitron', sans-serif; font-size:40px; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; }
-    .lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
-    .lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--accent); color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
-    .lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
-
-    /* BRANDS ARCHIVE SECTION */
-    .brands-archive {
-      padding:60px 20px;
-      text-align:center;
-      background: #111;
-    }
-    .brands-archive h2 {
-      font-family:'Orbitron',sans-serif;
-      font-size:36px;
-      margin-bottom:15px;
-      color: var(--accent);
-    }
-    .brands-archive p {
-      font-size:16px;
-      margin-bottom:20px;
-      color: var(--muted);
-      max-width:600px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-    .brands-archive a {
-      display:inline-block;
-      padding:12px 28px;
-      border-radius:30px;
-      border:2px solid var(--accent);
-      color:white;
-      font-weight:700;
-      text-transform:uppercase;
-      transition:0.2s;
-      text-decoration:none;
-    }
-    .brands-archive a:hover { background: var(--accent); color:black; box-shadow:0 0 15px rgba(255,42,161,0.5); }
-
-    footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
-  </style>
+footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
+</style>
 </head>
 <body>
 
-  <!-- NAV BAR -->
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
-      </a>
+<!-- NAV BAR -->
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
 
-      <nav class="nav-links" aria-label="Main navigation">
-
-        <!-- Menu dropdown (releases / playlists / universe / lab / brands) -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
-          <div class="dropdown-menu" role="menu" aria-label="Menu">
-            <a role="menuitem" href="artists.html">Artists</a>
-            <a role="menuitem" href="playlists.html">Playlists</a>
-            <a role="menuitem" href="universe.html">The Universe</a>
-            <a role="menuitem" href="lab.html">The Lab</a>
-            <a role="menuitem" href="brands.html">Brands</a>
-          </div>
+    <nav class="nav-links" aria-label="Main navigation">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+        <div class="dropdown-menu" role="menu" aria-label="Menu">
+          <a role="menuitem" href="artists.html">Artists</a>
+          <a role="menuitem" href="playlists.html">Playlists</a>
+          <a role="menuitem" href="universe.html">The Universe</a>
+          <a role="menuitem" href="lab.html">The Lab</a>
         </div>
-
-        <!-- Socials dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
-          <div class="dropdown-menu" role="menu" aria-label="Social links">
-            <a role="menuitem" href="#" target="_blank">Spotify</a>
-            <a role="menuitem" href="#" target="_blank">TikTok</a>
-            <a role="menuitem" href="#" target="_blank">Instagram</a>
-            <a role="menuitem" href="#" target="_blank">YouTube</a>
-          </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+        <div class="dropdown-menu" role="menu" aria-label="Social links">
+          <a role="menuitem" href="#" target="_blank">Spotify</a>
+          <a role="menuitem" href="#" target="_blank">TikTok</a>
+          <a role="menuitem" href="#" target="_blank">Instagram</a>
+          <a role="menuitem" href="#" target="_blank">YouTube</a>
         </div>
+      </div>
+    </nav>
+  </div>
+</header>
 
-      </nav>
-    </div>
-  </header>
+<!-- HERO / LABEL -->
+<section class="hero">
+  <h1>MLKSHK</h1>
+  <p>A Music Label, Digital Universe & Cultural Archive</p>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1></h1>
-    <p></p>
-  </section>
+<div class="section-divider"></div>
 
-  <div class="section-divider"></div>
+<!-- BRANDS / ARCHIVE SECTION -->
+<section class="brands-archive">
+  <h2>Explore Our Brands</h2>
+  <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
 
-  <!-- UNIVERSE TEASER -->
-  <section class="universe-teaser">
-    <h2>The Universe</h2>
-    <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
-    <a href="universe.html" class="universe-btn">Enter The Universe</a>
-  </section>
+  <div class="brands-grid">
+    <!-- Brand 1 -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="RumRunner 1967">
+      <div class="brand-info">
+        <h2>Rum Runner 1967</h2>
+        <p>Indie disco vibes from Birmingham’s legendary Rum Runner club. Reborn in playlists and curated events.</p>
+        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
+      </div>
+    </article>
 
-  <div class="section-divider"></div>
+    <!-- Brand 2 -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
+      <div class="brand-info">
+        <h2>The Warehouse 1977</h2>
+        <p>The legendary Chicago nightclub reimagined — classic grooves, modern soundscapes.</p>
+        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
+      </div>
+    </article>
 
-  <!-- ENTER THE LAB -->
-  <section class="lab-section">
-    <h2>Enter The Lab</h2>
-    <p>Think you’ve got what it takes? Step inside. Make something real.</p>
-    <a href="lab.html" class="lab-btn">Enter The Lab</a>
-  </section>
+    <!-- Brand 3 -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
+      <div class="brand-info">
+        <h2>Shoom 1987</h2>
+        <p>The legendary London club reimagined — the birthplace of acid house and UK rave culture.</p>
+        <a href="archive-shoom-1987.html" class="explore-button">Explore</a>
+      </div>
+    </article>
 
-  <div class="section-divider"></div>
+    <!-- Brand 4 -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
+      <div class="brand-info">
+        <h2>Blitz 1979</h2>
+        <p>The legendary London club reimagined — the birthplace of the New Romantic movement and avant-garde club culture.</p>
+        <a href="archive-blitz-1979.html" class="explore-button">Explore</a>
+      </div>
+    </article>
+  </div>
+</section>
 
-  <!-- BRANDS ARCHIVE SECTION -->
-  <section class="brands-archive">
-    <h2>Explore Our Brands</h2>
-    <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
-    <a href="brands.html">Enter the Brands Archive</a>
-  </section>
+<div class="section-divider"></div>
 
-  <div class="section-divider"></div>
+<!-- UNIVERSE TEASER -->
+<section class="universe-teaser">
+  <h2>The Universe</h2>
+  <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
+  <a href="universe.html" class="universe-btn">Enter The Universe</a>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
-  </footer>
+<div class="section-divider"></div>
 
-  <script>
-    // small accessibility: update aria-expanded when menu/focus toggles show via :focus-within/hover
-    document.querySelectorAll('.nav-dropdown').forEach(dd => {
-      const btn = dd.querySelector('.nav-toggle');
-      const menu = dd.querySelector('.dropdown-menu');
-      if (!btn || !menu) return;
+<!-- ENTER THE LAB -->
+<section class="lab-section">
+  <h2>Enter The Lab</h2>
+  <p>Think you’ve got what it takes? Step inside. Make something real.</p>
+  <a href="lab.html" class="lab-btn">Enter The Lab</a>
+</section>
 
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const isOpen = menu.style.display === 'block';
-          menu.style.display = isOpen ? '' : 'block';
-          btn.setAttribute('aria-expanded', String(!isOpen));
-        } else if (e.key === 'Escape') {
-          menu.style.display = '';
-          btn.setAttribute('aria-expanded', 'false');
-          btn.blur();
-        }
-      });
+<div class="section-divider"></div>
 
-      dd.addEventListener('focusout', (e) => {
-        setTimeout(() => {
-          if (!dd.contains(document.activeElement)) {
-            menu.style.display = '';
-            btn.setAttribute('aria-expanded', 'false');
-          }
-        }, 10);
-      });
+<!-- FOOTER -->
+<footer>
+  MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+</footer>
+
+<script>
+  // Accessibility & nav dropdown toggle
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    const btn = dd.querySelector('.nav-toggle');
+    const menu = dd.querySelector('.dropdown-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isOpen = menu.style.display === 'block';
+        menu.style.display = isOpen ? '' : 'block';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      } else if (e.key === 'Escape') {
+        menu.style.display = '';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.blur();
+      }
     });
 
-    // set year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+    dd.addEventListener('focusout', (e) => {
+      setTimeout(() => {
+        if (!dd.contains(document.activeElement)) {
+          menu.style.display = '';
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      }, 10);
+    });
+  });
+
+  // Update year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
