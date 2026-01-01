@@ -1,218 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MLKSHK LAB</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLKSHK LAB</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --card-radius: 12px;
+}
 
-  <style>
-    :root {
-      --bg: #000;
-      --text: #f5f5f5;
-      --muted: #c0c0c0;
-      --accent: #ff2aa1;
-    }
+body {
+  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+}
 
-    body {
-      margin: 0;
-      font-family: 'Rajdhani', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      padding: 0 20px;
-    }
+/* NAVIGATION */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top:0; z-index:30;
+}
+.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+.logo-link img { height:42px; display:block; }
+.nav-links { display:flex; gap:14px; align-items:center; }
+.nav-dropdown { position: relative; display:inline-block; }
+.nav-toggle {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
+  color:var(--muted); font-weight:600; background:transparent; border:0;
+}
+.nav-toggle::after {
+  content:""; display:inline-block; width:8px; height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform: rotate(45deg); margin-left:4px; transition:.18s ease;
+}
+.dropdown-menu {
+  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
+  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
+}
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
 
-    a { color: inherit; text-decoration: none; }
+/* MAIN CONTENT */
+.lab-container { max-width:1000px; margin:0 auto; padding:40px 20px; }
+.lab-header { text-align:center; margin-bottom:40px; padding:0 10px; }
+.lab-header h1 { font-family:'Orbitron', sans-serif; font-size:42px; margin-bottom:10px; }
+.lab-header p { font-size:16px; opacity:0.7; }
 
-    /* NAV BAR */
-    header.nav-bar {
-      border-bottom:1px solid rgba(255,42,161,0.04);
-      padding:18px 24px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-      position: sticky; top: 0; z-index: 30;
-    }
+/* Section styling */
+.section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
 
-    .nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 18px; }
-    .logo-link img { height: 42px; display:block; }
+.rules-box {
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,42,161,0.2); border-radius:12px;
+  padding:30px; text-align:center;
+}
+.rules-box p { margin-bottom:15px; line-height:1.5; }
+.rules-box label { display:block; margin-top:15px; font-size:14px; opacity:0.8; cursor:pointer; }
 
-    nav.nav-links { display: flex; align-items: center; gap: 14px; position: relative; }
-    .nav-link { font-weight: 600; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
-    .nav-link:hover { background: rgba(255,255,255,0.02); color: var(--text); }
+.section { margin-bottom:60px; text-align:center; }
+.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
+.note { font-size:14px; opacity:0.7; margin-bottom:15px; }
 
-    /* Dropdown Menu */
-    .nav-dropdown { position: relative; display: inline-block; }
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      background: #000;
-      min-width: 160px;
-      border: 1px solid var(--accent);
-      top: 100%; left: 0;
-      z-index: 1000;
-    }
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 15px;
-      font-size: 14px;
-      color: white;
-    }
-    .dropdown-menu a:hover { background: var(--accent); color: black; }
-    .nav-dropdown:hover .dropdown-menu { display: block; }
+.lyric-box {
+  width:100%; min-height:300px; padding:20px; border-radius:12px; border:none; resize:vertical; font-size:16px;
+  background: rgba(255,255,255,0.03); color:var(--text);
+}
 
-    /* Section Divider */
-    .section-divider { width: 100%; height: 4px; background: black; margin: 40px 0; }
+.button {
+  padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
+  transition:.2s;
+}
+.button:hover { background:#ff5bc3; }
+.button:disabled { opacity:0.3; cursor:not-allowed; }
 
-    /* LAB CONTENT */
-    .lab-container { max-width: 1000px; margin: 0 auto; padding: 40px 0; }
-
-    .lab-header { text-align: center; margin-bottom: 30px; }
-    .lab-header h1 { font-family: 'Orbitron', sans-serif; font-size: 36px; margin-bottom: 10px; }
-    .lab-header p { opacity: 0.7; }
-
-    .rules-box {
-      border: 1px solid #444;
-      padding: 20px;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.4);
-    }
-    .rules-box p { margin-bottom: 15px; line-height: 1.5; }
-    .rules-box label { display: block; margin-top: 10px; font-size: 14px; opacity: 0.8; cursor: pointer; }
-
-    .section { margin-bottom: 60px; }
-    .section h2 { font-family: 'Orbitron', sans-serif; margin-bottom: 10px; }
-
-    .note { font-size: 14px; opacity: 0.7; margin-bottom: 15px; }
-
-    .lyric-box { width: 100%; min-height: 300px; padding: 20px; border-radius: 10px; border: none; resize: vertical; font-size: 16px; }
-
-    .button {
-      padding: 15px 30px;
-      border-radius: 30px;
-      border: none;
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .button:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .archive-list li { list-style: none; margin: 8px 0; opacity: 0.7; }
-
-    .chat-window {
-      width: 100%;
-      height: 200px;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-      background: rgba(0,0,0,0.3);
-    }
-    .chat-inputs { display: flex; gap: 10px; flex-wrap: wrap; }
-    .chat-inputs input, .chat-inputs textarea { flex: 1; padding: 12px; border-radius: 10px; border: none; font-size: 14px; }
-    .chat-inputs textarea { min-height: 60px; }
-  </style>
+.chat-window {
+  width:100%; height:200px; border:1px solid rgba(255,255,255,0.1); border-radius:12px;
+  padding:15px; margin-bottom:15px; background: rgba(255,255,255,0.03); overflow-y:auto;
+}
+.chat-inputs { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+.chat-inputs input, .chat-inputs textarea { flex:1; padding:12px; border-radius:12px; border:none; font-size:14px; background: rgba(255,255,255,0.03); color:#fff; }
+.chat-inputs textarea { min-height:60px; }
+</style>
 </head>
 <body>
 
-  <!-- NAV BAR -->
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
-      </a>
-
-      <!-- Menu Dropdown -->
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <nav class="nav-links">
       <div class="nav-dropdown">
-        <span class="nav-link">Menu ▼</span>
+        <button class="nav-toggle" aria-haspopup="true">Menu</button>
         <div class="dropdown-menu">
           <a href="index.html">Home</a>
-           <a href="artists.html">Artists</a>
+          <a href="artists.html">Artists</a>
           <a href="playlists.html">Playlists</a>
           <a href="universe.html">The Universe</a>
           <a href="lab.html">The Lab</a>
         </div>
       </div>
-    </div>
-  </header>
-
-  <div class="lab-container">
-
-    <!-- 1. HEADER -->
-    <section class="lab-header">
-      <h1>MLKSHK LAB</h1>
-      <p>A writing space for vocalists, lyricists and raw talent.</p>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 2. RULES / DISCLAIMER -->
-    <section class="rules-box">
-      <p>All instrumentals on this page belong to MLKSHK Digital.</p>
-      <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
-      <p>You keep credit. We keep structure.</p>
-      <p>No reposts. No theft. No drama.</p>
-
-      <label>
-        <input type="checkbox" id="agreeRules">
-        I understand and agree to the MLKSHK LAB rules
-      </label>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 3. BEAT PLAYER SECTION -->
-    <section class="section">
-      <h2>Select a Beat</h2>
-      <iframe style="border-radius:12px" 
-        src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
-        width="100%" 
-        height="152" 
-        frameborder="0" 
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-      </iframe>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 4. LYRIC LAB -->
-    <section class="section">
-      <h2>Write Your Lyrics</h2>
-      <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
-      <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 7. LIVE CHAT -->
-    <section class="section">
-      <h2>Live Lab Chat</h2>
-      <p class="note">Talk shit. Trade bars. Stay sharp.</p>
-
-      <div class="chat-window">
-        <!-- Messages will appear here later -->
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true">Socials</button>
+        <div class="dropdown-menu">
+          <a href="#" target="_blank">Spotify</a>
+          <a href="#" target="_blank">TikTok</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">YouTube</a>
+        </div>
       </div>
-
-      <div class="chat-inputs">
-        <input type="text" placeholder="Username (coming soon)" disabled>
-        <textarea placeholder="Type message (coming soon)" disabled></textarea>
-        <button class="button" disabled>Send</button>
-      </div>
-    </section>
-
+    </nav>
   </div>
+</header>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div style="padding:18px 10px;color:var(--muted);text-align:center">
-      MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+<div class="lab-container">
+
+  <!-- HEADER -->
+  <section class="lab-header">
+    <h1>MLKSHK LAB</h1>
+    <p>A writing space for vocalists, lyricists and raw talent.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- RULES -->
+  <section class="rules-box">
+    <p>All instrumentals on this page belong to MLKSHK Digital.</p>
+    <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
+    <p>You keep credit. We keep structure.</p>
+    <p>No reposts. No theft. No drama.</p>
+    <label>
+      <input type="checkbox" id="agreeRules"> I understand and agree to the MLKSHK LAB rules
+    </label>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- BEAT PLAYER -->
+  <section class="section">
+    <h2>Select a Beat</h2>
+    <iframe style="border-radius:12px;" 
+      src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
+      width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- LYRIC LAB -->
+  <section class="section">
+    <h2>Write Your Lyrics</h2>
+    <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
+    <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- LIVE CHAT -->
+  <section class="section">
+    <h2>Live Lab Chat</h2>
+    <p class="note">Talk shit. Trade bars. Stay sharp.</p>
+    <div class="chat-window"></div>
+    <div class="chat-inputs">
+      <input type="text" placeholder="Username (coming soon)" disabled>
+      <textarea placeholder="Type message (coming soon)" disabled></textarea>
+      <button class="button" disabled>Send</button>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+</div>
+
+<footer class="site-footer">
+  <div style="padding:18px 10px;color:var(--muted);text-align:center">
+    MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
+
