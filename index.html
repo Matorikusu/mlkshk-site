@@ -130,7 +130,7 @@ header.nav-bar {
 .explore-button:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
 
 /* BRANDS / ARCHIVE GRID */
-.brands-archive { padding:40px 20px; text-align:center; background: #111; } /* reduced top padding */
+.brands-archive { padding:50px 20px; text-align:center; background: #111; } /* slightly reduced padding */
 .brands-archive h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
 .brands-archive p { font-size:16px; margin-bottom:40px; color: var(--muted); max-width:600px; margin-left:auto; margin-right:auto; }
 .brands-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:0; }
@@ -145,7 +145,7 @@ header.nav-bar {
 
 /* UNIVERSE SECTION */
 .universe-teaser { padding:60px 20px; text-align:center; background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat; }
-.universe-teaser h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
+.universe-teaser h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
 .universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
 .universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--accent); color:white; text-transform:uppercase; font-weight:700; transition:0.2s; }
 .universe-btn:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
@@ -184,7 +184,7 @@ footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13
   </div>
 </header>
 
-<!-- HERO / LABEL -->
+<!-- HERO -->
 <section class="hero">
   <h1>MLKSHK</h1>
   <p>A Music Label, Digital Universe & Cultural Archive</p>
@@ -197,7 +197,38 @@ footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13
   <h2>Explore Our Brands</h2>
   <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
   <div class="brands-grid">
-    <!-- Brand cards same as before -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="RumRunner 1967">
+      <div class="brand-info">
+        <h2>Rum Runner 1967</h2>
+        <p>Indie disco vibes from Birmingham’s legendary Rum Runner club. Reborn in playlists and curated events.</p>
+        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
+      </div>
+    </article>
+    <article class="brand-card">
+      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
+      <div class="brand-info">
+        <h2>The Warehouse 1977</h2>
+        <p>The legendary Chicago nightclub reimagined — classic grooves, modern soundscapes.</p>
+        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
+      </div>
+    </article>
+    <article class="brand-card">
+      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
+      <div class="brand-info">
+        <h2>Shoom 1987</h2>
+        <p>The legendary London club reimagined — the birthplace of acid house and UK rave culture.</p>
+        <a href="archive-shoom-1987.html" class="explore-button">Explore</a>
+      </div>
+    </article>
+    <article class="brand-card">
+      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
+      <div class="brand-info">
+        <h2>Blitz 1979</h2>
+        <p>The legendary London club reimagined — the birthplace of the New Romantic movement and avant-garde club culture.</p>
+        <a href="archive-blitz-1979.html" class="explore-button">Explore</a>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -245,21 +276,22 @@ footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13
 
 <!-- FOOTER -->
 <footer>
-  MLKSHK DIGITAL — Built for the misfits. © <span id="year"></span>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
-document.querySelectorAll('.nav-dropdown').forEach(dd => {
-  const btn = dd.querySelector('.nav-toggle');
-  const menu = dd.querySelector('.dropdown-menu');
-  if (!btn || !menu) return;
-  btn.addEventListener('keydown', (e) => {
-    if(e.key==='Enter'||e.key===' '){e.preventDefault();const isOpen=menu.style.display==='block';menu.style.display=isOpen?'':'block';btn.setAttribute('aria-expanded',String(!isOpen));}
-    else if(e.key==='Escape'){menu.style.display='';btn.setAttribute('aria-expanded','false');btn.blur();}
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    const btn = dd.querySelector('.nav-toggle');
+    const menu = dd.querySelector('.dropdown-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('keydown', (e) => {
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();const isOpen=menu.style.display==='block';menu.style.display=isOpen?'':'block';btn.setAttribute('aria-expanded',String(!isOpen));}
+      else if(e.key==='Escape'){menu.style.display='';btn.setAttribute('aria-expanded','false');btn.blur();}
+    });
+    dd.addEventListener('focusout',()=>{setTimeout(()=>{if(!dd.contains(document.activeElement)){menu.style.display='';btn.setAttribute('aria-expanded','false');}},10);});
   });
-  dd.addEventListener('focusout',()=>{setTimeout(()=>{if(!dd.contains(document.activeElement)){menu.style.display='';btn.setAttribute('aria-expanded','false');}},10);});
-});
-document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
