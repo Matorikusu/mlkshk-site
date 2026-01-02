@@ -27,14 +27,15 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* NAV */
+    /* NAVIGATION BAR */
     header.nav-bar {
       border-bottom: 1px solid rgba(255,255,255,0.05);
       padding: 18px 24px;
       position: sticky;
       top: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.95);
       z-index: 20;
+      backdrop-filter: blur(5px);
     }
 
     .nav-content {
@@ -47,6 +48,39 @@
 
     .logo-link img {
       height: 42px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.2s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     /* PAGE */
@@ -78,7 +112,7 @@
     /* CATALOGUE ITEMS */
     .catalogue-item {
       display: grid;
-      grid-template-columns: 1fr 160px; /* cover smaller */
+      grid-template-columns: 1fr 160px;
       gap: 40px;
       align-items: center;
       padding: 40px 0;
@@ -195,22 +229,33 @@
         width: 60%;
         margin: 0 auto;
       }
+
+      .nav-links {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
+  <!-- NAVIGATION -->
   <header class="nav-bar">
     <div class="nav-content">
       <a href="index.html" class="logo-link">
         <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
       </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="artists.html">Artists</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <!-- PAGE -->
+  <!-- PAGE CONTENT -->
   <main class="page-wrap">
 
     <div class="page-header">
@@ -218,7 +263,6 @@
       <p>A living archive of MLKSHK releases — carefully curated, timeless, continuously growing.</p>
     </div>
 
-    <!-- CATALOGUE ITEM EXAMPLE -->
     <!-- ITEM 001 -->
     <div class="catalogue-item">
       <div class="catalogue-meta">
