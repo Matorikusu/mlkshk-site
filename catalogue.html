@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MLKSHK — Catalogue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000;
+      --text: #f5f5f5;
+      --muted: #a0a0a0;
+      --accent: #ff2aa1;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV (same as index) */
+    header.nav-bar {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 18px 24px;
+      position: sticky;
+      top: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 20;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-link img {
+      height: 42px;
+    }
+
+    /* PAGE */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 80px;
+    }
+
+    .page-header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* CATALOGUE ITEM */
+    .catalogue-item {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 60px;
+      align-items: center;
+      padding: 60px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .catalogue-item:first-child {
+      border-top: none;
+    }
+
+    .catalogue-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .catalogue-number {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .catalogue-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 32px;
+    }
+
+    .catalogue-artist {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .catalogue-genre {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .catalogue-actions {
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 26px;
+      border-radius: 30px;
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .catalogue-artwork img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 24px;
+      text-align: centre;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .catalogue-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <header class="nav-bar">
+    <div class="nav-content">
+      <a href="index.html" class="logo-link">
+        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
+      </a>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="page-wrap">
+
+    <div class="page-header">
+      <h1>CATALOGUE</h1>
+      <p>A living archive of MLKSHK releases.  
+      New entries added continuously.</p>
+    </div>
+
+    <!-- ITEM 001 -->
+    <div class="catalogue-item">
+      <div class="catalogue-meta">
+        <div class="catalogue-number">MLKSHK-001</div>
+        <div class="catalogue-title">Rum Runner 1967</div>
+        <div class="catalogue-artist">Shockaddict</div>
+        <div class="catalogue-genre">Indie Dance / Nu-Disco</div>
+
+        <div class="catalogue-actions">
+          <a href="https://open.spotify.com" class="button" target="_blank">Listen</a>
+        </div>
+      </div>
+
+      <div class="catalogue-artwork">
+        <img src="images/rum_runner_cover.jpg" alt="Rum Runner 1967 cover">
+      </div>
+    </div>
+
+    <!-- DUPLICATE BLOCK FOR NEXT RELEASE -->
+
+  </main>
+
+  <footer>
+    MLKSHK MEDIA © <span id="year"></span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
