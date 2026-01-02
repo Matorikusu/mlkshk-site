@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK</title>
+<title>MLKSHK Catalogue</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
 <!-- Fonts -->
@@ -90,47 +90,8 @@ header.nav-bar {
 .hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase; }
 .hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
 
-/* SECTION WITH IMAGE + OVERLAY */
-.section {
-  position: relative;
-  padding: 80px 20px;
-  text-align: center;
-  color: #fff;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-.section::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,0.48); /* slightly darker overlay */
-  z-index:0;
-}
-.section .section-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin:0 auto;
-}
-.section h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
-.section p { font-size:18px; opacity:0.9; margin-bottom:25px; }
-
-/* BUTTONS */
-.explore-button {
-  display:inline-block;
-  padding:14px 40px;
-  border-radius:30px;
-  border:2px solid var(--accent);
-  color:white;
-  font-weight:700;
-  text-decoration:none;
-  transition:0.2s;
-}
-.explore-button:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
-
-/* BRANDS / ARCHIVE GRID */
-.brands-archive { padding:50px 20px; text-align:center; background: #111; } /* slightly reduced padding */
+/* CATALOGUE GRID */
+.brands-archive { padding:50px 20px; text-align:center; background: #111; }
 .brands-archive h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
 .brands-archive p { font-size:16px; margin-bottom:40px; color: var(--muted); max-width:600px; margin-left:auto; margin-right:auto; }
 .brands-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:0; }
@@ -158,6 +119,7 @@ header.nav-bar {
 .lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
 
 footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
+
 </style>
 </head>
 <body>
@@ -192,84 +154,23 @@ footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13
 
 <div class="section-divider"></div>
 
-<!-- BRANDS / ARCHIVE GRID -->
-<section class="brands-archive">
-  <h2>Explore Our Brands</h2>
-  <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
-  <div class="brands-grid">
-    <article class="brand-card">
-      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="RumRunner 1967">
-      <div class="brand-info">
-        <h2>Rum Runner 1967</h2>
-        <p>Indie disco vibes from Birmingham’s legendary Rum Runner club. Reborn in playlists and curated events.</p>
-        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
-      </div>
-    </article>
-    <article class="brand-card">
-      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
-      <div class="brand-info">
-        <h2>The Warehouse 1977</h2>
-        <p>The legendary Chicago nightclub reimagined — classic grooves, modern soundscapes.</p>
-        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
-      </div>
-    </article>
-    <article class="brand-card">
-      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
-      <div class="brand-info">
-        <h2>Shoom 1987</h2>
-        <p>The legendary London club reimagined — the birthplace of acid house and UK rave culture.</p>
-        <a href="archive-shoom-1987.html" class="explore-button">Explore</a>
-      </div>
-    </article>
-    <article class="brand-card">
-      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
-      <div class="brand-info">
-        <h2>Blitz 1979</h2>
-        <p>The legendary London club reimagined — the birthplace of the New Romantic movement and avant-garde club culture.</p>
-        <a href="archive-blitz-1979.html" class="explore-button">Explore</a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
 <!-- CATALOGUE SECTION -->
-<section class="section" style="background-image:url('images/access/Top.png');">
-  <div class="section-content">
-    <h2>Catalogue</h2>
-    <p>Explore our complete catalogue: all artists, releases, and curated archival collections capturing iconic musical moments and locations. Browse and licence music for commercial projects.</p>
-    <a href="catalogue.html" class="explore-button">View Catalogue</a>
+<section class="brands-archive">
+  <h2>Catalogue</h2>
+  <p>Explore our complete catalogue: all artists, releases, and curated archival collections capturing iconic musical moments and locations. Browse and licence music for commercial projects.</p>
+  <div class="brands-grid">
+    <!-- Paste all your 15 releases + 3 archive items here exactly as you provided -->
+    <!-- ITEM 001 -->
+    <article class="brand-card">
+      <img src="images/Catalogue/1.png" alt="Broken Idol">
+      <div class="brand-info">
+        <h2>Broken Idol</h2>
+        <p>Artist: Shockaddict<br>Genre: House<br>Type: EP</p>
+        <a href="https://open.spotify.com/album/1Ew2its2XXnWqvNtCuwUBR?si=RUT89xYdSBu0IoV88VhiLA" class="explore-button" target="_blank">Listen</a>
+      </div>
+    </article>
+    <!-- ...repeat all items 002–018 exactly as you listed above -->
   </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ACCESS SECTION -->
-<section class="section" style="background-image:url('images/access/Lower.png');">
-  <div class="section-content">
-    <h2>Members-Only Access</h2>
-    <p>Approved users gain the ability to browse and licence our music for events, television, film, fashion campaigns, and curated brand experiences. All applications are reviewed individually.</p>
-    <a href="access.html" class="explore-button">Request Access</a>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- UNIVERSE TEASER -->
-<section class="universe-teaser">
-  <h2>The Universe</h2>
-  <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
-  <a href="universe.html" class="universe-btn">Enter The Universe</a>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ENTER THE LAB -->
-<section class="lab-section">
-  <h2>Enter The Lab</h2>
-  <p>Think you’ve got what it takes? Step inside. Make something real.</p>
-  <a href="lab.html" class="lab-btn">Enter The Lab</a>
 </section>
 
 <div class="section-divider"></div>
