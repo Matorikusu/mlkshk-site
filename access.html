@@ -17,13 +17,13 @@
   --accent:#ff2aa1;
 }
 
+/* Global */
 html, body {
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
 }
-
 a { color:inherit; text-decoration:none; }
 
 /* NAV */
@@ -105,6 +105,29 @@ header.nav-bar{
   color:var(--muted);
 }
 
+/* MIDDLE SECTIONS */
+.section {
+  max-width:900px;
+  margin:80px auto;
+  padding:60px 20px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+.section h2{
+  font-family:'Orbitron', sans-serif;
+  font-size:36px;
+  margin-bottom:16px;
+  color:var(--accent);
+}
+.section p{
+  font-size:18px;
+  color:var(--text);
+  line-height:1.6;
+  max-width:700px;
+  margin:0 auto;
+}
+
 /* FORM SECTION */
 .access-form {
   max-width:700px;
@@ -115,14 +138,12 @@ header.nav-bar{
   gap:16px;
   text-align:center;
 }
-
 .access-form h2 {
   font-family:'Orbitron', sans-serif;
   font-size:36px;
   color:var(--accent);
   margin-bottom:8px;
 }
-
 .access-form .field{
   background:#111;
   border:1px solid rgba(255,255,255,0.1);
@@ -131,22 +152,9 @@ header.nav-bar{
   font-size:15px;
   color:#fff;
 }
-
-.access-form .field::placeholder {
-  color:var(--muted);
-}
-
-.access-form select.field {
-  appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-}
-
-.access-form textarea.field {
-  resize:vertical;
-  min-height:100px;
-}
-
+.access-form .field::placeholder { color:var(--muted); }
+.access-form select.field { appearance:none; -webkit-appearance:none; -moz-appearance:none; }
+.access-form textarea.field { resize:vertical; min-height:100px; }
 .access-form button {
   padding:16px;
   border-radius:30px;
@@ -158,12 +166,10 @@ header.nav-bar{
   cursor:pointer;
   transition:.2s;
 }
-
 .access-form button:hover {
   background:var(--accent);
   color:#000;
 }
-
 .form-note {
   font-size:13px;
   color:var(--muted);
@@ -212,13 +218,30 @@ footer{
   </p>
 </section>
 
+<!-- SECTION 1 -->
+<section class="section" style="background: url('images/bg-section1.jpg') center/cover no-repeat; color:#fff;">
+  <h2>MLKSHK Digital — Members-Only Access</h2>
+  <p>
+    MLKSHK Digital is more than a record label; we are a cultural archive. This exclusive gateway grants access to our ever-expanding catalogue, including all our artists, releases, and archival collections capturing the sounds and atmosphere of iconic musical moments and locations throughout history.
+  </p>
+</section>
+
+<!-- SECTION 2 -->
+<section class="section" style="background: url('images/bg-section2.jpg') center/cover no-repeat; color:#fff;">
+  <h2>Licensing & Access</h2>
+  <p>
+    Approved users will gain the ability to browse and licence our music for commercial use — including events, television and film, fashion campaigns, and curated brand experiences. All submissions are individually reviewed, and access is granted only to projects and partners that align with our ethos.
+  </p>
+  <p>
+    Complete the form below to request access and join the network of creators working with our catalogue.
+  </p>
+</section>
+
 <div class="access-form">
   <h2>Request Access</h2>
 
   <input type="text" name="name" placeholder="Your name" class="field" required>
-
   <input type="text" name="company" placeholder="Brand / Company" class="field">
-
   <input type="email" name="email" placeholder="Email address" class="field" required>
 
   <select name="project" class="field" required>
@@ -237,7 +260,6 @@ footer{
   </select>
 
   <textarea name="usage" placeholder="How will the music be used?" class="field"></textarea>
-
   <textarea name="catalogue" placeholder="Which archive collections interest you?" class="field"></textarea>
 
   <button id="submitBtn" type="submit">Request Access</button>
@@ -257,11 +279,9 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby4U0ERd2cFQcHsGLL26c_
 
 document.getElementById('submitBtn').addEventListener('click', async function (e) {
   e.preventDefault();
-
   const formElements = document.querySelectorAll('.access-form .field');
   const data = {};
   formElements.forEach(el => data[el.name] = el.value);
-
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -269,7 +289,6 @@ document.getElementById('submitBtn').addEventListener('click', async function (e
       headers: { 'Content-Type': 'application/json' }
     });
     const result = await response.json();
-
     if (result && result.success) {
       alert('Request received. If it fits, we’ll be in touch.');
       formElements.forEach(el => el.value = '');
