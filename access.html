@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MLKSHK — Access the Archive</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --dropdown-bg: #000;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* NAV BAR */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top: 0; z-index: 30;
+}
+.nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 18px; }
+.logo-link img { height: 42px; display:block; }
+.nav-links { display: flex; gap: 14px; align-items: center; }
+
+/* Dropdowns */
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.nav-toggle { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; cursor:pointer; color:var(--muted); font-weight:600; background:transparent; border:0; }
+.nav-toggle:focus { outline:2px solid rgba(255,42,161,0.12); outline-offset:3px; }
+.nav-toggle::after { content: ""; display:inline-block; width:8px; height:8px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform: rotate(45deg); margin-left:4px; transition: transform .18s ease, border-color .18s ease; }
+.dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--dropdown-bg); min-width: 200px; border: 1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+.dropdown-menu a { display:block; padding:10px 14px; font-size:14px; color:#fff; }
+.dropdown-menu a:hover { background: var(--accent); color: #000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform: rotate(-135deg); border-color: var(--text); }
+
+/* small responsive collapse */
+@media (max-width:760px){
+  .nav-content{padding-right:14px;padding-left:14px}
+  .nav-links{gap:8px}
+}
+
+/* HERO */
+.hero { padding: 80px 20px; text-align: center; background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/MLKSHK_HERO_HEADER_1920X800.png') center/cover no-repeat; color: white; }
+.hero h1 { font-family:'Orbitron',sans-serif; font-size:48px; margin-bottom:12px; letter-spacing:2px; text-transform:uppercase; }
+.hero p { font-size:20px; opacity:0.85; max-width:650px; margin:0 auto; }
+
+/* ACCESS INFO SECTION */
+.access-info { padding:60px 20px; text-align:center; background: #111; }
+.access-info h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:12px; color: var(--accent); }
+.access-info p { font-size:16px; margin-bottom:24px; color: var(--muted); max-width:600px; margin-left:auto; margin-right:auto; line-height:1.5; }
+
+/* FORM SECTION */
+.access-form { padding:60px 20px; background:#000; text-align:center; }
+.access-form h2 { font-family:'Orbitron',sans-serif; font-size:32px; margin-bottom:16px; color: var(--accent); }
+.access-form p { font-size:15px; color:var(--muted); margin-bottom:30px; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.5; }
+.access-form form { display:flex; flex-direction:column; gap:14px; max-width:500px; margin:0 auto; }
+.access-form input, .access-form textarea { padding:12px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:#111; color:#fff; font-size:14px; }
+.access-form textarea { resize:vertical; min-height:100px; }
+.access-form button { padding:12px 18px; border-radius:12px; border:2px solid var(--accent); background:transparent; color:var(--accent); font-weight:600; text-transform:uppercase; cursor:pointer; transition:.2s; }
+.access-form button:hover { background: var(--accent); color:#000; }
+
+/* FOOTER */
+footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
+</style>
+</head>
+<body>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+        <div class="dropdown-menu" role="menu" aria-label="Menu">
+          <a role="menuitem" href="artists.html">Artists</a>
+          <a role="menuitem" href="playlists.html">Playlists</a>
+          <a role="menuitem" href="universe.html">The Universe</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+        <div class="dropdown-menu" role="menu" aria-label="Social links">
+          <a role="menuitem" href="#" target="_blank">Spotify</a>
+          <a role="menuitem" href="#" target="_blank">TikTok</a>
+          <a role="menuitem" href="#" target="_blank">Instagram</a>
+          <a role="menuitem" href="#" target="_blank">YouTube</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>MLKSHK ACCESS</h1>
+  <p>Curated use of the MLKSHK archive. By request only.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ACCESS INFO -->
+<section class="access-info">
+  <h2>What This Is</h2>
+  <p>MLKSHK is an independent music studio and label building long-form sound archives inspired by cultural landmarks, movements, and moments in time. We don’t produce stock music, and access is granted selectively, per project.</p>
+
+  <h2>What Access Means</h2>
+  <p>Approved partners may request permission to use music for campaigns, content, fashion, events, and other cultural projects. All music is written, produced, and cleared in-house.</p>
+
+  <h2>The Archive</h2>
+  <p>The MLKSHK archive is a growing collection of sound worlds — each inspired by a specific place, era, or movement. Current collections include The Warehouse, Shoom, Rum Runner, Blitz. New collections are added monthly, new music weekly. Access is about alignment, not volume.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ACCESS FORM -->
+<section class="access-form">
+  <h2>Request Access</h2>
+  <p>Submit your project for review. If it aligns with the archive, we’ll be in touch.</p>
+  <form action="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse" method="POST" target="_blank">
+    <input type="text" name="entry.123456789" placeholder="Name" required>
+    <input type="text" name="entry.987654321" placeholder="Company / Project" required>
+    <textarea name="entry.192837465" placeholder="Intended Use / Notes" required></textarea>
+    <input type="text" name="entry.564738291" placeholder="Timeline (optional)">
+    <input type="url" name="entry.102938475" placeholder="Link (optional)">
+    <button type="submit">Request Access</button>
+  </form>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  MLKSHK MEDIA — Built for the misfits. © <span id="year"></span>
+</footer>
+
+<script>
+  // Accessibility & nav dropdown toggle
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    const btn = dd.querySelector('.nav-toggle');
+    const menu = dd.querySelector('.dropdown-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isOpen = menu.style.display === 'block';
+        menu.style.display = isOpen ? '' : 'block';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      } else if (e.key === 'Escape') {
+        menu.style.display = '';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.blur();
+      }
+    });
+
+    dd.addEventListener('focusout', (e) => {
+      setTimeout(() => {
+        if (!dd.contains(document.activeElement)) {
+          menu.style.display = '';
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      }, 10);
+    });
+  });
+
+  // Update year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
