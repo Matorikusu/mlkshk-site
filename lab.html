@@ -150,9 +150,9 @@ header.nav-bar {
   <!-- BEAT PLAYER -->
   <section class="section">
     <h2>Select a Beat</h2>
-    <iframe style="border-radius:12px;" 
-      src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
-      width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
+      width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
     </iframe>
   </section>
 
@@ -170,13 +170,23 @@ header.nav-bar {
   <!-- LIVE CHAT -->
   <section class="section">
     <h2>Live Lab Chat</h2>
-    <p class="note">Talk shit. Trade bars. Stay sharp.</p>
+    <p class="note">This chat is reserved for official MLKSHK artists only.</p>
     <div class="chat-window"></div>
     <div class="chat-inputs">
-      <input type="text" placeholder="Username (coming soon)" disabled>
-      <textarea placeholder="Type message (coming soon)" disabled></textarea>
+      <input type="text" placeholder="Username (Access Only)" disabled>
+      <textarea placeholder="Type message (Access Only)" disabled></textarea>
       <button class="button" disabled>Send</button>
     </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ARTIST STATUS NOTE -->
+  <section class="section">
+    <p class="note" style="opacity:0.8;">
+      We are currently not accepting submissions for new artists.<br>
+      MLKSHK’s Lab is an exclusive space for approved talent.
+    </p>
   </section>
 
 </div>
@@ -192,4 +202,3 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
