@@ -14,7 +14,7 @@
   --bg: #000;
   --text: #f5f5f5;
   --muted: #c0c0c0;
-  --accent: #ff2aa1; /* default accent for the site */
+  --accent: #ff2aa1;
   --dropdown-bg: #000;
 }
 
@@ -47,7 +47,6 @@ header.nav-bar {
 }
 .logo-link img { height: 42px; display:block; }
 .nav-links { display: flex; gap: 14px; align-items: center; }
-/* Dropdowns */
 .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
 .nav-toggle {
   display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; cursor:pointer;
@@ -70,6 +69,7 @@ header.nav-bar {
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
 .nav-dropdown:hover .nav-toggle::after,
 .nav-dropdown:focus-within .nav-toggle::after { transform: rotate(-135deg); border-color: var(--text); }
+
 /* small responsive collapse */
 @media (max-width:760px){
   .nav-content{padding-right:14px;padding-left:14px}
@@ -81,13 +81,15 @@ header.nav-bar {
 
 /* HERO */
 .hero {
-  padding: 60px 20px;
+  min-height: 700px; /* taller hero */
+  padding: 0; /* remove default padding */
   text-align: center;
   background: url('images/Home/home-hero-header.png') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
   color: white;
 }
-.hero h1 { display:none; } /* hidden since text is removed */
-.hero p { display:none; } /* hidden since text is removed */
+.hero h1, .hero p { display:none; } /* no text */
 
 /* SECTION WITH IMAGE + OVERLAY */
 .section {
@@ -103,7 +105,7 @@ header.nav-bar {
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,0.48); /* slightly darker overlay */
+  background: rgba(0,0,0,0.48);
   z-index:0;
 }
 .section .section-content {
@@ -200,7 +202,7 @@ footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13
 
 <!-- HERO -->
 <section class="hero">
-  <!-- No text as requested -->
+  <!-- Hero image only, no text -->
 </section>
 
 <div class="section-divider"></div>
