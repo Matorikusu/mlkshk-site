@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK — Catalogue</title>
+<title>MLKSHK</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
 <!-- Fonts -->
@@ -11,465 +11,221 @@
 
 <style>
 :root{
-  --bg:#000;
-  --text:#f5f5f5;
-  --muted:#c0c0c0;
-  --accent:#ff2aa1;
-  --dropdown-bg:#000;
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --dropdown-bg: #000;
 }
 
-html,body{
-  margin:0;
-  height:100%;
-  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
-  background:var(--bg);
-  color:var(--text);
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
 }
 
-a{color:inherit;text-decoration:none}
+a { color: inherit; text-decoration: none; }
 
-/* ================= NAV ================= */
-header.nav-bar{
+/* NAV BAR */
+header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,0.2),transparent);
-  position:sticky;
-  top:0;
-  z-index:30;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
-.nav-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1200px;
-  margin:0 auto;
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 18px;
 }
-.logo-link img{height:42px}
-.nav-links{display:flex}
-.nav-dropdown{position:relative}
-.nav-toggle{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
+.logo-link img { height: 42px; display:block; }
+.nav-links { display: flex; gap: 14px; align-items: center; }
+/* Dropdowns */
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.nav-toggle {
+  display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; cursor:pointer;
+  color:var(--muted); font-weight:600; background:transparent; border:0;
 }
-.nav-toggle::after{
-  content:"";
-  display:inline-block;
-  width:8px;
-  height:8px;
-  margin-left:6px;
-  border-right:2px solid var(--muted);
-  border-bottom:2px solid var(--muted);
-  transform:rotate(45deg);
+.nav-toggle::after {
+  content: ""; display:inline-block; width:8px; height:8px; border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted); transform: rotate(45deg); margin-left:4px; transition: transform .18s ease, border-color .18s ease;
 }
-.dropdown-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 8px);
-  left:0;
-  background:var(--dropdown-bg);
-  min-width:200px;
-  border:1px solid var(--accent);
-  border-radius:8px;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
+.dropdown-menu {
+  display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--dropdown-bg);
+  min-width: 200px; border: 1px solid var(--accent); border-radius:8px; padding:6px 0;
+  z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
-.dropdown-menu a{
-  display:block;
-  padding:10px 14px;
-  font-size:14px;
+.dropdown-menu a {
+  display:block; padding:10px 14px; font-size:14px; color:#fff;
 }
-.dropdown-menu a:hover{
-  background:var(--accent);
-  color:#000;
-}
-.nav-dropdown:hover .dropdown-menu{display:block}
-
-/* ================= PAGE HEADER ================= */
-.page-header{
-  padding:70px 20px 50px;
-  text-align:center;
-}
-.page-header h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:44px;
-  color:var(--accent);
-  margin-bottom:10px;
-}
-.page-header p{
-  max-width:700px;
-  margin:0 auto;
-  color:var(--muted);
-}
-
-/* ================= RELEASE TAB ================= */
-.release-tab{
-  padding:60px 20px;
-  background:#111;
-  border-bottom:1px solid rgba(255,42,161,0.05);
-}
-.release-inner{
-  max-width:1100px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 3fr;
-  gap:32px;
-  align-items:center;
-}
-.release-cover img{
-  width:100%;
-  max-width:260px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-}
-.release-info h2{
-  font-family:'Orbitron',sans-serif;
-  font-size:28px;
-  margin:0 0 10px;
-  color:var(--accent);
-}
-.release-meta{
-  font-size:15px;
-  color:var(--muted);
-  margin-bottom:16px;
-}
-.release-actions{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-.explore-button{
-  padding:10px 26px;
-  border:2px solid var(--accent);
-  border-radius:20px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--accent);
-  transition:.2s;
-}
-.explore-button:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-/* ================= FOOTER ================= */
-footer{
-  padding:28px 20px;
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  border-top:1px solid rgba(255,42,161,0.03);
-}
-
-/* ================= MOBILE ================= */
+.dropdown-menu a:hover { background: var(--accent); color: #000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform: rotate(-135deg); border-color: var(--text); }
+/* small responsive collapse */
 @media (max-width:760px){
-  .release-inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-  .release-cover img{
-    margin:0 auto;
-  }
-  .release-actions{
-    justify-content:center;
-  }
+  .nav-content{padding-right:14px;padding-left:14px}
+  .nav-links{gap:8px}
 }
+
+/* SECTION DIVIDER */
+.section-divider { width: 100%; height: 5px; background: black; }
+
+/* HERO */
+.hero {
+  padding: 60px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url('images/MLKSHK_HERO_HEADER_1920X800.png') center/cover no-repeat;
+  color: white;
+}
+.hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase; }
+.hero p { font-size:20px; opacity:0.85; max-width:600px; margin:0 auto; }
+
+/* SECTION WITH IMAGE + OVERLAY */
+.section {
+  position: relative;
+  padding: 80px 20px;
+  text-align: center;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.section::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.48); /* slightly darker overlay */
+  z-index:0;
+}
+.section .section-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin:0 auto;
+}
+.section h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
+.section p { font-size:18px; opacity:0.9; margin-bottom:25px; }
+
+/* BUTTONS */
+.explore-button {
+  display:inline-block;
+  padding:14px 40px;
+  border-radius:30px;
+  border:2px solid var(--accent);
+  color:white;
+  font-weight:700;
+  text-decoration:none;
+  transition:0.2s;
+}
+.explore-button:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
+
+/* BRANDS / ARCHIVE GRID */
+.brands-archive { padding:50px 20px; text-align:center; background: #111; } /* slightly reduced padding */
+.brands-archive h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:15px; color: var(--accent); }
+.brands-archive p { font-size:16px; margin-bottom:40px; color: var(--muted); max-width:600px; margin-left:auto; margin-right:auto; }
+.brands-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:0; }
+.brand-card { background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)); border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.5); transition:.2s; }
+.brand-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.7); }
+.brand-card img { width:100%; height:auto; display:block; object-fit:cover; }
+.brand-info { padding:16px; display:flex; flex-direction:column; align-items:center; }
+.brand-info h2 { margin:0 0 6px; font-family:'Orbitron',sans-serif; font-size:22px; text-align:center; }
+.brand-info p { margin:0 0 12px; font-size:14px; color:var(--muted); text-align:center; }
+.brand-info .explore-button { display:inline-block; padding:10px 20px; border:2px solid var(--accent); border-radius:12px; font-size:14px; font-weight:600; color:var(--accent); text-decoration:none; transition:.2s; }
+.brand-info .explore-button:hover { background:var(--accent); color:#000; }
+
+/* UNIVERSE SECTION */
+.universe-teaser { padding:60px 20px; text-align:center; background: url('images/UNIVERSE_HEADER 1920 x 800.png') center/cover no-repeat; }
+.universe-teaser h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--accent); }
+.universe-teaser p { font-size:18px; opacity:0.8; max-width:600px; margin:0 auto 20px; }
+.universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--accent); color:white; text-transform:uppercase; font-weight:700; transition:0.2s; }
+.universe-btn:hover { background: var(--accent); color:black; box-shadow:0 0 20px rgba(255,42,161,0.5); }
+
+/* LAB SECTION */
+.lab-section { text-align:center; padding:60px 20px; background: url('images/THE_LAB_HEADER 1920 x 800.png') center/cover no-repeat; }
+.lab-section h2 { font-family:'Orbitron',sans-serif; font-size:40px; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; }
+.lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
+.lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--accent); color:white; font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
+.lab-btn:hover { background: var(--accent); color:black; box-shadow:0 0 25px rgba(255,42,161,0.6); }
+
+footer { padding:28px 20px; color: var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
 </style>
 </head>
-
 <body>
 
+<!-- NAV BAR -->
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main navigation">
       <div class="nav-dropdown">
-        <button class="nav-toggle">Menu</button>
-        <div class="dropdown-menu">
-          <a href="access.html">Access</a>
-          <a href="artists.html">Artists</a>
-          <a href="catalogue.html">Catalogue</a>
-          <a href="lab.html">The Lab</a>
-          <a href="playlists.html">Playlists</a>
-          <a href="universe.html">The Universe</a>
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
+        <div class="dropdown-menu" role="menu" aria-label="Menu">
+          <a role="menuitem" href="access.html">Access</a>
+          <a role="menuitem" href="artists.html">Artists</a>
+          <a role="menuitem" href="catalogue.html">Catalogue</a>
+          <a role="menuitem" href="lab.html">The Lab</a>
+          <a role="menuitem" href="playlists.html">Playlists</a>
+          <a role="menuitem" href="universe.html">The Universe</a>
         </div>
       </div>
     </nav>
   </div>
 </header>
 
-<section class="page-header">
-  <h1>Catalogue</h1>
+<!-- HERO -->
+<section class="hero">
+  <h1>CATALOGUE</h1>
   <p>All MLKSHK releases and archive projects. New drops stack below.</p>
 </section>
 
+<div class="section-divider"></div>
+
 <!-- Releases -->
 <!-- ITEM 001 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/1.png" alt="Broken Idol">
-    </div>
-    <div class="release-info">
-      <h2>Broken Idol</h2>
-      <div class="release-meta">
-        Artist: Shockaddict<br>
-        Genre: House<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
+<section class="brands-archive">
+    <article class="brand-card">
+      <img src="images/Catalogue/1.png" alt="cover">
+      <div class="brand-info">
+        <h2>Broken Idol</h2>
+        <p>Artist: Shockaddict</p>
+        <p>Genre: House</p>
+        <p>Type: EP</p>
         <a href="https://open.spotify.com/album/1Ew2its2XXnWqvNtCuwUBR?si=RUT89xYdSBu0IoV88VhiLA" target="_blank" class="explore-button">Listen</a>
       </div>
-    </div>
+
   </div>
 </section>
 
-<!-- ITEM 002 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/2.png" alt="Microdose Moments">
-    </div>
-    <div class="release-info">
-      <h2>Microdose Moments</h2>
-      <div class="release-meta">
-        Artist: CPH4<br>
-        Genre: Lo-Fi<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/4WEdkfHLVGdJ4HnQyQ0Iag?si=smOBSU_WS86whjvn-1Fm5g" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ITEM 003 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/3.png" alt="Obsidian Rhythms">
-    </div>
-    <div class="release-info">
-      <h2>Obsidian Rhythms</h2>
-      <div class="release-meta">
-        Artist: Blaqq Shifu<br>
-        Genre: Afrobeat<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/7jbD4BMssuuKTjn6s7HFZB?si=jfNrGaXiRwCkxYNPpVLrwQ" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 004 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/4.png" alt="Fractured Reality">
-    </div>
-    <div class="release-info">
-      <h2>Fractured Reality</h2>
-      <div class="release-meta">
-        Artist: Furbyz Rvenge<br>
-        Genre: Drum &amp; Bass<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/0ZdDuUmnxa2swTBQzUEXgk?si=7T947GDiSsuAkTUlKT3zdA" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 005 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/5.png" alt="Scarborough Fair">
-    </div>
-    <div class="release-info">
-      <h2>Scarborough Fair</h2>
-      <div class="release-meta">
-        Artist: Shockaddict ft Izzy Blue<br>
-        Genre: Pop<br>
-        Type: Single
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/4loVTgRRZZ4NinFj8For74?si=WpBega2SQ-S4nop2Pyen-w" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 006 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/6.png" alt="Funk Theory">
-    </div>
-    <div class="release-info">
-      <h2>Funk Theory</h2>
-      <div class="release-meta">
-        Artist: CPH4<br>
-        Genre: Hip Hop<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/5kzvXwwsbvaW4uajdkFu6A?si=JdYRWOBsQs6tquKDDO-Q-g" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 007 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/7.png" alt="009: The Soundtrack">
-    </div>
-    <div class="release-info">
-      <h2>009: The Soundtrack</h2>
-      <div class="release-meta">
-        Artist: Shockaddict x Sidney Shaw<br>
-        Genre: Soundtrack<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/2uscJQHZxZ8IdUTfPKWNrM?si=jVK9-l9pQYClHAAd2JqL8A" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 008 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/8.png" alt="The Skye Boat Song">
-    </div>
-    <div class="release-info">
-      <h2>The Skye Boat Song</h2>
-      <div class="release-meta">
-        Artist: Furbyz Rvenge<br>
-        Genre: Drum &amp; Bass<br>
-        Type: Single
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/track/76Ni6c4W3c5o8SUTncSrf6?si=48d1c62d454c40ac" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 009 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/9.png" alt="Magnetic">
-    </div>
-    <div class="release-info">
-      <h2>Magnetic</h2>
-      <div class="release-meta">
-        Artist: Blaqq Magnetic<br>
-        Genre: House / Afrobeat<br>
-        Type: Single
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/track/0nE7yarXEzQtGEsCH7vWZr?si=5251f0c183df4486" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ITEM 010 -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/10.png" alt="Pop Sh*t">
-    </div>
-    <div class="release-info">
-      <h2>Pop Sh*t</h2>
-      <div class="release-meta">
-        Artist: Shockaddict<br>
-        Genre: House / Pop<br>
-        Type: EP
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/album/3UbYxuqz8ekBA3ZStn0ljl?si=Qyg5FidqSr2L_WApIuOIuA" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ARCHIVES -->
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/MLKSHK-ARCHIVE-WH1977.png" alt="The Warehouse 1977">
-    </div>
-    <div class="release-info">
-      <h2>MLKSHK Archives: The Warehouse 1977</h2>
-      <div class="release-meta">
-        Artist: Shockaddict<br>
-        Genre: House<br>
-        Type: Album
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/MLKSHK-ARCHIVE-SH1987.png" alt="Shoom 1987">
-    </div>
-    <div class="release-info">
-      <h2>MLKSHK Archives: Shoom 1987</h2>
-      <div class="release-meta">
-        Artist: Shockaddict<br>
-        Genre: House<br>
-        Type: Album
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="release-tab">
-  <div class="release-inner">
-    <div class="release-cover">
-      <img src="images/Catalogue/MLKSHK-ARCHIVE-RR1967.png" alt="Rum Runner 1967">
-    </div>
-    <div class="release-info">
-      <h2>MLKSHK Archives: Rum Runner 1967</h2>
-      <div class="release-meta">
-        Artist: Shockaddict<br>
-        Genre: Indie House / Nu Disco<br>
-        Type: Album
-      </div>
-      <div class="release-actions">
-        <a href="https://open.spotify.com/" target="_blank" class="explore-button">Listen</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- FOOTER -->
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    const btn = dd.querySelector('.nav-toggle');
+    const menu = dd.querySelector('.dropdown-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('keydown', (e) => {
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();const isOpen=menu.style.display==='block';menu.style.display=isOpen?'':'block';btn.setAttribute('aria-expanded',String(!isOpen));}
+      else if(e.key==='Escape'){menu.style.display='';btn.setAttribute('aria-expanded','false');btn.blur();}
+    });
+    dd.addEventListener('focusout',()=>{setTimeout(()=>{if(!dd.contains(document.activeElement)){menu.style.display='';btn.setAttribute('aria-expanded','false');}},10);});
+  });
+
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
