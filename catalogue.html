@@ -28,7 +28,7 @@ html,body{
 
 a{color:inherit;text-decoration:none}
 
-/* NAV BAR */
+/* ================= NAV ================= */
 header.nav-bar{
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -43,32 +43,26 @@ header.nav-bar{
   justify-content:space-between;
   max-width:1200px;
   margin:0 auto;
-  gap:18px;
 }
-.logo-link img{height:42px;display:block}
-.nav-links{display:flex;gap:14px;align-items:center}
-
-.nav-dropdown{position:relative;display:inline-flex}
+.logo-link img{height:42px}
+.nav-links{display:flex}
+.nav-dropdown{position:relative}
 .nav-toggle{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
+  background:none;
+  border:0;
   color:var(--muted);
   font-weight:600;
-  background:transparent;
-  border:0;
+  cursor:pointer;
 }
 .nav-toggle::after{
   content:"";
+  display:inline-block;
   width:8px;
   height:8px;
+  margin-left:6px;
   border-right:2px solid var(--muted);
   border-bottom:2px solid var(--muted);
   transform:rotate(45deg);
-  transition:.18s;
 }
 .dropdown-menu{
   display:none;
@@ -79,7 +73,6 @@ header.nav-bar{
   min-width:200px;
   border:1px solid var(--accent);
   border-radius:8px;
-  padding:6px 0;
   box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 .dropdown-menu a{
@@ -92,73 +85,64 @@ header.nav-bar{
   color:#000;
 }
 .nav-dropdown:hover .dropdown-menu{display:block}
-.nav-dropdown:hover .nav-toggle::after{
-  transform:rotate(-135deg);
-  border-color:var(--text);
-}
 
-/* CATALOGUE GRID */
-.catalogue{
-  padding:60px 20px;
+/* ================= PAGE HEADER ================= */
+.page-header{
+  padding:70px 20px 50px;
   text-align:center;
-  background:#111;
 }
-.catalogue h1{
+.page-header h1{
   font-family:'Orbitron',sans-serif;
-  font-size:40px;
-  margin-bottom:10px;
+  font-size:44px;
   color:var(--accent);
+  margin-bottom:10px;
 }
-.catalogue p{
+.page-header p{
   max-width:700px;
-  margin:0 auto 40px;
+  margin:0 auto;
   color:var(--muted);
-  font-size:16px;
 }
 
-.brands-grid{
+/* ================= RELEASE TAB ================= */
+.release-tab{
+  padding:60px 20px;
+  background:#111;
+  border-bottom:1px solid rgba(255,42,161,0.05);
+}
+.release-inner{
+  max-width:1100px;
+  margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:24px;
-}
-
-.brand-card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  transition:.2s;
-}
-.brand-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 20px 50px rgba(0,0,0,.7);
-}
-.brand-card img{
-  width:100%;
-  display:block;
-}
-
-.brand-info{
-  padding:16px;
-  display:flex;
-  flex-direction:column;
+  grid-template-columns:1fr 3fr;
+  gap:32px;
   align-items:center;
 }
-.brand-info h2{
-  font-family:'Orbitron',sans-serif;
-  font-size:20px;
-  margin:0 0 6px;
+.release-cover img{
+  width:100%;
+  max-width:260px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
-.brand-info p{
-  font-size:14px;
+.release-info h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;
+  margin:0 0 10px;
+  color:var(--accent);
+}
+.release-meta{
+  font-size:15px;
   color:var(--muted);
-  margin-bottom:12px;
-  text-align:center;
+  margin-bottom:16px;
+}
+.release-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
 }
 .explore-button{
-  padding:10px 22px;
+  padding:10px 26px;
   border:2px solid var(--accent);
-  border-radius:14px;
+  border-radius:20px;
   font-size:14px;
   font-weight:600;
   color:var(--accent);
@@ -169,13 +153,27 @@ header.nav-bar{
   color:#000;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
   padding:28px 20px;
   text-align:center;
   font-size:13px;
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,0.03);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:760px){
+  .release-inner{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .release-cover img{
+    margin:0 auto;
+  }
+  .release-actions{
+    justify-content:center;
+  }
 }
 </style>
 </head>
@@ -185,7 +183,7 @@ footer{
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
     </a>
     <nav class="nav-links">
       <div class="nav-dropdown">
@@ -203,25 +201,48 @@ footer{
   </div>
 </header>
 
-<section class="catalogue">
+<section class="page-header">
   <h1>Catalogue</h1>
-  <p>Explore all MLKSHK releases and archive projects. Browse EPs, singles, albums and curated historical collections.</p>
+  <p>All MLKSHK releases and archive projects. New drops stack below.</p>
+</section>
 
-  <div class="brands-grid">
-
-    <!-- Repeat your catalogue items exactly as supplied -->
-    <!-- Example -->
-    <article class="brand-card">
+<!-- ================= RELEASE 001 ================= -->
+<section class="release-tab">
+  <div class="release-inner">
+    <div class="release-cover">
       <img src="images/Catalogue/1.png" alt="Broken Idol">
-      <div class="brand-info">
-        <h2>Broken Idol</h2>
-        <p>Artist: Shockaddict<br>Genre: House<br>Type: EP</p>
+    </div>
+    <div class="release-info">
+      <h2>Broken Idol</h2>
+      <div class="release-meta">
+        Artist: Shockaddict<br>
+        Genre: House<br>
+        Type: EP
+      </div>
+      <div class="release-actions">
         <a href="https://open.spotify.com/album/1Ew2its2XXnWqvNtCuwUBR" target="_blank" class="explore-button">Listen</a>
       </div>
-    </article>
+    </div>
+  </div>
+</section>
 
-    <!-- Continue pasting the rest of your catalogue items here unchanged -->
-
+<!-- ================= RELEASE 002 ================= -->
+<section class="release-tab">
+  <div class="release-inner">
+    <div class="release-cover">
+      <img src="images/Catalogue/2.png" alt="Microdose Moments">
+    </div>
+    <div class="release-info">
+      <h2>Microdose Moments</h2>
+      <div class="release-meta">
+        Artist: CPH4<br>
+        Genre: Lo-Fi<br>
+        Type: EP
+      </div>
+      <div class="release-actions">
+        <a href="https://open.spotify.com/album/4WEdkfHLVGdJ4HnQyQ0Iag" target="_blank" class="explore-button">Listen</a>
+      </div>
+    </div>
   </div>
 </section>
 
