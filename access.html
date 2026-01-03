@@ -310,14 +310,17 @@ footer{
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // FORM SUBMISSION
-const endpoint = 'https://script.google.com/macros/s/AKfycby4U0ERd2cFQcHsGLL26c_WWjibffDDccRK0_HyxP0vf1GqW-VndcecJ2sr4EouMIqdaA/exec';
+const endpoint = 'https://script.google.com/macros/s/AKfycbyJAcpIp3j1F27qB9wSQTVU2NvCHaPQxOuIgJjpnuXqQiv2kgql6kPQRzVu0JPlJunTPw/exec';
+const submitBtn = document.getElementById('submitBtn');
 
-document.getElementById('submitBtn').addEventListener('click', async function (e) {
+submitBtn.addEventListener('click', async function (e) {
   e.preventDefault();
 
   const formElements = document.querySelectorAll('.access-form .field');
   const data = {};
   formElements.forEach(el => data[el.name] = el.value);
+
+  submitBtn.disabled = true;
 
   try {
     const response = await fetch(endpoint, {
@@ -325,9 +328,15 @@ document.getElementById('submitBtn').addEventListener('click', async function (e
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
     });
-    const result = await response.json();
 
-    if (result && result.success) {
+    let result = {};
+    try {
+      result = await response.json();
+    } catch(err) {
+      console.warn("Non-JSON response from server", err);
+    }
+
+    if (result.success) {
       alert('Request received. If it fits, we’ll be in touch.');
       formElements.forEach(el => el.value = '');
     } else {
@@ -336,6 +345,8 @@ document.getElementById('submitBtn').addEventListener('click', async function (e
   } catch (err) {
     alert('There was an error submitting. Try again later.');
     console.error(err);
+  } finally {
+    submitBtn.disabled = false;
   }
 });
 </script>
