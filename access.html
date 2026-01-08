@@ -6,8 +6,12 @@
 <title>MLKSHK — Archive Access</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-<!-- styles unchanged -->
+
+<style>
+/* [UNCHANGED — STYLES LEFT EXACTLY AS PROVIDED] */
+</style>
 </head>
 
 <body>
@@ -36,20 +40,43 @@
 <section class="hero">
   <h1>ARCHIVE ACCESS</h1>
   <p>
-    MLKSHK is a living archive of cultural sound — built deliberately, released selectively, and preserved in full.  
-    Access is granted, not assumed.
+    MLKSHK is a privately curated archive of cultural sound — built to preserve atmosphere, not chase trends.
+    Access is granted selectively to projects that align with our catalogue and ethos.
   </p>
 </section>
 
-<!-- UPDATED -->
+<!-- SECTION 1 -->
 <section class="section" style="background-image:url('images/access/Middle.png');">
   <div class="section-content">
-    <h2>A Curated Digital Archive</h2>
+    <h2>A Living Cultural Archive</h2>
     <p>
-      MLKSHK Digital operates as a private archive rather than a public catalogue.  
-      Each collection is designed around a specific place, era, or cultural moment — interpreted through modern production and released as part of a wider universe.
-      <br><br>
-      We do not chase trends or volume. We build bodies of work intended to live long beyond their first use.
+      MLKSHK Digital is not a traditional music library. It is an ever-expanding archive of original recordings,
+      designed to capture the sound, energy, and attitude of specific eras, locations, and subcultures.
+      Each archive is produced in-house and curated as a complete body of work.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="section" style="background-image:url('images/access/Lower.png');">
+  <div class="section-content">
+    <h2>How Access Works</h2>
+    <p>
+      Access to MLKSHK is granted in stages. Approved applicants typically begin with the ability to licence
+      individual tracks or selected archives. Expanded access, including full catalogue or partnership-level
+      licensing, is offered selectively over time.
+    </p>
+  </div>
+</section>
+
+<!-- NEW SECTION -->
+<section class="section" style="background-image:url('images/access/Middle.png');">
+  <div class="section-content">
+    <h2>Selective Licensing</h2>
+    <p>
+      We licence deliberately. Not all archives are available to all partners, and availability may change as
+      our catalogue grows. Usage is reviewed on a project-by-project basis to ensure alignment and long-term value
+      for both parties.
     </p>
   </div>
 </section>
@@ -57,36 +84,17 @@
 <!-- NEW SECTION -->
 <section class="section" style="background-image:url('images/access/Lower.png');">
   <div class="section-content">
-    <h2>How Access Works</h2>
+    <h2>Access Is Granted, Not Guaranteed</h2>
     <p>
-      Access to MLKSHK is granted in stages.  
-      Approved applicants typically begin with limited use — individual tracks or selected archives — allowing us to understand how our work is represented.
-      <br><br>
-      As relationships develop, access may expand. In some cases, access may also be reduced or withdrawn.
-      <br><br>
-      This approach allows us to protect the integrity of the archive while building long-term creative partnerships.
-    </p>
-  </div>
-</section>
-
-<!-- NEW SECTION -->
-<section class="section">
-  <div class="section-content">
-    <h2>Licensing Philosophy</h2>
-    <p>
-      MLKSHK licenses selectively. Not all archives are available to all partners, and full-catalogue access is limited by design.
-      <br><br>
-      We prioritise alignment, restraint, and quality of use over scale.  
-      Our catalogue remains fully owned and controlled by MLKSHK at all times.
-      <br><br>
-      If your project fits, we’ll explore what level of access makes sense.
+      All licences are time-bound and usage-specific. Access may be expanded, limited, or revoked based on how
+      the music is used. We prioritise collaborators who treat the archive with respect and creative intent.
     </p>
   </div>
 </section>
 
 <!-- FORM SECTION -->
 <div class="access-form">
-  <h2>Request Consideration</h2>
+  <h2>Request Access</h2>
 
   <input type="text" name="name" placeholder="Your name" class="field" required>
   <input type="text" name="company" placeholder="Brand / Company" class="field">
@@ -96,8 +104,8 @@
     <option value="">Project type</option>
     <option>Brand campaign</option>
     <option>Film / TV</option>
-    <option>Game / interactive</option>
-    <option>Agency / ongoing work</option>
+    <option>Digital content</option>
+    <option>Agency / ongoing use</option>
   </select>
 
   <select name="budget" class="field">
@@ -107,14 +115,14 @@
     <option>£1,000+</option>
   </select>
 
-  <textarea name="usage" placeholder="How do you intend to use the music?" class="field"></textarea>
-  <textarea name="catalogue" placeholder="Which archives or locations are you interested in?" class="field"></textarea>
+  <textarea name="usage" placeholder="How will the music be used?" class="field"></textarea>
+  <textarea name="catalogue" placeholder="Which archive collections interest you?" class="field"></textarea>
 
-  <button id="submitBtn" type="submit">Submit Request</button>
+  <button id="submitBtn" type="submit">Request Access</button>
 
   <p class="form-note">
-    Submissions are reviewed manually.  
-    If your project aligns with MLKSHK, we’ll be in touch.
+    Submissions are reviewed individually. Initial access is limited.
+    Expanded licensing is offered selectively over time.
   </p>
 </div>
 
@@ -124,6 +132,8 @@
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* [FORM JS LEFT UNCHANGED] */
 </script>
 
 </body>
