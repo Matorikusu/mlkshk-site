@@ -23,9 +23,9 @@ html, body {
   color:var(--text);
   font-family:'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
 }
-a { text-decoration:none; color:inherit; }
+a { text-decoration:none; color:inherit; cursor:pointer; }
 
-/* NAVIGATION - match index page */
+/* NAVIGATION */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -62,15 +62,23 @@ header.nav-bar {
 .nav-dropdown:hover .nav-toggle::after,
 .nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
 
-/* MAIN CONTENT */
-.wrap { max-width:1200px; margin:0 auto; padding:40px 20px; }
-
-.hero { text-align:center; margin-bottom:40px; }
-.hero h1 { font-family:'Orbitron', sans-serif; font-size:48px; margin-bottom:12px; }
-.hero p { font-size:18px; color:var(--muted); max-width:600px; margin:0 auto; }
+/* IMAGE HERO */
+.hero-link { display:block; }
+.hero {
+  height:500px;
+  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
+  cursor:pointer;
+  transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
+}
+.hero-link:hover .hero {
+  transform: scale(1.02);
+  filter: brightness(1.15);
+  box-shadow: 0 0 40px rgba(255,255,255,0.35);
+}
 
 /* GRID CARDS */
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; }
+.wrap { max-width:1200px; margin:0 auto; padding:40px 20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:40px; }
 .card {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border-radius:var(--card-radius);
@@ -97,6 +105,7 @@ header.nav-bar {
 
 /* FOOTER */
 footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
+
 </style>
 </head>
 <body>
@@ -116,16 +125,26 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
           <a href="lab.html">The Lab</a>
         </div>
       </div>
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Socials</button>
+        <div class="dropdown-menu">
+          <a href="#" target="_blank">Spotify</a>
+          <a href="#" target="_blank">TikTok</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">YouTube</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <section class="hero">
-    <h1>THE UNIVERSE</h1>
-    <p>Explore the crews and genres of MLKSHK — each carton is a world, each playlist is a journey.</p>
-  </section>
+  <!-- HERO -->
+  <a href="universe.html" class="hero-link">
+    <section class="hero"></section>
+  </a>
 
+  <!-- GRID CARDS -->
   <section class="grid">
     <!-- Drum & Bass -->
     <article class="card" data-genre="drum-bass">
@@ -182,6 +201,7 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
       </div>
     </article>
   </section>
+
 </main>
 
 <footer>
@@ -191,5 +211,6 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
 </body>
 </html>
