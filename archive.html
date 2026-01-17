@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK — Archives</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#000;
+  --text:#fff;
+  --muted:#ccc;
+  --accent:#d4af37;
+  --dropdown-bg:#000;
+}
+
+/* RESET */
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+
+/* NAV BAR (UNCHANGED) */
+header.nav-bar{
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding:18px 24px;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  position:sticky;
+  top:0;
+  z-index:30;
+}
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1200px;
+  margin:0 auto;
+}
+.logo-link img{height:42px;display:block}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
+}
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  background:var(--dropdown-bg);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+}
+.nav-dropdown:hover .dropdown-menu{display:block}
+
+/* PAGE HEADER */
+.page-header{
+  padding:80px 20px 40px;
+  text-align:center;
+}
+.page-header h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:42px;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+.page-header p{
+  max-width:700px;
+  margin:0 auto;
+  font-size:18px;
+  color:var(--muted);
+}
+
+/* ARCHIVE GRID */
+.brands-archive{
+  padding:40px 20px 80px;
+  background:#111;
+}
+.brands-grid{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+.brand-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  transition:.25s ease;
+}
+.brand-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 25px 60px rgba(0,0,0,.8);
+}
+.brand-card img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+.brand-info{
+  padding:18px;
+  text-align:center;
+}
+.brand-info h2{
+  margin:0 0 8px;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+}
+.brand-info p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* FOOTER */
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <div class="nav-dropdown">
+      <button class="nav-toggle">Menu</button>
+      <div class="dropdown-menu">
+        <a href="access.html">Access</a>
+        <a href="artists.html">Artists</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="lab.html">The Lab</a>
+        <a href="playlists.html">Playlists</a>
+        <a href="brands.html">Archives</a>
+        <a href="universe.html">The Universe</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HEADER -->
+<section class="page-header">
+  <h1>ARCHIVES</h1>
+  <p>
+    Digital audio time capsules capturing the sound, atmosphere and cultural memory
+    of iconic places around the world.
+  </p>
+</section>
+
+<!-- ARCHIVE GRID -->
+<section class="brands-archive">
+  <div class="brands-grid">
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
+      <div class="brand-info">
+        <h2>The Warehouse 1977</h2>
+        <p>Chicago nightclub culture — the birthplace of house music.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
+      <div class="brand-info">
+        <h2>Shoom 1987</h2>
+        <p>London acid house energy, captured at its rawest.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
+      <div class="brand-info">
+        <h2>Blitz 1979</h2>
+        <p>New Romantic style, sound and cultural rebellion.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="Rum Runner 1967">
+      <div class="brand-info">
+        <h2>Rum Runner 1967</h2>
+        <p>Birmingham nightlife and the roots of future pop.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/southbank1973.png" alt="Southbank Undercroft 1973">
+      <div class="brand-info">
+        <h2>Southbank Undercroft 1973</h2>
+        <p>London skate culture — concrete, community and sound.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/venice1979.png" alt="Venice Beach Skatepark 1979">
+      <div class="brand-info">
+        <h2>Venice Beach Skatepark 1979</h2>
+        <p>California sun, asphalt rebellion and street rhythm.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/shibuya1985.png" alt="Shibuya Street 1985">
+      <div class="brand-info">
+        <h2>Shibuya Street 1985</h2>
+        <p>Neon nights and urban movement — Tokyo preserved in sound.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
