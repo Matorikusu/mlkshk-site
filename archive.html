@@ -28,7 +28,7 @@ html,body{
 }
 a{color:inherit;text-decoration:none}
 
-/* NAV BAR (UNCHANGED) */
+/* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
   padding:18px 24px;
@@ -124,9 +124,26 @@ header.nav-bar{
   font-size:22px;
 }
 .brand-info p{
-  margin:0;
+  margin:0 0 14px;
   font-size:14px;
   color:var(--muted);
+}
+
+/* PLAYLIST BUTTON */
+.playlist-btn{
+  display:inline-block;
+  padding:10px 22px;
+  border-radius:20px;
+  border:2px solid var(--text);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  transition:.2s ease;
+}
+.playlist-btn:hover{
+  background:var(--text);
+  color:#000;
+  box-shadow:0 0 18px rgba(255,255,255,0.5);
 }
 
 /* FOOTER */
@@ -141,7 +158,6 @@ footer{
 
 <body>
 
-<!-- NAV -->
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -162,7 +178,6 @@ footer{
   </div>
 </header>
 
-<!-- HEADER -->
 <section class="page-header">
   <h1>ARCHIVES</h1>
   <p>
@@ -171,7 +186,6 @@ footer{
   </p>
 </section>
 
-<!-- ARCHIVE GRID -->
 <section class="brands-archive">
   <div class="brands-grid">
 
@@ -180,6 +194,7 @@ footer{
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
         <p>Chicago nightclub culture — the birthplace of house music.</p>
+        <a href="playlists-warehouse-1977.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -188,6 +203,7 @@ footer{
       <div class="brand-info">
         <h2>Shoom 1987</h2>
         <p>London acid house energy, captured at its rawest.</p>
+        <a href="playlists-shoom-1987.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -196,6 +212,7 @@ footer{
       <div class="brand-info">
         <h2>Blitz 1979</h2>
         <p>New Romantic style, sound and cultural rebellion.</p>
+        <a href="playlists-blitz-1979.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -204,6 +221,7 @@ footer{
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
         <p>Birmingham nightlife and the roots of future pop.</p>
+        <a href="playlists-rumrunner-1967.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -212,6 +230,7 @@ footer{
       <div class="brand-info">
         <h2>Southbank Undercroft 1973</h2>
         <p>London skate culture — concrete, community and sound.</p>
+        <a href="playlists-southbank-1973.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -220,6 +239,7 @@ footer{
       <div class="brand-info">
         <h2>Venice Beach Skatepark 1979</h2>
         <p>California sun, asphalt rebellion and street rhythm.</p>
+        <a href="playlists-venice-1979.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
@@ -228,6 +248,7 @@ footer{
       <div class="brand-info">
         <h2>Shibuya Street 1985</h2>
         <p>Neon nights and urban movement — Tokyo preserved in sound.</p>
+        <a href="playlists-shibuya-1985.html" class="playlist-btn">View Playlists</a>
       </div>
     </article>
 
