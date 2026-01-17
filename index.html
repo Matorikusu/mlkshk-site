@@ -11,298 +11,347 @@
 
 <style>
 :root{
-  --bg: #000;
-  --text: #fff; /* main text white */
-  --muted: #ccc;
-  --accent: #d4af37; /* gold for access section */
-  --dropdown-bg: #000;
-  --access-overlay: rgba(0,0,0,0.65); /* darker overlay for access section */
+  --bg:#000;
+  --text:#fff;
+  --muted:#ccc;
+  --accent:#d4af37;
+  --dropdown-bg:#000;
+  --access-overlay:rgba(0,0,0,0.65);
 }
 
-/* RESET & BODY */
-html, body {
-  margin: 0;
-  height: 100%;
-  font-family: 'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
-  background: var(--bg);
-  color: var(--text);
+/* RESET */
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+  background:var(--bg);
+  color:var(--text);
 }
-
-a { color: inherit; text-decoration: none; }
+a{color:inherit;text-decoration:none}
 
 /* NAV BAR */
-header.nav-bar {
+header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
   padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-  position: sticky;
-  top: 0;
-  z-index: 30;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  position:sticky;
+  top:0;
+  z-index:30;
 }
-.nav-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 18px;
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1200px;
+  margin:0 auto;
 }
-.logo-link img { height: 42px; display:block; }
-.nav-links { display: flex; gap: 14px; align-items: center; }
-.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
-.nav-toggle {
-  display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; cursor:pointer;
-  color:var(--muted); font-weight:600; background:transparent; border:0;
+.logo-link img{height:42px;display:block}
+.nav-links{display:flex}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
 }
-.nav-toggle::after {
-  content: ""; display:inline-block; width:8px; height:8px; border-right:2px solid var(--muted);
-  border-bottom:2px solid var(--muted); transform: rotate(45deg); margin-left:4px; transition: transform .18s ease, border-color .18s ease;
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  background:var(--dropdown-bg);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
 }
-.dropdown-menu {
-  display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--dropdown-bg);
-  min-width: 200px; border: 1px solid var(--accent); border-radius:8px; padding:6px 0;
-  z-index:1000; box-shadow:0 10px 30px rgba(0,0,0,0.6);
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
 }
-.dropdown-menu a {
-  display:block; padding:10px 14px; font-size:14px; color:#fff;
-}
-.dropdown-menu a:hover { background: var(--accent); color: #000; }
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu { display:block; }
-.nav-dropdown:hover .nav-toggle::after,
-.nav-dropdown:focus-within .nav-toggle::after { transform: rotate(-135deg); border-color: var(--text); }
+.nav-dropdown:hover .dropdown-menu{display:block}
 
-@media (max-width:760px){
-  .nav-content{padding-right:14px;padding-left:14px}
-  .nav-links{gap:8px}
-}
-
-/* SECTION DIVIDER */
-.section-divider { width: 100%; height: 2px; background: #fff; border: 0; margin:0; }
-
-/* HERO IMAGE */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 700px;
-  background: url('images/Home/home-hero-header.png') center/cover no-repeat;
-  overflow: hidden;
+/* HERO */
+.hero{
+  height:700px;
+  background:url('images/Home/home-hero-header.png') center/cover no-repeat;
 }
 
-/* SECTIONS */
-.section {
-  position: relative;
-  padding: 80px 20px;
-  text-align: center;
-  color: var(--text);
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
+/* DIVIDER */
+.section-divider{
+  height:2px;
+  background:#fff;
+  border:0;
+  margin:0;
 }
-.section::before {
+
+/* BRANDS */
+.brands-archive{
+  padding:50px 20px;
+  text-align:center;
+  background:#111;
+}
+.brands-archive h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:36px;
+  margin-bottom:15px;
+}
+.brands-archive p{
+  font-size:16px;
+  color:var(--muted);
+  max-width:600px;
+  margin:0 auto 40px;
+}
+.brands-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+.brand-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  transition:.2s;
+}
+.brand-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,.7);
+}
+.brand-card img{
+  width:100%;
+  display:block;
+}
+.brand-info{
+  padding:16px;
+  text-align:center;
+}
+.brand-info h2{
+  margin:0 0 6px;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+}
+.brand-info p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* CATALOGUE & ACCESS SECTIONS */
+.section{
+  position:relative;
+  padding:80px 20px;
+  text-align:center;
+  background-size:cover;
+  background-position:center;
+}
+.section::before{
   content:"";
   position:absolute;
   inset:0;
-  background: transparent; /* no overlay for normal sections */
-  z-index:0;
+  background:transparent;
 }
-.section .section-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
+.section-content{
+  position:relative;
+  max-width:700px;
   margin:0 auto;
 }
-.section h2 { font-family:'Orbitron', sans-serif; font-size:36px; margin-bottom:15px; color: var(--text); }
-.section p { font-size:18px; opacity:0.9; margin-bottom:25px; }
-
-/* ACCESS SECTION */
-.access-section::before {
-  background: var(--access-overlay); /* darker overlay */
+.section h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:36px;
+  margin-bottom:15px;
 }
-.access-section h2,
-.access-section .explore-button {
-  color: var(--accent);
-  border-color: var(--accent);
+.section p{
+  font-size:18px;
+  margin-bottom:25px;
 }
-.access-section .explore-button:hover {
-  background: var(--accent);
-  color: #000;
-}
-
-/* BUTTONS */
-.explore-button {
+.explore-button{
   display:inline-block;
   padding:14px 40px;
   border-radius:30px;
   border:2px solid var(--text);
-  color: var(--text);
   font-weight:700;
-  text-decoration:none;
-  transition:0.2s;
+  transition:.2s;
 }
-.explore-button:hover { background: var(--text); color:black; box-shadow:0 0 20px rgba(255,255,255,0.5); }
+.explore-button:hover{
+  background:var(--text);
+  color:#000;
+  box-shadow:0 0 20px rgba(255,255,255,.5);
+}
 
-/* BRANDS / ARCHIVE GRID */
-.brands-archive { padding:50px 20px; text-align:center; background: #111; } 
-.brands-archive h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:15px; color: var(--text); }
-.brands-archive p { font-size:16px; margin-bottom:40px; color:var(--muted); max-width:600px; margin-left:auto; margin-right:auto; }
-.brands-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:0; }
-.brand-card { background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)); border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.5); transition:.2s; }
-.brand-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.7); }
-.brand-card img { width:100%; height:auto; display:block; object-fit:cover; }
-.brand-info { padding:16px; display:flex; flex-direction:column; align-items:center; }
-.brand-info h2 { margin:0 0 6px; font-family:'Orbitron',sans-serif; font-size:22px; text-align:center; }
-.brand-info p { margin:0 0 12px; font-size:14px; color:var(--muted); text-align:center; }
-.brand-info .explore-button { display:inline-block; padding:10px 20px; border:2px solid var(--text); border-radius:12px; font-size:14px; font-weight:600; color:var(--text); text-decoration:none; transition:.2s; }
-.brand-info .explore-button:hover { background:var(--text); color:#000; }
+/* ACCESS OVERLAY */
+.access-section::before{
+  background:var(--access-overlay);
+}
 
-/* UNIVERSE SECTION */
-.universe-teaser { padding:60px 20px; text-align:center; background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat; }
-.universe-teaser h2 { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:10px; letter-spacing:2px; color: var(--text); }
-.universe-teaser p { font-size:18px; opacity:0.85; max-width:600px; margin:0 auto 20px; }
-.universe-btn { display:inline-block; padding:14px 40px; border-radius:30px; border:2px solid var(--text); color:var(--text); text-transform:uppercase; font-weight:700; transition:0.2s; }
-.universe-btn:hover { background: var(--text); color:black; box-shadow:0 0 20px rgba(255,255,255,0.5); }
-
-/* LAB SECTION */
-.lab-section { text-align:center; padding:60px 20px; background: url('images/THE_LAB_HEADER 1920 x 800.png') center/cover no-repeat; }
-.lab-section h2 { font-family:'Orbitron',sans-serif; font-size:40px; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; color: var(--text); }
-.lab-section p { font-size:18px; margin-bottom:20px; opacity:0.85; }
-.lab-btn { display:inline-block; padding:16px 50px; border-radius:40px; border:2px solid var(--text); color:var(--text); font-weight:bold; text-decoration:none; letter-spacing:1px; transition: all 0.2s ease; }
-.lab-btn:hover { background: var(--text); color:black; box-shadow:0 0 25px rgba(255,255,255,0.6); }
+/* UNIVERSE & LAB – IMAGE ONLY */
+.universe-link,
+.lab-link{
+  display:block;
+}
+.universe-teaser,
+.lab-section{
+  height:420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.universe-teaser{
+  background-image:url('images/Home/UNIVERSE_HEADER2.png');
+}
+.lab-section{
+  background-image:url('images/THE_LAB_HEADER 1920 x 800.png');
+}
+.universe-link:hover .universe-teaser,
+.lab-link:hover .lab-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
 
 /* FOOTER */
-footer { padding:28px 20px; color: var(--text); text-align:center; font-size:13px; border-top:1px solid rgba(255,255,255,0.05); }
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
 </style>
 </head>
+
 <body>
 
-<!-- NAV BAR -->
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <nav class="nav-links" aria-label="Main navigation">
+    <nav class="nav-links">
       <div class="nav-dropdown">
-        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
-        <div class="dropdown-menu" role="menu" aria-label="Menu">
-          <a role="menuitem" href="access.html">Access</a>
-          <a role="menuitem" href="artists.html">Artists</a>
-          <a role="menuitem" href="catalogue.html">Catalogue</a>
-          <a role="menuitem" href="lab.html">The Lab</a>
-          <a role="menuitem" href="playlists.html">Playlists</a>
-          <a role="menuitem" href="universe.html">The Universe</a>
+        <button class="nav-toggle">Menu</button>
+        <div class="dropdown-menu">
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="lab.html">The Lab</a>
+          <a href="playlists.html">Playlists</a>
+          <a href="universe.html">The Universe</a>
         </div>
       </div>
     </nav>
   </div>
 </header>
 
-<!-- HERO IMAGE -->
 <section class="hero"></section>
-
 <hr class="section-divider">
 
-<!-- BRANDS / ARCHIVE GRID -->
 <section class="brands-archive">
   <h2>EXPLORE OUR BRANDS</h2>
-  <p>Discover revitalised clubs and music brands curated by MLKSHK. Dive into playlists, events, and the legacy of music culture.</p>
+  <p>Digital audio time capsules capturing the sound, energy and cultural memory of iconic places.</p>
+
   <div class="brands-grid">
+
+    <!-- EXISTING -->
     <article class="brand-card">
-      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
+      <img src="images/Brand_Banners/thewarehouse1977banner.png">
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
-        <p>The legendary Chicago nightclub reimagined — classic grooves, modern soundscapes.</p>
-        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
+        <p>Chicago’s legendary nightclub — the birthplace of house music.</p>
       </div>
     </article>
+
     <article class="brand-card">
-      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
+      <img src="images/Brand_Banners/shoom1987banner.png">
       <div class="brand-info">
         <h2>Shoom 1987</h2>
-        <p>The legendary London club reimagined — the birthplace of acid house and UK rave culture.</p>
-        <a href="archive-shoom-1987.html" class="explore-button">Explore</a>
+        <p>London acid house, raw energy and underground unity.</p>
       </div>
     </article>
+
     <article class="brand-card">
-      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
+      <img src="images/Brand_Banners/blitz1979banner.png">
       <div class="brand-info">
         <h2>Blitz 1979</h2>
-        <p>The legendary London club reimagined — the birthplace of the New Romantic movement and avant-garde club culture.</p>
-        <a href="archive-blitz-1979.html" class="explore-button">Explore</a>
+        <p>New Romantic culture, style and sound.</p>
       </div>
     </article>
-        <article class="brand-card">
-      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="RumRunner 1967">
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/rumrunner1967banner.png">
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
-        <p>Indie disco vibes from Birmingham’s legendary Rum Runner club. Reborn in playlists and curated events.</p>
-        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
+        <p>Birmingham nightlife — indie, disco and future pop.</p>
       </div>
     </article>
+
+    <!-- NEW -->
+    <article class="brand-card">
+      <img src="images/Brand_Banners/southbank1973.png">
+      <div class="brand-info">
+        <h2>Southbank Undercroft 1973</h2>
+        <p>London’s concrete heart of skate culture, captured in a audio time capsule.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/venice1979.png">
+      <div class="brand-info">
+        <h2>Venice Beach Skatepark 1979</h2>
+        <p>California sun, asphalt rebellion and the birth of modern skate sound.</p>
+      </div>
+    </article>
+
+    <article class="brand-card">
+      <img src="images/Brand_Banners/shibuya1985.png">
+      <div class="brand-info">
+        <h2>Shibuya Street 1985</h2>
+        <p>Tokyo street culture preserved in sound.</p>
+      </div>
+    </article>
+
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- CATALOGUE SECTION -->
 <section class="section" style="background-image:url('images/Catalogue/catalogue-header.png');">
   <div class="section-content">
     <h2>CATALOGUE</h2>
-    <p>Explore our complete catalogue: all artists, releases, and curated archival collections capturing iconic musical moments and locations. Browse and licence music for commercial projects.</p>
+    <p>Browse our complete archive of artists, releases and cultural collections.</p>
     <a href="catalogue.html" class="explore-button">View Catalogue</a>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ACCESS SECTION -->
 <section class="section access-section" style="background-image:url('images/access/access-banner.png');">
   <div class="section-content">
     <h2>REQUEST ACCESS</h2>
-    <p>Approved users gain the ability to browse and licence our music for events, television, film, fashion campaigns, and curated brand experiences. All applications are reviewed individually.</p>
+    <p>Apply to licence music for film, fashion, events and brand projects.</p>
     <a href="access.html" class="explore-button">Request Access</a>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- UNIVERSE TEASER -->
-<section class="universe-teaser">
-  <h2></h2>
-  <p>Pick your crew — each carton represents a genre, a colour, a vibe. Step inside and explore the world of MLKSHK.</p>
-  <a href="universe.html" class="universe-btn">Enter The Universe</a>
-</section>
+<a href="universe.html" class="universe-link">
+  <section class="universe-teaser"></section>
+</a>
 
 <hr class="section-divider">
 
-<!-- ENTER THE LAB -->
-<section class="lab-section">
-  <h2>ENTER THE LAB</h2>
-  <p>Think you’ve got what it takes? Step inside. Make something real.</p>
-  <a href="lab.html" class="lab-btn">Enter The Lab</a>
-</section>
+<a href="lab.html" class="lab-link">
+  <section class="lab-section"></section>
+</a>
 
 <hr class="section-divider">
 
-<!-- FOOTER -->
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
-  document.querySelectorAll('.nav-dropdown').forEach(dd => {
-    const btn = dd.querySelector('.nav-toggle');
-    const menu = dd.querySelector('.dropdown-menu');
-    if (!btn || !menu) return;
-    btn.addEventListener('keydown', (e) => {
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();const isOpen=menu.style.display==='block';menu.style.display=isOpen?'':'block';btn.setAttribute('aria-expanded',String(!isOpen));}
-      else if(e.key==='Escape'){menu.style.display='';btn.setAttribute('aria-expanded','false');btn.blur();}
-    });
-    dd.addEventListener('focusout',()=>{setTimeout(()=>{if(!dd.contains(document.activeElement)){menu.style.display='';btn.setAttribute('aria-expanded','false');}},10);});
-  });
-
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 </body>
