@@ -68,22 +68,18 @@ header.nav-bar{
 }
 .nav-dropdown:hover .dropdown-menu{display:block}
 
-/* PAGE HEADER */
-.page-header{
-  padding:80px 20px 40px;
-  text-align:center;
+/* HERO IMAGE */
+.hero-link { display:block; margin-bottom:40px; }
+.hero {
+  height:400px;
+  background: url('images/Home/MLKSHK_ARCHIVE_HEADER.png') center/cover no-repeat;
+  cursor:pointer;
+  transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
 }
-.page-header h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:42px;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
-.page-header p{
-  max-width:700px;
-  margin:0 auto;
-  font-size:18px;
-  color:var(--muted);
+.hero-link:hover .hero {
+  transform: scale(1.02);
+  filter: brightness(1.15);
+  box-shadow: 0 0 40px rgba(255,255,255,0.35);
 }
 
 /* ARCHIVE GRID */
@@ -170,7 +166,6 @@ footer{
         <a href="artists.html">Artists</a>
         <a href="catalogue.html">Catalogue</a>
         <a href="lab.html">The Lab</a>
-        <a href="playlists.html">Playlists</a>
         <a href="brands.html">Archives</a>
         <a href="universe.html">The Universe</a>
       </div>
@@ -178,13 +173,10 @@ footer{
   </div>
 </header>
 
-<section class="page-header">
-  <h1>ARCHIVES</h1>
-  <p>
-    Digital audio time capsules capturing the sound, atmosphere and cultural memory
-    of iconic places around the world.
-  </p>
-</section>
+<!-- HERO IMAGE -->
+<a href="archive.html" class="hero-link">
+  <section class="hero"></section>
+</a>
 
 <section class="brands-archive">
   <div class="brands-grid">
@@ -193,7 +185,7 @@ footer{
       <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
-        <p>Chicago nightclub culture — the birthplace of house music.</p>
+        <p>Chicago nightclub culture, the birthplace of house music.</p>
         <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
       </div>
     </article>
