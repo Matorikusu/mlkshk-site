@@ -14,7 +14,7 @@
   --bg:#000;
   --text:#f5f5f5;
   --muted:#c0c0c0;
-  --accent:#d4af37; /* changed pink to gold */
+  --accent:#d4af37;
 }
 
 html, body {
@@ -107,26 +107,23 @@ header.nav-bar{
   color:var(--muted);
 }
 
-/* SECTION LAYOUT */
+/* SECTION */
 .section{
   position:relative;
   padding:100px 20px;
   text-align:center;
   background-size:cover;
   background-position:center;
-  color:#fff;
   overflow:hidden;
 }
 .section::before{
   content:"";
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.75); /* darker overlay */
-  z-index:0;
+  background:rgba(0,0,0,0.75);
 }
 .section-content{
   position:relative;
-  z-index:1;
   max-width:800px;
   margin:0 auto;
 }
@@ -139,11 +136,10 @@ header.nav-bar{
 .section p{
   font-size:18px;
   line-height:1.6;
-  color:#f5f5f5;
 }
 
-/* FORM SECTION */
-.access-form {
+/* FORM */
+.access-form{
   max-width:700px;
   margin:60px auto 90px;
   padding:0 20px;
@@ -153,14 +149,13 @@ header.nav-bar{
   text-align:center;
 }
 
-.access-form h2 {
+.access-form h2{
   font-family:'Orbitron', sans-serif;
   font-size:36px;
   color:var(--accent);
-  margin-bottom:8px;
 }
 
-.access-form .field{
+.field{
   background:#111;
   border:1px solid rgba(255,255,255,0.1);
   border-radius:12px;
@@ -169,22 +164,14 @@ header.nav-bar{
   color:#fff;
 }
 
-.access-form .field::placeholder {
-  color:var(--muted);
-}
+.field::placeholder{color:var(--muted);}
 
-.access-form select.field {
-  appearance:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-}
-
-.access-form textarea.field {
+textarea.field{
   resize:vertical;
   min-height:100px;
 }
 
-.access-form button {
+button{
   padding:16px;
   border-radius:30px;
   border:2px solid var(--accent);
@@ -196,15 +183,14 @@ header.nav-bar{
   transition:.2s;
 }
 
-.access-form button:hover {
+button:hover{
   background:var(--accent);
   color:#000;
 }
 
-.form-note {
+.form-note{
   font-size:13px;
   color:var(--muted);
-  margin-top:6px;
 }
 
 /* FOOTER */
@@ -225,77 +211,47 @@ footer{
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-
-    <nav class="nav-links">
-      <div class="nav-dropdown">
-        <button class="nav-toggle">Menu</button>
-        <div class="dropdown-menu">
-          <a href="artists.html">Artists</a>
-          <a href="playlists.html">Playlists</a>
-          <a href="universe.html">The Universe</a>
-          <a href="lab.html">The Lab</a>
-        </div>
-      </div>
-    </nav>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <h1>ARCHIVE ACCESS</h1>
-  <p>
-    MLKSHK is a living cultural archive — built deliberately and released selectively.<br>
-    Access is not public. It is granted.
-    </p>
-  </p>
+  <p>Access is limited. It is granted selectively.</p>
 </section>
 
-<!-- MIDDLE SECTION -->
 <section class="section" style="background-image:url('images/access/Middle.png');">
   <div class="section-content">
     <h2>What is MLKSHK Archive?</h2>
     <p>
-      MLKSHK ARCHIVE operates as a curated archive of sound, capturing the atmosphere,
-      energy, and identity of iconic musical movements and locations.
-      <br><br>
-      Our catalogue is continuously expanding and fully owned in-house. Every release
-      is built as part of a wider universe — not for trends, not for volume, and not
-      for short-term gain.
-      <br><br>
-      We don’t chase streams or clout.<br>
-      We preserve worlds.
+      MLKSHK is a curated cultural archive. Every release is intentional.
+      We preserve worlds — not trends.
     </p>
   </div>
 </section>
 
-<!-- LOWER SECTION -->
 <section class="section" style="background-image:url('images/access/Lower.png');">
   <div class="section-content">
     <h2>Licensing & Access</h2>
     <p>
-      Licensing through MLKSHK is staged and selective.
-      <br><br>
-      New partners are typically granted access to a limited number of tracks. This
-      allows both sides to understand alignment, usage, and creative intent before
-      expanding access.
-      <br><br>
-      Extended access, archive-level licensing, and long-term partnerships are offered
-      gradually and reviewed over time. Access may evolve — and may also be revoked.
-      <br><br>
-      Availability is limited by design.
+      New partners are granted limited access initially.
+      Extended access is reviewed over time.
     </p>
   </div>
 </section>
 
-<!-- FORM SECTION -->
-<div class="access-form">
+<!-- FORM -->
+<form
+  class="access-form"
+  action="https://formspree.io/f/mnjjjobd"
+  method="POST"
+>
   <h2>Request Access</h2>
 
-  <input type="text" name="name" placeholder="Your name" class="field" required>
-  <input type="text" name="company" placeholder="Brand / Company" class="field">
-  <input type="email" name="email" placeholder="Email address" class="field" required>
+  <input class="field" type="text" name="name" placeholder="Your name" required>
+  <input class="field" type="text" name="company" placeholder="Company / Agency">
+  <input class="field" type="email" name="email" placeholder="Email address" required>
 
-  <select name="project" class="field" required>
+  <select class="field" name="project_type" required>
     <option value="">Project type</option>
     <option>Brand campaign</option>
     <option>Film / TV</option>
@@ -303,57 +259,24 @@ footer{
     <option>Agency / ongoing use</option>
   </select>
 
-  <select name="budget" class="field">
-    <option value="">Budget range (optional)</option>
-    <option>£250 – £500</option>
-    <option>£500 – £1,000</option>
-    <option>£1,000+</option>
-  </select>
+  <textarea class="field" name="usage" placeholder="How will the music be used?"></textarea>
+  <textarea class="field" name="requested_music" placeholder="Which archive(s) or track(s) are you interested in?"></textarea>
 
-  <textarea name="usage" placeholder="How will the music be used?" class="field"></textarea>
-  <textarea name="catalogue" placeholder="Which archive collections interest you?" class="field"></textarea>
+  <input type="hidden" name="_subject" value="MLKSHK — Archive Access Request">
 
-  <button id="submitBtn" type="submit">Request Access</button>
+  <button type="submit">Request Access</button>
 
-  <p class="form-note">All submissions are reviewed individually. If your project aligns, we will be in touch.</p>
-</div>
+  <p class="form-note">
+    All requests are reviewed individually. Access is not guaranteed.
+  </p>
+</form>
 
 <footer>
-  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+  MLKSHK Digital © <span id="year"></span>
 </footer>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-
-// FORM SUBMISSION
-const endpoint = 'https://script.google.com/macros/s/AKfycby4U0ERd2cFQcHsGLL26c_WWjibffDDccRK0_HyxP0vf1GqW-VndcecJ2sr4EouMIqdaA/exec';
-
-document.getElementById('submitBtn').addEventListener('click', async function (e) {
-  e.preventDefault();
-
-  const formElements = document.querySelectorAll('.access-form .field');
-  const data = {};
-  formElements.forEach(el => data[el.name] = el.value);
-
-  try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const result = await response.json();
-
-    if (result && result.success) {
-      alert('Request received. If it fits, we’ll be in touch.');
-      formElements.forEach(el => el.value = '');
-    } else {
-      alert('Submission sent. We’ll review shortly.');
-    }
-  } catch (err) {
-    alert('There was an error submitting. Try again later.');
-    console.error(err);
-  }
-});
 </script>
 
 </body>
