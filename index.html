@@ -81,58 +81,6 @@ header.nav-bar{
   margin:0;
 }
 
-/* BRANDS */
-.brands-archive{
-  padding:50px 20px;
-  text-align:center;
-  background:#111;
-}
-.brands-archive h2{
-  font-family:'Orbitron',sans-serif;
-  font-size:36px;
-  margin-bottom:15px;
-}
-.brands-archive p{
-  font-size:16px;
-  color:var(--muted);
-  max-width:600px;
-  margin:0 auto 40px;
-}
-.brands-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:24px;
-}
-.brand-card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  transition:.2s;
-}
-.brand-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 20px 50px rgba(0,0,0,.7);
-}
-.brand-card img{
-  width:100%;
-  display:block;
-}
-.brand-info{
-  padding:16px;
-  text-align:center;
-}
-.brand-info h2{
-  margin:0 0 6px;
-  font-family:'Orbitron',sans-serif;
-  font-size:22px;
-}
-.brand-info p{
-  margin:0;
-  font-size:14px;
-  color:var(--muted);
-}
-
 /* IMAGE-ONLY SECTIONS */
 .image-link{
   display:block;
@@ -151,6 +99,9 @@ header.nav-bar{
 }
 
 /* INDIVIDUAL BACKGROUNDS */
+.brands-section{
+  background-image:url('images/Home/ARCHIVES_HEADER.png'); /* your new brands image */
+}
 .catalogue-section{
   background-image:url('images/Home/CATALOGUE_HEADER.png');
 }
@@ -185,10 +136,10 @@ footer{
       <button class="nav-toggle">Menu</button>
       <div class="dropdown-menu">
         <a href="access.html">Access</a>
+        <a href="archive.html">Archive</a>
         <a href="artists.html">Artists</a>
         <a href="catalogue.html">Catalogue</a>
         <a href="lab.html">The Lab</a>
-        <a href="playlists.html">Playlists</a>
         <a href="universe.html">The Universe</a>
       </div>
     </div>
@@ -198,16 +149,10 @@ footer{
 <section class="hero"></section>
 <hr class="section-divider">
 
-<!-- EXPLORE OUR BRANDS (UNCHANGED) -->
-<section class="brands-archive">
-  <h2>EXPLORE OUR BRANDS</h2>
-  <p>Digital audio time capsules capturing the sound, energy and cultural memory of iconic places.</p>
-
-  <div class="brands-grid">
-    <!-- existing + new brand cards exactly as before -->
-    <!-- (no changes made here) -->
-  </div>
-</section>
+<!-- ARCHIVES IMAGE LINK -->
+<a href="brands.html" class="image-link">
+  <section class="image-section brands-section"></section>
+</a>
 
 <hr class="section-divider">
 
@@ -232,7 +177,7 @@ footer{
 
 <hr class="section-divider">
 
-<!-- REQUEST ACCESS (BOTTOM) -->
+<!-- REQUEST ACCESS -->
 <a href="access.html" class="image-link">
   <section class="image-section access-section"></section>
 </a>
