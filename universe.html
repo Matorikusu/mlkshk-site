@@ -106,6 +106,63 @@ header.nav-bar {
 /* FOOTER */
 footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
 
+/* FLOATING AUDIO PLAYER */
+#floating-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.95);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 340px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  font-family: 'Rajdhani', sans-serif;
+  z-index: 999;
+}
+
+.player-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.track-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-title { font-weight: 700; font-size: 14px; }
+.track-artist { font-size: 12px; color: #ccc; }
+
+.player-right button {
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.player-right button:hover { transform: scale(1.1); }
+
 </style>
 </head>
 <body>
@@ -192,8 +249,22 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
       </div>
     </article>
   </section>
-
 </main>
+
+<!-- FLOATING AUDIO PLAYER -->
+<div id="floating-player">
+  <div class="player-left">
+    <img src="images/Player/azuki-cover.png" alt="Track Cover" class="track-image">
+    <div class="track-info">
+      <div class="track-title" id="track-title">Track 1</div>
+      <div class="track-artist">MLKSHK Digital</div>
+    </div>
+  </div>
+  <div class="player-right">
+    <button id="play-pause">▶️</button>
+    <audio id="audio" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp1.mp3"></audio>
+  </div>
+</div>
 
 <footer>
   MLKSHK — Built for the misfits. © <span id="year"></span>
@@ -201,7 +272,40 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Floating audio player logic
+const audio = document.getElementById('audio');
+const btn = document.getElementById('play-pause');
+
+const tracks = [
+  {title: "Track 1", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp1.mp3"},
+  {title: "Track 2", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp2.mp3"},
+  {title: "Track 3", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp3.mp3"}
+];
+
+let currentTrack = 0;
+
+function loadTrack(index) {
+  audio.src = tracks[index].url;
+  document.getElementById('track-title').textContent = tracks[index].title;
+  audio.pause();
+  btn.textContent = '▶️';
+}
+
+btn.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    btn.textContent = '⏸️';
+  } else {
+    audio.pause();
+    btn.textContent = '▶️';
+  }
+});
+
+// Load first track initially
+loadTrack(currentTrack);
 </script>
 
 </body>
 </html>
+
