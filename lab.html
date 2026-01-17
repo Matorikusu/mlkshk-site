@@ -52,13 +52,28 @@ header.nav-bar {
 .nav-dropdown:hover .nav-toggle::after,
 .nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
 
-/* MAIN CONTENT */
-.lab-container { max-width:1000px; margin:0 auto; padding:40px 20px; }
-.lab-header { text-align:center; margin-bottom:40px; padding:0 10px; }
-.lab-header h1 { font-family:'Orbitron', sans-serif; font-size:42px; margin-bottom:10px; }
-.lab-header p { font-size:16px; opacity:0.7; }
+/* HERO HEADER IMAGE */
+.image-link{
+  display:block;
+  margin-bottom:40px;
+}
+.image-section{
+  height:420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.image-link:hover .image-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
 
-/* Section styling */
+/* LAB CONTENT */
+.lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
+
+/* Section divider */
 .section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
 
 .rules-box {
@@ -123,26 +138,16 @@ header.nav-bar {
           <a href="universe.html">The Universe</a>
         </div>
       </div>
-      <div class="nav-dropdown">
-        <button class="nav-toggle" aria-haspopup="true">Socials</button>
-        <div class="dropdown-menu">
-          <a href="#" target="_blank">Spotify</a>
-          <a href="#" target="_blank">TikTok</a>
-          <a href="#" target="_blank">Instagram</a>
-          <a href="#" target="_blank">YouTube</a>
-        </div>
-      </div>
     </nav>
   </div>
 </header>
 
 <div class="lab-container">
 
-  <!-- HEADER -->
-  <section class="lab-header">
-    <h1>MLKSHK LAB</h1>
-    <p>A writing space for vocalists, lyricists and raw talent.</p>
-  </section>
+  <!-- HERO IMAGE HEADER -->
+  <a href="lab.html" class="image-link">
+    <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
+  </a>
 
   <hr class="section-divider">
 
@@ -179,13 +184,6 @@ header.nav-bar {
 
   <hr class="section-divider">
 
-  <!-- PASSWORD ENTRY -->
-  <section class="password-section">
-    <h2>Enter Password</h2>
-    <input type="text" placeholder="Password">
-    <button>Submit</button>
-  </section>
-
   <!-- LIVE CHAT -->
   <section class="chat-container">
     <h2>Live Lab Chat</h2>
@@ -196,6 +194,13 @@ header.nav-bar {
       <textarea placeholder="Type message (Access Only)" disabled></textarea>
       <button disabled>Send</button>
     </div>
+  </section>
+
+    <!-- PASSWORD ENTRY -->
+  <section class="password-section">
+    <h2>Enter Password</h2>
+    <input type="text" placeholder="Password">
+    <button>Submit</button>
   </section>
 
   <hr class="section-divider">
