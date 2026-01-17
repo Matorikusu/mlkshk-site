@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
+:root{
   --bg:#000;
   --text:#f5f5f5;
   --muted:#c0c0c0;
@@ -16,254 +16,279 @@
   --card-radius:12px;
 }
 
-/* Global */
-html, body {
-  margin:0; padding:0;
+/* GLOBAL */
+html,body{
+  margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:'Rajdhani', system-ui, -apple-system, 'Helvetica Neue', Arial;
+  font-family:'Rajdhani',system-ui,-apple-system,Arial;
 }
-a { text-decoration:none; color:inherit; cursor:pointer; }
+a{color:inherit;text-decoration:none}
 
-/* NAVIGATION */
-header.nav-bar {
-  border-bottom:1px solid rgba(255,42,161,0.04);
+/* NAV */
+header.nav-bar{
+  border-bottom:1px solid rgba(255,42,161,.04);
   padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-  position: sticky; top:0; z-index:30;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  position:sticky;
+  top:0;
+  z-index:30;
 }
-.nav-content {
-  max-width:1200px; margin:0 auto;
-  display:flex; justify-content:space-between; align-items:center; gap:18px;
+.nav-content{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.logo-link img { height:42px; display:block; }
-.nav-links { display:flex; gap:14px; align-items:center; }
-.nav-dropdown { position: relative; display:inline-flex; align-items:center; }
-.nav-toggle {
-  display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
-  border-radius:8px; cursor:pointer; color:var(--muted); font-weight:600; background:transparent; border:0;
-}
-.nav-toggle::after {
-  content:""; display:inline-block; width:8px; height:8px;
-  border-right:2px solid var(--muted);
-  border-bottom:2px solid var(--muted);
-  transform: rotate(45deg);
-  margin-left:4px; transition: transform .18s ease, border-color .18s ease;
-}
-.dropdown-menu {
-  display:none; position:absolute; top:calc(100% + 8px); left:0;
-  background:#000; min-width:200px; border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-}
-.dropdown-menu a { display:block; padding:10px 14px; font-size:14px; color:#fff; }
-.dropdown-menu a:hover { background: var(--accent); color:#000; }
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu { display:block; }
-.nav-dropdown:hover .nav-toggle::after,
-.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
-
-/* IMAGE HERO */
-.hero-link { display:block; }
-.hero {
-  height:500px;
-  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
+.logo-link img{height:42px}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
   cursor:pointer;
-  transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
 }
-.hero-link:hover .hero {
-  transform: scale(1.02);
-  filter: brightness(1.15);
-  box-shadow: 0 0 40px rgba(255,255,255,0.35);
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  background:#000;
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+}
+.dropdown-menu a:hover{
+  background:var(--accent);
+  color:#000;
+}
+.nav-dropdown:hover .dropdown-menu{display:block}
+
+/* HERO */
+.hero{
+  height:500px;
+  background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
 }
 
-/* GRID CARDS */
-.wrap { max-width:1200px; margin:0 auto; padding:40px 20px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:40px; }
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+/* GRID */
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:40px 20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
   border-radius:var(--card-radius);
-  overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  transition:transform .14s ease, box-shadow .14s ease;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.2s;
 }
-.card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,0.7); }
-.art { height:250px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.art img { width:100%; height:100%; object-fit:cover; display:block; }
-.meta { padding:12px 14px; display:flex; flex-direction:column; gap:6px; text-align:center; }
-.title { font-weight:700; font-family:'Orbitron', sans-serif; font-size:18px; }
-.sub { font-size:13px; color:var(--muted); margin-top:2px; }
-.actions { margin-top:8px; }
-.actions a { display:inline-block; padding:10px 18px; border:2px solid var(--accent); border-radius:12px; font-weight:600; color:var(--accent); text-decoration:none; transition:.2s; }
-.actions a:hover { background:var(--accent); color:#000; }
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+.art img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+}
+.meta{
+  padding:14px;
+  text-align:center;
+}
+.swatch{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  margin:0 auto 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+.card[data-genre="drum-bass"] .swatch{background:#0050ff}
+.card[data-genre="house"] .swatch{background:#ff49c8}
+.card[data-genre="lofi"] .swatch{background:#d95b2f}
+.card[data-genre="hiphop"] .swatch{background:#b58b00}
+.card[data-genre="afrobeat"] .swatch{background:#ff3b00}
 
-/* Swatches */
-.swatch { width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; margin:0 auto 6px; }
-.card[data-genre="drum-bass"] .swatch{background:linear-gradient(180deg,#00b3ff,#0050ff);}
-.card[data-genre="house"] .swatch{background:linear-gradient(180deg,#ff49c8,#00d2c2);}
-.card[data-genre="lofi"] .swatch{background:linear-gradient(180deg,#e7d8c2,#d95b2f);}
-.card[data-genre="hiphop"] .swatch{background:linear-gradient(180deg,#222,#b58b00);}
-.card[data-genre="afrobeat"] .swatch{background:linear-gradient(180deg,#ff3b00,#ffd166);}
+.title{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+}
+.sub{
+  font-size:13px;
+  color:var(--muted);
+  margin:6px 0 12px;
+}
+.actions a{
+  display:inline-block;
+  padding:10px 18px;
+  border:2px solid var(--accent);
+  border-radius:12px;
+  color:var(--accent);
+  font-weight:600;
+}
+.actions a:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.95);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:12px 16px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.8);
+  z-index:999;
+}
+#floating-player img{
+  width:54px;
+  height:54px;
+  border-radius:12px;
+  object-fit:cover;
+}
+.player-meta{
+  display:flex;
+  flex-direction:column;
+}
+.player-title{
+  font-weight:700;
+  font-size:14px;
+}
+.player-artist{
+  font-size:12px;
+  color:var(--muted);
+}
+.player-controls button{
+  background:var(--accent);
+  border:0;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:16px;
+  color:#000;
+}
 
 /* FOOTER */
-footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13px; border-top:1px solid rgba(255,42,161,0.03); }
-
-/* FLOATING AUDIO PLAYER */
-#floating-player {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.95);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 340px;
-  padding: 10px 14px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-  font-family: 'Rajdhani', sans-serif;
-  z-index: 999;
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  border-top:1px solid rgba(255,42,161,.05);
 }
-
-.player-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.track-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.track-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.track-title { font-weight: 700; font-size: 14px; }
-.track-artist { font-size: 12px; color: #ccc; }
-
-.player-right button {
-  background: var(--accent);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 16px;
-  cursor: pointer;
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.15s ease;
-}
-
-.player-right button:hover { transform: scale(1.1); }
-
 </style>
 </head>
+
 <body>
 
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
     </a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <div class="nav-dropdown">
-        <button class="nav-toggle" aria-haspopup="true" aria-expanded="false">Menu</button>
-        <div class="dropdown-menu">
-          <a href="index.html">Home</a>
-          <a href="artists.html">Artists</a>
-          <a href="playlists.html">Playlists</a>
-          <a href="lab.html">The Lab</a>
-        </div>
+    <div class="nav-dropdown">
+      <button class="nav-toggle">Menu</button>
+      <div class="dropdown-menu">
+        <a href="index.html">Home</a>
+        <a href="artists.html">Artists</a>
+        <a href="playlists.html">Playlists</a>
+        <a href="lab.html">The Lab</a>
       </div>
-    </nav>
+    </div>
   </div>
 </header>
 
+<section class="hero"></section>
+
 <main class="wrap">
-  <!-- HERO -->
-  <a href="universe.html" class="hero-link">
-    <section class="hero"></section>
-  </a>
+<section class="grid">
 
-  <!-- GRID CARDS -->
-  <section class="grid">
-    <!-- Drum & Bass -->
-    <article class="card" data-genre="drum-bass">
-      <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
-      <div class="meta">
-        <div class="swatch">DNB</div>
-        <div class="title">Drum & Bass</div>
-        <div class="sub">Electric — Energy Crew</div>
-        <div class="actions"><a href="https://open.spotify.com/playlist/6rR5q7HkkjAUEnEU2vErfd?si=ae45f1ad2a704319" target="_blank">Explore</a></div>
-      </div>
-    </article>
+<article class="card" data-genre="drum-bass">
+  <div class="art"><img src="images/Cartons/Drum & Bass Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">DNB</div>
+    <div class="title">Drum & Bass</div>
+    <div class="sub">Electric — Energy Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-    <!-- House -->
-    <article class="card" data-genre="house">
-      <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
-      <div class="meta">
-        <div class="swatch">HSE</div>
-        <div class="title">House</div>
-        <div class="sub">Psychic — Club Crew</div>
-        <div class="actions"><a href="https://open.spotify.com/playlist/10vNHB1I3QsP8w76dCPpH8?si=aee2c40c64564d08" target="_blank">Explore</a></div>
-      </div>
-    </article>
+<article class="card" data-genre="house">
+  <div class="art"><img src="images/Cartons/House Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">HSE</div>
+    <div class="title">House</div>
+    <div class="sub">Psychic — Club Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-    <!-- Lo-Fi -->
-    <article class="card" data-genre="lofi">
-      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi"></div>
-      <div class="meta">
-        <div class="swatch">LOF</div>
-        <div class="title">Lo-Fi</div>
-        <div class="sub">Wind — Chilled Crew</div>
-        <div class="actions"><a href="https://open.spotify.com/playlist/62mIJIjCHEhSJhHtegakEp?si=d2c8dd8ce40645d1" target="_blank">Explore</a></div>
-      </div>
-    </article>
+<article class="card" data-genre="lofi">
+  <div class="art"><img src="images/Cartons/LO-FI Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">LOF</div>
+    <div class="title">Lo-Fi</div>
+    <div class="sub">Wind — Chilled Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-    <!-- Hip-Hop -->
-    <article class="card" data-genre="hiphop">
-      <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
-      <div class="meta">
-        <div class="swatch">HH</div>
-        <div class="title">Hip-Hop</div>
-        <div class="sub">Earth — Hip Hop Crew</div>
-        <div class="actions"><a href="https://open.spotify.com/playlist/6L8vvrkFACiqYj1bfJt1Gk?si=6c9a7b9db78f4b5a" target="_blank">Explore</a></div>
-      </div>
-    </article>
+<article class="card" data-genre="hiphop">
+  <div class="art"><img src="images/Cartons/Hip Hop Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">HH</div>
+    <div class="title">Hip-Hop</div>
+    <div class="sub">Earth — Hip Hop Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-    <!-- Afrobeat -->
-    <article class="card" data-genre="afrobeat">
-      <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
-      <div class="meta">
-        <div class="swatch">AFR</div>
-        <div class="title">Afrobeat</div>
-        <div class="sub">Fire — Afro Crew</div>
-        <div class="actions"><a href="https://open.spotify.com/playlist/19YLuKSvktPAukX6wh40yJ?si=7dc346c762ca449d" target="_blank">Explore</a></div>
-      </div>
-    </article>
-  </section>
+<article class="card" data-genre="afrobeat">
+  <div class="art"><img src="images/Cartons/Afrobeat Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">AFR</div>
+    <div class="title">Afrobeat</div>
+    <div class="sub">Fire — Afro Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
+
+</section>
 </main>
 
-<!-- FLOATING AUDIO PLAYER -->
+<!-- FLOATING PLAYER -->
 <div id="floating-player">
-  <div class="player-left">
-    <img src="images/Player/azuki-cover.png" alt="Track Cover" class="track-image">
-    <div class="track-info">
-      <div class="track-title" id="track-title">Track 1</div>
-      <div class="track-artist">MLKSHK Digital</div>
-    </div>
+  <img src="images/Catalogue/MLKSHK-ARCHIVE-SB1973.png">
+  <div class="player-meta">
+    <div class="player-title">Round We Go</div>
+    <div class="player-artist">Shockaddict</div>
   </div>
-  <div class="player-right">
-    <button id="play-pause">▶️</button>
-    <audio id="audio" src="https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp1.mp3"></audio>
+  <div class="player-controls">
+    <button id="playPause">▶</button>
   </div>
+  <audio id="audio">
+    <source src="Audio/6. Round And Round.mp3" type="audio/mpeg">
+  </audio>
 </div>
 
 <footer>
@@ -273,39 +298,19 @@ footer { padding:28px 20px; color:var(--muted); text-align:center; font-size:13p
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Floating audio player logic
-const audio = document.getElementById('audio');
-const btn = document.getElementById('play-pause');
+const audio=document.getElementById('audio');
+const btn=document.getElementById('playPause');
 
-const tracks = [
-  {title: "Track 1", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp1.mp3"},
-  {title: "Track 2", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp2.mp3"},
-  {title: "Track 3", url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music/temp3.mp3"}
-];
-
-let currentTrack = 0;
-
-function loadTrack(index) {
-  audio.src = tracks[index].url;
-  document.getElementById('track-title').textContent = tracks[index].title;
-  audio.pause();
-  btn.textContent = '▶️';
-}
-
-btn.addEventListener('click', () => {
+btn.onclick=()=>{
   if(audio.paused){
     audio.play();
-    btn.textContent = '⏸️';
-  } else {
+    btn.textContent='⏸';
+  }else{
     audio.pause();
-    btn.textContent = '▶️';
+    btn.textContent='▶';
   }
-});
-
-// Load first track initially
-loadTrack(currentTrack);
+};
 </script>
 
 </body>
 </html>
-
