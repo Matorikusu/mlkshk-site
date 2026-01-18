@@ -100,7 +100,7 @@ header.nav-bar{
 
 /* INDIVIDUAL BACKGROUNDS */
 .brands-section{
-  background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');
+  background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png'); /* your new brands image */
 }
 .catalogue-section{
   background-image:url('images/Home/CATALOGUE_HEADER_3.png');
@@ -121,54 +121,6 @@ footer{
   text-align:center;
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
-}
-
-/* FLOATING PLAYER (Universe style) */
-#floating-player{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:url('images/Player/PLAYER.png') center/cover no-repeat;
-  background-size:contain;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  padding:12px 24px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.8);
-  z-index:999;
-  min-width:320px;
-  max-width:520px;
-  height:80px;
-}
-#floating-player .player-meta{
-  text-align:center;
-  color:#fff;
-}
-#floating-player .player-title{
-  font-weight:700;
-  font-size:14px;
-}
-#floating-player .player-artist{
-  font-size:12px;
-  color:#ccc;
-}
-#floating-player .player-controls button{
-  background:transparent;
-  border:0;
-  width:40px;
-  height:40px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#floating-player .player-controls button img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
 }
 </style>
 </head>
@@ -232,40 +184,12 @@ footer{
 
 <hr class="section-divider">
 
-<!-- FLOATING PLAYER FROM UNIVERSE -->
-<div id="floating-player">
-  <div class="player-meta">
-    <div class="player-title">Round We Go</div>
-    <div class="player-artist">Shockaddict</div>
-  </div>
-  <div class="player-controls">
-    <button id="playPause"><img id="playPauseImg" src="images/Player/PLAY.png" alt="Play"></button>
-  </div>
-  <audio id="audio">
-    <source src="Audio/6. Round And Round.mp3" type="audio/mpeg">
-  </audio>
-</div>
-
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-
-const audio=document.getElementById('audio');
-const btn=document.getElementById('playPause');
-const btnImg=document.getElementById('playPauseImg');
-
-btn.onclick=()=>{
-  if(audio.paused){
-    audio.play();
-    btnImg.src='images/Player/PAUSE.png';
-  }else{
-    audio.pause();
-    btnImg.src='images/Player/PLAY.png';
-  }
-};
 </script>
 
 </body>
