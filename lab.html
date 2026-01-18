@@ -126,6 +126,54 @@ header.nav-bar {
 .password-section input { padding:10px 14px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; width:180px; margin-right:8px; }
 .password-section button { padding:10px 18px; border-radius:12px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:not-allowed; opacity:0.5; }
 
+/* NEW FORM STYLE */
+.lab-form{
+  max-width:700px;
+  margin:60px auto 60px;
+  padding:0 20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  text-align:center;
+}
+
+.lab-form h2{
+  font-family:'Orbitron', sans-serif;
+  font-size:36px;
+  color:var(--accent);
+}
+
+.lab-form .field{
+  background:#111;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:15px;
+  color:#fff;
+}
+
+.lab-form .field::placeholder{color:var(--muted);}
+.lab-form textarea.field{resize:vertical; min-height:100px;}
+
+.lab-form button{
+  padding:16px;
+  border-radius:30px;
+  border:2px solid var(--accent);
+  background:transparent;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+.lab-form button:hover{
+  background:var(--accent);
+  color:#000;
+}
+.lab-form .form-note{
+  font-size:13px;
+  color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -214,29 +262,20 @@ header.nav-bar {
 
   <hr class="section-divider">
 
-  <!-- ADDITIONAL FORMSPREE SECTION -->
+  <!-- NEW FORMSPREE SECTION -->
   <section class="section">
-    <h2>Show Us What You’ve Created</h2>
-    <form action="https://formspree.io/f/xojjeblv" method="POST">
-      <label>Artist Name</label>
-      <input type="text" name="artist_name" required>
+    <form class="lab-form" action="https://formspree.io/f/xojjeblv" method="POST">
+      <h2>Show Us What You’ve Created</h2>
 
-      <label>Track Used</label>
-      <input type="text" name="track_used">
-
-      <label>Email</label>
-      <input type="email" name="email" required>
-
-      <label>Private SoundCloud Link</label>
-      <input type="text" name="soundcloud_link">
-
-      <label>Social Links</label>
-      <input type="text" name="social_links">
-
-      <label>Notes</label>
-      <textarea name="message"></textarea>
+      <input class="field" type="text" name="artist_name" placeholder="Artist Name" required>
+      <input class="field" type="text" name="track_used" placeholder="Track Used">
+      <input class="field" type="email" name="email" placeholder="Email Address" required>
+      <input class="field" type="text" name="soundcloud_link" placeholder="Private SoundCloud Link">
+      <input class="field" type="text" name="social_links" placeholder="Social Links">
+      <textarea class="field" name="message" placeholder="Additional Notes"></textarea>
 
       <button type="submit">Send</button>
+      <p class="form-note">All submissions are reviewed individually. No guarantee of release.</p>
     </form>
   </section>
 
