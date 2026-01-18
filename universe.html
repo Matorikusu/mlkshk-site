@@ -4,7 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>MLKSHK — The Universe</title>
-
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
@@ -71,18 +70,19 @@ header.nav-bar{
 }
 .nav-dropdown:hover .dropdown-menu{display:block}
 
-/* LAB-STYLE HEADER */
-.image-link{
-  display:block;
-  margin-bottom:40px;
-}
-.image-section{
+/* HERO HEADER LIKE LAB */
+.hero-link{display:block; margin-bottom:40px;}
+.hero{
+  width:100%;
+  max-width:1000px; /* centred like lab page */
   height:420px;
+  margin:0 auto;
   background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
   cursor:pointer;
+  border-radius:12px;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
 }
-.image-link:hover .image-section{
+.hero-link:hover .hero{
   transform:scale(1.02);
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
@@ -92,12 +92,13 @@ header.nav-bar{
 .wrap{
   max-width:1200px;
   margin:0 auto;
-  padding:0 20px 90px;
+  padding:40px 20px;
 }
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:24px;
+  margin-top:40px;
 }
 .card{
   background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
@@ -110,7 +111,9 @@ header.nav-bar{
   transform:translateY(-6px);
   box-shadow:0 20px 50px rgba(0,0,0,.8);
 }
-.art{height:250px}
+.art{
+  height:250px;
+}
 .art img{
   width:100%;
   height:100%;
@@ -164,27 +167,30 @@ header.nav-bar{
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  width:340px;
-  height:86px;
+  width:360px;
   background:url('Player/PLAYER.png') center/cover no-repeat;
+  padding:10px 18px;
+  border-radius:20px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
   display:flex;
   align-items:center;
   gap:14px;
-  padding:14px 18px;
-  border-radius:20px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
 }
 #floating-player img.cover{
-  width:56px;
-  height:56px;
+  width:60px;
+  height:60px;
   border-radius:12px;
   object-fit:cover;
+  flex-shrink:0;
+  margin-left:6px;
 }
 .player-meta{
   flex:1;
   display:flex;
   flex-direction:column;
+  justify-content:center;
+  margin-left:12px;
 }
 .player-title{
   font-weight:700;
@@ -193,6 +199,12 @@ header.nav-bar{
 .player-artist{
   font-size:12px;
   color:var(--muted);
+}
+.player-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:12px;
 }
 .player-controls img{
   width:42px;
@@ -230,70 +242,70 @@ footer{
   </div>
 </header>
 
-<!-- HEADER -->
-<a href="universe.html" class="image-link">
-  <section class="image-section"></section>
+<!-- HERO (like lab page) -->
+<a href="universe.html" class="hero-link">
+  <section class="hero"></section>
 </a>
 
 <main class="wrap">
 <section class="grid">
 
-  <article class="card" data-genre="drum-bass">
-    <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt=""></div>
-    <div class="meta">
-      <div class="swatch">DNB</div>
-      <div class="title">Drum & Bass</div>
-      <div class="sub">Electric — Energy Crew</div>
-      <div class="actions"><a href="#">Explore</a></div>
-    </div>
-  </article>
+<article class="card" data-genre="drum-bass">
+  <div class="art"><img src="images/Cartons/Drum & Bass Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">DNB</div>
+    <div class="title">Drum & Bass</div>
+    <div class="sub">Electric — Energy Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-  <article class="card" data-genre="house">
-    <div class="art"><img src="images/Cartons/House Carton.png" alt=""></div>
-    <div class="meta">
-      <div class="swatch">HSE</div>
-      <div class="title">House</div>
-      <div class="sub">Psychic — Club Crew</div>
-      <div class="actions"><a href="#">Explore</a></div>
-    </div>
-  </article>
+<article class="card" data-genre="house">
+  <div class="art"><img src="images/Cartons/House Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">HSE</div>
+    <div class="title">House</div>
+    <div class="sub">Psychic — Club Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-  <article class="card" data-genre="lofi">
-    <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt=""></div>
-    <div class="meta">
-      <div class="swatch">LOF</div>
-      <div class="title">Lo-Fi</div>
-      <div class="sub">Wind — Chilled Crew</div>
-      <div class="actions"><a href="#">Explore</a></div>
-    </div>
-  </article>
+<article class="card" data-genre="lofi">
+  <div class="art"><img src="images/Cartons/LO-FI Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">LOF</div>
+    <div class="title">Lo-Fi</div>
+    <div class="sub">Wind — Chilled Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-  <article class="card" data-genre="hiphop">
-    <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt=""></div>
-    <div class="meta">
-      <div class="swatch">HH</div>
-      <div class="title">Hip-Hop</div>
-      <div class="sub">Earth — Hip Hop Crew</div>
-      <div class="actions"><a href="#">Explore</a></div>
-    </div>
-  </article>
+<article class="card" data-genre="hiphop">
+  <div class="art"><img src="images/Cartons/Hip Hop Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">HH</div>
+    <div class="title">Hip-Hop</div>
+    <div class="sub">Earth — Hip Hop Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
-  <article class="card" data-genre="afrobeat">
-    <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt=""></div>
-    <div class="meta">
-      <div class="swatch">AFR</div>
-      <div class="title">Afrobeat</div>
-      <div class="sub">Fire — Afro Crew</div>
-      <div class="actions"><a href="#">Explore</a></div>
-    </div>
-  </article>
+<article class="card" data-genre="afrobeat">
+  <div class="art"><img src="images/Cartons/Afrobeat Carton.png"></div>
+  <div class="meta">
+    <div class="swatch">AFR</div>
+    <div class="title">Afrobeat</div>
+    <div class="sub">Fire — Afro Crew</div>
+    <div class="actions"><a href="#">Explore</a></div>
+  </div>
+</article>
 
 </section>
 </main>
 
 <!-- FLOATING PLAYER -->
 <div id="floating-player">
-  <img class="cover" src="images/Catalogue/MLKSHK-ARCHIVE-SB1973.png" alt="">
+  <img class="cover" src="images/Catalogue/MLKSHK-ARCHIVE-SB1973.png" alt="Cover">
   <div class="player-meta">
     <div class="player-title">Round We Go</div>
     <div class="player-artist">Shockaddict</div>
