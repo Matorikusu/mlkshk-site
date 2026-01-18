@@ -1,4 +1,220 @@
-<!-- FLOATING MUSIC PLAYER -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#000;
+  --text:#fff;
+  --muted:#ccc;
+  --accent:#d4af37;
+  --dropdown-bg:#000;
+}
+
+/* RESET */
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+
+/* NAV BAR */
+header.nav-bar{
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding:18px 24px;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  position:sticky;
+  top:0;
+  z-index:30;
+}
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1200px;
+  margin:0 auto;
+}
+.logo-link img{height:42px;display:block}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
+}
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  background:var(--dropdown-bg);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+}
+.nav-dropdown:hover .dropdown-menu{display:block}
+
+/* HERO */
+.hero{
+  height:420px;
+  background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
+}
+
+/* DIVIDER */
+.section-divider{
+  height:2px;
+  background:#fff;
+  border:0;
+  margin:0;
+}
+
+/* IMAGE-ONLY SECTIONS */
+.image-link{
+  display:block;
+}
+.image-section{
+  height:420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.image-link:hover .image-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
+
+/* INDIVIDUAL BACKGROUNDS */
+.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
+.catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
+.universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
+.lab-section{background-image:url('images/Home/LAB_HEADER.png');}
+.access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
+
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.95);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 24px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.8);
+  z-index:999;
+  max-width:500px;
+}
+.player-meta{
+  flex:1;
+  text-align:center;
+}
+.player-title{
+  font-weight:700;
+  font-size:14px;
+}
+.player-artist{
+  font-size:12px;
+  color:var(--muted);
+}
+.player-controls button{
+  background:var(--accent);
+  border:0;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+  color:#000;
+}
+
+/* FOOTER */
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+</style>
+</head>
+
+<body>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <div class="nav-dropdown">
+      <button class="nav-toggle">Menu</button>
+      <div class="dropdown-menu">
+        <a href="access.html">Access</a>
+        <a href="archive.html">Archive</a>
+        <a href="artists.html">Artists</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="lab.html">The Lab</a>
+        <a href="universe.html">The Universe</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero"></section>
+<hr class="section-divider">
+
+<!-- ARCHIVES IMAGE LINK -->
+<a href="archive.html" class="image-link">
+  <section class="image-section brands-section"></section>
+</a>
+
+<hr class="section-divider">
+
+<!-- CATALOGUE -->
+<a href="catalogue.html" class="image-link">
+  <section class="image-section catalogue-section"></section>
+</a>
+
+<hr class="section-divider">
+
+<!-- UNIVERSE -->
+<a href="universe.html" class="image-link">
+  <section class="image-section universe-section"></section>
+</a>
+
+<hr class="section-divider">
+
+<!-- THE LAB -->
+<a href="lab.html" class="image-link">
+  <section class="image-section lab-section"></section>
+</a>
+
+<hr class="section-divider">
+
+<!-- REQUEST ACCESS -->
+<a href="access.html" class="image-link">
+  <section class="image-section access-section"></section>
+</a>
+
+<hr class="section-divider">
+
+<!-- FLOATING AUDIO PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">Round We Go</div>
@@ -6,7 +222,7 @@
   </div>
   <div class="player-controls">
     <button id="playPause">
-      <img src="Player/PLAY.png" alt="Play">
+      <img src="Player/PLAY.png" alt="Play" id="playBtnImg" style="width:28px;height:28px;">
     </button>
   </div>
   <audio id="audio">
@@ -14,66 +230,27 @@
   </audio>
 </div>
 
-<style>
-#floating-player{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:url('Player/PLAYER.png') center/cover no-repeat;
-  width:480px;
-  height:80px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.8);
-  z-index:999;
-}
-.player-meta{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  flex:1;
-  text-align:center;
-  color:#fff;
-}
-.player-title{
-  font-weight:700;
-  font-size:16px;
-}
-.player-artist{
-  font-size:12px;
-  color:#ccc;
-}
-.player-controls button{
-  background:transparent;
-  border:0;
-  width:40px;
-  height:40px;
-  cursor:pointer;
-}
-.player-controls button img{
-  width:100%;
-  height:100%;
-}
-</style>
+<footer>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+</footer>
 
 <script>
-const audio=document.getElementById('audio');
-const btn=document.getElementById('playPause');
-const playImg='Player/PLAY.png';
-const pauseImg='Player/PAUSE.png';
+document.getElementById('year').textContent = new Date().getFullYear();
 
-btn.onclick=()=>{
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const btnImg = document.getElementById('playBtnImg');
+
+btn.onclick = () => {
   if(audio.paused){
     audio.play();
-    btn.firstElementChild.src=pauseImg;
+    btnImg.src='Player/PAUSE.png';
   }else{
     audio.pause();
-    btn.firstElementChild.src=playImg;
+    btnImg.src='Player/PLAY.png';
   }
 };
 </script>
+
+</body>
+</html>
