@@ -74,7 +74,7 @@ header.nav-bar{
 .hero-link{display:block; margin-bottom:40px;}
 .hero{
   width:100%;
-  max-width:1000px; /* centred like lab page */
+  max-width:1000px;
   height:420px;
   margin:0 auto;
   background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
@@ -168,29 +168,22 @@ header.nav-bar{
   left:50%;
   transform:translateX(-50%);
   width:360px;
+  height:72px;
   background:url('Player/PLAYER.png') center/cover no-repeat;
-  padding:10px 18px;
   border-radius:20px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
   display:flex;
   align-items:center;
-  gap:14px;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
-}
-#floating-player img.cover{
-  width:60px;
-  height:60px;
-  border-radius:12px;
-  object-fit:cover;
-  flex-shrink:0;
-  margin-left:6px;
 }
 .player-meta{
   flex:1;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  margin-left:12px;
+  text-align:center;
+  padding:0 12px;
 }
 .player-title{
   font-weight:700;
@@ -210,6 +203,35 @@ header.nav-bar{
   width:42px;
   height:42px;
   cursor:pointer;
+}
+
+/* PLAYLIST SECTIONS */
+.playlist-section{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  margin:60px 0;
+  gap:20px;
+}
+.playlist-section h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:20px;
+  margin-bottom:15px;
+}
+.playlist-left,.playlist-right{
+  flex:1 1 48%;
+}
+.playlist-left img,.playlist-right img{
+  width:100%;
+  border-radius:12px;
+}
+hr{
+  border:0;
+  height:1px;
+  background:#fff;
+  opacity:0.15;
+  margin:60px 0;
 }
 
 /* FOOTER */
@@ -242,12 +264,13 @@ footer{
   </div>
 </header>
 
-<!-- HERO (like lab page) -->
+<!-- HERO -->
 <a href="universe.html" class="hero-link">
   <section class="hero"></section>
 </a>
 
 <main class="wrap">
+
 <section class="grid">
 
 <article class="card" data-genre="drum-bass">
@@ -301,11 +324,68 @@ footer{
 </article>
 
 </section>
+
+<!-- PLAYLIST SECTIONS -->
+<hr>
+
+<section class="playlist-section">
+  <div class="playlist-left">
+    <h2>Coffee Shop Grooves (LO-FI & Hip Hop)</h2>
+    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
+      src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
+      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+  <div class="playlist-right">
+    <img src="images/Coffee Shop Grooves.png" alt="Playlist Artwork">
+  </div>
+</section>
+
+<hr>
+
+<section class="playlist-section">
+  <div class="playlist-left">
+    <img src="images/Afrobeat.png" alt="Playlist Artwork">
+  </div>
+  <div class="playlist-right">
+    <h2>Afrobeat</h2>
+    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
+      src="https://open.spotify.com/embed/playlist/19YLuKSvktPAukX6wh40yJ?utm_source=generator&theme=0" 
+      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</section>
+
+<hr>
+
+<section class="playlist-section">
+  <div class="playlist-left">
+    <h2>House Party Mix</h2>
+    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
+      src="https://open.spotify.com/embed/playlist/10vNHB1I3QsP8w76dCPpH8?utm_source=generator&theme=0" 
+      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+  <div class="playlist-right">
+    <img src="images/House Party.png" alt="Playlist Artwork">
+  </div>
+</section>
+
+<hr>
+
+<section class="playlist-section">
+  <div class="playlist-left">
+    <img src="images/Drum & Bass Destruction.png" alt="Playlist Artwork">
+  </div>
+  <div class="playlist-right">
+    <h2>Drum & Bass Destruction</h2>
+    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
+      src="https://open.spotify.com/embed/playlist/6rR5q7HkkjAUEnEU2vErfd?utm_source=generator&theme=0" 
+      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</section>
+
 </main>
 
 <!-- FLOATING PLAYER -->
 <div id="floating-player">
-  <img class="cover" src="images/Catalogue/MLKSHK-ARCHIVE-SB1973.png" alt="Cover">
   <div class="player-meta">
     <div class="player-title">Round We Go</div>
     <div class="player-artist">Shockaddict</div>
