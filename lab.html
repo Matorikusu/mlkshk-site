@@ -49,9 +49,14 @@ header.nav-bar {
 .dropdown-menu a:hover { background:var(--accent); color:#000; }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
 
-/* HERO */
-.image-link{ display:block; margin-bottom:40px; }
+/* HERO HEADER IMAGE */
+.image-link{
+  display:block;
+  margin-bottom:40px;
+}
 .image-section{
   height:420px;
   background-size:cover;
@@ -65,23 +70,24 @@ header.nav-bar {
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
 
-/* CONTENT */
+/* LAB CONTENT */
 .lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
+
+/* Section divider */
 .section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
+
+.rules-box {
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,42,161,0.2); border-radius:12px;
+  padding:30px; text-align:center;
+}
+.rules-box p { margin-bottom:15px; line-height:1.5; }
+.rules-box label { display:block; margin-top:15px; font-size:14px; opacity:0.8; cursor:pointer; }
 
 .section { margin-bottom:60px; text-align:center; }
 .section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
 .note { font-size:14px; opacity:0.7; margin-bottom:15px; }
 
-.rules-box {
-  background: rgba(255,255,255,0.03);
-  border:1px solid rgba(255,42,161,0.2);
-  border-radius:12px;
-  padding:30px;
-  text-align:center;
-}
-
-/* LYRIC BOX */
+/* LYRIC BOX UPDATED */
 .lyric-box {
   width:100%;
   min-height:300px;
@@ -90,165 +96,164 @@ header.nav-bar {
   border:none;
   resize:vertical;
   font-size:16px;
-  background:#f5f5f5;
-  color:#000;
+  background:#f5f5f5; /* off-white background */
+  color:#000
+  caret-color:#fff; /* visible cursor */
 }
+
+.button {
+  padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
+  transition:.2s;
+}
+.button:hover { background:#ff5bc3; }
+.button:disabled { opacity:0.3; cursor:not-allowed; }
 
 /* CHAT */
 .chat-container { max-width:600px; margin:0 auto; text-align:left; }
 .chat-window {
-  width:100%; height:200px;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;
-  padding:15px;
-  margin-bottom:15px;
-  background: rgba(255,255,255,0.03);
+  width:100%; height:200px; border:1px solid rgba(255,255,255,0.1); border-radius:12px;
+  padding:15px; margin-bottom:15px; background: rgba(255,255,255,0.03); overflow-y:auto;
 }
+.chat-inputs {
+  display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
+}
+.chat-inputs input[type="text"] { width:150px; padding:12px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; }
+.chat-inputs textarea { flex:1; padding:12px; border-radius:12px; border:none; font-size:14px; background: rgba(255,255,255,0.03); color:#fff; resize:none; min-height:50px; }
+.chat-inputs button { padding:12px 24px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:not-allowed; opacity:0.5; }
 
-/* PASSWORD */
+/* PASSWORD SECTION */
 .password-section { margin-bottom:30px; text-align:center; }
+.password-section input { padding:10px 14px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; width:180px; margin-right:8px; }
+.password-section button { padding:10px 18px; border-radius:12px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:not-allowed; opacity:0.5; }
 
-/* ADDITIVE FORM */
-.creation-form {
-  background: rgba(255,255,255,0.03);
-  border:1px solid rgba(255,42,161,0.2);
-  border-radius:12px;
-  padding:30px;
-  max-width:700px;
-  margin:0 auto;
-  text-align:left;
-}
-.creation-form label { font-size:14px; opacity:0.8; }
-.creation-form input,
-.creation-form textarea {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-bottom:16px;
-  background: rgba(255,255,255,0.05);
-  color:#fff;
-}
-.creation-form button {
-  padding:14px 28px;
-  border-radius:30px;
-  border:none;
-  background:var(--accent);
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
-}
 </style>
 </head>
-
 <body>
 
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <div class="nav-dropdown">
-      <button class="nav-toggle">Menu</button>
-      <div class="dropdown-menu">
-        <a href="index.html">Home</a>
-        <a href="access.html">Access</a>
-        <a href="artists.html">Artists</a>
-        <a href="archive.html">Archive</a>
-        <a href="catalogue.html">Catalogue</a>
-        <a href="universe.html">The Universe</a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="archive.html">Archive</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="universe.html">The Universe</a>
+        </div>
       </div>
-    </div>
+    </nav>
   </div>
 </header>
 
 <div class="lab-container">
 
-<a href="lab.html" class="image-link">
-  <section class="image-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
-</a>
+  <!-- HERO IMAGE HEADER -->
+  <a href="lab.html" class="image-link">
+    <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
+  </a>
 
-<hr class="section-divider">
+  <hr class="section-divider">
 
-<section class="rules-box">
-  <p>All instrumentals on this page belong to MLKSHK Digital.</p>
-  <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
-  <p>You keep credit. We keep structure.</p>
-  <p>No reposts. No theft. No drama.</p>
-</section>
+  <!-- RULES -->
+  <section class="rules-box">
+    <p>All instrumentals on this page belong to MLKSHK Digital.</p>
+    <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
+    <p>You keep credit. We keep structure.</p>
+    <p>No reposts. No theft. No drama.</p>
+    <label>
+      <input type="checkbox" id="agreeRules"> I understand and agree to the MLKSHK LAB rules
+    </label>
+  </section>
 
-<hr class="section-divider">
+  <hr class="section-divider">
 
-<section class="section">
-  <h2>Select a Beat</h2>
-  <iframe style="border-radius:12px"
-    src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
-    width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-  </iframe>
-</section>
+  <!-- BEAT PLAYER -->
+  <section class="section">
+    <h2>Select a Beat</h2>
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
+      width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+    </iframe>
+  </section>
 
-<hr class="section-divider">
+  <hr class="section-divider">
 
-<section class="section">
-  <h2>Write Your Lyrics</h2>
-  <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
-</section>
+  <!-- LYRIC LAB -->
+  <section class="section">
+    <h2>Write Your Lyrics</h2>
+    <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
+    <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
+  </section>
 
-<hr class="section-divider">
+  <hr class="section-divider">
 
-<section class="chat-container">
-  <h2>Live Lab Chat</h2>
-  <div class="chat-window"></div>
-</section>
+  <!-- LIVE CHAT -->
+  <section class="chat-container">
+    <h2>Live Lab Chat</h2>
+    <p class="note">This chat is reserved for official MLKSHK artists only.</p>
+    <div class="chat-window"></div>
+    <div class="chat-inputs">
+      <input type="text" placeholder="Username (Access Only)" disabled>
+      <textarea placeholder="Type message (Access Only)" disabled></textarea>
+      <button disabled>Send</button>
+    </div>
+  </section>
 
-<hr class="section-divider">
+  <!-- PASSWORD ENTRY -->
+  <section class="password-section">
+    <h2>Enter Password</h2>
+    <input type="text" placeholder="Password">
+    <button>Submit</button>
+  </section>
 
-<section class="password-section">
-  <h2>Enter Password</h2>
-  <input type="text" placeholder="Password">
-  <button>Submit</button>
-</section>
+  <hr class="section-divider">
 
-<hr class="section-divider">
+  <!-- ADDITIONAL FORMSPREE SECTION -->
+  <section class="section">
+    <h2>Show Us What You’ve Created</h2>
+    <form action="https://formspree.io/f/xojjeblv" method="POST">
+      <label>Artist Name</label>
+      <input type="text" name="artist_name" required>
 
-<!-- ✅ ONLY NEW SECTION -->
-<section class="section">
-  <h2>Show Us What You’ve Created</h2>
-  <form class="creation-form" action="https://formspree.io/f/xojjeblv" method="POST">
-    <label>Artist Name</label>
-    <input name="artist_name" required>
+      <label>Track Used</label>
+      <input type="text" name="track_used">
 
-    <label>Track Used</label>
-    <input name="track_used">
+      <label>Email</label>
+      <input type="email" name="email" required>
 
-    <label>Email</label>
-    <input type="email" name="email" required>
+      <label>Private SoundCloud Link</label>
+      <input type="text" name="soundcloud_link">
 
-    <label>Private SoundCloud Link</label>
-    <input name="soundcloud_link">
+      <label>Social Links</label>
+      <input type="text" name="social_links">
 
-    <label>Social Links</label>
-    <input name="social_links">
+      <label>Notes</label>
+      <textarea name="message"></textarea>
 
-    <label>Notes</label>
-    <textarea name="message"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
 
-    <button type="submit">Send</button>
-  </form>
-</section>
+  <hr class="section-divider">
 
-<hr class="section-divider">
-
-<section class="section">
-  <p class="note">
-    We are currently not accepting submissions for new artists.
-  </p>
-</section>
+  <!-- ARTIST STATUS NOTE -->
+  <section class="section">
+    <p class="note" style="opacity:0.85;">
+      We are currently not accepting submissions for new artists.<br>
+      Non-artist submissions that make the cut will be released on a song-by-song basis. An official release does not guarantee signing.
+    </p>
+  </section>
 
 </div>
 
-<footer>
-  <div style="padding:18px;text-align:center;color:var(--muted)">
+<footer class="site-footer">
+  <div style="padding:18px 10px;color:var(--muted);text-align:center">
     MLKSHK Digital — Built for the misfits. © <span id="year"></span>
   </div>
 </footer>
@@ -256,6 +261,5 @@ header.nav-bar {
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
