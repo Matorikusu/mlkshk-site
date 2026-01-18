@@ -17,7 +17,10 @@
 }
 
 body {
-  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+  margin:0; padding:0;
+  font-family:'Rajdhani', sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
 /* NAVIGATION */
@@ -27,88 +30,179 @@ header.nav-bar {
   background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
   position: sticky; top:0; z-index:30;
 }
-.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+.nav-content {
+  display:flex; justify-content:space-between; align-items:center;
+  max-width:1200px; margin:0 auto; gap:18px;
+}
 .logo-link img { height:42px; display:block; }
 .nav-links { display:flex; gap:14px; align-items:center; }
+
 .nav-dropdown { position: relative; display:inline-block; }
 .nav-toggle {
-  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
-  color:var(--muted); font-weight:600; background:transparent; border:0;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 10px; border-radius:8px;
+  cursor:pointer; color:var(--muted);
+  font-weight:600; background:transparent; border:0;
+}
+.nav-toggle::after {
+  content:"";
+  width:8px; height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform: rotate(45deg);
+  margin-left:4px;
 }
 .dropdown-menu {
-  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
-  border:1px solid var(--accent); border-radius:8px; padding:6px 0;
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;
+  min-width:180px;
+  background:#000;
+  border:1px solid var(--accent);
+  border-radius:8px;
+  padding:6px 0;
+  z-index:1000;
 }
-.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
-.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.dropdown-menu a {
+  display:block;
+  padding:10px 14px;
+  color:#fff;
+  font-size:14px;
+}
+.dropdown-menu a:hover {
+  background:var(--accent);
+  color:#000;
+}
 .nav-dropdown:hover .dropdown-menu { display:block; }
 
-/* HERO */
-.image-link{display:block;margin-bottom:40px;}
-.image-section{
+/* HERO IMAGE */
+.image-link { display:block; margin-bottom:40px; }
+.image-section {
   height:420px;
   background-size:cover;
   background-position:center;
+  cursor:pointer;
   transition:.35s;
 }
-.image-link:hover .image-section{
+.image-link:hover .image-section {
   transform:scale(1.02);
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
 
-/* CONTENT */
-.lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
-.section-divider { height:2px; background:rgba(255,42,161,.15); border:none; margin:40px 0; }
-
-.section { margin-bottom:60px; text-align:center; }
-.section h2 { font-family:'Orbitron',sans-serif; margin-bottom:15px; }
-.note { font-size:14px; opacity:.7; }
-
-/* LYRIC BOX */
-.lyric-box{
-  width:100%; min-height:300px; padding:20px;
-  border-radius:12px; border:none; resize:vertical;
-  font-size:16px; background:#f5f5f5; color:#000;
+/* LAB CONTENT */
+.lab-container {
+  max-width:1000px;
+  margin:0 auto;
+  padding:0 20px 60px;
+}
+.section-divider {
+  width:100%;
+  height:2px;
+  background: rgba(255,42,161,0.15);
+  margin:40px 0;
+  border:none;
 }
 
-/* ADDITIONAL SECTIONS */
+.rules-box {
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,42,161,0.2);
+  border-radius:12px;
+  padding:30px;
+  text-align:center;
+}
+.rules-box p { margin-bottom:15px; line-height:1.5; }
+
+.section { margin-bottom:60px; text-align:center; }
+.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
+.note { font-size:14px; opacity:0.7; }
+
+/* LYRIC BOX */
+.lyric-box {
+  width:100%;
+  min-height:300px;
+  padding:20px;
+  border-radius:12px;
+  border:none;
+  resize:vertical;
+  font-size:16px;
+  background:#f5f5f5;
+  color:#000;
+}
+
+/* CHAT */
+.chat-container { max-width:600px; margin:0 auto; }
+.chat-window {
+  width:100%;
+  height:200px;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+  background: rgba(255,255,255,0.03);
+  overflow-y:auto;
+}
+.chat-inputs {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.chat-inputs input,
+.chat-inputs textarea {
+  background: rgba(255,255,255,0.03);
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
+}
+.chat-inputs button {
+  background:var(--accent);
+  border:none;
+  border-radius:30px;
+  padding:12px 24px;
+  font-weight:700;
+  cursor:not-allowed;
+  opacity:.5;
+}
+
+/* ADDITIVE SECTIONS ONLY */
 .producer-box,
 .leaderboard,
-.submit-box{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,42,161,.2);
+.submit-box {
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,42,161,0.2);
   border-radius:12px;
   padding:30px;
   text-align:center;
 }
 
-.leaderboard ul{
+.leaderboard ul {
   list-style:none;
   padding:0;
   margin:0;
 }
-.leaderboard li{
+.leaderboard li {
   padding:6px 0;
   font-size:14px;
-  opacity:.85;
+  opacity:0.85;
 }
 
-/* FORM */
-.submit-box form{
+.submit-box form {
   display:flex;
   flex-direction:column;
   gap:14px;
 }
 .submit-box input,
-.submit-box textarea{
+.submit-box textarea {
   padding:12px;
   border-radius:12px;
   border:none;
-  background:rgba(255,255,255,.05);
+  background: rgba(255,255,255,0.05);
   color:#fff;
 }
-.submit-box button{
+.submit-box button {
   padding:14px;
   border-radius:30px;
   border:none;
@@ -127,42 +221,93 @@ header.nav-bar {
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png">
     </a>
-    <div class="nav-dropdown">
-      <button class="nav-toggle">Menu</button>
-      <div class="dropdown-menu">
-        <a href="index.html">Home</a>
-        <a href="archive.html">Archive</a>
-        <a href="catalogue.html">Catalogue</a>
-        <a href="universe.html">Universe</a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <button class="nav-toggle">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="archive.html">Archive</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="universe.html">The Universe</a>
+        </div>
       </div>
-    </div>
+    </nav>
   </div>
 </header>
 
 <div class="lab-container">
 
+<!-- ORIGINAL CONTENT — UNCHANGED -->
 <a href="lab.html" class="image-link">
-  <section class="image-section" style="background-image:url('images/Home/LAB_HEADER.png')"></section>
+  <section class="image-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
 </a>
 
 <hr class="section-divider">
 
-<!-- PRODUCER CORNER -->
+<section class="rules-box">
+  <p>All instrumentals on this page belong to MLKSHK Digital.</p>
+  <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
+  <p>You keep credit. We keep structure.</p>
+  <p>No reposts. No theft. No drama.</p>
+  <label>
+    <input type="checkbox"> I understand and agree to the MLKSHK LAB rules
+  </label>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <h2>Select a Beat</h2>
+  <iframe style="border-radius:12px"
+    src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
+    width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+  </iframe>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <h2>Write Your Lyrics</h2>
+  <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
+  <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
+</section>
+
+<hr class="section-divider">
+
+<section class="chat-container">
+  <h2>Live Lab Chat</h2>
+  <p class="note">This chat is reserved for official MLKSHK artists only.</p>
+  <div class="chat-window"></div>
+  <div class="chat-inputs">
+    <input type="text" placeholder="Username (Access Only)" disabled>
+    <textarea placeholder="Type message (Access Only)" disabled></textarea>
+    <button disabled>Send</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <p class="note" style="opacity:0.85;">
+    We are currently not accepting submissions for new artists.
+  </p>
+</section>
+
+<!-- ADDITIONS START HERE -->
+<hr class="section-divider">
+
 <section class="section producer-box">
   <h2>Producer Corner</h2>
   <p class="note">
-    Producers can submit original instrumentals for use in the LAB.
-    If an artist records to your beat and it’s selected for release,
-    you will be credited and contacted.
-  </p>
-  <p class="note">
-    No guarantees. No placements promised. Quality only.
+    Producers may submit original instrumentals for use inside the LAB.
+    If selected for release, you will be contacted and credited.
   </p>
 </section>
 
 <hr class="section-divider">
 
-<!-- LEADERBOARD -->
 <section class="section leaderboard">
   <h2>Recent LAB Activity</h2>
   <ul id="artistList"></ul>
@@ -170,13 +315,11 @@ header.nav-bar {
 
 <hr class="section-divider">
 
-<!-- SUBMISSION FORM -->
 <section class="section submit-box">
   <h2>Submit Beats / Ideas</h2>
-
   <form action="https://formspree.io/f/xojjeblv" method="POST">
     <input type="email" name="email" placeholder="Your email" required>
-    <textarea name="message" placeholder="Link to beats / notes / info" rows="5"></textarea>
+    <textarea name="message" placeholder="Links / notes" rows="5"></textarea>
     <button type="submit">Send</button>
   </form>
 </section>
@@ -184,18 +327,14 @@ header.nav-bar {
 </div>
 
 <footer>
-  <div style="text-align:center;padding:20px;color:var(--muted)">
+  <div style="padding:18px;color:var(--muted);text-align:center">
     MLKSHK Digital © <span id="year"></span>
   </div>
 </footer>
 
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
-
-const artists=[
-  'Shockaddict','Neon Poet','Grainy Tape','VXNTAGE',
-  'Southside Ghost','Lowpass','Static Youth','Midnight Era'
-];
+const artists=['Shockaddict','Neon Poet','Lowpass','Static Youth','VXNTAGE','Southside Ghost'];
 const list=document.getElementById('artistList');
 artists.sort(()=>0.5-Math.random()).slice(0,5).forEach(a=>{
   const li=document.createElement('li');
