@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLKSHK Radio</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --card-radius: 12px;
+}
+
+body {
+  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+}
+
+/* NAVIGATION */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top:0; z-index:30;
+}
+.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+.logo-link img { height:42px; display:block; }
+.nav-links { display:flex; gap:14px; align-items:center; }
+.nav-dropdown { position: relative; display:inline-block; }
+.nav-toggle {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
+  color:var(--muted); font-weight:600; background:transparent; border:0;
+}
+.nav-toggle::after {
+  content:""; display:inline-block; width:8px; height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform: rotate(45deg); margin-left:4px; transition:.18s ease;
+}
+.dropdown-menu {
+  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
+  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
+}
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
+
+/* HERO HEADER IMAGE */
+.image-link{
+  display:block;
+  margin-bottom:40px;
+}
+.image-section{
+  height:420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.image-link:hover .image-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
+
+/* LAB CONTENT */
+.lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
+
+/* Section divider */
+.section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
+
+.section { margin-bottom:60px; text-align:center; }
+.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
+.note { font-size:14px; opacity:0.7; margin-bottom:15px; }
+
+.button {
+  padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
+  transition:.2s;
+}
+.button:hover { background:#ff5bc3; }
+.button:disabled { opacity:0.3; cursor:not-allowed; }
+
+/* AUDIO PLAYER */
+.audio-player {
+  max-width:600px;
+  margin:0 auto 40px;
+  background: rgba(255,255,255,0.03);
+  padding:20px;
+  border-radius:12px;
+  border:1px solid rgba(255,42,161,0.2);
+}
+.audio-player audio {
+  width:100%;
+  border-radius:8px;
+  outline:none;
+}
+</style>
+</head>
+<body>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="archive.html">Archive</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="universe.html">The Universe</a>
+          <a href="radio.html">Radio</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="lab-container">
+
+  <!-- HERO IMAGE HEADER -->
+  <a href="radio.html" class="image-link">
+    <section class="image-section lab-section" style="background-image:url('images/Home/RADIO_HEADER.png');"></section>
+  </a>
+
+  <hr class="section-divider">
+
+  <!-- LIVE RADIO -->
+  <section class="section">
+    <h2>Live Radio</h2>
+    <p class="note">Listen to MLKSHK Radio live 24/7. Stream will play automatically if supported by your browser.</p>
+    <div class="audio-player">
+      <audio controls autoplay>
+        <source src="http://81.77.64.225:8000/stream.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section">
+    <p class="note">
+      MLKSHK Radio broadcasts directly from our Raspberry Pi. Keep this page open to listen live.
+    </p>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div style="padding:18px 10px;color:var(--muted);text-align:center">
+    MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
