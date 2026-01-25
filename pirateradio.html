@@ -76,9 +76,49 @@ header.nav-bar {
 /* Section divider */
 .section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
 
-/* AUDIO PLAYER */
-.audio-player { text-align:center; margin:40px 0; }
-.audio-player audio { border-radius:12px; width:100%; max-width:600px; }
+/* MODERN RADIO PLAYER */
+.modern-player {
+  margin:40px auto;
+  max-width:600px;
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+.player-bg {
+  width:100%;
+  display:block;
+  filter: brightness(0.35);
+}
+.player-overlay {
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+.player-overlay h2 {
+  font-family:'Orbitron', sans-serif;
+  font-size:24px;
+  margin-bottom:20px;
+}
+.player-overlay button {
+  padding:14px 28px;
+  border:none;
+  border-radius:24px;
+  background:#ff2aa1;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.2s;
+}
+.player-overlay button:hover { background:#ff5bc3; }
 
 /* BUTTONS */
 .button {
@@ -116,19 +156,23 @@ header.nav-bar {
 
   <!-- HERO IMAGE -->
   <a href="radio.html" class="image-link">
-    <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
+    <section class="image-section lab-section" style="background-image:url('images/Pirate Radio/pirateradio_header.png');"></section>
   </a>
 
   <hr class="section-divider">
 
-  <!-- LIVE RADIO -->
-  <section class="section audio-player">
-    <h2>MLKSHK RADIO — Live Broadcast</h2>
-    <audio id="liveRadio" controls autoplay muted>
-      <source src="http://81.77.64.225:8000/stream.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <p class="note">Plays on click.</p>
+  <!-- MODERN LIVE RADIO PLAYER -->
+  <section class="modern-player">
+    <div class="player-container">
+      <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
+      <div class="player-overlay">
+        <h2>MLKSHK Pirate Radio</h2>
+        <button id="playBtn">▶ Play</button>
+        <audio id="radio" preload="none">
+          <source src="http://81.77.64.225:8000/stream.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -142,16 +186,28 @@ header.nav-bar {
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Custom player play/pause
+const radio = document.getElementById('radio');
+const btn = document.getElementById('playBtn');
+
+btn.addEventListener('click', () => {
+  if(radio.paused){
+    radio.play();
+    btn.textContent = '⏸ Pause';
+  } else {
+    radio.pause();
+    btn.textContent = '▶ Play';
+  }
+});
+
 // Autoplay workaround for browsers
 window.addEventListener('load', () => {
-  const audio = document.getElementById('liveRadio');
-  audio.muted = true;
-  audio.play().catch(() => console.log('Autoplay blocked.'));
+  radio.muted = true;
+  radio.play().catch(() => console.log('Autoplay blocked.'));
   
-  // Unmute after first user click anywhere
   document.body.addEventListener('click', () => {
-    audio.muted = false;
-    audio.play();
+    radio.muted = false;
+    radio.play().catch(()=>console.log('User play required.'));
   }, { once: true });
 });
 </script>
