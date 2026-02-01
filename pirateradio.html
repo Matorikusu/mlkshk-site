@@ -203,17 +203,17 @@ radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
 radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
 radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
 
-// Media Session API: show "MLKSHK Pirate Radio" on Android lock screen / notification
+// Media Session API: use your square pirate radio logo for lock screen / notification
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
     artist: "Underground • Live • No Rules",
     album: "MLKSHK Digital",
     artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },      // small fallback
       { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
       { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-      { src: "images/MLKSHK_LOGO_1500_X_500.png", sizes: "512x512", type: "image/png" }
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }  // ← your square logo here (main one for lock screen)
     ]
   });
 
