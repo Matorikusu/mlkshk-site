@@ -7,7 +7,6 @@
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
-/* ── Your existing styles here (kept unchanged, just adding chat enhancements) ── */
 :root {
   --bg: #000;
   --text: #f5f5f5;
@@ -15,118 +14,179 @@
   --accent: #ff2aa1;
   --card-radius: 12px;
 }
-body { margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text); }
+body {
+  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+}
 
-/* ... your full existing CSS ... */
+/* ── Keep all your existing CSS ── */
+/* ... paste your full CSS here ... */
 
-/* Chat enhancements */
+/* Chat specific adjustments */
+.chat-container { max-width:600px; margin:40px auto; text-align:left; }
 .chat-window {
-  width:100%; 
-  height:280px; /* taller for better usability */
-  border:1px solid rgba(255,42,161,0.3); 
-  border-radius:12px;
-  padding:15px; 
-  margin-bottom:15px; 
-  background: rgba(255,255,255,0.04); 
-  overflow-y:auto;
-  font-size:14px;
-  line-height:1.5;
+  width:100%; height:280px; border:1px solid rgba(255,42,161,0.3); border-radius:12px;
+  padding:15px; margin-bottom:15px; background: rgba(255,255,255,0.04); overflow-y:auto;
+  font-size:14px; line-height:1.5;
 }
-.chat-message {
-  margin-bottom:10px;
-}
+.chat-message { margin-bottom:10px; }
 .chat-message strong { color: var(--accent); }
 .chat-inputs {
-  display:flex; 
-  gap:10px; 
-  align-items:center; 
-  justify-content:center; 
-  flex-wrap:wrap;
+  display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
 }
-.chat-inputs input[type="text"] { 
-  width:180px; 
-  padding:12px; 
-  border-radius:12px; 
-  border:1px solid rgba(255,255,255,0.1); 
-  background: rgba(255,255,255,0.03); 
-  color:#fff; 
+.chat-inputs input[type="text"] {
+  width:180px; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03); color:#fff;
 }
-.chat-inputs textarea { 
-  flex:1; 
-  padding:12px; 
-  border-radius:12px; 
-  border:1px solid rgba(255,255,255,0.1); 
-  background: rgba(255,255,255,0.03); 
-  color:#fff; 
-  resize:none; 
-  min-height:48px; 
+.chat-inputs textarea {
+  flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03); color:#fff; resize:none; min-height:48px;
 }
-.chat-inputs button { 
-  padding:12px 28px; 
-  border-radius:30px; 
-  border:none; 
-  background:var(--accent); 
-  color:#000; 
-  font-weight:700; 
-  cursor:pointer; 
+.chat-inputs button {
+  padding:12px 28px; border-radius:30px; border:none; background:var(--accent); color:#000;
+  font-weight:700; cursor:pointer;
 }
 .chat-inputs button:hover { background:#ff5bc3; }
 .chat-inputs button:disabled { opacity:0.4; cursor:not-allowed; }
 
-/* Password section */
-.password-section { text-align:center; margin:40px 0; }
-#passwordInput { 
-  padding:12px 16px; 
-  width:220px; 
-  border-radius:12px; 
-  border:none; 
-  background:rgba(255,255,255,0.05); 
-  color:#fff; 
+/* Password unlock area */
+.chat-lock {
+  background: rgba(255,42,161,0.08); border:1px solid rgba(255,42,161,0.3); border-radius:12px;
+  padding:40px 20px; text-align:center; max-width:500px; margin:0 auto 40px;
 }
-#unlockBtn { 
-  padding:12px 24px; 
-  margin-left:10px; 
-  border-radius:12px; 
-  background:var(--accent); 
-  color:#000; 
-  border:none; 
-  font-weight:700; 
-  cursor:pointer; 
+.chat-lock input[type="password"] {
+  padding:14px 18px; width:240px; border-radius:12px; border:none;
+  background:rgba(255,255,255,0.05); color:#fff; font-size:16px;
 }
-.locked-note { color:#ff5bc3; font-weight:600; }
+.chat-lock button {
+  padding:14px 28px; margin-left:12px; border-radius:12px; background:var(--accent);
+  color:#000; border:none; font-weight:700; cursor:pointer; font-size:16px;
+}
+.chat-lock button:hover { background:#ff5bc3; }
+.locked-note { color:#ff5bc3; font-weight:600; margin-bottom:20px; font-size:18px; }
 
 /* Floating player (your existing styles) */
-#floating-player { /* ... your existing floating player CSS ... */ }
+#floating-player {
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  width:360px; height:72px; background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px; display:flex; align-items:center; padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85); z-index:999;
+}
+/* ... rest of player CSS ... */
 </style>
 </head>
 <body>
 
-<!-- Your existing header, hero, rules, spotify embed, lyrics, etc. -->
-
-<!-- LIVE CHAT - now password protected -->
-<section class="chat-container">
-  <h2>Live Lab Chat</h2>
-  <p class="note">Reserved for official MLKSHK artists. Password required.</p>
-
-  <div id="lockedChat" style="text-align:center; padding:30px; background:rgba(255,42,161,0.05); border-radius:12px;">
-    <p class="locked-note">Enter password to join chat</p>
-    <input type="password" id="passwordInput" placeholder="Lab access code">
-    <button id="unlockBtn">Unlock</button>
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <button class="nav-toggle" aria-haspopup="true">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="archive.html">Archive</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="universe.html">The Universe</a>
+        </div>
+      </div>
+    </nav>
   </div>
+</header>
 
-  <div id="chatContent" style="display:none;">
-    <div class="chat-window" id="chatWindow"></div>
-    <div class="chat-inputs">
-      <input type="text" id="username" placeholder="Your artist name" maxlength="20">
-      <textarea id="message" placeholder="Type your message..."></textarea>
-      <button id="sendBtn">Send</button>
+<div class="lab-container">
+
+  <!-- HERO -->
+  <a href="lab.html" class="image-link">
+    <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
+  </a>
+  <hr class="section-divider">
+
+  <!-- RULES (informational only, no checkbox gating) -->
+  <section class="rules-box">
+    <p>All instrumentals on this page belong to MLKSHK Digital.</p>
+    <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
+    <p>You keep credit. We keep structure.</p>
+    <p>No reposts. No theft. No drama.</p>
+  </section>
+  <hr class="section-divider">
+
+  <!-- SPOTIFY BEATS -->
+  <section class="section">
+    <h2>Select a Beat</h2>
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
+      width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+    </iframe>
+    <p class="note" style="margin-top:12px;">Live Pirate Radio stream playing in the floating player below — vibe while you create.</p>
+  </section>
+  <hr class="section-divider">
+
+  <!-- LYRIC LAB -->
+  <section class="section">
+    <h2>Write Your Lyrics</h2>
+    <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
+    <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
+  </section>
+  <hr class="section-divider">
+
+  <!-- CHAT - password protected -->
+  <section class="chat-container">
+    <h2>Live Lab Chat</h2>
+    <p class="note">This chat is reserved for official MLKSHK artists only.</p>
+
+    <div class="chat-lock" id="chatLock">
+      <p class="locked-note">Artist-only chat – enter code to join</p>
+      <input type="password" id="passwordInput" placeholder="Access code">
+      <button id="unlockBtn">Unlock Chat</button>
     </div>
+
+    <div id="chatContent" style="display:none;">
+      <div class="chat-window" id="chatWindow"></div>
+      <div class="chat-inputs">
+        <input type="text" id="username" placeholder="Your artist name" maxlength="20">
+        <textarea id="message" placeholder="Type your message..."></textarea>
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </section>
+  <hr class="section-divider">
+
+  <!-- SUBMISSION FORM -->
+  <section class="section">
+    <form class="lab-form" action="https://formspree.io/f/xojjeblv" method="POST">
+      <h2>Show Us What You’ve Created</h2>
+      <input class="field" type="text" name="artist_name" placeholder="Artist Name" required>
+      <input class="field" type="text" name="track_used" placeholder="Track Used">
+      <input class="field" type="email" name="email" placeholder="Email Address" required>
+      <input class="field" type="text" name="soundcloud_link" placeholder="Private SoundCloud Link">
+      <input class="field" type="text" name="social_links" placeholder="Social Links">
+      <textarea class="field" name="message" placeholder="Additional Notes"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+  <hr class="section-divider">
+
+  <!-- NOTE -->
+  <section class="section">
+    <p class="note" style="opacity:0.85;">
+      We are currently not accepting submissions for new artists.<br>
+      Non-artist submissions that make the cut will be released on a song-by-song basis. An official release does not guarantee signing.
+    </p>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div style="padding:18px 10px;color:var(--muted);text-align:center">
+    MLKSHK Digital — Built for the misfits. © <span id="year"></span>
   </div>
-</section>
+</footer>
 
-<!-- Your existing password section (if you want to keep it separate), form, note, etc. -->
-
-<!-- FLOATING PLAYER (unchanged from previous) -->
+<!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -141,20 +201,18 @@ body { margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(-
   </audio>
 </div>
 
-<!-- Optional: manual pause helper near Spotify if needed -->
-<p class="note" style="text-align:center; margin:20px 0;">
-  If Spotify beat clashes with radio stream, use the floating player controls or refresh.
-</p>
-
 <script>
-// ── Floating player (your existing code) ──
+// Year in footer
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ── Floating radio player logic ──
 const audio = document.getElementById('audio');
 const playBtn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
 
 playBtn.onclick = () => {
   if (audio.paused) {
-    audio.play().catch(e => statusEl.textContent = 'Error – try again');
+    audio.play().catch(() => statusEl.textContent = 'Error – try again');
     playBtn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Connecting...';
   } else {
@@ -164,38 +222,78 @@ playBtn.onclick = () => {
   }
 };
 
-// ... your existing audio event listeners + Media Session code ...
+// Audio events
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
-// ── Password unlock for chat ──
-const CORRECT_PASSWORD = "mlkshk-lab-2026"; // ← CHANGE THIS to your real password!
+// Media Session (lock screen)
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
 
-document.getElementById('unlockBtn').onclick = () => {
-  const input = document.getElementById('passwordInput').value.trim();
-  if (input === CORRECT_PASSWORD) {
-    document.getElementById('lockedChat').style.display = 'none';
-    document.getElementById('chatContent').style.display = 'block';
-    addSystemMessage("Welcome to the Lab chat. Keep it creative.");
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    playBtn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  });
+
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    playBtn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  });
+
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+}
+
+// ── Chat: password unlock only ──
+const CORRECT_PASSWORD = "mlkshk-lab-2026"; // ← CHANGE THIS to your actual password
+
+const chatLock = document.getElementById('chatLock');
+const chatContent = document.getElementById('chatContent');
+const passwordInput = document.getElementById('passwordInput');
+const unlockBtn = document.getElementById('unlockBtn');
+
+unlockBtn.onclick = () => {
+  if (passwordInput.value.trim() === CORRECT_PASSWORD) {
+    chatLock.style.display = 'none';
+    chatContent.style.display = 'block';
+    addSystemMessage("Welcome to the MLKSHK artist chat. Keep it creative.");
+    passwordInput.value = ''; // clear field
   } else {
-    alert("Access denied. Wrong code.");
-    document.getElementById('passwordInput').value = '';
+    alert("Wrong code – try again.");
   }
 };
 
-// ── Simple in-memory chat ──
+// ── In-memory chat logic ──
 const chatWindow = document.getElementById('chatWindow');
 const usernameInput = document.getElementById('username');
 const messageInput = document.getElementById('message');
 const sendBtn = document.getElementById('sendBtn');
 
-let messages = []; // stored in memory (lost on refresh)
+let messages = [];
 
-function addMessage(user, text) {
-  messages.push({ user, text, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
+function addMessage(user, text, isSystem = false) {
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  messages.push({ user, text, time, isSystem });
   renderChat();
 }
 
 function addSystemMessage(text) {
-  addMessage("System", text);
+  addMessage("System", text, true);
 }
 
 function renderChat() {
@@ -203,7 +301,11 @@ function renderChat() {
   messages.forEach(msg => {
     const div = document.createElement('div');
     div.className = 'chat-message';
-    div.innerHTML = `<strong>${msg.user}</strong> <span style="opacity:0.6; font-size:0.9em;">${msg.time}</span><br>${msg.text}`;
+    if (msg.isSystem) {
+      div.innerHTML = `<em style="color:#888;">${msg.text}</em> <span style="opacity:0.5; font-size:0.85em;">${msg.time}</span>`;
+    } else {
+      div.innerHTML = `<strong>${msg.user}</strong> <span style="opacity:0.6; font-size:0.9em;">${msg.time}</span><br>${msg.text}`;
+    }
     chatWindow.appendChild(div);
   });
   chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -225,25 +327,7 @@ messageInput.addEventListener('keypress', e => {
   }
 });
 
-// Initial welcome
-addSystemMessage("Chat unlocked for artists only. Be excellent to each other.");
-
-// Optional: try to detect Spotify play (very limited reliability)
-const spotifyIframe = document.querySelector('iframe[src*="spotify.com/embed"]');
-if (spotifyIframe) {
-  window.addEventListener('message', e => {
-    // Spotify sometimes sends playback state via postMessage (not always reliable)
-    if (e.source === spotifyIframe.contentWindow && e.data?.command) {
-      if (e.data.command === 'play' || e.data.command === 'toggle') {
-        if (!audio.paused) {
-          audio.pause();
-          playBtn.src = 'Player/PLAY.png';
-          statusEl.textContent = 'Paused (Spotify active)';
-        }
-      }
-    }
-  });
-}
+// Initial message (shown only after unlock)
 </script>
 </body>
 </html>
