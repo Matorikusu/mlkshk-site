@@ -73,6 +73,25 @@ header.nav-bar{
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
 
+/* PIRATE RADIO IMAGE LINK */
+.pirate-radio-link{
+  display:block;
+  margin:40px auto;
+  max-width:1000px;
+}
+.pirate-radio-link .image-section{
+  height:420px;
+  background:url('images/Pirate Radio/pirateradio_header.png') center/cover no-repeat;
+  background-size:cover;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.pirate-radio-link .image-section:hover{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
+
 /* DIVIDER */
 .section-divider{
   height:2px;
@@ -99,21 +118,11 @@ header.nav-bar{
 }
 
 /* INDIVIDUAL BACKGROUNDS */
-.brands-section{
-  background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png'); /* your new brands image */
-}
-.catalogue-section{
-  background-image:url('images/Home/CATALOGUE_HEADER_3.png');
-}
-.universe-section{
-  background-image:url('images/Home/UNIVERSE_HEADER2.png');
-}
-.lab-section{
-  background-image:url('images/Home/LAB_HEADER.png');
-}
-.access-section{
-  background-image:url('images/Home/MLKSHK_ACCESS.png');
-}
+.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
+.catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
+.universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
+.lab-section{background-image:url('images/Home/LAB_HEADER.png');}
+.access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
 
 /* FOOTER */
 footer{
@@ -123,7 +132,7 @@ footer{
   border-top:1px solid rgba(255,255,255,.05);
 }
 
-/* FLOATING PLAYER FROM UNIVERSE PAGE */
+/* FLOATING PLAYER */
 #floating-player{
   position:fixed;
   bottom:20px;
@@ -190,6 +199,11 @@ footer{
   </div>
 </header>
 
+<!-- PIRATE RADIO IMAGE LINK -->
+<a href="pirateradio.html" class="pirate-radio-link">
+  <section class="image-section"></section>
+</a>
+
 <section class="hero"></section>
 <hr class="section-divider">
 
@@ -232,17 +246,17 @@ footer{
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER INTEGRATED -->
+<!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
-    <div class="player-title">Round We Go</div>
-    <div class="player-artist">Shockaddict</div>
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live Stream</div>
   </div>
   <div class="player-controls">
     <img id="playPause" src="Player/PLAY.png" alt="Play">
   </div>
   <audio id="audio">
-    <source src="Audio/6. Round And Round.mp3" type="audio/mpeg">
+    <source src="https://radio.mlkshkdigital.com/stream" type="audio/mpeg">
   </audio>
 </div>
 
