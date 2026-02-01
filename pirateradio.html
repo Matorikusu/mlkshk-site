@@ -162,27 +162,19 @@ header.nav-bar {
   <hr class="section-divider">
 
   <!-- MODERN LIVE RADIO PLAYER -->
-<section class="modern-player">
-  <div class="player-container">
-    <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
-    <div class="player-overlay">
-      <h2>MLKSHK Pirate Radio</h2>
-      <button id="playBtn">▶ Play</button>
-      <!-- Hidden audio element for JS control -->
-      <audio id="radio" controls>
-  <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-</audio>
+  <section class="modern-player">
+    <div class="player-container">
+      <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
+      <div class="player-overlay">
+        <h2>MLKSHK Pirate Radio</h2>
+        <button id="playBtn">▶ Play</button>
+        <!-- Hidden audio element controlled by JS -->
+        <audio id="radio" style="display:none">
+          <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+        </audio>
+      </div>
     </div>
-  </div>
-</section>
-
-<audio id="radio" controls>
-  <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-</audio>
-
-
-<button id="playBtn">▶ Play</button>
-
+  </section>
 
 </div>
 
@@ -195,29 +187,18 @@ header.nav-bar {
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Custom player play/pause
+// Play/pause button for radio
 const radio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
 
 btn.addEventListener('click', () => {
-  if(radio.paused){
+  if (radio.paused) {
     radio.play();
     btn.textContent = 'Pause';
   } else {
     radio.pause();
     btn.textContent = '▶ Play';
   }
-});
-
-// Autoplay workaround for browsers
-window.addEventListener('load', () => {
-  radio.muted = true;
-  radio.play().catch(() => console.log('Autoplay blocked.'));
-  
-  document.body.addEventListener('click', () => {
-    radio.muted = false;
-    radio.play().catch(()=>console.log('User play required.'));
-  }, { once: true });
 });
 </script>
 
