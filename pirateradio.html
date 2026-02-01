@@ -6,7 +6,6 @@
 <title>MLKSHK RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-
 <style>
 :root {
   --bg: #000;
@@ -15,11 +14,9 @@
   --accent: #ff2aa1;
   --card-radius: 12px;
 }
-
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
 }
-
 /* NAVIGATION */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
@@ -51,7 +48,6 @@ header.nav-bar {
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
 .nav-dropdown:hover .nav-toggle::after,
 .nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
-
 /* HERO HEADER IMAGE */
 .image-link{
   display:block;
@@ -69,13 +65,10 @@ header.nav-bar {
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
-
 /* MAIN CONTAINER */
 .lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
-
 /* Section divider */
 .section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
-
 /* MODERN RADIO PLAYER */
 .modern-player {
   margin:40px auto;
@@ -119,7 +112,11 @@ header.nav-bar {
   transition:0.2s;
 }
 .player-overlay button:hover { background:#ff5bc3; }
-
+.player-overlay #status {
+  margin-top:12px;
+  font-size:14px;
+  opacity:0.8;
+}
 /* BUTTONS */
 .button {
   padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
@@ -130,7 +127,6 @@ header.nav-bar {
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -151,16 +147,12 @@ header.nav-bar {
     </nav>
   </div>
 </header>
-
 <div class="lab-container">
-
   <!-- HERO IMAGE -->
   <a href="radio.html" class="image-link">
     <section class="image-section lab-section" style="background-image:url('images/Pirate Radio/pirateradio_header.png');"></section>
   </a>
-
   <hr class="section-divider">
-
   <!-- MODERN LIVE RADIO PLAYER -->
   <section class="modern-player">
     <div class="player-container">
@@ -168,6 +160,7 @@ header.nav-bar {
       <div class="player-overlay">
         <h2>MLKSHK Pirate Radio</h2>
         <button id="playBtn">▶ Play</button>
+        <p id="status">Ready</p>
         <!-- Hidden audio element controlled by JS -->
         <audio id="radio" style="display:none">
           <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
@@ -175,32 +168,70 @@ header.nav-bar {
       </div>
     </div>
   </section>
-
 </div>
-
 <footer class="site-footer">
   <div style="padding:18px 10px;color:var(--muted);text-align:center">
     MLKSHK Digital — Built for the misfits. © <span id="year"></span>
   </div>
 </footer>
-
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Play/pause button for radio
 const radio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
+const statusEl = document.getElementById('status');
 
 btn.addEventListener('click', () => {
   if (radio.paused) {
-    radio.play();
+    radio.play().catch(e => {
+      console.log("Play failed:", e);
+      statusEl.textContent = 'Error – try again';
+    });
     btn.textContent = 'Pause';
+    statusEl.textContent = 'Connecting...';
   } else {
     radio.pause();
     btn.textContent = '▶ Play';
+    statusEl.textContent = 'Paused';
   }
 });
-</script>
 
+// Status updates
+radio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
+radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
+radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
+radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
+
+// Media Session API: show "MLKSHK Pirate Radio" on Android lock screen / notification
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/MLKSHK_LOGO_1500_X_500.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+
+  navigator.mediaSession.setActionHandler('play', () => {
+    radio.play();
+    btn.textContent = 'Pause';
+    statusEl.textContent = 'Live';
+  });
+
+  navigator.mediaSession.setActionHandler('pause', () => {
+    radio.pause();
+    btn.textContent = '▶ Play';
+    statusEl.textContent = 'Paused';
+  });
+
+  radio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
+  radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
+}
+</script>
 </body>
 </html>
