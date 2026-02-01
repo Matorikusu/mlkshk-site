@@ -17,65 +17,204 @@
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
 }
-
-/* ── Keep all your existing CSS ── */
-/* ... paste your full CSS here ... */
-
-/* Chat specific adjustments */
-.chat-container { max-width:600px; margin:40px auto; text-align:left; }
-.chat-window {
-  width:100%; height:280px; border:1px solid rgba(255,42,161,0.3); border-radius:12px;
-  padding:15px; margin-bottom:15px; background: rgba(255,255,255,0.04); overflow-y:auto;
-  font-size:14px; line-height:1.5;
+/* NAVIGATION */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
+  position: sticky; top:0; z-index:30;
 }
-.chat-message { margin-bottom:10px; }
-.chat-message strong { color: var(--accent); }
+.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+.logo-link img { height:42px; display:block; }
+.nav-links { display:flex; gap:14px; align-items:center; }
+.nav-dropdown { position: relative; display:inline-block; }
+.nav-toggle {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
+  color:var(--muted); font-weight:600; background:transparent; border:0;
+}
+.nav-toggle::after {
+  content:""; display:inline-block; width:8px; height:8px;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform: rotate(45deg); margin-left:4px; transition:.18s ease;
+}
+.dropdown-menu {
+  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
+  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
+}
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+.nav-dropdown:hover .nav-toggle::after,
+.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
+/* HERO HEADER IMAGE */
+.image-link{
+  display:block;
+  margin-bottom:40px;
+}
+.image-section{
+  height:420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.image-link:hover .image-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
+}
+/* LAB CONTENT */
+.lab-container { 
+  max-width:1000px; 
+  margin:0 auto; 
+  padding:0 20px 120px 20px;  /* extra bottom space for floating player */
+}
+/* Section divider */
+.section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
+.rules-box {
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,42,161,0.2); border-radius:12px;
+  padding:30px; text-align:center;
+}
+.rules-box p { margin-bottom:15px; line-height:1.5; }
+.rules-box label { display:block; margin-top:15px; font-size:14px; opacity:0.8; cursor:pointer; }
+.section { margin-bottom:60px; text-align:center; }
+.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
+.note { font-size:14px; opacity:0.7; margin-bottom:15px; }
+/* LYRIC BOX UPDATED */
+.lyric-box {
+  width:100%;
+  min-height:300px;
+  padding:20px;
+  border-radius:12px;
+  border:none;
+  resize:vertical;
+  font-size:16px;
+  background:#f5f5f5; /* off-white background */
+  color:#000;
+  caret-color:#fff; /* visible cursor */
+}
+/* BUTTONS */
+.button {
+  padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
+  transition:.2s;
+}
+.button:hover { background:#ff5bc3; }
+.button:disabled { opacity:0.3; cursor:not-allowed; }
+/* CHAT */
+.chat-container { max-width:600px; margin:0 auto; text-align:left; }
+.chat-window {
+  width:100%; height:200px; border:1px solid rgba(255,255,255,0.1); border-radius:12px;
+  padding:15px; margin-bottom:15px; background: rgba(255,255,255,0.03); overflow-y:auto;
+}
 .chat-inputs {
   display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
 }
-.chat-inputs input[type="text"] {
-  width:180px; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.03); color:#fff;
+.chat-inputs input[type="text"] { width:150px; padding:12px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; }
+.chat-inputs textarea { flex:1; padding:12px; border-radius:12px; border:none; font-size:14px; background: rgba(255,255,255,0.03); color:#fff; resize:none; min-height:50px; }
+.chat-inputs button { padding:12px 24px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer; }
+.chat-inputs button:disabled { opacity:0.5; cursor:not-allowed; }
+/* PASSWORD SECTION */
+.password-section { margin-bottom:30px; text-align:center; }
+.password-section input { padding:10px 14px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; width:180px; margin-right:8px; }
+.password-section button { padding:10px 18px; border-radius:12px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer; }
+/* NEW FORM STYLE */
+.lab-form{
+  max-width:700px;
+  margin:60px auto 60px;
+  padding:0 20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  text-align:center;
 }
-.chat-inputs textarea {
-  flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.03); color:#fff; resize:none; min-height:48px;
+.lab-form h2{
+  font-family:'Orbitron', sans-serif;
+  font-size:36px;
+  color:var(--accent);
 }
-.chat-inputs button {
-  padding:12px 28px; border-radius:30px; border:none; background:var(--accent); color:#000;
-  font-weight:700; cursor:pointer;
+.lab-form .field{
+  background:#111;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:15px;
+  color:#fff;
 }
-.chat-inputs button:hover { background:#ff5bc3; }
-.chat-inputs button:disabled { opacity:0.4; cursor:not-allowed; }
+.lab-form .field::placeholder{color:var(--muted);}
+.lab-form textarea.field{resize:vertical; min-height:100px;}
+.lab-form button{
+  padding:16px;
+  border-radius:30px;
+  border:2px solid var(--accent);
+  background:transparent;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+.lab-form button:hover{
+  background:var(--accent);
+  color:#000;
+}
+.lab-form .form-note{
+  font-size:13px;
+  color:var(--muted);
+}
 
-/* Password unlock area */
-.chat-lock {
-  background: rgba(255,42,161,0.08); border:1px solid rgba(255,42,161,0.3); border-radius:12px;
-  padding:40px 20px; text-align:center; max-width:500px; margin:0 auto 40px;
-}
-.chat-lock input[type="password"] {
-  padding:14px 18px; width:240px; border-radius:12px; border:none;
-  background:rgba(255,255,255,0.05); color:#fff; font-size:16px;
-}
-.chat-lock button {
-  padding:14px 28px; margin-left:12px; border-radius:12px; background:var(--accent);
-  color:#000; border:none; font-weight:700; cursor:pointer; font-size:16px;
-}
-.chat-lock button:hover { background:#ff5bc3; }
-.locked-note { color:#ff5bc3; font-weight:600; margin-bottom:20px; font-size:18px; }
-
-/* Floating player (your existing styles) */
+/* ── FLOATING PLAYER ── (added from index) */
 #floating-player {
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  width:360px; height:72px; background:url('Player/PLAYER.png') center/cover no-repeat;
-  border-radius:20px; display:flex; align-items:center; padding:0 18px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85); z-index:999;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 72px;
+  background: url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.85);
+  z-index: 999;
 }
-/* ... rest of player CSS ... */
+.player-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+}
+.player-title {
+  font-weight: 700;
+  font-size: 14px;
+}
+.player-artist {
+  font-size: 12px;
+  color: var(--muted);
+}
+.player-status {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+.player-controls img {
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -96,35 +235,32 @@ body {
     </nav>
   </div>
 </header>
-
 <div class="lab-container">
-
-  <!-- HERO -->
+  <!-- HERO IMAGE HEADER -->
   <a href="lab.html" class="image-link">
     <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
   </a>
   <hr class="section-divider">
-
-  <!-- RULES (informational only, no checkbox gating) -->
+  <!-- RULES -->
   <section class="rules-box">
     <p>All instrumentals on this page belong to MLKSHK Digital.</p>
     <p>If you write or record vocals here, you agree that any release happens through MLKSHK.</p>
     <p>You keep credit. We keep structure.</p>
     <p>No reposts. No theft. No drama.</p>
+    <label>
+      <input type="checkbox" id="agreeRules"> I understand and agree to the MLKSHK LAB rules
+    </label>
   </section>
   <hr class="section-divider">
-
-  <!-- SPOTIFY BEATS -->
+  <!-- BEAT PLAYER -->
   <section class="section">
     <h2>Select a Beat</h2>
     <iframe style="border-radius:12px"
       src="https://open.spotify.com/embed/playlist/1EgaT4UCeVNRNektx5KjJe?utm_source=generator&theme=0"
       width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
     </iframe>
-    <p class="note" style="margin-top:12px;">Live Pirate Radio stream playing in the floating player below — vibe while you create.</p>
   </section>
   <hr class="section-divider">
-
   <!-- LYRIC LAB -->
   <section class="section">
     <h2>Write Your Lyrics</h2>
@@ -132,30 +268,25 @@ body {
     <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
   </section>
   <hr class="section-divider">
-
-  <!-- CHAT - password protected -->
+  <!-- LIVE CHAT -->
   <section class="chat-container">
     <h2>Live Lab Chat</h2>
     <p class="note">This chat is reserved for official MLKSHK artists only.</p>
-
-    <div class="chat-lock" id="chatLock">
-      <p class="locked-note">Artist-only chat – enter code to join</p>
-      <input type="password" id="passwordInput" placeholder="Access code">
-      <button id="unlockBtn">Unlock Chat</button>
-    </div>
-
-    <div id="chatContent" style="display:none;">
-      <div class="chat-window" id="chatWindow"></div>
-      <div class="chat-inputs">
-        <input type="text" id="username" placeholder="Your artist name" maxlength="20">
-        <textarea id="message" placeholder="Type your message..."></textarea>
-        <button id="sendBtn">Send</button>
-      </div>
+    <div class="chat-window" id="chatWindow"></div>
+    <div class="chat-inputs">
+      <input type="text" id="username" placeholder="Username (Access Only)" disabled>
+      <textarea id="message" placeholder="Type message (Access Only)" disabled></textarea>
+      <button id="sendBtn" disabled>Send</button>
     </div>
   </section>
+  <!-- PASSWORD ENTRY -->
+  <section class="password-section">
+    <h2>Enter Password (for chat only)</h2>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="unlockBtn">Unlock Chat</button>
+  </section>
   <hr class="section-divider">
-
-  <!-- SUBMISSION FORM -->
+  <!-- NEW FORMSPREE SECTION -->
   <section class="section">
     <form class="lab-form" action="https://formspree.io/f/xojjeblv" method="POST">
       <h2>Show Us What You’ve Created</h2>
@@ -169,17 +300,14 @@ body {
     </form>
   </section>
   <hr class="section-divider">
-
-  <!-- NOTE -->
+  <!-- ARTIST STATUS NOTE -->
   <section class="section">
     <p class="note" style="opacity:0.85;">
       We are currently not accepting submissions for new artists.<br>
       Non-artist submissions that make the cut will be released on a song-by-song basis. An official release does not guarantee signing.
     </p>
   </section>
-
 </div>
-
 <footer class="site-footer">
   <div style="padding:18px 10px;color:var(--muted);text-align:center">
     MLKSHK Digital — Built for the misfits. © <span id="year"></span>
@@ -194,7 +322,7 @@ body {
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+    <img id="playPause" src="Player/PLAY.png" alt="Play">
   </div>
   <audio id="audio">
     <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
@@ -202,34 +330,35 @@ body {
 </div>
 
 <script>
-// Year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// ── Floating radio player logic ──
+// Floating player controls
 const audio = document.getElementById('audio');
-const playBtn = document.getElementById('playPause');
+const playPauseBtn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
 
-playBtn.onclick = () => {
+playPauseBtn.addEventListener('click', () => {
   if (audio.paused) {
-    audio.play().catch(() => statusEl.textContent = 'Error – try again');
-    playBtn.src = 'Player/PAUSE.png';
+    audio.play().catch(err => {
+      console.log("Play error:", err);
+      statusEl.textContent = 'Error – try again';
+    });
+    playPauseBtn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Connecting...';
   } else {
     audio.pause();
-    playBtn.src = 'Player/PLAY.png';
+    playPauseBtn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
   }
-};
+});
 
-// Audio events
-audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Live');
-audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error');
 audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
 audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
-// Media Session (lock screen)
+// Lock screen metadata (Android mostly)
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -245,89 +374,60 @@ if ('mediaSession' in navigator) {
 
   navigator.mediaSession.setActionHandler('play', () => {
     audio.play();
-    playBtn.src = 'Player/PAUSE.png';
+    playPauseBtn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Live';
   });
-
   navigator.mediaSession.setActionHandler('pause', () => {
     audio.pause();
-    playBtn.src = 'Player/PLAY.png';
+    playPauseBtn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
   });
-
-  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
-  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
 
-// ── Chat: password unlock only ──
-const CORRECT_PASSWORD = "mlkshk-lab-2026"; // ← CHANGE THIS to your actual password
-
-const chatLock = document.getElementById('chatLock');
-const chatContent = document.getElementById('chatContent');
+// Chat unlock (only affects chat inputs)
 const passwordInput = document.getElementById('passwordInput');
 const unlockBtn = document.getElementById('unlockBtn');
-
-unlockBtn.onclick = () => {
-  if (passwordInput.value.trim() === CORRECT_PASSWORD) {
-    chatLock.style.display = 'none';
-    chatContent.style.display = 'block';
-    addSystemMessage("Welcome to the MLKSHK artist chat. Keep it creative.");
-    passwordInput.value = ''; // clear field
-  } else {
-    alert("Wrong code – try again.");
-  }
-};
-
-// ── In-memory chat logic ──
-const chatWindow = document.getElementById('chatWindow');
 const usernameInput = document.getElementById('username');
 const messageInput = document.getElementById('message');
 const sendBtn = document.getElementById('sendBtn');
 
-let messages = [];
+const CORRECT_PASSWORD = "mlkshk-lab-2026"; // ← CHANGE THIS TO YOUR REAL PASSWORD
 
-function addMessage(user, text, isSystem = false) {
-  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-  messages.push({ user, text, time, isSystem });
-  renderChat();
-}
+unlockBtn.addEventListener('click', () => {
+  if (passwordInput.value.trim() === CORRECT_PASSWORD) {
+    usernameInput.disabled = false;
+    messageInput.disabled = false;
+    sendBtn.disabled = false;
+    passwordInput.disabled = true;
+    unlockBtn.disabled = true;
+    passwordInput.value = '';
+    alert('Chat unlocked for this session.');
+  } else {
+    alert('Wrong password.');
+  }
+});
 
-function addSystemMessage(text) {
-  addMessage("System", text, true);
-}
+// Basic chat sending (client-side only, visible to you in this tab)
+const chatWindow = document.getElementById('chatWindow');
 
-function renderChat() {
-  chatWindow.innerHTML = '';
-  messages.forEach(msg => {
+sendBtn.addEventListener('click', () => {
+  const user = usernameInput.value.trim() || 'Anonymous';
+  const msg = messageInput.value.trim();
+  if (msg) {
     const div = document.createElement('div');
-    div.className = 'chat-message';
-    if (msg.isSystem) {
-      div.innerHTML = `<em style="color:#888;">${msg.text}</em> <span style="opacity:0.5; font-size:0.85em;">${msg.time}</span>`;
-    } else {
-      div.innerHTML = `<strong>${msg.user}</strong> <span style="opacity:0.6; font-size:0.9em;">${msg.time}</span><br>${msg.text}`;
-    }
+    div.textContent = `${user}: ${msg}`;
     chatWindow.appendChild(div);
-  });
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-sendBtn.onclick = () => {
-  const user = usernameInput.value.trim() || "Anonymous";
-  const text = messageInput.value.trim();
-  if (text) {
-    addMessage(user, text);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
     messageInput.value = '';
   }
-};
+});
 
-messageInput.addEventListener('keypress', e => {
+messageInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
     sendBtn.click();
   }
 });
-
-// Initial message (shown only after unlock)
 </script>
 </body>
 </html>
