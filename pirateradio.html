@@ -162,19 +162,19 @@ header.nav-bar {
   <hr class="section-divider">
 
   <!-- MODERN LIVE RADIO PLAYER -->
-  <section class="modern-player">
-    <div class="player-container">
-      <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
-      <div class="player-overlay">
-        <h2>MLKSHK Pirate Radio</h2>
-        <button id="playBtn">▶ Play</button>
-        <audio controls>
-  <source src="https://radio.mlkshkdigital.com/stream" type="audio/mpeg">
-</audio>
-
-      </div>
+<section class="modern-player">
+  <div class="player-container">
+    <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
+    <div class="player-overlay">
+      <h2>MLKSHK Pirate Radio</h2>
+      <button id="playBtn">▶ Play</button>
+      <!-- Hidden audio element for JS control -->
+      <audio id="radio">
+        <source src="https://radio.mlkshkdigital.com/stream" type="audio/mpeg">
+      </audio>
     </div>
-  </section>
+  </div>
+</section>
 
 </div>
 
