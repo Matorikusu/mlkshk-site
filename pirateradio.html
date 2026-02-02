@@ -44,18 +44,8 @@ header.nav-bar {
   display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
   border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
 }
-.dropdown-menu a { 
-  display:block; 
-  padding:10px 14px; 
-  color:#fff; 
-  font-size:14px; 
-  text-decoration: none; /* removes underline */
-}
-.dropdown-menu a:hover { 
-  background:var(--accent); 
-  color:#000; 
-  text-decoration: none; /* ensures no underline on hover */
-}
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
 
@@ -71,7 +61,7 @@ header.nav-bar {
   justify-content: center;
 }
 
-/* Background moody filter */
+/* Moody filter on background */
 .transmitter-room::before {
   content: '';
   position: absolute;
@@ -81,12 +71,12 @@ header.nav-bar {
   z-index: 0;
 }
 
-/* CRT noise - prominent */
+/* CRT noise - more prominent */
 .transmitter-room .crt-noise {
   position: absolute;
   inset: 0;
   background: url('images/Pirate Radio/static1.png') repeat;
-  opacity: 0.40;
+  opacity: 0.40; /* bumped up ~20% more than before */
   animation: scan 14s linear infinite;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -107,27 +97,26 @@ header.nav-bar {
   z-index: 1;
 }
 
-/* PLAYER OVERLAY - toned down */
+/* PLAYER OVERLAY - toned down rectangle */
 .player-overlay {
   position: relative;
   z-index: 10;
-  background: rgba(0,0,0,0.38);
-  padding: 25px 35px;
+  background: rgba(0,0,0,0.28); /* even more transparent - bunker very visible */
+  padding: 25px 40px; /* smaller, less dominant */
   border-radius: 16px;
-  border: 1px dashed var(--accent);
+  border: 1px dashed var(--accent); /* dashed for grit */
   backdrop-filter: blur(6px);
   box-shadow: 0 0 50px var(--glow);
   text-align: center;
-  max-width: 420px;
+  max-width: 420px; /* narrower rectangle */
 }
 
-/* Branding image inside overlay */
+/* Branding image inside overlay (replaces h2) */
 .player-overlay img {
-  max-width: 80%;
-  max-height: 120px;
+  max-width: 100%;
   height: auto;
   margin-bottom: 20px;
-  filter: brightness(0.88) contrast(1.12) grayscale(0.1);
+  filter: brightness(0.88) contrast(1.12) grayscale(0.1); /* gritty look */
   border: 1px solid rgba(255,42,161,0.25);
   box-shadow: 0 0 20px var(--glow);
 }
@@ -153,7 +142,7 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS READOUT */
+/* TRANSMITTER STATUS READOUT - random cycling */
 #transmitter-status {
   position: absolute;
   bottom: 20px;
@@ -212,7 +201,7 @@ footer.site-footer {
     NOISE: -41 dB
   </div>
 
-  <!-- Player overlay - with image -->
+  <!-- Player overlay - now with image instead of h2 -->
   <div class="player-overlay">
     <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
     <button id="playBtn">▶ Play</button>
