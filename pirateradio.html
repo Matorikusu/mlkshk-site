@@ -18,7 +18,7 @@
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
 }
-/* NAVIGATION (unchanged, just ensured reliability) */
+/* NAVIGATION */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -59,10 +59,20 @@ header.nav-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: brightness(0.75) contrast(1.1);
 }
-.transmitter-room::before {  /* CRT noise & scanlines */
+
+/* Background moody filter (only on image) */
+.transmitter-room::before {
   content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: brightness(0.75) contrast(1.1);
+  z-index: 0;
+}
+
+/* CRT noise overlay */
+.transmitter-room .crt-noise {
   position: absolute;
   inset: 0;
   background: url('images/crt-noise.png') repeat;
@@ -70,29 +80,33 @@ header.nav-bar {
   animation: scan 14s linear infinite;
   pointer-events: none;
   mix-blend-mode: overlay;
-}
-.transmitter-room::after {  /* vignette/dark edges */
-  content: '';
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 180px #000;
-  pointer-events: none;
+  z-index: 1;
 }
 @keyframes scan {
   0% { background-position: 0 0; }
   100% { background-position: 0 100%; }
 }
 
-/* PLAYER OVERLAY (centered in room) */
+/* Vignette (dark edges) */
+.transmitter-room::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 180px #000;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PLAYER OVERLAY (centered, bright & vivid) */
 .player-overlay {
   position: relative;
   z-index: 10;
   background: rgba(0,0,0,0.65);
   padding: 40px 60px;
   border-radius: 20px;
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   backdrop-filter: blur(8px);
-  box-shadow: 0 0 80px var(--glow);
+  box-shadow: 0 0 80px var(--glow), inset 0 0 40px var(--glow);
   text-align: center;
   max-width: 600px;
 }
@@ -101,7 +115,7 @@ header.nav-bar {
   font-size: 3rem;
   margin-bottom: 20px;
   color: var(--accent);
-  text-shadow: 0 0 20px var(--glow);
+  text-shadow: 0 0 30px var(--glow);
 }
 .player-overlay button {
   padding:16px 48px;
@@ -113,12 +127,14 @@ header.nav-bar {
   font-size:1.4rem;
   cursor:pointer;
   transition: all 0.3s;
+  box-shadow: 0 0 30px var(--glow);
 }
 .player-overlay button:hover { background:#ff5bc3; transform: scale(1.05); }
 .player-overlay #status {
   margin-top:16px;
   font-size:1.1rem;
-  opacity:0.8;
+  opacity:0.9;
+  color: #fff;
 }
 
 /* TRANSMITTER STATUS READOUT */
@@ -136,8 +152,15 @@ header.nav-bar {
   z-index: 20;
 }
 
-/* FOOTER & OTHER (unchanged) */
-footer.site-footer { /* your existing footer styles */ }
+/* FOOTER */
+footer.site-footer {
+  padding:18px 10px;
+  color:var(--muted);
+  text-align:center;
+  background: rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 10;
+}
 </style>
 </head>
 <body>
@@ -164,6 +187,8 @@ footer.site-footer { /* your existing footer styles */ }
 </header>
 
 <div class="transmitter-room">
+  <div class="crt-noise"></div>
+
   <!-- Transmitter status readout -->
   <div id="transmitter-status">
     FREQ: 107.3 MHz (PIRATE)<br>
@@ -171,7 +196,7 @@ footer.site-footer { /* your existing footer styles */ }
     NOISE: -41 dB
   </div>
 
-  <!-- Player overlay */
+  <!-- Player overlay -->
   <div class="player-overlay">
     <h2>MLKSHK Pirate Radio</h2>
     <button id="playBtn">▶ Play</button>
@@ -191,7 +216,7 @@ footer.site-footer { /* your existing footer styles */ }
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Play/pause + status (your existing logic)
+// Play/pause + status
 const radio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
 const statusEl = document.getElementById('status');
@@ -216,7 +241,7 @@ radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
 radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
 radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
 
-// Media Session (your existing)
+// Media Session API (unchanged)
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -243,7 +268,7 @@ if ('mediaSession' in navigator) {
   radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
 }
 
-// Transmitter status cycling (fluctuating + cryptic)
+// Transmitter status cycling
 const statusOptions = [
   "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
   "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
@@ -256,7 +281,7 @@ function updateTransmitterStatus() {
   document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
 }
 updateTransmitterStatus();
-setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000); // every 4–6 minutes
+setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000); // 4–6 min
 </script>
 </body>
 </html>
