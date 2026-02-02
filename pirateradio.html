@@ -12,20 +12,22 @@
   --text: #f5f5f5;
   --muted: #c0c0c0;
   --accent: #ff2aa1;
+  --glow: rgba(255,42,161,0.5);
   --card-radius: 12px;
 }
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
 }
-/* NAVIGATION */
+/* NAVIGATION (unchanged, just ensured reliability) */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-  position: sticky; top:0; z-index:30;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
+  position: sticky; top:0; z-index:100;
+  backdrop-filter: blur(6px);
 }
 .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
-.logo-link img { height:42px; display:block; }
+.logo-link img { height:42px; display:block; cursor:pointer; }
 .nav-links { display:flex; gap:14px; align-items:center; }
 .nav-dropdown { position: relative; display:inline-block; }
 .nav-toggle {
@@ -46,87 +48,100 @@ header.nav-bar {
 .dropdown-menu a:hover { background:var(--accent); color:#000; }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
-.nav-dropdown:hover .nav-toggle::after,
-.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
-/* HERO HEADER IMAGE */
-.image-link{
-  display:block;
-  margin-bottom:40px;
+
+/* TRANSMITTER ROOM HEADER */
+.transmitter-room {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+  background: url('images/radio-rig-base.jpg') center/cover no-repeat fixed;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: brightness(0.75) contrast(1.1);
 }
-.image-section{
-  height:420px;
-  background-size:cover;
-  background-position:center;
-  cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+.transmitter-room::before {  /* CRT noise & scanlines */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('images/crt-noise.png') repeat;
+  opacity: 0.18;
+  animation: scan 14s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
 }
-.image-link:hover .image-section{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px rgba(255,255,255,.35);
+.transmitter-room::after {  /* vignette/dark edges */
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 180px #000;
+  pointer-events: none;
 }
-/* MAIN CONTAINER */
-.lab-container { max-width:1000px; margin:0 auto; padding:0 20px 60px; }
-/* Section divider */
-.section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
-/* MODERN RADIO PLAYER */
-.modern-player {
-  margin:40px auto;
-  max-width:600px;
-  position:relative;
-  border-radius:16px;
-  overflow:hidden;
-  background:#000;
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
+@keyframes scan {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
 }
-.player-bg {
-  width:100%;
-  display:block;
-  filter: brightness(0.35);
-}
+
+/* PLAYER OVERLAY (centered in room) */
 .player-overlay {
-  position:absolute;
-  top:0; left:0; right:0; bottom:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  text-align:center;
-  padding:20px;
+  position: relative;
+  z-index: 10;
+  background: rgba(0,0,0,0.65);
+  padding: 40px 60px;
+  border-radius: 20px;
+  border: 1px solid var(--accent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 80px var(--glow);
+  text-align: center;
+  max-width: 600px;
 }
 .player-overlay h2 {
   font-family:'Orbitron', sans-serif;
-  font-size:24px;
-  margin-bottom:20px;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--glow);
 }
 .player-overlay button {
-  padding:14px 28px;
+  padding:16px 48px;
   border:none;
-  border-radius:24px;
-  background:#ff2aa1;
-  color:#fff;
+  border-radius:30px;
+  background:var(--accent);
+  color:#000;
   font-weight:700;
+  font-size:1.4rem;
   cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
+  transition: all 0.3s;
 }
-.player-overlay button:hover { background:#ff5bc3; }
+.player-overlay button:hover { background:#ff5bc3; transform: scale(1.05); }
 .player-overlay #status {
-  margin-top:12px;
-  font-size:14px;
+  margin-top:16px;
+  font-size:1.1rem;
   opacity:0.8;
 }
-/* BUTTONS */
-.button {
-  padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
-  transition:.2s;
+
+/* TRANSMITTER STATUS READOUT */
+#transmitter-status {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--accent);
+  opacity: 0.65;
+  pointer-events: none;
+  text-align: right;
+  line-height: 1.4;
+  z-index: 20;
 }
-.button:hover { background:#ff5bc3; }
-.button:disabled { opacity:0.3; cursor:not-allowed; }
+
+/* FOOTER & OTHER (unchanged) */
+footer.site-footer { /* your existing footer styles */ }
 </style>
 </head>
 <body>
+
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -147,37 +162,36 @@ header.nav-bar {
     </nav>
   </div>
 </header>
-<div class="lab-container">
-  <!-- HERO IMAGE -->
-  <a href="pirateradio.html" class="image-link">
-    <section class="image-section lab-section" style="background-image:url('images/Pirate Radio/pirateradio_header.png');"></section>
-  </a>
-  <hr class="section-divider">
-  <!-- MODERN LIVE RADIO PLAYER -->
-  <section class="modern-player">
-    <div class="player-container">
-      <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Radio" class="player-bg">
-      <div class="player-overlay">
-        <h2>MLKSHK Pirate Radio</h2>
-        <button id="playBtn">▶ Play</button>
-        <p id="status">Ready</p>
-        <!-- Hidden audio element controlled by JS -->
-        <audio id="radio" style="display:none">
-          <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-        </audio>
-      </div>
-    </div>
-  </section>
+
+<div class="transmitter-room">
+  <!-- Transmitter status readout -->
+  <div id="transmitter-status">
+    FREQ: 107.3 MHz (PIRATE)<br>
+    PWR: 52% (FLUCTUATING)<br>
+    NOISE: -41 dB
+  </div>
+
+  <!-- Player overlay */
+  <div class="player-overlay">
+    <h2>MLKSHK Pirate Radio</h2>
+    <button id="playBtn">▶ Play</button>
+    <p id="status">Ready</p>
+    <audio id="radio" style="display:none">
+      <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 </div>
+
 <footer class="site-footer">
   <div style="padding:18px 10px;color:var(--muted);text-align:center">
     MLKSHK Digital — Built for the misfits. © <span id="year"></span>
   </div>
 </footer>
+
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Play/pause button for radio
+// Play/pause + status (your existing logic)
 const radio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
 const statusEl = document.getElementById('status');
@@ -197,41 +211,52 @@ btn.addEventListener('click', () => {
   }
 });
 
-// Status updates
 radio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
 radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
 radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
 radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
 
-// Media Session API: use your square pirate radio logo for lock screen / notification
+// Media Session (your existing)
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
     artist: "Underground • Live • No Rules",
     album: "MLKSHK Digital",
     artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },      // small fallback
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
       { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
       { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }  // ← your square logo here (main one for lock screen)
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
     ]
   });
-
   navigator.mediaSession.setActionHandler('play', () => {
     radio.play();
     btn.textContent = 'Pause';
     statusEl.textContent = 'Live';
   });
-
   navigator.mediaSession.setActionHandler('pause', () => {
     radio.pause();
     btn.textContent = '▶ Play';
     statusEl.textContent = 'Paused';
   });
-
   radio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
   radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
 }
+
+// Transmitter status cycling (fluctuating + cryptic)
+const statusOptions = [
+  "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
+  "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
+  "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED",
+  "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
+  "THEY’RE LISTENING<br>FREQUENCY LOCKED"
+];
+
+function updateTransmitterStatus() {
+  document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+}
+updateTransmitterStatus();
+setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000); // every 4–6 minutes
 </script>
 </body>
 </html>
