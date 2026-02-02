@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Universe – MLKSHK</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #ff2aa1;
+  --glow: rgba(255,42,161,0.6);
+}
+body {
+  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+  overflow-x:hidden; cursor: none; /* we'll replace cursor */
+}
+* { box-sizing:border-box; }
+
+/* Fake CRT cursor */
+body::before {
+  content: '';
+  position: fixed;
+  width: 20px; height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 30px var(--accent);
+  transition: all 0.08s ease-out;
+}
+body:hover::before { transform: translate(-50%, -50%) scale(1.2); }
+
+/* NAV – improved dropdown reliability */
+header.nav-bar {
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
+  position: fixed; top:0; width:100%; z-index:100;
+  backdrop-filter: blur(8px);
+}
+.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; }
+.logo-link img { height:42px; display:block; cursor:pointer; }
+.nav-dropdown { position: relative; }
+.nav-toggle {
+  background:none; border:none; color:var(--muted); font-weight:600; cursor:pointer; font-size:16px;
+  padding:8px 16px; border-radius:8px; transition: all 0.2s;
+}
+.nav-toggle:hover { color:#fff; background:rgba(255,42,161,0.1); }
+.dropdown-menu {
+  display:none; position:absolute; top:100%; right:0; min-width:180px; background:#000;
+  border:1px solid var(--accent); border-radius:8px; padding:8px 0; z-index:1000;
+  box-shadow:0 8px 30px rgba(0,0,0,0.7);
+}
+.dropdown-menu a {
+  display:block; padding:12px 20px; color:#fff; font-size:14px; text-decoration:none;
+}
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display:block; }
+
+/* UNIVERSE CRT WORLD */
+.universe-crt {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  filter: contrast(1.15) brightness(0.85);
+}
+.crt-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
+  animation: scanline 8s linear infinite;
+  z-index: 10;
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.45;
+  transition: opacity 0.8s, transform 0.6s;
+}
+.bg-layer:hover { opacity: 0.7; transform: scale(1.03); }
+.glitch { animation: glitch 3s infinite; }
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+}
+
+/* CARDS – now transmission nodes */
+.cards-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 80px 20px 120px;
+  z-index: 20;
+}
+.card {
+  width: 280px;
+  height: 380px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s;
+  backdrop-filter: blur(4px);
+}
+.card:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 0 40px var(--glow);
+}
+.card img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.7) contrast(1.2);
+}
+.card:hover img { filter: brightness(1) contrast(1.3); }
+
+/* AD OVERLAYS */
+#ad-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1.2s;
+  z-index: 30;
+  font-family: 'Orbitron', monospace;
+  color: var(--accent);
+  font-size: 2.8rem;
+  text-align: center;
+  text-shadow: 0 0 30px var(--accent);
+  background: rgba(0,0,0,0.6);
+}
+.ad-inner { padding: 40px; border: 2px dashed var(--accent); border-radius: 20px; }
+
+/* FLOATING PLAYER (same as other pages) */
+#floating-player { /* your existing floating player CSS here */ }
+</style>
+</head>
+<body>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link" id="logo">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <button class="nav-toggle">Menu</button>
+        <div class="dropdown-menu">
+          <a href="index.html">Home</a>
+          <a href="access.html">Access</a>
+          <a href="artists.html">Artists</a>
+          <a href="archive.html">Archive</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="universe.html">The Universe</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="universe-crt">
+  <!-- CRT overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- Background layers (add your images) -->
+  <div class="bg-layer" style="background-image:url('images/universe/venice-concrete-dark.jpg');"></div>
+  <div class="bg-layer glitch" style="background-image:url('images/universe/shibuya-neon-rain.jpg');"></div>
+  <div class="bg-layer" style="background-image:url('images/universe/warehouse-shadows.jpg'); opacity:0.35;"></div>
+  <div class="bg-layer" style="background-image:url('images/universe/southbank-undercroft.jpg'); opacity:0.4;"></div>
+
+  <!-- Transmission cards -->
+  <div class="cards-container">
+    <div class="card" data-audio="venice-skate-echo.mp3">
+      <img src="images/universe/venice-skate-cartoon.jpg" alt="Venice Beach Skatepark">
+    </div>
+    <div class="card" data-audio="shibuya-neon-hum.mp3">
+      <img src="images/universe/shibuya-neon-cartoon.jpg" alt="Shibuya Crossing">
+    </div>
+    <div class="card" data-audio="warehouse-pulse.mp3">
+      <img src="images/universe/warehouse-cartoon.jpg" alt="Warehouse Rave">
+    </div>
+    <div class="card" data-audio="blitz-shadow.mp3">
+      <img src="images/universe/blitz-cartoon.jpg" alt="Blitz Club">
+    </div>
+    <div class="card" data-audio="southbank-echo.mp3">
+      <img src="images/universe/southbank-cartoon.jpg" alt="Southbank Undercroft">
+    </div>
+  </div>
+
+  <!-- Random ad overlay -->
+  <div id="ad-overlay">
+    <div class="ad-inner" id="adContent"></div>
+  </div>
+</div>
+
+<!-- FLOATING PLAYER (copy your existing one here) -->
+<div id="floating-player">
+  <div class="player-meta">
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Transmission</div>
+    <div class="player-status" id="status">Tuned In</div>
+  </div>
+  <div class="player-controls">
+    <img id="playPause" src="Player/PLAY.png" alt="Play">
+  </div>
+  <audio id="radio" loop>
+    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+// Radio starts on first click anywhere
+document.body.addEventListener('click', () => {
+  document.getElementById('radio').play().catch(() => {});
+}, { once: true });
+
+// Player controls (your existing code)
+const audio = document.getElementById('radio');
+const playPauseBtn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
+
+playPauseBtn.addEventListener('click', (e) => {
+  e.stopPropagation(); // prevent body click
+  if (audio.paused) {
+    audio.play();
+    playPauseBtn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  } else {
+    audio.pause();
+    playPauseBtn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  }
+});
+
+// Fake ads – rotate every 3–6 min
+const ads = [
+  { text: "Gary’s Back Alley Aftershave<br>Smell like you never came home", duration: 9000 },
+  { text: "Last Chance Lube<br>Slide into chaos. No refunds.", duration: 8000 },
+  { text: "Barry’s Forgotten Pants Deodorant<br>For when hygiene is optional", duration: 10000 },
+  { text: "Kevin’s Emotional Support Brick<br>Heavy. Cold. Doesn’t talk back.", duration: 7000 },
+  { text: "Mystery Bag of Crisps<br>Could be regret & onion. Open at own risk.", duration: 8500 }
+];
+
+function showRandomAd() {
+  const ad = ads[Math.floor(Math.random() * ads.length)];
+  const overlay = document.getElementById('ad-overlay');
+  const content = document.getElementById('adContent');
+  content.innerHTML = ad.text;
+  overlay.style.opacity = 1;
+  setTimeout(() => { overlay.style.opacity = 0; }, ad.duration);
+}
+
+setInterval(showRandomAd, 240000 + Math.random() * 120000); // 4–6 min
+
+// Card audio triggers
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.boxShadow = '0 0 60px var(--glow)';
+  });
+  card.addEventListener('click', () => {
+    const snd = new Audio(card.dataset.audio || 'sounds/default-glitch.mp3');
+    snd.volume = 0.4;
+    snd.play();
+  });
+});
+
+// Hidden Easter egg: click logo 7 times
+let logoClicks = 0;
+document.getElementById('logo').addEventListener('click', () => {
+  logoClicks++;
+  if (logoClicks >= 7) {
+    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    setTimeout(() => { document.body.style.filter = ''; }, 1500);
+    const whisper = new Audio('sounds/hidden-whisper.mp3'); // make this file
+    whisper.play();
+    logoClicks = 0;
+  }
+});
+</script>
+</body>
+</html>
