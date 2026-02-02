@@ -23,7 +23,7 @@ header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
   background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
-  position: sticky; top:0; z-index:200; /* high z-index to stay on top */
+  position: sticky; top:0; z-index:200;
   backdrop-filter: blur(6px);
 }
 .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
@@ -49,7 +49,7 @@ header.nav-bar {
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
 
-/* TRANSMITTER ROOM HEADER */
+/* TRANSMITTER ROOM */
 .transmitter-room {
   position: relative;
   height: 70vh;
@@ -61,7 +61,7 @@ header.nav-bar {
   justify-content: center;
 }
 
-/* Background moody filter (only image) */
+/* Moody filter on background */
 .transmitter-room::before {
   content: '';
   position: absolute;
@@ -71,12 +71,12 @@ header.nav-bar {
   z-index: 0;
 }
 
-/* CRT noise overlay - more prominent */
+/* CRT noise - more prominent */
 .transmitter-room .crt-noise {
   position: absolute;
   inset: 0;
   background: url('images/Pirate Radio/static1.png') repeat;
-  opacity: 0.28; /* increased for visibility */
+  opacity: 0.40; /* bumped up ~20% more than before */
   animation: scan 14s linear infinite;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -87,7 +87,7 @@ header.nav-bar {
   100% { background-position: 0 100%; }
 }
 
-/* Vignette (dark edges) */
+/* Vignette */
 .transmitter-room::after {
   content: '';
   position: absolute;
@@ -97,26 +97,31 @@ header.nav-bar {
   z-index: 1;
 }
 
-/* PLAYER OVERLAY - toned down, less dominant */
+/* PLAYER OVERLAY - toned down rectangle */
 .player-overlay {
   position: relative;
   z-index: 10;
-  background: rgba(0,0,0,0.40); /* lowered opacity - more bunker visible */
-  padding: 30px 50px; /* smaller padding - less screen space */
-  border-radius: 20px;
-  border: 1px solid var(--accent); /* thinner border */
+  background: rgba(0,0,0,0.38); /* even more transparent - bunker very visible */
+  padding: 25px 40px; /* smaller, less dominant */
+  border-radius: 16px;
+  border: 1px dashed var(--accent); /* dashed for grit */
   backdrop-filter: blur(6px);
-  box-shadow: 0 0 60px var(--glow);
+  box-shadow: 0 0 50px var(--glow);
   text-align: center;
-  max-width: 500px; /* smaller max-width */
+  max-width: 420px; /* narrower rectangle */
 }
-.player-overlay h2 {
-  font-family:'Orbitron', sans-serif;
-  font-size: 2.4rem; /* slightly smaller title */
-  margin-bottom: 16px;
-  color: var(--accent);
-  text-shadow: 0 0 20px var(--glow);
+
+/* Branding image inside overlay (replaces h2) */
+.player-overlay img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  filter: brightness(0.88) contrast(1.12) grayscale(0.1); /* gritty look */
+  border: 1px solid rgba(255,42,161,0.25);
+  box-shadow: 0 0 20px var(--glow);
 }
+
+/* Button & status */
 .player-overlay button {
   padding:14px 40px;
   border:none;
@@ -137,7 +142,7 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS READOUT - random cycle restored */
+/* TRANSMITTER STATUS READOUT - random cycling */
 #transmitter-status {
   position: absolute;
   bottom: 20px;
@@ -196,9 +201,9 @@ footer.site-footer {
     NOISE: -41 dB
   </div>
 
-  <!-- Player overlay -->
+  <!-- Player overlay - now with image instead of h2 -->
   <div class="player-overlay">
-    <h2>MLKSHK Pirate Radio</h2>
+    <img src="images/Pirate Radio/pirateradio_header.png" alt="MLKSHK Pirate Radio">
     <button id="playBtn">▶ Play</button>
     <p id="status">Ready</p>
     <audio id="radio" style="display:none">
@@ -216,7 +221,7 @@ footer.site-footer {
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Play/pause + status (unchanged)
+// Play/pause + status
 const radio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
 const statusEl = document.getElementById('status');
@@ -241,7 +246,7 @@ radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
 radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
 radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
 
-// Media Session API (unchanged)
+// Media Session API
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -268,7 +273,7 @@ if ('mediaSession' in navigator) {
   radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
 }
 
-// Transmitter status cycling (random changes)
+// Transmitter status cycling
 const statusOptions = [
   "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
   "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
@@ -281,7 +286,7 @@ function updateTransmitterStatus() {
   document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
 }
 updateTransmitterStatus();
-setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000); // 4–6 minutes
+setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
 </script>
 </body>
 </html>
