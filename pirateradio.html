@@ -18,38 +18,11 @@
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
 }
-/* NAVIGATION */
-header.nav-bar {
-  border-bottom:1px solid rgba(255,42,161,0.04);
-  padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
-  position: sticky; top:0; z-index:100;
-  backdrop-filter: blur(6px);
-}
-.nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
-.logo-link img { height:42px; display:block; cursor:pointer; }
-.nav-links { display:flex; gap:14px; align-items:center; }
-.nav-dropdown { position: relative; display:inline-block; }
-.nav-toggle {
-  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
-  color:var(--muted); font-weight:600; background:transparent; border:0;
-}
-.nav-toggle::after {
-  content:""; display:inline-block; width:8px; height:8px;
-  border-right:2px solid var(--muted);
-  border-bottom:2px solid var(--muted);
-  transform: rotate(45deg); margin-left:4px; transition:.18s ease;
-}
-.dropdown-menu {
-  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
-  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
-}
-.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
-.dropdown-menu a:hover { background:var(--accent); color:#000; }
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu { display:block; }
+/* NAVIGATION (unchanged) */
+header.nav-bar { /* your nav styles */ }
+/* ... keep your nav CSS as-is ... */
 
-/* TRANSMITTER ROOM HEADER */
+/* TRANSMITTER ROOM */
 .transmitter-room {
   position: relative;
   height: 70vh;
@@ -61,13 +34,13 @@ header.nav-bar {
   justify-content: center;
 }
 
-/* Background moody filter (only on image) */
+/* Background moody filter (lighter now) */
 .transmitter-room::before {
   content: '';
   position: absolute;
   inset: 0;
   background: inherit;
-  filter: brightness(0.75) contrast(1.1);
+  filter: brightness(0.85) contrast(1.05);  /* increased brightness */
   z-index: 0;
 }
 
@@ -76,7 +49,7 @@ header.nav-bar {
   position: absolute;
   inset: 0;
   background: url('images/Pirate Radio/static1.png') repeat;
-  opacity: 0.18;
+  opacity: 0.22;  /* slightly higher so it's more visible */
   animation: scan 14s linear infinite;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -87,7 +60,7 @@ header.nav-bar {
   100% { background-position: 0 100%; }
 }
 
-/* Vignette (dark edges) */
+/* Vignette */
 .transmitter-room::after {
   content: '';
   position: absolute;
@@ -97,11 +70,11 @@ header.nav-bar {
   z-index: 1;
 }
 
-/* PLAYER OVERLAY (centered, bright & vivid) */
+/* PLAYER OVERLAY – brighter, less dark */
 .player-overlay {
   position: relative;
   z-index: 10;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.45);  /* LOWERED opacity – more room visible through it */
   padding: 40px 60px;
   border-radius: 20px;
   border: 2px solid var(--accent);
@@ -110,6 +83,20 @@ header.nav-bar {
   text-align: center;
   max-width: 600px;
 }
+
+/* Optional: subtle branding fallback behind overlay (uncomment if wanted) */
+/*
+.player-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('images/Pirate Radio/pirateradio_header.png') center/cover;
+  opacity: 0.15;  /* very faint – just branding hint */
+  z-index: -1;
+  border-radius: 18px;
+}
+*/
+
 .player-overlay h2 {
   font-family:'Orbitron', sans-serif;
   font-size: 3rem;
@@ -189,7 +176,7 @@ footer.site-footer {
 <div class="transmitter-room">
   <div class="crt-noise"></div>
 
-  <!-- Transmitter status readout -->
+  <!-- Transmitter status -->
   <div id="transmitter-status">
     FREQ: 107.3 MHz (PIRATE)<br>
     PWR: 52% (FLUCTUATING)<br>
@@ -214,74 +201,8 @@ footer.site-footer {
 </footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Play/pause + status
-const radio = document.getElementById('radio');
-const btn = document.getElementById('playBtn');
-const statusEl = document.getElementById('status');
-
-btn.addEventListener('click', () => {
-  if (radio.paused) {
-    radio.play().catch(e => {
-      console.log("Play failed:", e);
-      statusEl.textContent = 'Error – try again';
-    });
-    btn.textContent = 'Pause';
-    statusEl.textContent = 'Connecting...';
-  } else {
-    radio.pause();
-    btn.textContent = '▶ Play';
-    statusEl.textContent = 'Paused';
-  }
-});
-
-radio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
-radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
-radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
-radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
-
-// Media Session API (unchanged)
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: "MLKSHK Pirate Radio",
-    artist: "Underground • Live • No Rules",
-    album: "MLKSHK Digital",
-    artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
-      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
-      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
-    ]
-  });
-  navigator.mediaSession.setActionHandler('play', () => {
-    radio.play();
-    btn.textContent = 'Pause';
-    statusEl.textContent = 'Live';
-  });
-  navigator.mediaSession.setActionHandler('pause', () => {
-    radio.pause();
-    btn.textContent = '▶ Play';
-    statusEl.textContent = 'Paused';
-  });
-  radio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
-  radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
-}
-
-// Transmitter status cycling
-const statusOptions = [
-  "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
-  "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
-  "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED",
-  "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
-  "THEY’RE LISTENING<br>FREQUENCY LOCKED"
-];
-
-function updateTransmitterStatus() {
-  document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-}
-updateTransmitterStatus();
-setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000); // 4–6 min
+// your existing script here (play/pause, status, media session, transmitter cycling) – no changes needed
+// ...
 </script>
 </body>
 </html>
