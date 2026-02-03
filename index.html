@@ -11,7 +11,7 @@
   --bg:#000;
   --text:#fff;
   --muted:#ccc;
-  --accent:#ff2aa1; /* original pink restored */
+  --accent:#ff2aa1;
   --dropdown-bg:#000;
 }
 /* RESET */
@@ -48,6 +48,7 @@ header.nav-bar{
   color:var(--muted);
   font-weight:600;
   cursor:pointer;
+  padding:6px 10px;
 }
 .dropdown-menu{
   display:none;
@@ -70,12 +71,9 @@ header.nav-bar{
   text-decoration:none;
 }
 .dropdown-menu a:hover {
-  background:var(--accent); /* pink fill on hover */
+  background:var(--accent);
   color:#000;
-  text-decoration:none;
 }
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu {display:block}
 /* HERO */
 .hero{
   height:700px;
@@ -163,39 +161,15 @@ footer{
   cursor:pointer;
 }
 
-/* MOBILE RESPONSIVE FIXES */
+/* MOBILE */
 @media (max-width: 768px) {
-  .hero {
-    height: 50vh;
-  }
-  .image-section {
-    height: auto;
-    min-height: 200px;
-  }
-  .image-link {
-    margin: 20px auto;
-  }
-  #floating-player {
-    width: 90%;
-    height: 60px;
-    padding: 0 12px;
-  }
-  .player-title {
-    font-size: 12px;
-  }
-  .player-artist, .player-status {
-    font-size: 10px;
-  }
-  .player-controls img {
-    width: 36px;
-    height: 36px;
-  }
-  .nav-dropdown .dropdown-menu {
-    right: 0;
-    left: auto;
-    min-width: 160px;
-    max-width: 90vw;
-  }
+  .hero { height: 50vh; }
+  .image-section { height: auto; min-height: 200px; }
+  .image-link { margin: 20px auto; }
+  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
+  .player-title { font-size: 12px; }
+  .player-artist, .player-status { font-size: 10px; }
+  .player-controls img { width: 36px; height: 36px; }
 }
 </style>
 </head>
@@ -210,6 +184,7 @@ footer{
       <div class="dropdown-menu">
         <a href="access.html">Access</a>
         <a href="archive.html">Archive</a>
+        <a href="artists.html">Artists</a>
         <a href="catalogue.html">Catalogue</a>
         <a href="pirateradio.html">Pirate Radio</a>
         <a href="lab.html">The Lab</a>
@@ -265,6 +240,8 @@ footer{
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Floating player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -284,11 +261,11 @@ btn.onclick = () => {
   }
 };
 
-audio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
-audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
-audio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
-audio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled...'; });
-audio.addEventListener('pause', () => { statusEl.textContent = 'Paused'; });
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
@@ -312,9 +289,25 @@ if ('mediaSession' in navigator) {
     btn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
   });
-  audio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
-  audio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
+
+// Dropdown toggle (click to open/close)
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation(); // prevent closing immediately
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+    dropdownMenu.style.display = 'none';
+  }
+});
 </script>
 </body>
 </html>
