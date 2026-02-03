@@ -19,7 +19,7 @@ body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
   overflow-x: hidden;
 }
-/* NAVIGATION */
+/* NAVIGATION (unchanged from last good version) */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -134,7 +134,7 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS - responsive positioning */
+/* TRANSMITTER STATUS - responsive */
 #transmitter-status {
   font-family: monospace;
   font-size: 0.9rem;
@@ -145,7 +145,7 @@ header.nav-bar {
   z-index: 20;
 }
 
-/* Desktop: absolute bottom-right */
+/* Desktop: bottom-right overlay */
 @media (min-width: 769px) {
   #transmitter-status {
     position: absolute;
@@ -160,18 +160,18 @@ header.nav-bar {
   #transmitter-status {
     position: relative;
     text-align: center;
-    margin: 20px auto 40px;
+    margin: 30px auto 60px;
     max-width: 90%;
     font-size: 0.85rem;
   }
   .player-overlay {
-    padding: 20px 30px;
-    max-width: 90%;
-    border-radius: 12px;
+    padding: 20px 25px;
+    max-width: 92%;
+    border-radius: 14px;
   }
-  .player-overlay img { max-width: 80%; margin-bottom: 16px; }
-  .player-overlay button { padding:12px 32px; font-size:1.1rem; }
-  .player-overlay #status { font-size:0.9rem; }
+  .player-overlay img { max-width: 85%; margin-bottom: 16px; }
+  .player-overlay button { padding:12px 36px; font-size:1.2rem; }
+  .player-overlay #status { font-size:0.95rem; }
 }
 
 /* FOOTER */
@@ -184,7 +184,7 @@ footer.site-footer {
   z-index: 10;
 }
 
-/* MOBILE GENERAL FIXES */
+/* MOBILE GENERAL */
 @media (max-width: 768px) {
   header.nav-bar { padding: 12px 16px; }
   .transmitter-room { height: 60vh; min-height: 400px; }
