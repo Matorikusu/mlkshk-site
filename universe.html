@@ -2,47 +2,46 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK — The Universe</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --bg:#000;
   --text:#f5f5f5;
   --muted:#c0c0c0;
   --accent:#ff2aa1;
+  --glow:rgba(255,42,161,0.5);
   --card-radius:12px;
 }
-
-/* GLOBAL */
 html,body{
   margin:0;
   padding:0;
   background:var(--bg);
   color:var(--text);
   font-family:'Rajdhani',system-ui,-apple-system,Arial;
+  overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
-
-/* NAV */
+/* NAV - same as index */
 header.nav-bar{
-  border-bottom:1px solid rgba(255,42,161,.04);
+  border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  background:linear-gradient(180deg,rgba(0,0,0,0.6),transparent);
   position:sticky;
   top:0;
-  z-index:30;
+  z-index:200;
+  backdrop-filter:blur(6px);
 }
 .nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   max-width:1200px;
   margin:0 auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
 }
-.logo-link img{height:42px}
+.logo-link img{height:42px;display:block;cursor:pointer}
 .nav-dropdown{position:relative}
 .nav-toggle{
   background:none;
@@ -55,40 +54,50 @@ header.nav-bar{
   display:none;
   position:absolute;
   top:calc(100% + 8px);
+  right:0;
+  left:auto;
   background:#000;
   border:1px solid var(--accent);
   border-radius:8px;
   min-width:200px;
+  z-index:300;
+  overflow:hidden;
+  max-width:90vw;
 }
 .dropdown-menu a{
   display:block;
   padding:10px 14px;
+  color:#fff;
+  text-decoration:none;
 }
 .dropdown-menu a:hover{
   background:var(--accent);
   color:#000;
 }
-.nav-dropdown:hover .dropdown-menu{display:block}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* HERO HEADER LIKE LAB */
-.hero-link{display:block; margin-bottom:40px;}
+/* HERO - centered, not full-width (like LAB) */
+.hero-link{
+  display:block;
+  max-width:1000px;
+  margin:40px auto;
+}
 .hero{
   width:100%;
-  max-width:1000px;
   height:420px;
-  margin:0 auto;
   background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
   cursor:pointer;
-  border-radius:12px;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+  aspect-ratio:2.38 / 1;
 }
 .hero-link:hover .hero{
   transform:scale(1.02);
   filter:brightness(1.15);
-  box-shadow:0 0 40px rgba(255,255,255,.35);
+  box-shadow:0 0 40px var(--glow);
 }
 
-/* GRID */
+/* GRID OF CARDS */
 .wrap{
   max-width:1200px;
   margin:0 auto;
@@ -98,67 +107,62 @@ header.nav-bar{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:24px;
-  margin-top:40px;
 }
 .card{
   background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border:1px solid rgba(255,42,161,0.15);
   border-radius:var(--card-radius);
   overflow:hidden;
   box-shadow:0 10px 30px rgba(0,0,0,.6);
-  transition:.2s;
+  transition:.3s;
+  position:relative;
 }
 .card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-8px);
   box-shadow:0 20px 50px rgba(0,0,0,.8);
+  border-color:var(--accent);
 }
-.art{
+.card .art{
   height:250px;
 }
-.art img{
+.card .art img{
   width:100%;
   height:100%;
   object-fit:cover;
+  filter:brightness(0.85) contrast(1.1);
+  transition:.4s;
 }
-.meta{
+.card:hover .art img{
+  filter:brightness(1.05) contrast(1.2);
+}
+.card .meta{
   padding:14px;
   text-align:center;
 }
-.swatch{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  margin:0 auto 6px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-}
-.card[data-genre="drum-bass"] .swatch{background:#0050ff}
-.card[data-genre="house"] .swatch{background:#ff49c8}
-.card[data-genre="lofi"] .swatch{background:#d95b2f}
-.card[data-genre="hiphop"] .swatch{background:#b58b00}
-.card[data-genre="afrobeat"] .swatch{background:#ff3b00}
-
-.title{
+.card .title{
   font-family:'Orbitron',sans-serif;
   font-size:18px;
+  margin-bottom:6px;
+  color:var(--accent);
 }
-.sub{
+.card .sub{
   font-size:13px;
   color:var(--muted);
-  margin:6px 0 12px;
 }
-.actions a{
-  display:inline-block;
-  padding:10px 18px;
-  border:2px solid var(--accent);
-  border-radius:12px;
-  color:var(--accent);
-  font-weight:600;
+
+/* SUBTLE CRT OVERLAY */
+.crt-overlay{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
+  animation:scanline 10s linear infinite;
+  opacity:0.15;
+  z-index:10;
 }
-.actions a:hover{
-  background:var(--accent);
-  color:#000;
+@keyframes scanline{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100%);}
 }
 
 /* FLOATING PLAYER */
@@ -185,68 +189,25 @@ header.nav-bar{
   text-align:center;
   padding:0 12px;
 }
-.player-title{
-  font-weight:700;
-  font-size:14px;
-}
-.player-artist{
-  font-size:12px;
-  color:var(--muted);
-}
-.player-controls{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-left:12px;
-}
-.player-controls img{
-  width:42px;
-  height:42px;
-  cursor:pointer;
-}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
 
-/* PLAYLIST SECTIONS */
-.playlist-section{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  margin:60px 0;
-  gap:20px;
-}
-.playlist-section h2{
-  font-family:'Orbitron',sans-serif;
-  font-size:20px;
-  margin-bottom:15px;
-}
-.playlist-left,.playlist-right{
-  flex:1 1 48%;
-}
-.playlist-left img,.playlist-right img{
-  width:100%;
-  border-radius:12px;
-}
-hr{
-  border:0;
-  height:1px;
-  background:#fff;
-  opacity:0.15;
-  margin:60px 0;
-}
-
-/* FOOTER */
-footer{
-  padding:28px 20px;
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  border-top:1px solid rgba(255,42,161,.05);
+/* MOBILE */
+@media (max-width:768px){
+  .hero-link,.wrap{margin:20px auto;}
+  .hero,.card .art{height:auto;min-height:200px;}
+  #floating-player{width:90%;height:60px;padding:0 12px;}
+  .player-title{font-size:12px;}
+  .player-artist,.player-status{font-size:10px;}
+  .player-controls img{width:36px;height:36px;}
+  .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
 }
 </style>
 </head>
-
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -255,148 +216,77 @@ footer{
     <div class="nav-dropdown">
       <button class="nav-toggle">Menu</button>
       <div class="dropdown-menu">
-          <a href="index.html">Home</a>
-          <a href="access.html">Access</a>
-          <a href="artists.html">Artists</a>
-          <a href="archive.html">Archive</a>
-          <a href="catalogue.html">Catalogue</a>
-          <a href="lab.html">The Lab</a>
+        <a href="index.html">Home</a>
+        <a href="access.html">Access</a>
+        <a href="artists.html">Artists</a>
+        <a href="archive.html">Archive</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="pirateradio.html">Pirate Radio</a>
+        <a href="lab.html">The Lab</a>
       </div>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- HERO - centered, not full-width -->
 <a href="universe.html" class="hero-link">
   <section class="hero"></section>
 </a>
 
 <main class="wrap">
-
-<section class="grid">
-
-<article class="card" data-genre="drum-bass">
-  <div class="art"><img src="images/Cartons/Drum & Bass Carton.png"></div>
-  <div class="meta">
-    <div class="swatch">DNB</div>
-    <div class="title">Drum & Bass</div>
-    <div class="sub">Electric — Energy Crew</div>
-    <div class="actions"><a href="#">Explore</a></div>
-  </div>
-</article>
-
-<article class="card" data-genre="house">
-  <div class="art"><img src="images/Cartons/House Carton.png"></div>
-  <div class="meta">
-    <div class="swatch">HSE</div>
-    <div class="title">House</div>
-    <div class="sub">Psychic — Club Crew</div>
-    <div class="actions"><a href="#">Explore</a></div>
-  </div>
-</article>
-
-<article class="card" data-genre="lofi">
-  <div class="art"><img src="images/Cartons/LO-FI Carton.png"></div>
-  <div class="meta">
-    <div class="swatch">LOF</div>
-    <div class="title">Lo-Fi</div>
-    <div class="sub">Wind — Chilled Crew</div>
-    <div class="actions"><a href="#">Explore</a></div>
-  </div>
-</article>
-
-<article class="card" data-genre="hiphop">
-  <div class="art"><img src="images/Cartons/Hip Hop Carton.png"></div>
-  <div class="meta">
-    <div class="swatch">HH</div>
-    <div class="title">Hip-Hop</div>
-    <div class="sub">Earth — Hip Hop Crew</div>
-    <div class="actions"><a href="#">Explore</a></div>
-  </div>
-</article>
-
-<article class="card" data-genre="afrobeat">
-  <div class="art"><img src="images/Cartons/Afrobeat Carton.png"></div>
-  <div class="meta">
-    <div class="swatch">AFR</div>
-    <div class="title">Afrobeat</div>
-    <div class="sub">Fire — Afro Crew</div>
-    <div class="actions"><a href="#">Explore</a></div>
-  </div>
-</article>
-
-</section>
-
-<!-- PLAYLIST SECTIONS -->
-<hr>
-
-<section class="playlist-section">
-  <div class="playlist-left">
-    <h2>Coffee Shop Grooves (LO-FI & Hip Hop)</h2>
-    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
-      src="https://open.spotify.com/embed/playlist/62mIJIjCHEhSJhHtegakEp?utm_source=generator&theme=0" 
-      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-  <div class="playlist-right">
-    <img src="images/Coffee Shop Grooves.png" alt="Playlist Artwork">
-  </div>
-</section>
-
-<hr>
-
-<section class="playlist-section">
-  <div class="playlist-left">
-    <img src="images/Afrobeat.png" alt="Playlist Artwork">
-  </div>
-  <div class="playlist-right">
-    <h2>Afrobeat</h2>
-    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
-      src="https://open.spotify.com/embed/playlist/19YLuKSvktPAukX6wh40yJ?utm_source=generator&theme=0" 
-      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-</section>
-
-<hr>
-
-<section class="playlist-section">
-  <div class="playlist-left">
-    <h2>House Party Mix</h2>
-    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
-      src="https://open.spotify.com/embed/playlist/10vNHB1I3QsP8w76dCPpH8?utm_source=generator&theme=0" 
-      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-  <div class="playlist-right">
-    <img src="images/House Party.png" alt="Playlist Artwork">
-  </div>
-</section>
-
-<hr>
-
-<section class="playlist-section">
-  <div class="playlist-left">
-    <img src="images/Drum & Bass Destruction.png" alt="Playlist Artwork">
-  </div>
-  <div class="playlist-right">
-    <h2>Drum & Bass Destruction</h2>
-    <iframe class="spotify-player" style="border-radius:12px; width:100%; height:352px;" 
-      src="https://open.spotify.com/embed/playlist/6rR5q7HkkjAUEnEU2vErfd?utm_source=generator&theme=0" 
-      frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-</section>
-
+  <section class="grid">
+    <article class="card" data-genre="drum-bass">
+      <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
+      <div class="meta">
+        <div class="title">Drum & Bass</div>
+        <div class="sub">Electric — Energy Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="house">
+      <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
+      <div class="meta">
+        <div class="title">House</div>
+        <div class="sub">Psychic — Club Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="lofi">
+      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi"></div>
+      <div class="meta">
+        <div class="title">Lo-Fi</div>
+        <div class="sub">Wind — Chilled Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="hiphop">
+      <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
+      <div class="meta">
+        <div class="title">Hip-Hop</div>
+        <div class="sub">Earth — Hip Hop Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="afrobeat">
+      <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
+      <div class="meta">
+        <div class="title">Afrobeat</div>
+        <div class="sub">Fire — Afro Crew</div>
+      </div>
+    </article>
+  </section>
 </main>
+
+<div class="crt-overlay"></div>
 
 <!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
-    <div class="player-title">Round We Go</div>
-    <div class="player-artist">Shockaddict</div>
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live Stream</div>
+    <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
   </div>
   <audio id="audio">
-    <source src="Audio/6. Round And Round.mp3" type="audio/mpeg">
+    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
   </audio>
 </div>
 
@@ -405,21 +295,59 @@ footer{
 </footer>
 
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-const audio=document.getElementById('audio');
-const btn=document.getElementById('playPause');
+// Floating player controls
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
 
-btn.onclick=()=>{
-  if(audio.paused){
-    audio.play();
-    btn.src='Player/PAUSE.png';
-  }else{
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().catch(e => {
+      console.log("Play failed:", e);
+      statusEl.textContent = 'Error – try again';
+    });
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Connecting...';
+  } else {
     audio.pause();
-    btn.src='Player/PLAY.png';
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
   }
-};
-</script>
+});
 
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  });
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+}
+</script>
 </body>
 </html>
