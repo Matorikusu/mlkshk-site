@@ -11,20 +11,21 @@
   --bg: #000;
   --text: #f5f5f5;
   --muted: #c0c0c0;
-  --accent: #ff2aa1;
+  --accent: #d4af37; /* gold for luxury/licensing */
+  --glow: rgba(212,175,55,0.5);
 }
 html, body {
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:'Rajdhani', system-ui, -apple-system, Arial;
-  text-align:center;
+  overflow-x:hidden;
 }
 a { color:inherit; text-decoration:none; }
 
-/* NAV BAR - matched to site */
+/* NAV BAR - gold accents */
 header.nav-bar {
-  border-bottom:1px solid rgba(255,42,161,0.04);
+  border-bottom:1px solid rgba(212,175,55,0.08);
   padding:18px 24px;
   background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);
   position:sticky; top:0; z-index:200;
@@ -153,7 +154,7 @@ header.nav-bar {
 }
 .field {
   background:#111;
-  border:1px solid rgba(255,255,255,0.1);
+  border:1px solid rgba(212,175,55,0.3);
   border-radius:12px;
   padding:14px 16px;
   font-size:15px;
@@ -181,21 +182,55 @@ button:hover {
   color:var(--muted);
 }
 
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
+  background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  z-index:999;
+}
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
+
 /* FOOTER */
 footer {
   padding:28px 20px;
   text-align:center;
   font-size:13px;
   color:var(--muted);
-  border-top:1px solid rgba(255,42,161,.05);
+  border-top:1px solid rgba(212,175,55,.05);
 }
 
 /* MOBILE */
 @media (max-width:768px) {
+  header.nav-bar { padding:12px 16px; }
   .hero { height:50vh; min-height:400px; padding-bottom:60px; }
   .hero h1 { font-size:2.5rem; }
   .section { padding:60px 15px; }
   .access-form { padding:0 15px; }
+  #floating-player { width:90%; height:60px; padding:0 12px; }
+  .player-title { font-size:12px; }
+  .player-artist,.player-status { font-size:10px; }
+  .player-controls img { width:36px; height:36px; }
+  .nav-dropdown .dropdown-menu {
+    right:0;
+    left:auto;
+    min-width:160px;
+    max-width:90vw;
+  }
 }
 </style>
 </head>
@@ -257,12 +292,93 @@ footer {
   <p class="form-note">All submissions are reviewed individually. If your project aligns, we will be in touch.</p>
 </form>
 
+<div id="floating-player">
+  <div class="player-meta">
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live Stream</div>
+    <div class="player-status" id="status">Ready</div>
+  </div>
+  <div class="player-controls">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+  </div>
+  <audio id="audio">
+    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Floating player controls
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().catch(e => {
+      console.log("Play failed:", e);
+      statusEl.textContent = 'Error – try again';
+    });
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Connecting...';
+  } else {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  }
+});
+
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  });
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+}
+
+// Dropdown toggle
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+    dropdownMenu.style.display = 'none';
+  }
+});
 </script>
 
 </body>
