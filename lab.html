@@ -11,22 +11,24 @@
   --bg: #000;
   --text: #f5f5f5;
   --muted: #c0c0c0;
-  --accent: #ff2aa1;
+  --accent: #ff2aa1; /* pink restored */
+  --glow: rgba(255,42,161,0.5);
   --card-radius: 12px;
 }
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+  overflow-x: hidden;
 }
-/* NAVIGATION */
+/* NAVIGATION - matched to index */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-  position: sticky; top:0; z-index:30;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
+  position: sticky; top:0; z-index:200;
+  backdrop-filter: blur(6px);
 }
 .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
-.logo-link img { height:42px; display:block; }
-.nav-links { display:flex; gap:14px; align-items:center; }
+.logo-link img { height:42px; display:block; cursor:pointer; }
 .nav-dropdown { position: relative; display:inline-block; }
 .nav-toggle {
   display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
@@ -39,40 +41,43 @@ header.nav-bar {
   transform: rotate(45deg); margin-left:4px; transition:.18s ease;
 }
 .dropdown-menu {
-  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
-  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:1000;
+  display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
+  min-width:180px; background:#000;
+  border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
+  overflow:hidden; max-width:90vw;
 }
-.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; text-decoration:none; }
 .dropdown-menu a:hover { background:var(--accent); color:#000; }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
-.nav-dropdown:hover .nav-toggle::after,
-.nav-dropdown:focus-within .nav-toggle::after { transform:rotate(-135deg); border-color: var(--text); }
-/* HERO HEADER IMAGE */
-.image-link{
+
+/* HERO IMAGE (full-width clickable like index) */
+.hero-link {
   display:block;
-  margin-bottom:40px;
 }
-.image-section{
+.hero-section {
+  width:100%;
   height:420px;
-  background-size:cover;
-  background-position:center;
+  background:url('images/Home/LAB_HEADER.png') center/cover no-repeat;
   cursor:pointer;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+  aspect-ratio: 2.38 / 1;
 }
-.image-link:hover .image-section{
+.hero-link:hover .hero-section {
   transform:scale(1.02);
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
+
 /* LAB CONTENT */
-.lab-container { 
-  max-width:1000px; 
-  margin:0 auto; 
-  padding:0 20px 120px 20px;  /* extra bottom space for floating player */
+.lab-container {
+  max-width:1000px;
+  margin:0 auto;
+  padding:0 20px 120px 20px; /* space for floating player */
 }
-/* Section divider */
-.section-divider { width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none; }
+.section-divider {
+  width:100%; height:2px; background: rgba(255,42,161,0.15); margin:40px 0; border:none;
+}
 .rules-box {
   background: rgba(255,255,255,0.03); border:1px solid rgba(255,42,161,0.2); border-radius:12px;
   padding:30px; text-align:center;
@@ -80,9 +85,10 @@ header.nav-bar {
 .rules-box p { margin-bottom:15px; line-height:1.5; }
 .rules-box label { display:block; margin-top:15px; font-size:14px; opacity:0.8; cursor:pointer; }
 .section { margin-bottom:60px; text-align:center; }
-.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; }
+.section h2 { font-family:'Orbitron', sans-serif; margin-bottom:15px; color:var(--accent); }
 .note { font-size:14px; opacity:0.7; margin-bottom:15px; }
-/* LYRIC BOX UPDATED */
+
+/* LYRIC BOX */
 .lyric-box {
   width:100%;
   min-height:300px;
@@ -91,10 +97,11 @@ header.nav-bar {
   border:none;
   resize:vertical;
   font-size:16px;
-  background:#f5f5f5; /* off-white background */
-  color:#000;
-  caret-color:#fff; /* visible cursor */
+  background:#111;
+  color:#fff;
+  caret-color:#fff;
 }
+
 /* BUTTONS */
 .button {
   padding:15px 30px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer;
@@ -102,6 +109,7 @@ header.nav-bar {
 }
 .button:hover { background:#ff5bc3; }
 .button:disabled { opacity:0.3; cursor:not-allowed; }
+
 /* CHAT */
 .chat-container { max-width:600px; margin:0 auto; text-align:left; }
 .chat-window {
@@ -115,11 +123,13 @@ header.nav-bar {
 .chat-inputs textarea { flex:1; padding:12px; border-radius:12px; border:none; font-size:14px; background: rgba(255,255,255,0.03); color:#fff; resize:none; min-height:50px; }
 .chat-inputs button { padding:12px 24px; border-radius:30px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer; }
 .chat-inputs button:disabled { opacity:0.5; cursor:not-allowed; }
+
 /* PASSWORD SECTION */
 .password-section { margin-bottom:30px; text-align:center; }
 .password-section input { padding:10px 14px; border-radius:12px; border:none; background: rgba(255,255,255,0.03); color:#fff; width:180px; margin-right:8px; }
 .password-section button { padding:10px 18px; border-radius:12px; border:none; background:var(--accent); color:#000; font-weight:700; cursor:pointer; }
-/* NEW FORM STYLE */
+
+/* FORM */
 .lab-form{
   max-width:700px;
   margin:60px auto 60px;
@@ -164,7 +174,7 @@ header.nav-bar {
   color:var(--muted);
 }
 
-/* ── FLOATING PLAYER ── (added from index) */
+/* FLOATING PLAYER */
 #floating-player {
   position: fixed;
   bottom: 20px;
@@ -212,6 +222,41 @@ header.nav-bar {
   height: 42px;
   cursor: pointer;
 }
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  header.nav-bar {
+    padding: 12px 16px;
+  }
+  .hero-section, .image-section {
+    height: auto;
+    min-height: 200px;
+  }
+  .lab-container {
+    padding: 0 15px 100px 15px;
+  }
+  #floating-player {
+    width: 90%;
+    height: 60px;
+    padding: 0 12px;
+  }
+  .player-title {
+    font-size: 12px;
+  }
+  .player-artist, .player-status {
+    font-size: 10px;
+  }
+  .player-controls img {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 160px;
+    max-width: 90vw;
+  }
+}
 </style>
 </head>
 <body>
@@ -229,18 +274,23 @@ header.nav-bar {
           <a href="artists.html">Artists</a>
           <a href="archive.html">Archive</a>
           <a href="catalogue.html">Catalogue</a>
+          <a href="pirateradio.html">Pirate Radio</a>
+          <a href="lab.html">The Lab</a>
           <a href="universe.html">The Universe</a>
         </div>
       </div>
     </nav>
   </div>
 </header>
+
+<!-- HERO - full-width clickable -->
+<a href="lab.html" class="hero-link">
+  <section class="hero-section"></section>
+</a>
+
 <div class="lab-container">
-  <!-- HERO IMAGE HEADER -->
-  <a href="lab.html" class="image-link">
-    <section class="image-section lab-section" style="background-image:url('images/Home/LAB_HEADER.png');"></section>
-  </a>
   <hr class="section-divider">
+
   <!-- RULES -->
   <section class="rules-box">
     <p>All instrumentals on this page belong to MLKSHK Digital.</p>
@@ -248,7 +298,9 @@ header.nav-bar {
     <p>You keep credit. We keep structure.</p>
     <p>No reposts. No theft. No drama.</p>
   </section>
+
   <hr class="section-divider">
+
   <!-- BEAT PLAYER -->
   <section class="section">
     <h2>Select a Beat</h2>
@@ -257,14 +309,18 @@ header.nav-bar {
       width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
     </iframe>
   </section>
+
   <hr class="section-divider">
+
   <!-- LYRIC LAB -->
   <section class="section">
     <h2>Write Your Lyrics</h2>
     <p class="note">Don’t refresh the page. Copy your lyrics as you go.</p>
     <textarea class="lyric-box" placeholder="Start writing bars here..."></textarea>
   </section>
+
   <hr class="section-divider">
+
   <!-- LIVE CHAT -->
   <section class="chat-container">
     <h2>Live Lab Chat</h2>
@@ -276,14 +332,17 @@ header.nav-bar {
       <button id="sendBtn" disabled>Send</button>
     </div>
   </section>
+
   <!-- PASSWORD ENTRY -->
   <section class="password-section">
     <h2>Enter Password (for chat only)</h2>
     <input type="password" id="passwordInput" placeholder="Password">
     <button id="unlockBtn">Unlock Chat</button>
   </section>
+
   <hr class="section-divider">
-  <!-- NEW FORMSPREE SECTION -->
+
+  <!-- FORMSPREE FORM -->
   <section class="section">
     <form class="lab-form" action="https://formspree.io/f/xojjeblv" method="POST">
       <h2>Show Us What You’ve Created</h2>
@@ -296,8 +355,10 @@ header.nav-bar {
       <button type="submit">Send</button>
     </form>
   </section>
+
   <hr class="section-divider">
-  <!-- ARTIST STATUS NOTE -->
+
+  <!-- NOTE -->
   <section class="section">
     <p class="note" style="opacity:0.85;">
       We are currently not accepting submissions for new artists.<br>
@@ -305,6 +366,7 @@ header.nav-bar {
     </p>
   </section>
 </div>
+
 <footer class="site-footer">
   <div style="padding:18px 10px;color:var(--muted);text-align:center">
     MLKSHK Digital — Built for the misfits. © <span id="year"></span>
@@ -319,7 +381,7 @@ header.nav-bar {
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
   </div>
   <audio id="audio">
     <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
@@ -333,7 +395,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const audio = document.getElementById('audio');
 const playPauseBtn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
-
 playPauseBtn.addEventListener('click', () => {
   if (audio.paused) {
     audio.play().catch(err => {
@@ -348,14 +409,13 @@ playPauseBtn.addEventListener('click', () => {
     statusEl.textContent = 'Paused';
   }
 });
-
 audio.addEventListener('playing', () => statusEl.textContent = 'Live');
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('error', () => statusEl.textContent = 'Stream error');
 audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
 audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
-// Lock screen metadata (Android mostly)
+// Media Session API
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -368,7 +428,6 @@ if ('mediaSession' in navigator) {
       { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
     ]
   });
-
   navigator.mediaSession.setActionHandler('play', () => {
     audio.play();
     playPauseBtn.src = 'Player/PAUSE.png';
@@ -379,17 +438,17 @@ if ('mediaSession' in navigator) {
     playPauseBtn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
   });
+  audio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
+  audio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
 }
 
-// Chat unlock (only affects chat inputs)
+// Chat unlock
 const passwordInput = document.getElementById('passwordInput');
 const unlockBtn = document.getElementById('unlockBtn');
 const usernameInput = document.getElementById('username');
 const messageInput = document.getElementById('message');
 const sendBtn = document.getElementById('sendBtn');
-
-const CORRECT_PASSWORD = "mlkshk-lab-2026"; // ← CHANGE THIS TO YOUR REAL PASSWORD
-
+const CORRECT_PASSWORD = "mlkshk-lab-2026"; // CHANGE THIS
 unlockBtn.addEventListener('click', () => {
   if (passwordInput.value.trim() === CORRECT_PASSWORD) {
     usernameInput.disabled = false;
@@ -404,9 +463,8 @@ unlockBtn.addEventListener('click', () => {
   }
 });
 
-// Basic chat sending (client-side only, visible to you in this tab)
+// Basic chat (client-side)
 const chatWindow = document.getElementById('chatWindow');
-
 sendBtn.addEventListener('click', () => {
   const user = usernameInput.value.trim() || 'Anonymous';
   const msg = messageInput.value.trim();
@@ -418,7 +476,6 @@ sendBtn.addEventListener('click', () => {
     messageInput.value = '';
   }
 });
-
 messageInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
