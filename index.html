@@ -52,22 +52,27 @@ header.nav-bar{
   display:none;
   position:absolute;
   top:calc(100% + 8px);
+  left:0;
   background:var(--dropdown-bg);
   border:1px solid var(--accent);
   border-radius:8px;
   min-width:200px;
+  z-index:100;
+  overflow:hidden;
 }
 .dropdown-menu a{
   display:block;
   padding:10px 14px;
 }
 .nav-dropdown:hover .dropdown-menu{display:block}
-/* HERO - full width at top */
+
+/* HERO */
 .hero{
   height:700px;
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
-/* UNIFORM IMAGE LINKS (all sections including Pirate Radio) */
+
+/* IMAGE LINKS */
 .image-link{
   display:block;
   margin:40px auto;
@@ -78,12 +83,14 @@ header.nav-bar{
   background-position:center;
   cursor:pointer;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+  aspect-ratio: 2.38 / 1; /* matches your header images */
 }
 .image-link:hover .image-section{
   transform:scale(1.02);
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
+
 /* INDIVIDUAL BACKGROUNDS */
 .pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
 .brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
@@ -91,6 +98,7 @@ header.nav-bar{
 .universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
 .lab-section{background-image:url('images/Home/LAB_HEADER.png');}
 .access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
+
 /* FOOTER */
 footer{
   padding:28px 20px;
@@ -98,6 +106,7 @@ footer{
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
+
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -146,6 +155,44 @@ footer{
   height:42px;
   cursor:pointer;
 }
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  header.nav-bar {
+    padding: 12px 16px;
+  }
+  .nav-content {
+    gap: 12px;
+  }
+  .dropdown-menu {
+    right: 0;
+    left: auto; /* right-align on mobile so it doesn't go off-screen */
+    min-width: 160px;
+    max-width: 90vw;
+  }
+  .hero {
+    height: 50vh; /* shorter hero on mobile */
+  }
+  .image-section {
+    height: auto; /* let aspect-ratio control height */
+    min-height: 200px; /* prevent too small */
+  }
+  #floating-player {
+    width: 90%;
+    height: 60px;
+    padding: 0 12px;
+  }
+  .player-title {
+    font-size: 12px;
+  }
+  .player-artist, .player-status {
+    font-size: 10px;
+  }
+  .player-controls img {
+    width: 36px;
+    height: 36px;
+  }
+}
 </style>
 </head>
 <body>
@@ -159,6 +206,7 @@ footer{
       <div class="dropdown-menu">
         <a href="access.html">Access</a>
         <a href="archive.html">Archive</a>
+        <a href="artists.html">Artists</a>
         <a href="catalogue.html">Catalogue</a>
         <a href="pirateradio.html">Pirate Radio</a>
         <a href="lab.html">The Lab</a>
@@ -171,7 +219,7 @@ footer{
 <!-- HERO -->
 <section class="hero"></section>
 
-<!-- PIRATE RADIO - now same as others, full-width clickable -->
+<!-- PIRATE RADIO -->
 <a href="pirateradio.html" class="image-link">
   <section class="image-section pirate-radio-section"></section>
 </a>
@@ -205,7 +253,7 @@ footer{
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER (restored full features) -->
+<!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -241,14 +289,14 @@ btn.onclick = () => {
   }
 };
 
-// Status events (full functionality restored)
+// Status events
 audio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
 audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
 audio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
 audio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled...'; });
 audio.addEventListener('pause', () => { statusEl.textContent = 'Paused'; });
 
-// Media Session API for lock screen
+// Media Session API
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
