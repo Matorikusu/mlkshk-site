@@ -19,7 +19,7 @@ body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
   overflow-x: hidden;
 }
-/* NAVIGATION - matched to index */
+/* NAVIGATION */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -134,19 +134,44 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS */
+/* TRANSMITTER STATUS - responsive positioning */
 #transmitter-status {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   font-family: monospace;
   font-size: 0.9rem;
   color: var(--accent);
   opacity: 0.7;
   pointer-events: none;
-  text-align: right;
   line-height: 1.4;
   z-index: 20;
+}
+
+/* Desktop: absolute bottom-right */
+@media (min-width: 769px) {
+  #transmitter-status {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    text-align: right;
+  }
+}
+
+/* Mobile: centered below overlay */
+@media (max-width: 768px) {
+  #transmitter-status {
+    position: relative;
+    text-align: center;
+    margin: 20px auto 40px;
+    max-width: 90%;
+    font-size: 0.85rem;
+  }
+  .player-overlay {
+    padding: 20px 30px;
+    max-width: 90%;
+    border-radius: 12px;
+  }
+  .player-overlay img { max-width: 80%; margin-bottom: 16px; }
+  .player-overlay button { padding:12px 32px; font-size:1.1rem; }
+  .player-overlay #status { font-size:0.9rem; }
 }
 
 /* FOOTER */
@@ -159,29 +184,10 @@ footer.site-footer {
   z-index: 10;
 }
 
-/* MOBILE RESPONSIVE FIXES */
+/* MOBILE GENERAL FIXES */
 @media (max-width: 768px) {
   header.nav-bar { padding: 12px 16px; }
   .transmitter-room { height: 60vh; min-height: 400px; }
-  .player-overlay {
-    padding: 20px 30px;
-    max-width: 90%;
-    border-radius: 12px;
-  }
-  .player-overlay img { max-width: 80%; margin-bottom: 16px; }
-  .player-overlay button { padding:12px 32px; font-size:1.1rem; }
-  .player-overlay #status { font-size:0.9rem; }
-  #transmitter-status {
-    position: static;
-    margin: 20px auto 0;
-    text-align: center;
-    font-size: 0.85rem;
-    max-width: 90%;
-  }
-  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
-  .player-title { font-size: 12px; }
-  .player-artist, .player-status { font-size: 10px; }
-  .player-controls img { width: 36px; height: 36px; }
   .nav-dropdown .dropdown-menu {
     right: 0;
     left: auto;
@@ -217,12 +223,6 @@ footer.site-footer {
 <div class="transmitter-room">
   <div class="crt-noise"></div>
 
-  <div id="transmitter-status">
-    FREQ: 107.3 MHz (PIRATE)<br>
-    PWR: 52% (FLUCTUATING)<br>
-    NOISE: -41 dB
-  </div>
-
   <div class="player-overlay">
     <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
     <button id="playBtn">▶ Play</button>
@@ -230,6 +230,12 @@ footer.site-footer {
     <audio id="radio" style="display:none">
       <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
     </audio>
+  </div>
+
+  <div id="transmitter-status">
+    FREQ: 107.3 MHz (PIRATE)<br>
+    PWR: 52% (FLUCTUATING)<br>
+    NOISE: -41 dB
   </div>
 </div>
 
@@ -308,7 +314,7 @@ function updateTransmitterStatus() {
 updateTransmitterStatus();
 setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
 
-// Dropdown toggle (click to open/close)
+// Dropdown toggle
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
