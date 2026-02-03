@@ -23,6 +23,7 @@ html,body{
   color:var(--text);
 }
 a{color:inherit;text-decoration:none}
+
 /* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
@@ -62,35 +63,13 @@ header.nav-bar{
   padding:10px 14px;
 }
 .nav-dropdown:hover .dropdown-menu{display:block}
-/* HERO - now at top */
+
+/* HERO */
 .hero{
   height:700px;
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
-/* PIRATE RADIO IMAGE LINK */
-.pirate-radio-link{
-  display:block;
-  margin:40px auto;
-  max-width:1000px;
-}
-.pirate-radio-link .image-section{
-  height:420px;
-  background:url('images/Pirate Radio/pirateradio_header.png') center/cover no-repeat;
-  cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
-}
-.pirate-radio-link .image-section:hover{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px rgba(255,255,255,.35);
-}
-/* DIVIDER */
-.section-divider{
-  height:2px;
-  background:#fff;
-  border:0;
-  margin:0;
-}
+
 /* IMAGE-ONLY SECTIONS */
 .image-link{
   display:block;
@@ -107,12 +86,23 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
+
 /* INDIVIDUAL BACKGROUNDS */
+.pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
 .brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
 .catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
 .universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
 .lab-section{background-image:url('images/Home/LAB_HEADER.png');}
 .access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
+
+/* DIVIDER */
+.section-divider{
+  height:2px;
+  background:#fff;
+  border:0;
+  margin:0;
+}
+
 /* FOOTER */
 footer{
   padding:28px 20px;
@@ -120,6 +110,7 @@ footer{
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
+
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -170,6 +161,7 @@ footer{
 }
 </style>
 </head>
+
 <body>
 <header class="nav-bar">
   <div class="nav-content">
@@ -181,8 +173,8 @@ footer{
       <div class="dropdown-menu">
         <a href="access.html">Access</a>
         <a href="archive.html">Archive</a>
-        <a href="artists.html">Artists</a>
         <a href="catalogue.html">Catalogue</a>
+        <a href="pirateradio.html">Pirate Radio</a>
         <a href="lab.html">The Lab</a>
         <a href="universe.html">The Universe</a>
       </div>
@@ -190,41 +182,35 @@ footer{
   </div>
 </header>
 
-<!-- HERO - moved to top -->
 <section class="hero"></section>
 
-<!-- PIRATE RADIO IMAGE LINK -->
-<a href="pirateradio.html" class="pirate-radio-link">
-  <section class="image-section"></section>
+<!-- PIRATE RADIO (NOW FULL WIDTH & CLICKABLE) -->
+<a href="pirateradio.html" class="image-link">
+  <section class="image-section pirate-radio-section"></section>
 </a>
 
 <hr class="section-divider">
 
-<!-- ARCHIVES IMAGE LINK -->
 <a href="archive.html" class="image-link">
   <section class="image-section brands-section"></section>
 </a>
 <hr class="section-divider">
 
-<!-- CATALOGUE -->
 <a href="catalogue.html" class="image-link">
   <section class="image-section catalogue-section"></section>
 </a>
 <hr class="section-divider">
 
-<!-- UNIVERSE -->
 <a href="universe.html" class="image-link">
   <section class="image-section universe-section"></section>
 </a>
 <hr class="section-divider">
 
-<!-- THE LAB -->
 <a href="lab.html" class="image-link">
   <section class="image-section lab-section"></section>
 </a>
 <hr class="section-divider">
 
-<!-- REQUEST ACCESS -->
 <a href="access.html" class="image-link">
   <section class="image-section access-section"></section>
 </a>
@@ -259,7 +245,6 @@ const statusEl = document.getElementById('status');
 btn.onclick = () => {
   if (audio.paused) {
     audio.play().catch(e => {
-      console.log("Play failed:", e);
       statusEl.textContent = 'Error – try again';
     });
     btn.src = 'Player/PAUSE.png';
@@ -270,43 +255,6 @@ btn.onclick = () => {
     statusEl.textContent = 'Paused';
   }
 };
-
-// Status events
-audio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
-audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
-audio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
-audio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled...'; });
-audio.addEventListener('pause', () => { statusEl.textContent = 'Paused'; });
-
-// Media Session API for lock screen (same as pirate radio page)
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: "MLKSHK Pirate Radio",
-    artist: "Underground • Live • No Rules",
-    album: "MLKSHK Digital",
-    artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
-      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
-      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
-    ]
-  });
-
-  navigator.mediaSession.setActionHandler('play', () => {
-    audio.play();
-    btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Live';
-  });
-
-  navigator.mediaSession.setActionHandler('pause', () => {
-    audio.pause();
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
-  });
-
-  audio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
-  audio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
-}
 </script>
 </body>
 </html>
