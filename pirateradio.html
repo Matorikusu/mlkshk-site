@@ -17,8 +17,9 @@
 }
 body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+  overflow-x: hidden;
 }
-/* NAVIGATION */
+/* NAVIGATION - matched to index */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -28,7 +29,6 @@ header.nav-bar {
 }
 .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
 .logo-link img { height:42px; display:block; cursor:pointer; }
-.nav-links { display:flex; gap:14px; align-items:center; }
 .nav-dropdown { position: relative; display:inline-block; }
 .nav-toggle {
   display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
@@ -41,10 +41,12 @@ header.nav-bar {
   transform: rotate(45deg); margin-left:4px; transition:.18s ease;
 }
 .dropdown-menu {
-  display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:180px; background:#000;
+  display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
+  min-width:180px; background:#000;
   border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
+  overflow:hidden; max-width:90vw;
 }
-.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; }
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; text-decoration:none; }
 .dropdown-menu a:hover { background:var(--accent); color:#000; }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display:block; }
@@ -60,8 +62,6 @@ header.nav-bar {
   align-items: center;
   justify-content: center;
 }
-
-/* Moody filter on background */
 .transmitter-room::before {
   content: '';
   position: absolute;
@@ -70,13 +70,11 @@ header.nav-bar {
   filter: brightness(0.85) contrast(1.05);
   z-index: 0;
 }
-
-/* CRT noise - more prominent */
 .transmitter-room .crt-noise {
   position: absolute;
   inset: 0;
   background: url('images/Pirate Radio/static1.png') repeat;
-  opacity: 0.40; /* bumped up ~20% more than before */
+  opacity: 0.40;
   animation: scan 14s linear infinite;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -86,8 +84,6 @@ header.nav-bar {
   0% { background-position: 0 0; }
   100% { background-position: 0 100%; }
 }
-
-/* Vignette */
 .transmitter-room::after {
   content: '';
   position: absolute;
@@ -97,31 +93,27 @@ header.nav-bar {
   z-index: 1;
 }
 
-/* PLAYER OVERLAY - toned down rectangle */
+/* PLAYER OVERLAY */
 .player-overlay {
   position: relative;
   z-index: 10;
-  background: rgba(0,0,0,0.28); /* even more transparent - bunker very visible */
-  padding: 25px 40px; /* smaller, less dominant */
+  background: rgba(0,0,0,0.28);
+  padding: 25px 40px;
   border-radius: 16px;
-  border: 1px dashed var(--accent); /* dashed for grit */
+  border: 1px dashed var(--accent);
   backdrop-filter: blur(6px);
   box-shadow: 0 0 50px var(--glow);
   text-align: center;
-  max-width: 420px; /* narrower rectangle */
+  max-width: 420px;
 }
-
-/* Branding image inside overlay (replaces h2) */
 .player-overlay img {
   max-width: 100%;
   height: auto;
   margin-bottom: 20px;
-  filter: brightness(0.88) contrast(1.12) grayscale(0.1); /* gritty look */
+  filter: brightness(0.88) contrast(1.12) grayscale(0.1);
   border: 1px solid rgba(255,42,161,0.25);
   box-shadow: 0 0 20px var(--glow);
 }
-
-/* Button & status */
 .player-overlay button {
   padding:14px 40px;
   border:none;
@@ -142,7 +134,7 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS READOUT - random cycling */
+/* TRANSMITTER STATUS */
 #transmitter-status {
   position: absolute;
   bottom: 20px;
@@ -166,10 +158,40 @@ footer.site-footer {
   position: relative;
   z-index: 10;
 }
+
+/* MOBILE RESPONSIVE FIXES */
+@media (max-width: 768px) {
+  header.nav-bar { padding: 12px 16px; }
+  .transmitter-room { height: 60vh; min-height: 400px; }
+  .player-overlay {
+    padding: 20px 30px;
+    max-width: 90%;
+    border-radius: 12px;
+  }
+  .player-overlay img { max-width: 80%; margin-bottom: 16px; }
+  .player-overlay button { padding:12px 32px; font-size:1.1rem; }
+  .player-overlay #status { font-size:0.9rem; }
+  #transmitter-status {
+    position: static;
+    margin: 20px auto 0;
+    text-align: center;
+    font-size: 0.85rem;
+    max-width: 90%;
+  }
+  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
+  .player-title { font-size: 12px; }
+  .player-artist, .player-status { font-size: 10px; }
+  .player-controls img { width: 36px; height: 36px; }
+  .nav-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 160px;
+    max-width: 90vw;
+  }
+}
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -181,9 +203,10 @@ footer.site-footer {
         <div class="dropdown-menu">
           <a href="index.html">Home</a>
           <a href="access.html">Access</a>
-          <a href="artists.html">Artists</a>
           <a href="archive.html">Archive</a>
           <a href="catalogue.html">Catalogue</a>
+          <a href="pirateradio.html">Pirate Radio</a>
+          <a href="lab.html">The Lab</a>
           <a href="universe.html">The Universe</a>
         </div>
       </div>
@@ -194,14 +217,12 @@ footer.site-footer {
 <div class="transmitter-room">
   <div class="crt-noise"></div>
 
-  <!-- Transmitter status -->
   <div id="transmitter-status">
     FREQ: 107.3 MHz (PIRATE)<br>
     PWR: 52% (FLUCTUATING)<br>
     NOISE: -41 dB
   </div>
 
-  <!-- Player overlay - now with image instead of h2 -->
   <div class="player-overlay">
     <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
     <button id="playBtn">▶ Play</button>
@@ -241,10 +262,10 @@ btn.addEventListener('click', () => {
   }
 });
 
-radio.addEventListener('waiting', () => { statusEl.textContent = 'Buffering...'; });
-radio.addEventListener('playing', () => { statusEl.textContent = 'Live'; });
-radio.addEventListener('error', () => { statusEl.textContent = 'Stream error – retry?'; });
-radio.addEventListener('stalled', () => { statusEl.textContent = 'Stalled – reconnecting...'; });
+radio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+radio.addEventListener('playing', () => statusEl.textContent = 'Live');
+radio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+radio.addEventListener('stalled', () => statusEl.textContent = 'Stalled – reconnecting...');
 
 // Media Session API
 if ('mediaSession' in navigator) {
@@ -269,8 +290,8 @@ if ('mediaSession' in navigator) {
     btn.textContent = '▶ Play';
     statusEl.textContent = 'Paused';
   });
-  radio.addEventListener('play', () => { navigator.mediaSession.playbackState = 'playing'; });
-  radio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
+  radio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  radio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
 
 // Transmitter status cycling
@@ -281,12 +302,26 @@ const statusOptions = [
   "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
   "THEY’RE LISTENING<br>FREQUENCY LOCKED"
 ];
-
 function updateTransmitterStatus() {
   document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
 }
 updateTransmitterStatus();
 setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
+
+// Dropdown toggle (click to open/close)
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+    dropdownMenu.style.display = 'none';
+  }
+});
 </script>
 </body>
 </html>
