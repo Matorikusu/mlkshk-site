@@ -11,7 +11,7 @@
   --bg:#000;
   --text:#fff;
   --muted:#ccc;
-  --accent:#ff2aa1; /* restored original pink */
+  --accent:#ff2aa1; /* original pink restored */
   --dropdown-bg:#000;
 }
 /* RESET */
@@ -53,16 +53,29 @@ header.nav-bar{
   display:none;
   position:absolute;
   top:calc(100% + 8px);
+  right:0;
+  left:auto;
   background:var(--dropdown-bg);
   border:1px solid var(--accent);
   border-radius:8px;
   min-width:200px;
+  z-index:100;
+  overflow:hidden;
+  max-width:90vw;
 }
 .dropdown-menu a{
   display:block;
   padding:10px 14px;
+  color:#fff;
+  text-decoration:none;
 }
-.nav-dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a:hover {
+  background:var(--accent); /* pink fill on hover */
+  color:#000;
+  text-decoration:none;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {display:block}
 /* HERO */
 .hero{
   height:700px;
