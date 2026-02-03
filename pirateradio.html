@@ -19,7 +19,7 @@ body {
   margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
   overflow-x: hidden;
 }
-/* NAVIGATION (unchanged from last good version) */
+/* NAVIGATION (unchanged) */
 header.nav-bar {
   border-bottom:1px solid rgba(255,42,161,0.04);
   padding:18px 24px;
@@ -93,12 +93,12 @@ header.nav-bar {
   z-index: 1;
 }
 
-/* PLAYER OVERLAY */
+/* PLAYER OVERLAY - now contains status */
 .player-overlay {
   position: relative;
   z-index: 10;
   background: rgba(0,0,0,0.28);
-  padding: 25px 40px;
+  padding: 25px 40px 40px; /* extra bottom padding for status */
   border-radius: 16px;
   border: 1px dashed var(--accent);
   backdrop-filter: blur(6px);
@@ -134,44 +134,19 @@ header.nav-bar {
   color: #fff;
 }
 
-/* TRANSMITTER STATUS - responsive */
+/* TRANSMITTER STATUS - now inside overlay */
 #transmitter-status {
+  margin-top: 20px;
   font-family: monospace;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--accent);
-  opacity: 0.7;
-  pointer-events: none;
+  opacity: 0.75;
+  text-align: center;
   line-height: 1.4;
-  z-index: 20;
-}
-
-/* Desktop: bottom-right overlay */
-@media (min-width: 769px) {
-  #transmitter-status {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    text-align: right;
-  }
-}
-
-/* Mobile: centered below overlay */
-@media (max-width: 768px) {
-  #transmitter-status {
-    position: relative;
-    text-align: center;
-    margin: 30px auto 60px;
-    max-width: 90%;
-    font-size: 0.85rem;
-  }
-  .player-overlay {
-    padding: 20px 25px;
-    max-width: 92%;
-    border-radius: 14px;
-  }
-  .player-overlay img { max-width: 85%; margin-bottom: 16px; }
-  .player-overlay button { padding:12px 36px; font-size:1.2rem; }
-  .player-overlay #status { font-size:0.95rem; }
+  background: rgba(0,0,0,0.4);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255,42,161,0.3);
 }
 
 /* FOOTER */
@@ -184,10 +159,19 @@ footer.site-footer {
   z-index: 10;
 }
 
-/* MOBILE GENERAL */
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
   header.nav-bar { padding: 12px 16px; }
   .transmitter-room { height: 60vh; min-height: 400px; }
+  .player-overlay {
+    padding: 20px 25px 35px;
+    max-width: 92%;
+    border-radius: 14px;
+  }
+  .player-overlay img { max-width: 85%; margin-bottom: 16px; }
+  .player-overlay button { padding:12px 36px; font-size:1.2rem; }
+  .player-overlay #status { font-size:0.95rem; }
+  #transmitter-status { font-size: 0.8rem; margin-top: 16px; padding: 6px 10px; }
   .nav-dropdown .dropdown-menu {
     right: 0;
     left: auto;
@@ -226,15 +210,17 @@ footer.site-footer {
     <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
     <button id="playBtn">▶ Play</button>
     <p id="status">Ready</p>
+
+    <!-- Transmitter status now inside overlay -->
+    <div id="transmitter-status">
+      FREQ: 107.3 MHz (PIRATE)<br>
+      PWR: 52% (FLUCTUATING)<br>
+      NOISE: -41 dB
+    </div>
+
     <audio id="radio" style="display:none">
       <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
     </audio>
-  </div>
-
-  <div id="transmitter-status">
-    FREQ: 107.3 MHz (PIRATE)<br>
-    PWR: 52% (FLUCTUATING)<br>
-    NOISE: -41 dB
   </div>
 </div>
 
