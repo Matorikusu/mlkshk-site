@@ -3,145 +3,107 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK — Archives</title>
+<title>MLKSHK — Access / Licensing</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#000;
-  --text:#fff;
-  --muted:#ccc;
-  --accent:#ff2aa1;
-  --glow:rgba(255,42,161,0.5);
+:root {
+  --bg: #000;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
+  --accent: #d4af37; /* gold for premium/licensing */
+  --glow: rgba(212,175,55,0.5);
 }
-/* RESET */
-html,body{
-  margin:0;
-  height:100%;
-  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
+body {
+  margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+  min-height:100vh; display:flex; flex-direction:column;
 }
-a{color:inherit;text-decoration:none}
-/* NAV BAR - pink accents */
-header.nav-bar{
-  border-bottom:1px solid rgba(255,42,161,0.04);
+header.nav-bar {
+  border-bottom:1px solid rgba(212,175,55,0.08);
   padding:18px 24px;
   background:linear-gradient(180deg,rgba(0,0,0,.6),transparent);
-  position:sticky;
-  top:0;
-  z-index:200;
+  position:sticky; top:0; z-index:200;
   backdrop-filter:blur(6px);
 }
-.nav-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1200px;
-  margin:0 auto;
+.nav-content {
+  display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;
 }
-.logo-link img{height:42px;display:block;cursor:pointer}
-.nav-dropdown{position:relative}
-.nav-toggle{
-  background:none;
-  border:0;
+.logo-link img { height:42px; display:block; cursor:pointer; }
+.nav-dropdown { position:relative; }
+.nav-toggle {
+  background:none; border:0; color:var(--muted); font-weight:600; cursor:pointer;
+}
+.dropdown-menu {
+  display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
+  min-width:180px; background:#000; border:1px solid var(--accent); border-radius:8px;
+  padding:6px 0; z-index:300; overflow:hidden; max-width:90vw;
+}
+.dropdown-menu a { display:block; padding:10px 14px; color:#fff; text-decoration:none; }
+.dropdown-menu a:hover { background:var(--accent); color:#000; }
+.nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu { display:block; }
+
+main {
+  flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;
+}
+.access-box {
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(212,175,55,0.3);
+  border-radius:16px;
+  padding:50px 40px;
+  max-width:500px;
+  text-align:center;
+  box-shadow:0 0 60px var(--glow);
+  backdrop-filter:blur(8px);
+}
+.access-box h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:2.4rem;
+  margin:0 0 24px;
+  color:var(--accent);
+  letter-spacing:2px;
+}
+.access-box p.intro {
+  font-size:1.1rem;
+  line-height:1.6;
+  margin:0 0 32px;
   color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
 }
-.dropdown-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 8px);
-  right:0;
-  left:auto;
-  background:#000;
-  border:1px solid var(--accent);
-  border-radius:8px;
-  min-width:200px;
-  z-index:300;
-  overflow:hidden;
-  max-width:90vw;
+.access-box .why-us {
+  font-size:0.95rem;
+  color:var(--muted);
+  margin:32px 0 40px;
+  line-height:1.7;
+  border-top:1px solid rgba(212,175,55,0.15);
+  padding-top:24px;
 }
-.dropdown-menu a{
-  display:block;
-  padding:10px 14px;
+.access-form {
+  display:flex; flex-direction:column; gap:16px; max-width:360px; margin:0 auto;
+}
+.access-form input, .access-form textarea {
+  padding:16px 18px;
+  border:1px solid rgba(212,175,55,0.3);
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
   color:#fff;
-  text-decoration:none;
+  font-size:1.05rem;
 }
-.dropdown-menu a:hover{
+.access-form textarea { min-height:120px; resize:vertical; }
+.access-form button {
+  padding:16px;
+  border:none;
+  border-radius:30px;
   background:var(--accent);
   color:#000;
-}
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu{display:block}
-
-/* HERO */
-.hero-link{
-  display:block;
-  max-width:1000px;
-  margin:40px auto;
-}
-.hero{
-  width:100%;
-  height:420px;
-  background:url('images/Home/MLKSHK_ARCHIVE_HEADER.png') center/cover no-repeat;
+  font-weight:700;
+  font-size:1.1rem;
   cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
-  aspect-ratio:2.38 / 1;
+  transition:.2s;
 }
-.hero-link:hover .hero{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px var(--glow);
-}
-
-/* ARCHIVE GRID - single cards with glow hover */
-.brands-archive{
-  padding:40px 20px 120px;
-  background:#111;
-}
-.brands-grid{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:24px;
-}
-.brand-card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border:1px solid rgba(255,42,161,0.2);
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  transition:.25s ease;
-}
-.brand-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 25px 60px rgba(255,42,161,0.4), 0 0 40px var(--glow);
-  border-color:var(--accent);
-}
-.brand-card img{
-  width:100%;
-  display:block;
-  object-fit:cover;
-  aspect-ratio: 2.38 / 1;
-}
-.brand-info{
-  padding:18px;
-  text-align:center;
-}
-.brand-info h2{
-  margin:0 0 8px;
-  font-family:'Orbitron',sans-serif;
-  font-size:22px;
-  color:var(--accent);
-}
-.brand-info p{
-  margin:0 0 14px;
-  font-size:14px;
-  color:var(--muted);
+.access-form button:hover { background:#e6c84d; transform:scale(1.02); }
+#form-message {
+  margin-top:20px;
+  font-size:1rem;
+  min-height:24px;
 }
 
 /* FLOATING PLAYER */
@@ -167,50 +129,27 @@ header.nav-bar{
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
 
-/* FOOTER - centered */
-footer{
+/* FOOTER */
+footer {
   padding:28px 20px;
   text-align:center;
   font-size:13px;
   color:var(--muted);
-  border-top:1px solid rgba(255,42,161,.05);
-}
-
-/* CRT OVERLAY */
-.crt-overlay{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
-  animation:scanline 12s linear infinite;
-  opacity:0.12;
-  z-index:10;
-}
-@keyframes scanline{
-  0%{transform:translateY(-100%);}
-  100%{transform:translateY(100%);}
+  border-top:1px solid rgba(212,175,55,.05);
 }
 
 /* MOBILE */
-@media (max-width:768px){
-  header.nav-bar { padding:12px 16px; }
-  .hero-link,.brands-archive { margin:20px auto; padding:0 15px; }
-  .hero,.brand-card img { height:auto; min-height:180px; }
-  .brands-grid { gap:20px; }
+@media (max-width:768px) {
+  .access-box { padding:40px 25px; }
+  .access-box h1 { font-size:2rem; }
+  .access-form { max-width:100%; padding:0 10px; }
   #floating-player { width:90%; height:60px; padding:0 12px; }
   .player-title { font-size:12px; }
   .player-artist,.player-status { font-size:10px; }
   .player-controls img { width:36px; height:36px; }
-  .nav-dropdown .dropdown-menu {
-    right:0;
-    left:auto;
-    min-width:160px;
-    max-width:90vw;
-  }
 }
 </style>
 </head>
-
 <body>
 
 <header class="nav-bar">
@@ -222,83 +161,38 @@ footer{
       <button class="nav-toggle">Menu</button>
       <div class="dropdown-menu">
         <a href="index.html">Home</a>
-        <a href="access.html">Access</a>
         <a href="pirateradio.html">Pirate Radio</a>
         <a href="lab.html">The Lab</a>
         <a href="universe.html">The Universe</a>
+        <a href="archive.html">Archive</a>
       </div>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
-<a href="archive.html" class="hero-link">
-  <section class="hero"></section>
-</a>
+<main>
+  <div class="access-box">
+    <h1>LICENSING INQUIRIES</h1>
+    <p class="intro">
+      MLKSHK catalog is available for sync, advertising, film, TV, and select projects.<br>
+      Submit your request below. Serious inquiries only.
+    </p>
 
-<section class="brands-archive">
-  <div class="brands-grid">
+    <form class="access-form" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
+      <input type="text" name="name" placeholder="Your Name / Company" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="text" name="project" placeholder="Project Type (Ad / Film / TV / Other)" required>
+      <textarea name="details" placeholder="Project details, timeline, budget range..." required></textarea>
+      <button type="submit">Send Request</button>
+      <div id="form-message"></div>
+    </form>
 
-    <article class="brand-card">
-      <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
-      <div class="brand-info">
-        <h2>The Warehouse 1977</h2>
-        <p>Chicago nightclub culture, the birthplace of house music. Dim lights, sweat, 4/4 pulse. Frankie Knuckles built the religion here.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
-      <div class="brand-info">
-        <h2>Shoom 1987</h2>
-        <p>London acid house energy, captured at its rawest. Danny Rampling, acid tabs, sunrise sets. The smiley became the flag.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
-      <div class="brand-info">
-        <h2>Blitz 1979</h2>
-        <p>New Romantic style, sound and cultural rebellion. Steve Strange at the door. Glamour as armor.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/rumrunner1967banner.png" alt="Rum Runner 1967">
-      <div class="brand-info">
-        <h2>Rum Runner 1967</h2>
-        <p>Birmingham nightlife and the roots of future pop. The Beat, UB40, Dexys started here.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/southbank1973banner.png" alt="Southbank Undercroft 1973">
-      <div class="brand-info">
-        <h2>Southbank Undercroft 1973</h2>
-        <p>London skate culture — concrete, community and sound. Pillars tagged over years.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/venice1979banner.png" alt="Venice Beach Skatepark 1979">
-      <div class="brand-info">
-        <h2>Venice Beach Skatepark 1979</h2>
-        <p>California sun, asphalt rebellion and street rhythm. Empty bowl echoes at 3am.</p>
-      </div>
-    </article>
-
-    <article class="brand-card">
-      <img src="images/Brand_Banners/shibuya1985banner.png" alt="Shibuya Street 1985">
-      <div class="brand-info">
-        <h2>Shibuya Street 1985</h2>
-        <p>Neon nights and urban movement — Tokyo preserved in sound. Rain-soaked crowds dissolve.</p>
-      </div>
-    </article>
-
+    <div class="why-us">
+      Our catalog is selective and protected. We license to projects that align with the signal.<br>
+      No open submissions. Serious inquiries only.
+    </div>
   </div>
-</section>
-
-<div class="crt-overlay"></div>
+</main>
 
 <div id="floating-player">
   <div class="player-meta">
@@ -373,20 +267,33 @@ if ('mediaSession' in navigator) {
   audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
 
-// Dropdown toggle
-const navToggle = document.querySelector('.nav-toggle');
-const dropdownMenu = document.querySelector('.dropdown-menu');
+// Form submission feedback
+const form = document.querySelector('.access-form');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const message = document.getElementById('form-message');
+  message.textContent = 'Sending...';
+  message.style.color = '#fff';
 
-navToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-});
-
-document.addEventListener('click', (e) => {
-  if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-    dropdownMenu.style.display = 'none';
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      message.style.color = '#d4af37';
+      message.textContent = 'Request sent. We’ll be in touch if it aligns.';
+      form.reset();
+    } else {
+      throw new Error('Error');
+    }
+  } catch (err) {
+    message.style.color = '#ff4d4d';
+    message.textContent = 'Something went wrong. Try again or email licensing@mlkshkdigital.com';
   }
 });
 </script>
+
 </body>
 </html>
