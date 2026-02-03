@@ -13,7 +13,6 @@
   --muted:#ccc;
   --accent:#ff2aa1;
   --glow:rgba(255,42,161,0.5);
-  --dropdown-bg:#000;
 }
 /* RESET */
 html,body{
@@ -57,7 +56,7 @@ header.nav-bar{
   top:calc(100% + 8px);
   right:0;
   left:auto;
-  background:var(--dropdown-bg);
+  background:#000;
   border:1px solid var(--accent);
   border-radius:8px;
   min-width:200px;
@@ -100,7 +99,7 @@ header.nav-bar{
 
 /* ARCHIVE GRID - cards with glow hover */
 .brands-archive{
-  padding:40px 20px 120px;
+  padding:40px 20px 80px;
   background:#111;
 }
 .brands-grid{
@@ -144,21 +143,40 @@ header.nav-bar{
   font-size:14px;
   color:var(--muted);
 }
-.explore-button{
-  display:inline-block;
-  padding:10px 22px;
-  border-radius:20px;
-  border:2px solid var(--accent);
-  color:var(--accent);
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:0.5px;
-  transition:.2s ease;
+
+/* COMPRESSED ARCHIVE SECTIONS - below grid */
+.archive-sections{
+  max-width:1000px;
+  margin:0 auto;
+  padding:0 20px 120px;
 }
-.explore-button:hover{
-  background:var(--accent);
-  color:#000;
-  box-shadow:0 0 18px var(--glow);
+.archive-entry{
+  margin:60px 0;
+  padding:30px;
+  background:rgba(255,255,255,0.02);
+  border:1px dashed rgba(255,42,161,0.3);
+  border-radius:12px;
+}
+.archive-entry h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;
+  color:var(--accent);
+  margin:0 0 16px;
+}
+.archive-entry p{
+  font-size:16px;
+  line-height:1.6;
+  color:var(--muted);
+  margin:0 0 24px;
+}
+.archive-entry img{
+  width:100%;
+  max-width:600px;
+  display:block;
+  margin:20px auto;
+  border-radius:8px;
+  border:1px solid rgba(255,42,161,0.2);
+  box-shadow:0 0 20px rgba(0,0,0,.6);
 }
 
 /* FLOATING PLAYER */
@@ -177,21 +195,14 @@ header.nav-bar{
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
 }
-.player-meta{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  text-align:center;
-  padding:0 12px;
-}
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
 .player-title{font-weight:700;font-size:14px;}
 .player-artist{font-size:12px;color:var(--muted);}
 .player-status{font-size:11px;color:var(--muted);margin-top:4px;}
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
 
-/* FOOTER - fixed centering */
+/* FOOTER - centered */
 footer{
   padding:28px 20px;
   text-align:center;
@@ -199,11 +210,8 @@ footer{
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,.05);
 }
-footer div {
-  text-align: center;
-}
 
-/* CRT OVERLAY - subtle */
+/* CRT OVERLAY */
 .crt-overlay{
   position:fixed;
   inset:0;
@@ -221,8 +229,8 @@ footer div {
 /* MOBILE */
 @media (max-width:768px){
   header.nav-bar { padding:12px 16px; }
-  .hero-link,.brands-archive { margin:20px auto; padding:0 15px; }
-  .hero,.brand-card img { height:auto; min-height:180px; }
+  .hero-link,.brands-archive,.archive-sections { margin:20px auto; padding:0 15px; }
+  .hero,.brand-card img,.archive-entry img { height:auto; min-height:180px; }
   .brands-grid { gap:20px; }
   #floating-player { width:90%; height:60px; padding:0 12px; }
   .player-title { font-size:12px; }
@@ -271,7 +279,6 @@ footer div {
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
         <p>Chicago nightclub culture, the birthplace of house music.</p>
-        <a href="archive-warehouse-1977.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -280,7 +287,6 @@ footer div {
       <div class="brand-info">
         <h2>Shoom 1987</h2>
         <p>London acid house energy, captured at its rawest.</p>
-        <a href="archive-shoom-1987.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -289,7 +295,6 @@ footer div {
       <div class="brand-info">
         <h2>Blitz 1979</h2>
         <p>New Romantic style, sound and cultural rebellion.</p>
-        <a href="archive-blitz-1979.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -298,7 +303,6 @@ footer div {
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
         <p>Birmingham nightlife and the roots of future pop.</p>
-        <a href="archive-rumrunner-1967.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -307,7 +311,6 @@ footer div {
       <div class="brand-info">
         <h2>Southbank Undercroft 1973</h2>
         <p>London skate culture — concrete, community and sound.</p>
-        <a href="archive-southbank-1973.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -316,7 +319,6 @@ footer div {
       <div class="brand-info">
         <h2>Venice Beach Skatepark 1979</h2>
         <p>California sun, asphalt rebellion and street rhythm.</p>
-        <a href="archive-venice-1979.html" class="explore-button">Explore</a>
       </div>
     </article>
 
@@ -325,16 +327,63 @@ footer div {
       <div class="brand-info">
         <h2>Shibuya Street 1985</h2>
         <p>Neon nights and urban movement — Tokyo preserved in sound.</p>
-        <a href="archive-shibuya-1985.html" class="explore-button">Explore</a>
       </div>
     </article>
 
   </div>
 </section>
 
+<section class="archive-sections">
+  <div class="archive-entry">
+    <h2>The Warehouse 1977</h2>
+    <p>Chicago. Dim lights, sweat, 4/4 pulse. Frankie Knuckles built the religion here. Signal lost, echo remains.</p>
+    <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Shoom 1987</h2>
+    <p>London acid house explosion. Danny Rampling, acid tabs, sunrise sets. The smiley became the flag. Frequency jammed by dawn.</p>
+    <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Blitz 1979</h2>
+    <p>New Romantic style, sound and cultural rebellion. Steve Strange at the door. Glamour as armor. The new wave broke here.</p>
+    <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Rum Runner 1967</h2>
+    <p>Birmingham nightlife and the roots of future pop. The Beat, UB40, Dexys started here. Industrial city rhythm.</p>
+    <img src="images/Brand_Banners/rumrunner1967banner.png" alt="Rum Runner 1967">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Southbank Undercroft 1973</h2>
+    <p>London skate culture — concrete, community and sound. Pillars tagged over years. Train rumble below. Someone was here once.</p>
+    <img src="images/Brand_Banners/southbank1973banner.png" alt="Southbank Undercroft 1973">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Venice Beach Skatepark 1979</h2>
+    <p>California sun, asphalt rebellion and street rhythm. Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
+    <img src="images/Brand_Banners/venice1979banner.png" alt="Venice Beach Skatepark 1979">
+  </div>
+
+  <div class="archive-entry">
+    <h2>Shibuya Street 1985</h2>
+    <p>Neon nights and urban movement — Tokyo preserved in sound. Rain-soaked crowds dissolve. Static in the reflections.</p>
+    <img src="images/Brand_Banners/shibuya1985banner.png" alt="Shibuya Street 1985">
+  </div>
+
+  <p class="note" style="text-align:center; font-family:monospace; color:#0f0; opacity:0.7; margin-top:60px;">
+    ARCHIVE TRANSMISSIONS — RECOVERED FRAGMENTS<br>
+    TUNE IN. THE SIGNAL CHOOSES WHAT TO REVEAL.
+  </p>
+</section>
+
 <div class="crt-overlay"></div>
 
-<!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
