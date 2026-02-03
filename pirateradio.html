@@ -106,14 +106,29 @@ header.nav-bar {
   box-shadow: 0 0 50px var(--glow);
   text-align: center;
   max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 .player-overlay img {
   max-width: 100%;
   height: auto;
-  margin-bottom: 20px;
   filter: brightness(0.88) contrast(1.12) grayscale(0.1);
   border: 1px solid rgba(255,42,161,0.25);
   box-shadow: 0 0 20px var(--glow);
+}
+.player-overlay #transmitter-status {
+  font-family: monospace;
+  font-size: 1rem;
+  color: var(--accent); /* pink */
+  text-align: center;
+  line-height: 1.4;
+  background: rgba(0,0,0,0.4);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255,42,161,0.3);
+  flex-shrink: 0;
 }
 .player-overlay button {
   padding:14px 40px;
@@ -129,25 +144,9 @@ header.nav-bar {
 }
 .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
 .player-overlay #status {
-  margin-top:12px;
   font-size:1rem;
   opacity:0.9;
   color: #fff;
-}
-
-/* TRANSMITTER STATUS */
-#transmitter-status {
-  margin-top: 20px;
-  font-family: monospace;
-  font-size: 0.85rem;
-  color: #00ff00; /* green text */
-  opacity: 0.75;
-  text-align: center;
-  line-height: 1.4;
-  background: rgba(0,0,0,0.4);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px dashed rgba(255,42,161,0.3);
 }
 
 /* FOOTER */
@@ -168,11 +167,12 @@ footer.site-footer {
     padding: 20px 25px 35px;
     max-width: 92%;
     border-radius: 14px;
+    gap: 16px;
   }
-  .player-overlay img { max-width: 85%; margin-bottom: 16px; }
+  .player-overlay img { max-width: 85%; }
   .player-overlay button { padding:12px 36px; font-size:1.2rem; }
   .player-overlay #status { font-size:0.95rem; }
-  #transmitter-status { font-size: 0.8rem; margin-top: 16px; padding: 6px 10px; }
+  .player-overlay #transmitter-status { font-size: 0.9rem; padding: 8px 12px; }
   .nav-dropdown .dropdown-menu {
     right: 0;
     left: auto;
@@ -209,14 +209,16 @@ footer.site-footer {
 
   <div class="player-overlay">
     <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
-    <button id="playBtn">▶ Play</button>
-    <p id="status">Ready</p>
 
+    <!-- Transmitter status now centred -->
     <div id="transmitter-status">
       FREQ: 107.3 MHz (PIRATE)<br>
       PWR: 52% (FLUCTUATING)<br>
       NOISE: -41 dB
     </div>
+
+    <button id="playBtn">▶ Play</button>
+    <p id="status">Ready</p>
 
     <audio id="radio" style="display:none">
       <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
