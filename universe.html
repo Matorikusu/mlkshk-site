@@ -81,32 +81,49 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* SIGNAL METER — bottom-right, larger range */
-.signal-meter {
+/* SIGNAL STRENGTH METER — bottom-left, quicker cycle */
+#signalStrengthMeter {
   position: fixed;
-  bottom: 90px; /* above floating player */
+  bottom: 90px;
+  left: 20px;
+  z-index: 199;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--signal-green);
+  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+  backdrop-filter: blur(4px);
+  min-width: 180px;
+  text-align: left;
+  transition: all 0.4s ease;
+}
+#signalStrengthMeter.weak { color: var(--signal-yellow); box-shadow: 0 0 15px rgba(255,255,0,0.3); }
+#signalStrengthMeter.critical { color: var(--signal-red); box-shadow: 0 0 20px rgba(255,0,0,0.4); animation: pulse 1.5s infinite; }
+#signalStrengthMeter strong { color: #fff; }
+
+/* LISTENER COUNT METER — bottom-right, slower cycle */
+#listenerMeter {
+  position: fixed;
+  bottom: 90px;
   right: 20px;
   z-index: 199;
   background: rgba(0,0,0,0.75);
   border: 1px solid var(--accent);
   border-radius: 8px;
-  padding: 14px 18px;
+  padding: 12px 16px;
   font-family: monospace;
   font-size: 14px;
-  color: var(--signal-green);
+  color: #0f0;
   box-shadow: 0 0 15px rgba(0,255,0,0.2);
   backdrop-filter: blur(4px);
   min-width: 200px;
   text-align: left;
   transition: all 0.4s ease;
 }
-.signal-meter.weak { color: var(--signal-yellow); box-shadow: 0 0 15px rgba(255,255,0,0.3); }
-.signal-meter.critical { color: var(--signal-red); box-shadow: 0 0 20px rgba(255,0,0,0.4); animation: pulse 1.5s infinite; }
-.signal-meter strong { color: #fff; font-weight: bold; }
-@keyframes pulse {
-  0%,100% { opacity:1; }
-  50% { opacity:0.7; }
-}
+#listenerMeter strong { color: #fff; }
 
 /* HERO */
 .hero-link{
@@ -368,13 +385,13 @@ footer{
   .ghost-card { min-height:200px; padding:30px 15px; }
   .ghost-card h3 { font-size:1.3rem; }
   .ghost-card p { font-size:0.95rem; }
-  .signal-meter {
-    bottom: 90px;
-    right: 10px;
-    padding: 10px 14px;
-    font-size: 13px;
-    min-width: 160px;
+  .signal-meter, #listenerMeter {
+    font-size: 12px;
+    padding: 10px 12px;
+    min-width: 140px;
   }
+  #signalStrengthMeter { bottom: 80px; left: 10px; }
+  #listenerMeter { bottom: 80px; right: 10px; }
 }
 </style>
 </head>
@@ -398,11 +415,15 @@ footer{
   </div>
 </header>
 
-<!-- SIGNAL METER – bottom-right -->
-<div class="signal-meter" id="signalMeter">
-  <strong>Listeners:</strong> <span id="listenerCount">2,347</span><br>
+<!-- SIGNAL STRENGTH METER – bottom-left, quicker cycle -->
+<div class="signal-meter" id="signalStrengthMeter">
   <strong>Signal:</strong> <span id="signalStrength">89%</span> 
   <div id="strengthBar" style="height:8px;background:var(--signal-green);width:89%;margin-top:6px;border-radius:4px;"></div>
+</div>
+
+<!-- LISTENER COUNT METER – bottom-right, slower cycle -->
+<div class="signal-meter" id="listenerMeter">
+  <strong>Listeners:</strong> <span id="listenerCount">2,347</span>
 </div>
 
 <a href="universe.html" class="hero-link">
@@ -620,42 +641,48 @@ document.querySelectorAll('.ghost-card').forEach(card => {
   card.style.backgroundImage = `url('${randomBg}')`;
 });
 
-// FAKE LISTENER COUNT + SIGNAL STRENGTH (bottom-right, larger range)
-const listenerCountEl = document.getElementById('listenerCount');
+// SIGNAL STRENGTH METER – bottom-left, quicker cycle
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
-const meterEl = document.getElementById('signalMeter');
+const strengthMeterEl = document.getElementById('signalStrengthMeter');
 
-let currentListeners = 2347;
 let currentStrength = 89;
 
-function updateMeter() {
-  // Listener fluctuation
-  currentListeners += Math.floor(Math.random() * 201) - 100; // -100 to +100 change
-  currentListeners = Math.max(1800, Math.min(4200, currentListeners));
-  listenerCountEl.textContent = currentListeners.toLocaleString(); // adds commas
-
-  // Signal strength
+function updateStrength() {
   currentStrength += Math.floor(Math.random() * 13) - 6;
   currentStrength = Math.max(18, Math.min(98, currentStrength));
   signalStrengthEl.textContent = currentStrength + '%';
-
-  // Bar & color
   strengthBarEl.style.width = currentStrength + '%';
+
   if (currentStrength > 70) {
     strengthBarEl.style.background = 'var(--signal-green)';
-    meterEl.className = 'signal-meter';
+    strengthMeterEl.className = 'signal-meter';
   } else if (currentStrength > 40) {
     strengthBarEl.style.background = 'var(--signal-yellow)';
-    meterEl.className = 'signal-meter weak';
+    strengthMeterEl.className = 'signal-meter weak';
   } else {
     strengthBarEl.style.background = 'var(--signal-red)';
-    meterEl.className = 'signal-meter critical';
+    strengthMeterEl.className = 'signal-meter critical';
   }
 }
 
-updateMeter();
-setInterval(updateMeter, Math.random() * 7000 + 8000); // 8–15 seconds
+updateStrength();
+setInterval(updateStrength, Math.random() * 4000 + 3000); // 3–7 seconds
+
+// LISTENER COUNT METER – bottom-right, slower cycle
+const listenerCountEl = document.getElementById('listenerCount');
+const listenerMeterEl = document.getElementById('listenerMeter');
+
+let currentListeners = 2347;
+
+function updateListeners() {
+  currentListeners += Math.floor(Math.random() * 201) - 100;
+  currentListeners = Math.max(1800, Math.min(4200, currentListeners));
+  listenerCountEl.textContent = currentListeners.toLocaleString();
+}
+
+updateListeners();
+setInterval(updateListeners, Math.random() * 25000 + 15000); // 15–40 seconds
 </script>
 </body>
 </html>
