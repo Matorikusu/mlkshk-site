@@ -125,26 +125,32 @@ header.nav-bar{
   50% { opacity:0.7; }
 }
 
-/* JAM BUTTON — fixed bottom-right */
+/* JAM BUTTON — fixed center of screen */
 #jam-button {
   position: fixed;
-  bottom: 160px;
-  right: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 198;
   background: #800;
   color: #f00;
   border: 2px solid #f00;
   border-radius: 8px;
-  padding: 12px 24px;
+  padding: 16px 32px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,0,0,0.4);
+  box-shadow: 0 0 25px rgba(255,0,0,0.5);
   transition: all 0.3s;
 }
 #jam-button:hover {
   background: #a00;
-  box-shadow: 0 0 30px rgba(255,0,0,0.6);
+  box-shadow: 0 0 40px rgba(255,0,0,0.7);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+#jam-button.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* JAM OVERLAY – full-screen tiled static, centered text */
@@ -162,9 +168,9 @@ header.nav-bar{
 }
 #jam-text {
   font-family: 'Orbitron', sans-serif;
-  font-size: 80px;
+  font-size: 100px;
   color: #f00;
-  text-shadow: 0 0 40px #f00;
+  text-shadow: 0 0 50px #f00;
   text-align: center;
   opacity: 0;
   transition: opacity 0.5s;
@@ -439,7 +445,10 @@ footer{
   }
   #signalStrengthMeter { left: 10px; }
   #interferenceMeter { right: 10px; }
-  #jam-button { bottom: 150px; right: 15px; padding: 10px 20px; font-size: 14px; }
+  #jam-button {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
 }
 </style>
 </head>
@@ -556,7 +565,7 @@ footer{
 
 <div class="crt-overlay"></div>
 
-<!-- JAM BUTTON – fixed bottom-right -->
+<!-- JAM BUTTON – centered on screen -->
 <button id="jam-button">JAM SIGNAL</button>
 
 <!-- JAM OVERLAY – full-screen tiled static, centered text -->
@@ -765,6 +774,7 @@ jamButton.addEventListener('click', () => {
   jamText.style.opacity = '1';
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
+  jamButton.classList.add('hidden');
   document.body.style.animation = 'shake 0.8s infinite';
 
   // Your 7-second audio clip
@@ -772,11 +782,12 @@ jamButton.addEventListener('click', () => {
   jamAudio.volume = 0.5; // adjustable
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
-  // Full jam lasts exactly 7 seconds (matches audio)
+  // Full jam lasts exactly 7 seconds
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
     jamText.style.opacity = '0';
+    jamButton.classList.remove('hidden');
     document.body.style.animation = '';
     transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
   }, 7000);
