@@ -95,136 +95,28 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px var(--glow);
 }
-/* DRIFTING BACKGROUND LAYERS */
-.bg-layers {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  overflow:hidden;
-}
-.bg-layer {
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0.12;
-  animation:drift linear infinite;
-}
-.bg-layer-1 { background-image:url('images/universe/venice-concrete-night.jpg'); animation-duration:240s; }
-.bg-layer-2 { background-image:url('images/universe/shibuya-rain-neon.jpg'); animation-duration:300s; animation-direction:reverse; opacity:0.08; }
-.bg-layer-3 { background-image:url('images/universe/southbank-pillars.jpg'); animation-duration:360s; opacity:0.10; }
-@keyframes drift {
-  0% { transform:translate(0,0) scale(1.05); }
-  100% { transform:translate(5%,5%) scale(1.05); }
-}
-/* MAIN CONTENT */
-.wrap{
-  max-width:1200px;
-  margin:0 auto;
-  padding:40px 20px;
-  position:relative;
-  z-index:1;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-}
-.card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border:1px solid rgba(255,42,161,0.15);
-  border-radius:var(--card-radius);
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  transition:.3s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 20px 50px rgba(0,0,0,.8);
-  border-color:var(--accent);
-}
-.card .art{
-  height:250px;
-}
-.card .art img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.85) contrast(1.1);
-  transition:.4s;
-}
-.card:hover .art img{
-  filter:brightness(1.05) contrast(1.2);
-}
-.card .meta{
-  padding:14px;
-  text-align:center;
-}
-.card .title{
-  font-family:'Orbitron',sans-serif;
-  font-size:18px;
-  margin-bottom:6px;
-  color:var(--accent);
-}
-.card .sub{
-  font-size:13px;
-  color:var(--muted);
-}
-/* SINGLE CYCLING AD BANNER */
+/* CYCLING AD BANNER */
 .ad-banner {
-  margin:80px 0;
-  text-align:center;
-  max-width:1000px;
-  margin-left:auto;
-  margin-right:auto;
+  margin: 60px 20px;
+  text-align: center;
 }
 .ad-banner h2 {
-  font-family:'Orbitron',sans-serif;
-  color:var(--accent);
-  margin-bottom:20px;
-  opacity:0.8;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--accent);
+  margin-bottom: 20px;
+  opacity: 0.8;
 }
-.ad-card {
-  background:#111;
-  border:2px dashed var(--accent);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 0 40px var(--glow);
-  transition:0.5s;
+#ad-image-container img {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 0 30px var(--glow);
+  transition: opacity 0.8s ease;
 }
-.ad-card:hover {
-  transform:scale(1.02);
-  box-shadow:0 0 60px var(--glow);
-}
-.ad-card img {
-  width:100%;
-  height:300px;
-  object-fit:cover;
-}
-.ad-card .ad-text {
-  padding:25px;
-  text-align:center;
-}
-.ad-card h3 {
-  font-family:'Orbitron',sans-serif;
-  color:var(--accent);
-  margin:0 0 12px;
-  font-size:1.8rem;
-}
-.ad-card p {
-  color:#ccc;
-  margin:0;
-  font-size:1.2rem;
-}
-.ad-label {
-  font-family:monospace;
-  color:#0f0;
-  font-size:0.9rem;
-  margin-top:8px;
-  opacity:0.7;
-}
-
 /* TRANSMISSION LOG */
 .trans-log{
   margin:60px auto;
@@ -280,7 +172,7 @@ header.nav-bar{
   border-top:1px dashed var(--accent);
   border-bottom:1px dashed var(--accent);
 }
-/* CRT OVERLAY + GLITCH */
+/* CRT OVERLAY */
 .crt-overlay{
   position:fixed;
   inset:0;
@@ -293,19 +185,6 @@ header.nav-bar{
 @keyframes scanline{
   0%{transform:translateY(-100%);}
   100%{transform:translateY(100%);}
-}
-.glitch-flicker {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:transparent;
-  opacity:0;
-  animation:glitch 8s infinite;
-  z-index:5;
-}
-@keyframes glitch {
-  0%, 100% { opacity:0; }
-  4%, 8%, 12%, 16% { opacity:0.03; background:rgba(255,42,161,0.02); }
 }
 /* FLOATING PLAYER */
 #floating-player{
@@ -346,12 +225,10 @@ footer{
   .player-artist,.player-status{font-size:10px;}
   .player-controls img{width:36px;height:36px;}
   .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
-  .ad-card img { height:220px; }
 }
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -369,20 +246,6 @@ footer{
     </div>
   </div>
 </header>
-
-<!-- DRIFTING BACKGROUND LAYERS -->
-<div class="bg-layers">
-  <div class="bg-layer bg-layer-1"></div>
-  <div class="bg-layer bg-layer-2"></div>
-  <div class="bg-layer bg-layer-3"></div>
-</div>
-
-<div class="glitch-flicker"></div>
-
-<a href="universe.html" class="hero-link">
-  <section class="hero"></section>
-</a>
-
 <main class="wrap">
   <section class="grid">
     <article class="card" data-genre="drum-bass">
@@ -422,11 +285,10 @@ footer{
     </article>
   </section>
 
-  <!-- SINGLE CYCLING AD BANNER -->
+  <!-- CYCLING AD IMAGE -->
   <section class="ad-banner">
-    <h2>SIGNAL BLEED — COMMERCIAL INTRUSION</h2>
-    <div class="ad-card" id="adCard"></div>
-    <div class="ad-label">Sponsored by the Signal — No Refunds</div>
+    <h2>SIGNAL BLEED — INTRUSION</h2>
+    <div class="ad-image" id="adImage"></div>
   </section>
 
   <!-- TRANSMISSION LOG -->
@@ -463,9 +325,7 @@ footer{
     DO NOT ADJUST YOUR RECEIVER
   </section>
 </main>
-
 <div class="crt-overlay"></div>
-
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -479,11 +339,9 @@ footer{
     <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
   </audio>
 </div>
-
 <footer style="text-align:center;">
   MLKSHK — Built for the misfits. © <span id="year"></span>
 </footer>
-
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -492,7 +350,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
-
 btn.addEventListener('click', () => {
   if (audio.paused) {
     audio.play().catch(e => {
@@ -507,13 +364,11 @@ btn.addEventListener('click', () => {
     statusEl.textContent = 'Paused';
   }
 });
-
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Live');
 audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
 audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
 audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
-
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -539,7 +394,6 @@ if ('mediaSession' in navigator) {
   audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
   audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
-
 // Dropdown toggle
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -552,7 +406,6 @@ document.addEventListener('click', (e) => {
     dropdownMenu.style.display = 'none';
   }
 });
-
 // Cycle transmission log
 const transLog = document.getElementById('transLog');
 if (transLog) {
@@ -568,35 +421,27 @@ if (transLog) {
     index = (index + 1) % messages.length;
   }, 8000);
 }
-
-// SINGLE CYCLING AD BANNER
-const ads = [
-  { title: "Trevor’s Toe Jam Toothpaste", desc: "Fresh breath or fresh hell. Your choice.", img: "images/Universe/Ads/toejam-toothpaste.jpg" },
-  { title: "Nobby’s Used Condom Balloon Animals", desc: "Party ready. Slightly used. No refunds.", img: "images/Universe/Ads/nobbys-balloon.jpg" },
-  { title: "Auntie Brenda’s Haunted Semtex", desc: "Explosive flavour in every bite.", img: "images/Universe/Ads/brenda-semtex.jpg" },
-  { title: "The Glitch Witch Tarot Readings", desc: "Your future is already broken. £20.", img: "images/Universe/Ads/glitch-witch.jpg" },
-  { title: "Kevin’s Discount Existential Crisis Hotline", desc: "We care. Sort of. Call now.", img: "images/Universe/Ads/kevin-hotline.jpg" },
-  // ← Add new ads here:
-  // { title: "New Fake Brand", desc: "Tagline here.", img: "images/Universe/Ads/your-new-image.jpg" },
+// Cycling ad image
+const adImages = [
+  "images/Universe/Ads/toejam-toothpaste.jpg",
+  "images/Universe/Ads/nobbys-balloon.jpg",
+  "images/Universe/Ads/brenda-semtex.jpg",
+  "images/Universe/Ads/glitch-witch.jpg",
+  "images/Universe/Ads/kevin-hotline.jpg",
+  // Add more paths here when you create additional images
 ];
+let adIndex = 0;
+const adContainer = document.getElementById('adImage');
 
-let currentAdIndex = 0;
-const adCard = document.getElementById('adCard');
-
-function renderAd() {
-  const ad = ads[currentAdIndex];
-  adCard.innerHTML = `
-    <img src="${ad.img}" alt="${ad.title}">
-    <div class="ad-text">
-      <h3>${ad.title}</h3>
-      <p>${ad.desc}</p>
-    </div>
+function showAd() {
+  const imgPath = adImages[adIndex];
+  adContainer.innerHTML = `
+    <img src="${imgPath}" alt="Ad">
   `;
-  currentAdIndex = (currentAdIndex + 1) % ads.length;
+  adIndex = (adIndex + 1) % adImages.length;
 }
-
-renderAd();
-setInterval(renderAd, 10000); // cycle every 10 seconds — change to 8000 for faster, 15000 for slower
+showAd();
+setInterval(showAd, 10000); // 10 seconds per image
 </script>
 </body>
 </html>
