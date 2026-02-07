@@ -147,11 +147,11 @@ header.nav-bar{
   box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
-/* JAM OVERLAY with static background */
+/* JAM OVERLAY with tiled static background */
 #jam-overlay {
   position: fixed;
   inset: 0;
-  background: url('Player/static1.png') center/cover no-repeat #000;
+  background: url('Player/static1.png') repeat #000; /* tiled static */
   z-index: 300;
   opacity: 0;
   pointer-events: none;
@@ -167,6 +167,7 @@ header.nav-bar{
 #jam-text {
   opacity: 0;
   transition: opacity 0.5s;
+  text-align: center;
 }
 #jam-reconnect {
   position: absolute;
@@ -565,7 +566,7 @@ footer{
 <!-- JAM BUTTON – fixed bottom-right -->
 <button id="jam-button">JAM SIGNAL</button>
 
-<!-- JAM OVERLAY with static background -->
+<!-- JAM OVERLAY with tiled static background -->
 <div id="jam-overlay">
   <div id="jam-text">SIGNAL LOST</div>
   <div id="jam-reconnect">RECONNECTING...</div>
@@ -776,25 +777,25 @@ jamButton.addEventListener('click', () => {
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
 
-  // Distorted radio clip (replace URL with your GitHub .mp3 later)
-  const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3'); // placeholder static + distorted voice
+  // Your 7-second distorted radio clip
+  const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
   jamAudio.volume = 0.5; // adjustable
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
-  // Show "SIGNAL LOST" for 6 seconds
+  // Keep "SIGNAL LOST" visible for 7 seconds (matches audio length)
   setTimeout(() => {
     jamText.style.opacity = '0';
     jamReconnect.style.opacity = '1';
-  }, 6000);
+  }, 7000);
 
-  // Full fade-out after 8 seconds total
+  // Full fade-out after 9 seconds total
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
     jamReconnect.style.opacity = '0';
     document.body.style.animation = '';
     transLog.innerHTML = "RECONNECTING...<br>SIGNAL RESTORED";
-  }, 8000);
+  }, 9000);
 });
 
 // Shake animation
