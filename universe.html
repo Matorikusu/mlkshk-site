@@ -81,7 +81,7 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* SIGNAL METERS — bottom corners, symmetric */
+/* SIGNAL METERS */
 .signal-meter {
   position: fixed;
   bottom: 90px;
@@ -123,6 +123,85 @@ header.nav-bar{
 @keyframes pulse {
   0%,100% { opacity:1; }
   50% { opacity:0.7; }
+}
+
+/* HACKER TERMINAL */
+#terminal {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 700px;
+  background: #000;
+  border: 1px solid #0f0;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #0f0;
+  box-shadow: 0 0 20px rgba(0,255,0,0.2);
+  z-index: 198;
+  height: 140px;
+  overflow: hidden;
+  opacity: 0.9;
+  pointer-events: none;
+}
+#terminal-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* FREQUENCY DIAL */
+#freq-dial-container {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 198;
+}
+#freq-dial {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #111, #000);
+  border: 2px dashed var(--signal-green);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 0 15px rgba(0,255,0,0.3);
+  position: relative;
+}
+#dial-knob {
+  position: absolute;
+  width: 20px;
+  height: 40px;
+  background: var(--signal-green);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  border-radius: 10px 10px 0 0;
+  pointer-events: none;
+}
+
+/* SIGNAL JAM BUTTON */
+#jam-button {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 198;
+  background: #800;
+  color: #f00;
+  border: 2px solid #f00;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,0,0,0.4);
+  transition: all 0.3s;
+}
+#jam-button:hover {
+  background: #a00;
+  box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
 /* HERO */
@@ -337,36 +416,30 @@ header.nav-bar{
   100%{transform:translateY(100%);}
 }
 
-/* FLOATING PLAYER */
-#floating-player{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:360px;
-  height:72px;
-  background:url('Player/PLAYER.png') center/cover no-repeat;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  padding:0 18px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
-  z-index:999;
+/* JAM OVERLAY */
+#jam-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 80px;
+  color: #f00;
+  text-shadow: 0 0 30px #f00;
 }
-.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
-.player-title{font-weight:700;font-size:14px;}
-.player-artist{font-size:12px;color:var(--muted);}
-.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
-.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
-.player-controls img{width:42px;height:42px;cursor:pointer;}
-
-/* FOOTER */
-footer{
-  padding:28px 20px;
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  border-top:1px solid rgba(255,42,161,.05);
+#jam-text {
+  animation: glitch 0.5s infinite;
+}
+@keyframes glitch {
+  0%,100% { transform: translate(0); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
 }
 
 /* MOBILE */
@@ -393,6 +466,9 @@ footer{
   }
   #signalStrengthMeter { left: 10px; }
   #interferenceMeter { right: 10px; }
+  #terminal { font-size: 12px; height: 120px; top: 10px; width: 95%; }
+  #freq-dial-container { bottom: 110px; }
+  #jam-button { bottom: 110px; right: 15px; font-size: 14px; padding: 10px 16px; }
 }
 </style>
 </head>
@@ -416,7 +492,10 @@ footer{
   </div>
 </header>
 
-<!-- SIGNAL STRENGTH – bottom-left, quick cycle -->
+<!-- HACKER TERMINAL -->
+<div id="terminal"><span id="terminal-line"></span></div>
+
+<!-- SIGNAL STRENGTH – bottom-left -->
 <div class="signal-meter" id="signalStrengthMeter">
   <strong>Signal:</strong> <span id="signalStrength">89%</span>
   <div class="bar-container">
@@ -424,7 +503,7 @@ footer{
   </div>
 </div>
 
-<!-- INTERFERENCE LEVEL – bottom-right, slower cycle -->
+<!-- INTERFERENCE LEVEL – bottom-right -->
 <div class="signal-meter" id="interferenceMeter">
   <strong>Interference:</strong> 
   <div class="bar-container">
@@ -508,6 +587,21 @@ footer{
 </main>
 
 <div class="crt-overlay"></div>
+
+<!-- FREQUENCY DIAL -->
+<div id="freq-dial-container">
+  <div id="freq-dial">
+    <div id="dial-knob"></div>
+  </div>
+</div>
+
+<!-- SIGNAL JAM BUTTON -->
+<button id="jam-button">JAM SIGNAL</button>
+
+<!-- JAM OVERLAY -->
+<div id="jam-overlay">
+  <div id="jam-text">SIGNAL LOST</div>
+</div>
 
 <div id="floating-player">
   <div class="player-meta">
@@ -700,6 +794,154 @@ function updateInterference() {
 
 updateInterference();
 setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
+
+// HACKER TERMINAL – typewriter effect
+const terminalLine = document.getElementById('terminal-line');
+const terminalMessages = [
+  "> decrypting packet 0x4F9A...",
+  "> ghost signal intercepted — Venice 1979",
+  "> carrier drift +0.003 MHz",
+  "> THEY ARE CLOSING IN",
+  "> hidden track from 1987 tape detected",
+  "> wake up",
+  "> frequency lock unstable — interference rising",
+  "> someone is requesting dnb from the void",
+  "> signal bleed detected — adjust receiver",
+  "> do not trust the numbers"
+];
+
+let currentMsgIndex = 0;
+let charIndex = 0;
+let typing = false;
+
+function typeMessage() {
+  if (typing) return;
+  typing = true;
+  const msg = terminalMessages[currentMsgIndex];
+  terminalLine.textContent = '';
+  charIndex = 0;
+
+  const interval = setInterval(() => {
+    if (charIndex < msg.length) {
+      terminalLine.textContent += msg.charAt(charIndex);
+      charIndex++;
+    } else {
+      clearInterval(interval);
+      typing = false;
+      currentMsgIndex = (currentMsgIndex + 1) % terminalMessages.length;
+      setTimeout(typeMessage, Math.random() * 40000 + 20000); // 20–60 seconds
+    }
+  }, 60 + Math.random() * 40); // typing speed variation
+}
+
+typeMessage();
+
+// FREQUENCY DIAL – interactive tuning
+const dial = document.getElementById('freq-dial');
+const knob = document.getElementById('dial-knob');
+let isDragging = false;
+let startAngle = 0;
+let currentAngle = 0;
+
+function getAngle(e) {
+  const rect = dial.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const mouseX = e.clientX || e.touches[0].clientX;
+  const mouseY = e.clientY || e.touches[0].clientY;
+  return Math.atan2(mouseY - centerY, mouseX - centerX) * 180 / Math.PI;
+}
+
+function updateDial(angle) {
+  currentAngle = angle;
+  knob.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+  // Glitch effect
+  document.body.style.filter = `hue-rotate(${angle * 2}deg)`;
+  // Update meters dramatically
+  currentStrength += Math.floor(Math.random() * 30) - 15;
+  currentInterference += Math.floor(Math.random() * 40) - 20;
+  updateStrength();
+  updateInterference();
+  // Random transmission log change
+  transLog.innerHTML = ["SIGNAL LOST TEMPORARILY", "FREQUENCY SHIFT DETECTED", "GHOSTS AWAKENED"][Math.floor(Math.random() * 3)];
+}
+
+dial.addEventListener('mousedown', e => {
+  isDragging = true;
+  startAngle = getAngle(e) - currentAngle;
+  dial.style.cursor = 'grabbing';
+});
+document.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  const angle = getAngle(e) - startAngle;
+  updateDial(angle);
+});
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  dial.style.cursor = 'grab';
+});
+
+// Touch support for mobile
+dial.addEventListener('touchstart', e => {
+  isDragging = true;
+  startAngle = getAngle(e) - currentAngle;
+  e.preventDefault();
+});
+document.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  const angle = getAngle(e) - startAngle;
+  updateDial(angle);
+  e.preventDefault();
+});
+document.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+// SIGNAL JAM BUTTON
+const jamButton = document.getElementById('jam-button');
+const jamOverlay = document.getElementById('jam-overlay');
+const jamText = document.getElementById('jam-text');
+
+jamButton.addEventListener('click', () => {
+  jamOverlay.style.opacity = '1';
+  jamOverlay.style.pointerEvents = 'all';
+  document.body.style.animation = 'shake 0.5s infinite';
+  
+  // Fake static sound (short base64 beep)
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  oscillator.type = 'square';
+  oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+  oscillator.connect(audioCtx.destination);
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 3);
+
+  setTimeout(() => {
+    jamOverlay.style.opacity = '0';
+    jamOverlay.style.pointerEvents = 'none';
+    document.body.style.animation = '';
+    transLog.innerHTML = "RECONNECTING...<br>SIGNAL RESTORED";
+  }, 3000);
+});
+
+// Shake animation for jam
+const style = document.createElement('style');
+style.innerHTML = `
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+`;
+document.head.appendChild(style);
 </script>
 </body>
 </html>
