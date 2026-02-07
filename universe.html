@@ -157,23 +157,23 @@ header.nav-bar{
   color:var(--muted);
 }
 
-/* SMALL CYCLING AD BANNER */
+/* CYCLING AD BANNER — 75% BIGGER */
 .ad-banner {
   margin:60px auto;
-  max-width:400px;
+  max-width:700px; /* 75% larger than original small version */
   text-align:center;
 }
 .ad-banner h2 {
   font-family:'Orbitron',sans-serif;
   color:var(--accent);
   margin-bottom:16px;
-  font-size:1.4rem;
+  font-size:1.6rem;
   opacity:0.7;
 }
 #adImage img {
   width:100%;
   height:auto;
-  max-height:200px;
+  max-height:350px; /* 75% taller */
   object-fit:contain;
   border:2px dashed var(--accent);
   border-radius:12px;
@@ -198,34 +198,36 @@ header.nav-bar{
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  padding: 30px 20px;
-  min-height: 180px;
+  padding: 40px 20px; /* more padding for readability */
+  min-height: 220px;
   border: 1px solid rgba(255,42,161,0.2);
   border-radius: 8px;
   transition: .3s;
   opacity: 0.85;
+  text-align: center; /* text now centered */
 }
 .ghost-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.2);
   z-index: 0;
 }
 .ghost-card h3,
 .ghost-card p {
   position: relative;
   z-index: 1;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 90%;
 }
 .ghost-card h3 {
   font-family: 'Orbitron', sans-serif;
   color: var(--accent);
   margin-bottom: 12px;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 .ghost-card p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #ddd;
   line-height: 1.5;
 }
@@ -323,8 +325,9 @@ footer{
   .player-controls img{width:36px;height:36px;}
   .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
   .ad-banner{max-width:100%;margin:40px 15px;}
-  #adImage img{max-height:180px;}
-  .ghost-card { min-height:160px; padding:20px 15px; }
+  #adImage img{max-height:240px;}
+  .ghost-card { min-height:200px; padding:25px 15px; }
+  .ghost-card h3 { font-size:1.2rem; }
 }
 </style>
 </head>
@@ -391,7 +394,7 @@ footer{
     </article>
   </section>
 
-  <!-- SMALL CYCLING AD BANNER -->
+  <!-- CYCLING AD BANNER (75% BIGGER) -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
     <div id="adImage"></div>
@@ -402,15 +405,15 @@ footer{
     <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);opacity:0.7;">Ghost Signals</h2>
     <div class="ghost-grid">
       <div class="ghost-card">
-        <h3>Venice Concrete</h3>
+        <h3>Venice 1979</h3>
         <p>Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
       </div>
       <div class="ghost-card">
-        <h3>Shibuya Rain</h3>
+        <h3>Shibuya 1985</h3>
         <p>Neon bleeds into puddles. Crowds dissolve. Static in the reflections.</p>
       </div>
       <div class="ghost-card">
-        <h3>Southbank Pillars</h3>
+        <h3>Southbank 1973</h3>
         <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
       </div>
     </div>
@@ -528,7 +531,7 @@ if (transLog) {
   }, 8000);
 }
 
-// SMALL CYCLING AD BANNER
+// SMALL CYCLING AD BANNER (75% BIGGER)
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
   "images/Universe/Ads/nobbys-balloon.jpg",
@@ -557,6 +560,7 @@ const ghostBgs = [
   "images/Universe/Signals/venice.png",
   "images/Universe/Signals/shibuya.png",
   "images/Universe/Signals/southbank.png",
+  // Add your own images here as you want
 ];
 
 document.querySelectorAll('.ghost-card').forEach(card => {
