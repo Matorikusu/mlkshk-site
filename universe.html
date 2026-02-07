@@ -147,7 +147,7 @@ header.nav-bar{
   box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
-/* JAM OVERLAY with tiled static background */
+/* JAM OVERLAY – full-screen tiled static, centered text */
 #jam-overlay {
   position: fixed;
   inset: 0;
@@ -159,23 +159,16 @@ header.nav-bar{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+#jam-text {
   font-family: 'Orbitron', sans-serif;
   font-size: 80px;
   color: #f00;
   text-shadow: 0 0 40px #f00;
-}
-#jam-text {
-  opacity: 0;
-  transition: opacity 0.5s;
   text-align: center;
-}
-#jam-reconnect {
-  position: absolute;
-  bottom: 20%;
-  font-size: 40px;
-  color: #0f0;
   opacity: 0;
   transition: opacity 0.5s;
+  pointer-events: none;
 }
 
 /* HERO */
@@ -566,10 +559,9 @@ footer{
 <!-- JAM BUTTON – fixed bottom-right -->
 <button id="jam-button">JAM SIGNAL</button>
 
-<!-- JAM OVERLAY with tiled static background -->
+<!-- JAM OVERLAY – full-screen tiled static, centered text -->
 <div id="jam-overlay">
   <div id="jam-text">SIGNAL LOST</div>
-  <div id="jam-reconnect">RECONNECTING...</div>
 </div>
 
 <div id="floating-player">
@@ -768,34 +760,26 @@ setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 secon
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
 const jamText = document.getElementById('jam-text');
-const jamReconnect = document.getElementById('jam-reconnect');
 
 jamButton.addEventListener('click', () => {
   jamText.style.opacity = '1';
-  jamReconnect.style.opacity = '0';
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
 
-  // Your 7-second distorted radio clip
+  // Your 7-second audio clip
   const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
   jamAudio.volume = 0.5; // adjustable
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
-  // Keep "SIGNAL LOST" visible for 7 seconds (matches audio length)
-  setTimeout(() => {
-    jamText.style.opacity = '0';
-    jamReconnect.style.opacity = '1';
-  }, 7000);
-
-  // Full fade-out after 9 seconds total
+  // Full jam lasts exactly 7 seconds (matches audio)
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
-    jamReconnect.style.opacity = '0';
+    jamText.style.opacity = '0';
     document.body.style.animation = '';
-    transLog.innerHTML = "RECONNECTING...<br>SIGNAL RESTORED";
-  }, 9000);
+    transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
+  }, 7000);
 });
 
 // Shake animation
