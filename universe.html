@@ -128,7 +128,7 @@ header.nav-bar{
 /* JAM BUTTON — fixed bottom-right */
 #jam-button {
   position: fixed;
-  bottom: 160px; /* above player */
+  bottom: 160px;
   right: 20px;
   z-index: 198;
   background: #800;
@@ -155,22 +155,23 @@ header.nav-bar{
   z-index: 300;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.5s;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Orbitron', sans-serif;
-  font-size: 60px;
+  font-size: 80px;
   color: #f00;
-  text-shadow: 0 0 30px #f00;
+  text-shadow: 0 0 40px #f00;
 }
 #jam-text {
-  animation: glitch 0.5s infinite;
+  animation: glitch 0.6s infinite;
 }
 @keyframes glitch {
   0%,100% { transform: translate(0); }
-  20% { transform: translate(-5px, 5px); }
-  40% { transform: translate(5px, -5px); }
+  20% { transform: translate(-8px, 8px); }
+  40% { transform: translate(8px, -8px); }
+  60% { transform: translate(-4px, 4px); }
 }
 
 /* HERO */
@@ -766,26 +767,19 @@ const jamText = document.getElementById('jam-text');
 jamButton.addEventListener('click', () => {
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
-  document.body.style.animation = 'shake 0.5s infinite';
+  document.body.style.animation = 'shake 0.8s infinite';
 
-  // Softer, lower beep (sine wave, lower pitch, lower volume)
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioCtx.createOscillator();
-  oscillator.type = 'sine';
-  oscillator.frequency.setValueAtTime(220, audioCtx.currentTime); // lower pitch
-  const gainNode = audioCtx.createGain();
-  gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime); // much quieter
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  oscillator.start();
-  oscillator.stop(audioCtx.currentTime + 2); // shorter
+  // Distorted radio clip + warning voice (placeholder URL - replace with your GitHub mp3)
+  const jamAudio = new Audio('https://freesound.org/data/previews/612/612611_5674468-lq.mp3'); // public domain distorted radio static + voice sample
+  jamAudio.volume = 0.6; // adjustable
+  jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
     document.body.style.animation = '';
     transLog.innerHTML = "RECONNECTING...<br>SIGNAL RESTORED";
-  }, 3000);
+  }, 5000); // 5 seconds full chaos
 });
 
 // Shake animation
@@ -793,16 +787,16 @@ const style = document.createElement('style');
 style.innerHTML = `
   @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
+    10% { transform: translate(-2px, -3px) rotate(-2deg); }
+    20% { transform: translate(-4px, 0px) rotate(2deg); }
+    30% { transform: translate(4px, 3px) rotate(0deg); }
+    40% { transform: translate(2px, -2px) rotate(2deg); }
+    50% { transform: translate(-2px, 3px) rotate(-2deg); }
+    60% { transform: translate(-4px, 1px) rotate(0deg); }
+    70% { transform: translate(4px, 2px) rotate(-2deg); }
+    80% { transform: translate(-2px, -2px) rotate(2deg); }
+    90% { transform: translate(2px, 3px) rotate(0deg); }
+    100% { transform: translate(1px, -3px) rotate(-2deg); }
   }
 `;
 document.head.appendChild(style);
