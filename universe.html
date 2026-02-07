@@ -81,28 +81,28 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* LISTENER + SIGNAL METER */
+/* SIGNAL METER — bottom-right, larger range */
 .signal-meter {
   position: fixed;
-  top: 20px;
+  bottom: 90px; /* above floating player */
   right: 20px;
   z-index: 199;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.75);
   border: 1px solid var(--accent);
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 14px 18px;
   font-family: monospace;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--signal-green);
   box-shadow: 0 0 15px rgba(0,255,0,0.2);
   backdrop-filter: blur(4px);
-  min-width: 180px;
+  min-width: 200px;
   text-align: left;
   transition: all 0.4s ease;
 }
 .signal-meter.weak { color: var(--signal-yellow); box-shadow: 0 0 15px rgba(255,255,0,0.3); }
 .signal-meter.critical { color: var(--signal-red); box-shadow: 0 0 20px rgba(255,0,0,0.4); animation: pulse 1.5s infinite; }
-.signal-meter strong { color: #fff; }
+.signal-meter strong { color: #fff; font-weight: bold; }
 @keyframes pulse {
   0%,100% { opacity:1; }
   50% { opacity:0.7; }
@@ -187,7 +187,7 @@ header.nav-bar{
   color:var(--muted);
 }
 
-/* CYCLING AD BANNER — 75% BIGGER */
+/* CYCLING AD BANNER */
 .ad-banner {
   margin:60px auto;
   max-width:700px;
@@ -211,7 +211,7 @@ header.nav-bar{
   transition:opacity 0.8s ease;
 }
 
-/* GHOST SIGNALS — fixed centering & readability */
+/* GHOST SIGNALS */
 .ghost-signals{
   margin:80px 0;
   text-align:center;
@@ -369,11 +369,11 @@ footer{
   .ghost-card h3 { font-size:1.3rem; }
   .ghost-card p { font-size:0.95rem; }
   .signal-meter {
-    top: 10px;
+    bottom: 90px;
     right: 10px;
-    padding: 8px 12px;
-    font-size: 12px;
-    min-width: 140px;
+    padding: 10px 14px;
+    font-size: 13px;
+    min-width: 160px;
   }
 }
 </style>
@@ -398,10 +398,11 @@ footer{
   </div>
 </header>
 
-<!-- SIGNAL METER (top-right) -->
+<!-- SIGNAL METER – bottom-right -->
 <div class="signal-meter" id="signalMeter">
-  <strong>Listeners:</strong> <span id="listenerCount">47</span><br>
-  <strong>Signal:</strong> <span id="signalStrength">92%</span> <div id="strengthBar" style="height:6px;background:var(--signal-green);width:92%;margin-top:4px;border-radius:3px;"></div>
+  <strong>Listeners:</strong> <span id="listenerCount">2,347</span><br>
+  <strong>Signal:</strong> <span id="signalStrength">89%</span> 
+  <div id="strengthBar" style="height:8px;background:var(--signal-green);width:89%;margin-top:6px;border-radius:4px;"></div>
 </div>
 
 <a href="universe.html" class="hero-link">
@@ -619,27 +620,27 @@ document.querySelectorAll('.ghost-card').forEach(card => {
   card.style.backgroundImage = `url('${randomBg}')`;
 });
 
-// FAKE LISTENER COUNT + SIGNAL STRENGTH METER
+// FAKE LISTENER COUNT + SIGNAL STRENGTH (bottom-right, larger range)
 const listenerCountEl = document.getElementById('listenerCount');
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const meterEl = document.getElementById('signalMeter');
 
-let currentListeners = 47;
-let currentStrength = 92;
+let currentListeners = 2347;
+let currentStrength = 89;
 
 function updateMeter() {
   // Listener fluctuation
-  currentListeners += Math.floor(Math.random() * 11) - 5; // -5 to +5 change
-  currentListeners = Math.max(21, Math.min(89, currentListeners)); // keep between 21–89
-  listenerCountEl.textContent = currentListeners;
+  currentListeners += Math.floor(Math.random() * 201) - 100; // -100 to +100 change
+  currentListeners = Math.max(1800, Math.min(4200, currentListeners));
+  listenerCountEl.textContent = currentListeners.toLocaleString(); // adds commas
 
-  // Random signal strength change
-  currentStrength += Math.floor(Math.random() * 13) - 6; // -6 to +6
+  // Signal strength
+  currentStrength += Math.floor(Math.random() * 13) - 6;
   currentStrength = Math.max(18, Math.min(98, currentStrength));
   signalStrengthEl.textContent = currentStrength + '%';
 
-  // Bar width & color
+  // Bar & color
   strengthBarEl.style.width = currentStrength + '%';
   if (currentStrength > 70) {
     strengthBarEl.style.background = 'var(--signal-green)';
@@ -654,7 +655,7 @@ function updateMeter() {
 }
 
 updateMeter();
-setInterval(updateMeter, Math.random() * 7000 + 8000); // every 8–15 seconds
+setInterval(updateMeter, Math.random() * 7000 + 8000); // 8–15 seconds
 </script>
 </body>
 </html>
