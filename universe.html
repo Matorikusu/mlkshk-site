@@ -147,11 +147,11 @@ header.nav-bar{
   box-shadow: 0 0 30px rgba(255,0,0,0.6);
 }
 
-/* JAM OVERLAY */
+/* JAM OVERLAY with static background */
 #jam-overlay {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: url('Player/static1.png') center/cover no-repeat #000;
   z-index: 300;
   opacity: 0;
   pointer-events: none;
@@ -165,13 +165,16 @@ header.nav-bar{
   text-shadow: 0 0 40px #f00;
 }
 #jam-text {
-  animation: glitch 0.6s infinite;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
-@keyframes glitch {
-  0%,100% { transform: translate(0); }
-  20% { transform: translate(-8px, 8px); }
-  40% { transform: translate(8px, -8px); }
-  60% { transform: translate(-4px, 4px); }
+#jam-reconnect {
+  position: absolute;
+  bottom: 20%;
+  font-size: 40px;
+  color: #0f0;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 /* HERO */
@@ -562,9 +565,10 @@ footer{
 <!-- JAM BUTTON – fixed bottom-right -->
 <button id="jam-button">JAM SIGNAL</button>
 
-<!-- JAM OVERLAY -->
+<!-- JAM OVERLAY with static background -->
 <div id="jam-overlay">
   <div id="jam-text">SIGNAL LOST</div>
+  <div id="jam-reconnect">RECONNECTING...</div>
 </div>
 
 <div id="floating-player">
@@ -763,23 +767,34 @@ setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 secon
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
 const jamText = document.getElementById('jam-text');
+const jamReconnect = document.getElementById('jam-reconnect');
 
 jamButton.addEventListener('click', () => {
+  jamText.style.opacity = '1';
+  jamReconnect.style.opacity = '0';
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
 
-  // Distorted radio clip + warning voice (placeholder URL - replace with your GitHub mp3)
-  const jamAudio = new Audio('https://freesound.org/data/previews/612/612611_5674468-lq.mp3'); // public domain distorted radio static + voice sample
-  jamAudio.volume = 0.6; // adjustable
+  // Distorted radio clip (replace URL with your GitHub .mp3 later)
+  const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3'); // placeholder static + distorted voice
+  jamAudio.volume = 0.5; // adjustable
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
+  // Show "SIGNAL LOST" for 6 seconds
+  setTimeout(() => {
+    jamText.style.opacity = '0';
+    jamReconnect.style.opacity = '1';
+  }, 6000);
+
+  // Full fade-out after 8 seconds total
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
+    jamReconnect.style.opacity = '0';
     document.body.style.animation = '';
     transLog.innerHTML = "RECONNECTING...<br>SIGNAL RESTORED";
-  }, 5000); // 5 seconds full chaos
+  }, 8000);
 });
 
 // Shake animation
