@@ -24,6 +24,7 @@ html,body{
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
+
 /* NAV */
 header.nav-bar{
   border-bottom:1px solid rgba(255,42,161,0.04);
@@ -76,6 +77,7 @@ header.nav-bar{
 }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
+
 /* HERO */
 .hero-link{
   display:block;
@@ -84,39 +86,101 @@ header.nav-bar{
 }
 .hero{
   width:100%;
-  height:420px;
+  aspect-ratio: 2.38 / 1;
   background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
   cursor:pointer;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
-  aspect-ratio:2.38 / 1;
 }
 .hero-link:hover .hero{
   transform:scale(1.02);
   filter:brightness(1.15);
   box-shadow:0 0 40px var(--glow);
 }
-/* CYCLING AD BANNER */
+
+/* MAIN CONTENT */
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:40px 20px;
+  position:relative;
+  z-index:1;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border:1px solid rgba(255,42,161,0.15);
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.3s;
+  aspect-ratio: 1 / 1.4; /* consistent card shape */
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+  border-color:var(--accent);
+}
+.card .art{
+  height:0;
+  padding-top:75%; /* maintains aspect ratio */
+  position:relative;
+  overflow:hidden;
+}
+.card .art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.85) contrast(1.1);
+  transition:.4s;
+}
+.card:hover .art img{
+  filter:brightness(1.05) contrast(1.2);
+}
+.card .meta{
+  padding:14px;
+  text-align:center;
+}
+.card .title{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  margin-bottom:6px;
+  color:var(--accent);
+}
+.card .sub{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* SMALL CYCLING AD BANNER */
 .ad-banner {
-  margin: 60px 20px;
-  text-align: center;
+  margin:60px auto;
+  max-width:400px;
+  text-align:center;
 }
 .ad-banner h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
-  margin-bottom: 20px;
-  opacity: 0.8;
+  font-family:'Orbitron',sans-serif;
+  color:var(--accent);
+  margin-bottom:16px;
+  font-size:1.4rem;
+  opacity:0.7;
 }
-#ad-image-container img {
-  width: 100%;
-  max-width: 900px;
-  height: auto;
-  max-height: 400px;
-  object-fit: contain;
-  border: 2px dashed var(--accent);
-  border-radius: 12px;
-  box-shadow: 0 0 30px var(--glow);
-  transition: opacity 0.8s ease;
+#adImage img {
+  width:100%;
+  height:auto;
+  max-height:200px;
+  object-fit:contain;
+  border:2px dashed var(--accent);
+  border-radius:12px;
+  box-shadow:0 0 20px var(--glow);
+  transition:opacity 0.8s ease;
 }
+
 /* TRANSMISSION LOG */
 .trans-log{
   margin:60px auto;
@@ -131,6 +195,7 @@ header.nav-bar{
   text-align:center;
   opacity:0.7;
 }
+
 /* GHOST SIGNALS */
 .ghost-signals{
   margin:80px 0;
@@ -159,6 +224,7 @@ header.nav-bar{
   color:var(--accent);
   margin-bottom:8px;
 }
+
 /* SIGNAL BLEED NOTE */
 .signal-bleed{
   margin:80px auto 40px;
@@ -172,6 +238,7 @@ header.nav-bar{
   border-top:1px dashed var(--accent);
   border-bottom:1px dashed var(--accent);
 }
+
 /* CRT OVERLAY */
 .crt-overlay{
   position:fixed;
@@ -186,6 +253,7 @@ header.nav-bar{
   0%{transform:translateY(-100%);}
   100%{transform:translateY(100%);}
 }
+
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -208,6 +276,7 @@ header.nav-bar{
 .player-status{font-size:11px;color:var(--muted);margin-top:4px;}
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
+
 /* FOOTER */
 footer{
   padding:28px 20px;
@@ -216,19 +285,25 @@ footer{
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,.05);
 }
+
 /* MOBILE */
 @media (max-width:768px){
   .hero-link,.wrap{margin:20px auto;}
-  .hero,.card .art{height:auto;min-height:200px;}
+  .hero{height:auto;aspect-ratio:2.38 / 1;}
+  .grid{gap:20px;}
+  .card .art{padding-top:75%;}
   #floating-player{width:90%;height:60px;padding:0 12px;}
   .player-title{font-size:12px;}
   .player-artist,.player-status{font-size:10px;}
   .player-controls img{width:36px;height:36px;}
   .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
+  .ad-banner{max-width:100%;margin:40px 15px;}
+  #adImage img{max-height:180px;}
 }
 </style>
 </head>
 <body>
+
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -246,6 +321,11 @@ footer{
     </div>
   </div>
 </header>
+
+<a href="universe.html" class="hero-link">
+  <section class="hero"></section>
+</a>
+
 <main class="wrap">
   <section class="grid">
     <article class="card" data-genre="drum-bass">
@@ -285,10 +365,10 @@ footer{
     </article>
   </section>
 
-  <!-- CYCLING AD IMAGE -->
+  <!-- SMALL CYCLING AD BANNER -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
-    <div class="ad-image" id="adImage"></div>
+    <div id="adImage"></div>
   </section>
 
   <!-- TRANSMISSION LOG -->
@@ -325,7 +405,9 @@ footer{
     DO NOT ADJUST YOUR RECEIVER
   </section>
 </main>
+
 <div class="crt-overlay"></div>
+
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -339,9 +421,11 @@ footer{
     <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
   </audio>
 </div>
+
 <footer style="text-align:center;">
   MLKSHK — Built for the misfits. © <span id="year"></span>
 </footer>
+
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -350,6 +434,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
+
 btn.addEventListener('click', () => {
   if (audio.paused) {
     audio.play().catch(e => {
@@ -364,11 +449,13 @@ btn.addEventListener('click', () => {
     statusEl.textContent = 'Paused';
   }
 });
+
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Live');
 audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
 audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
 audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -394,6 +481,7 @@ if ('mediaSession' in navigator) {
   audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
   audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
 }
+
 // Dropdown toggle
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -406,6 +494,7 @@ document.addEventListener('click', (e) => {
     dropdownMenu.style.display = 'none';
   }
 });
+
 // Cycle transmission log
 const transLog = document.getElementById('transLog');
 if (transLog) {
@@ -421,15 +510,18 @@ if (transLog) {
     index = (index + 1) % messages.length;
   }, 8000);
 }
-// Cycling ad image
+
+// CYCLING AD IMAGE (SMALL & ALWAYS VISIBLE)
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
   "images/Universe/Ads/nobbys-balloon.jpg",
   "images/Universe/Ads/brenda-semtex.jpg",
   "images/Universe/Ads/glitch-witch.jpg",
   "images/Universe/Ads/kevin-hotline.jpg",
-  // Add more paths here when you create additional images
+  // Add more here:
+  // "images/Universe/Ads/your-new-ad.jpg",
 ];
+
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 
@@ -440,6 +532,7 @@ function showAd() {
   `;
   adIndex = (adIndex + 1) % adImages.length;
 }
+
 showAd();
 setInterval(showAd, 10000); // 10 seconds per image
 </script>
