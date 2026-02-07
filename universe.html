@@ -629,7 +629,7 @@ let currentListeners = 47;
 let currentStrength = 92;
 
 function updateMeter() {
-  // Random listener fluctuation
+  // Listener fluctuation
   currentListeners += Math.floor(Math.random() * 11) - 5; // -5 to +5 change
   currentListeners = Math.max(21, Math.min(89, currentListeners)); // keep between 21–89
   listenerCountEl.textContent = currentListeners;
