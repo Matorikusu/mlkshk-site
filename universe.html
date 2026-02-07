@@ -81,129 +81,6 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* SIGNAL METERS */
-.signal-meter {
-  position: fixed;
-  bottom: 90px;
-  z-index: 199;
-  background: rgba(0,0,0,0.75);
-  border: 1px dashed var(--signal-green);
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-family: monospace;
-  font-size: 13px;
-  color: var(--signal-green);
-  box-shadow: 0 0 12px rgba(0,255,0,0.15);
-  backdrop-filter: blur(4px);
-  min-width: 160px;
-  text-align: left;
-  transition: all 0.4s ease;
-}
-#signalStrengthMeter { left: 15px; }
-#interferenceMeter   { right: 15px; }
-.signal-meter.weak { color: var(--signal-yellow); border-color: var(--signal-yellow); box-shadow: 0 0 12px rgba(255,255,0,0.25); }
-.signal-meter.critical { color: var(--signal-red); border-color: var(--signal-red); box-shadow: 0 0 15px rgba(255,0,0,0.35); animation: pulse 1.5s infinite; }
-.signal-meter strong { color: #fff; }
-.signal-meter .bar-container {
-  display: inline-block;
-  width: 60px;
-  height: 6px;
-  background: #111;
-  border: 1px dashed var(--signal-green);
-  border-radius: 3px;
-  margin-left: 6px;
-  vertical-align: middle;
-}
-.signal-meter .bar {
-  height: 100%;
-  background: var(--signal-green);
-  border-radius: 2px;
-  transition: width 0.4s ease, background 0.4s ease;
-}
-@keyframes pulse {
-  0%,100% { opacity:1; }
-  50% { opacity:0.7; }
-}
-
-/* HACKER TERMINAL */
-#terminal {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 700px;
-  background: #000;
-  border: 1px solid #0f0;
-  border-radius: 6px;
-  padding: 12px;
-  font-family: monospace;
-  font-size: 14px;
-  color: #0f0;
-  box-shadow: 0 0 20px rgba(0,255,0,0.2);
-  z-index: 198;
-  height: 140px;
-  overflow: hidden;
-  opacity: 0.9;
-  pointer-events: none;
-}
-#terminal-line {
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
-/* FREQUENCY DIAL */
-#freq-dial-container {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 198;
-}
-#freq-dial {
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle at 30% 30%, #111, #000);
-  border: 2px dashed var(--signal-green);
-  border-radius: 50%;
-  cursor: grab;
-  box-shadow: 0 0 15px rgba(0,255,0,0.3);
-  position: relative;
-}
-#dial-knob {
-  position: absolute;
-  width: 20px;
-  height: 40px;
-  background: var(--signal-green);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  border-radius: 10px 10px 0 0;
-  pointer-events: none;
-}
-
-/* SIGNAL JAM BUTTON */
-#jam-button {
-  position: fixed;
-  bottom: 100px;
-  right: 20px;
-  z-index: 198;
-  background: #800;
-  color: #f00;
-  border: 2px solid #f00;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,0,0,0.4);
-  transition: all 0.3s;
-}
-#jam-button:hover {
-  background: #a00;
-  box-shadow: 0 0 30px rgba(255,0,0,0.6);
-}
-
 /* HERO */
 .hero-link{
   display:block;
@@ -305,6 +182,109 @@ header.nav-bar{
   border-radius:12px;
   box-shadow:0 0 20px var(--glow);
   transition:opacity 0.8s ease;
+}
+
+/* INTERACTIVE SECTIONS */
+.interactive-section {
+  margin: 80px auto;
+  max-width: 800px;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  border: 1px dashed var(--accent);
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* HACKER TERMINAL */
+#terminal {
+  background: #000;
+  border: 1px solid #0f0;
+  border-radius: 6px;
+  padding: 16px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #0f0;
+  box-shadow: 0 0 20px rgba(0,255,0,0.2);
+  height: 160px;
+  overflow: hidden;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+#terminal-line {
+  opacity: 0.9;
+}
+
+/* FREQUENCY DIAL + JAM BUTTON */
+#dial-jam-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 40px 0;
+}
+#freq-dial {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at 30% 30%, #111, #000);
+  border: 2px dashed var(--signal-green);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 0 20px rgba(0,255,0,0.3);
+  position: relative;
+}
+#dial-knob {
+  position: absolute;
+  width: 24px;
+  height: 50px;
+  background: var(--signal-green);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
+#jam-button {
+  background: #800;
+  color: #f00;
+  border: 2px solid #f00;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,0,0,0.4);
+  transition: all 0.3s;
+}
+#jam-button:hover {
+  background: #a00;
+  box-shadow: 0 0 30px rgba(255,0,0,0.6);
+}
+
+/* JAM OVERLAY */
+#jam-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 60px;
+  color: #f00;
+  text-shadow: 0 0 30px #f00;
+}
+#jam-text {
+  animation: glitch 0.5s infinite;
+}
+@keyframes glitch {
+  0%,100% { transform: translate(0); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
 }
 
 /* GHOST SIGNALS */
@@ -416,30 +396,36 @@ header.nav-bar{
   100%{transform:translateY(100%);}
 }
 
-/* JAM OVERLAY */
-#jam-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 300;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 80px;
-  color: #f00;
-  text-shadow: 0 0 30px #f00;
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
+  background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  z-index:999;
 }
-#jam-text {
-  animation: glitch 0.5s infinite;
-}
-@keyframes glitch {
-  0%,100% { transform: translate(0); }
-  20% { transform: translate(-5px, 5px); }
-  40% { transform: translate(5px, -5px); }
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
+
+/* FOOTER */
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  border-top:1px solid rgba(255,42,161,.05);
 }
 
 /* MOBILE */
@@ -458,17 +444,10 @@ header.nav-bar{
   .ghost-card { min-height:200px; padding:30px 15px; }
   .ghost-card h3 { font-size:1.3rem; }
   .ghost-card p { font-size:0.95rem; }
-  .signal-meter {
-    font-size: 12px;
-    padding: 8px 12px;
-    min-width: 140px;
-    bottom: 80px;
-  }
-  #signalStrengthMeter { left: 10px; }
-  #interferenceMeter { right: 10px; }
-  #terminal { font-size: 12px; height: 120px; top: 10px; width: 95%; }
-  #freq-dial-container { bottom: 110px; }
-  #jam-button { bottom: 110px; right: 15px; font-size: 14px; padding: 10px 16px; }
+  .interactive-section { padding: 15px; margin: 60px auto; }
+  #terminal { height: 120px; font-size: 12px; }
+  #freq-dial { width: 80px; height: 80px; }
+  #jam-button { padding: 12px 20px; font-size: 16px; }
 }
 </style>
 </head>
@@ -491,25 +470,6 @@ header.nav-bar{
     </div>
   </div>
 </header>
-
-<!-- HACKER TERMINAL -->
-<div id="terminal"><span id="terminal-line"></span></div>
-
-<!-- SIGNAL STRENGTH – bottom-left -->
-<div class="signal-meter" id="signalStrengthMeter">
-  <strong>Signal:</strong> <span id="signalStrength">89%</span>
-  <div class="bar-container">
-    <div id="strengthBar" class="bar" style="width:89%;"></div>
-  </div>
-</div>
-
-<!-- INTERFERENCE LEVEL – bottom-right -->
-<div class="signal-meter" id="interferenceMeter">
-  <strong>Interference:</strong> 
-  <div class="bar-container">
-    <div id="interferenceBar" class="bar" style="width:12%;"></div>
-  </div>
-</div>
 
 <a href="universe.html" class="hero-link">
   <section class="hero"></section>
@@ -560,6 +520,23 @@ header.nav-bar{
     <div id="adImage"></div>
   </section>
 
+  <!-- HACKER TERMINAL SECTION -->
+  <section class="interactive-section">
+    <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);">INCOMING TRANSMISSION</h2>
+    <div id="terminal"><span id="terminal-line"></span></div>
+  </section>
+
+  <!-- FREQUENCY DIAL + JAM BUTTON SECTION -->
+  <section class="interactive-section">
+    <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);">TUNE THE SIGNAL</h2>
+    <div id="dial-jam-container">
+      <div id="freq-dial">
+        <div id="dial-knob"></div>
+      </div>
+      <button id="jam-button">JAM SIGNAL</button>
+    </div>
+  </section>
+
   <!-- GHOST SIGNALS -->
   <section class="ghost-signals">
     <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);opacity:0.7;">Ghost Signals</h2>
@@ -587,21 +564,6 @@ header.nav-bar{
 </main>
 
 <div class="crt-overlay"></div>
-
-<!-- FREQUENCY DIAL -->
-<div id="freq-dial-container">
-  <div id="freq-dial">
-    <div id="dial-knob"></div>
-  </div>
-</div>
-
-<!-- SIGNAL JAM BUTTON -->
-<button id="jam-button">JAM SIGNAL</button>
-
-<!-- JAM OVERLAY -->
-<div id="jam-overlay">
-  <div id="jam-text">SIGNAL LOST</div>
-</div>
 
 <div id="floating-player">
   <div class="player-meta">
@@ -741,60 +703,6 @@ document.querySelectorAll('.ghost-card').forEach(card => {
   card.style.backgroundImage = `url('${randomBg}')`;
 });
 
-// SIGNAL STRENGTH – bottom-left, quick cycle
-const signalStrengthEl = document.getElementById('signalStrength');
-const strengthBarEl = document.getElementById('strengthBar');
-const strengthMeterEl = document.getElementById('signalStrengthMeter');
-
-let currentStrength = 89;
-
-function updateStrength() {
-  currentStrength += Math.floor(Math.random() * 13) - 6;
-  currentStrength = Math.max(18, Math.min(98, currentStrength));
-  signalStrengthEl.textContent = currentStrength + '%';
-  strengthBarEl.style.width = currentStrength + '%';
-
-  if (currentStrength > 70) {
-    strengthBarEl.style.background = 'var(--signal-green)';
-    strengthMeterEl.className = 'signal-meter';
-  } else if (currentStrength > 40) {
-    strengthBarEl.style.background = 'var(--signal-yellow)';
-    strengthMeterEl.className = 'signal-meter weak';
-  } else {
-    strengthBarEl.style.background = 'var(--signal-red)';
-    strengthMeterEl.className = 'signal-meter critical';
-  }
-}
-
-updateStrength();
-setInterval(updateStrength, Math.random() * 4000 + 3000); // 3–7 seconds
-
-// INTERFERENCE LEVEL – bottom-right, slower cycle
-const interferenceBarEl = document.getElementById('interferenceBar');
-const interferenceMeterEl = document.getElementById('interferenceMeter');
-
-let currentInterference = 12;
-
-function updateInterference() {
-  currentInterference += Math.floor(Math.random() * 17) - 8;
-  currentInterference = Math.max(5, Math.min(85, currentInterference));
-  interferenceBarEl.style.width = currentInterference + '%';
-
-  if (currentInterference < 30) {
-    interferenceBarEl.style.background = 'var(--signal-green)';
-    interferenceMeterEl.className = 'signal-meter';
-  } else if (currentInterference < 60) {
-    interferenceBarEl.style.background = 'var(--signal-yellow)';
-    interferenceMeterEl.className = 'signal-meter weak';
-  } else {
-    interferenceBarEl.style.background = 'var(--signal-red)';
-    interferenceMeterEl.className = 'signal-meter critical';
-  }
-}
-
-updateInterference();
-setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
-
 // HACKER TERMINAL – typewriter effect
 const terminalLine = document.getElementById('terminal-line');
 const terminalMessages = [
@@ -829,9 +737,9 @@ function typeMessage() {
       clearInterval(interval);
       typing = false;
       currentMsgIndex = (currentMsgIndex + 1) % terminalMessages.length;
-      setTimeout(typeMessage, Math.random() * 40000 + 20000); // 20–60 seconds
+      setTimeout(typeMessage, Math.random() * 40000 + 20000); // 20–60s delay
     }
-  }, 60 + Math.random() * 40); // typing speed variation
+  }, 60 + Math.random() * 40);
 }
 
 typeMessage();
@@ -847,8 +755,8 @@ function getAngle(e) {
   const rect = dial.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
-  const mouseX = e.clientX || e.touches[0].clientX;
-  const mouseY = e.clientY || e.touches[0].clientY;
+  const mouseX = e.clientX || (e.touches && e.touches[0].clientX);
+  const mouseY = e.clientY || (e.touches && e.touches[0].clientY);
   return Math.atan2(mouseY - centerY, mouseX - centerX) * 180 / Math.PI;
 }
 
@@ -881,7 +789,7 @@ document.addEventListener('mouseup', () => {
   dial.style.cursor = 'grab';
 });
 
-// Touch support for mobile
+// Touch support
 dial.addEventListener('touchstart', e => {
   isDragging = true;
   startAngle = getAngle(e) - currentAngle;
@@ -906,8 +814,8 @@ jamButton.addEventListener('click', () => {
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.5s infinite';
-  
-  // Fake static sound (short base64 beep)
+
+  // Fake static sound (square wave beep)
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const oscillator = audioCtx.createOscillator();
   oscillator.type = 'square';
@@ -924,7 +832,7 @@ jamButton.addEventListener('click', () => {
   }, 3000);
 });
 
-// Shake animation for jam
+// Shake animation
 const style = document.createElement('style');
 style.innerHTML = `
   @keyframes shake {
@@ -942,6 +850,60 @@ style.innerHTML = `
   }
 `;
 document.head.appendChild(style);
+
+// SIGNAL STRENGTH – quick cycle
+const signalStrengthEl = document.getElementById('signalStrength');
+const strengthBarEl = document.getElementById('strengthBar');
+const strengthMeterEl = document.getElementById('signalStrengthMeter');
+
+let currentStrength = 89;
+
+function updateStrength() {
+  currentStrength += Math.floor(Math.random() * 13) - 6;
+  currentStrength = Math.max(18, Math.min(98, currentStrength));
+  signalStrengthEl.textContent = currentStrength + '%';
+  strengthBarEl.style.width = currentStrength + '%';
+
+  if (currentStrength > 70) {
+    strengthBarEl.style.background = 'var(--signal-green)';
+    strengthMeterEl.className = 'signal-meter';
+  } else if (currentStrength > 40) {
+    strengthBarEl.style.background = 'var(--signal-yellow)';
+    strengthMeterEl.className = 'signal-meter weak';
+  } else {
+    strengthBarEl.style.background = 'var(--signal-red)';
+    strengthMeterEl.className = 'signal-meter critical';
+  }
+}
+
+updateStrength();
+setInterval(updateStrength, Math.random() * 4000 + 3000);
+
+// INTERFERENCE LEVEL – slower cycle
+const interferenceBarEl = document.getElementById('interferenceBar');
+const interferenceMeterEl = document.getElementById('interferenceMeter');
+
+let currentInterference = 12;
+
+function updateInterference() {
+  currentInterference += Math.floor(Math.random() * 17) - 8;
+  currentInterference = Math.max(5, Math.min(85, currentInterference));
+  interferenceBarEl.style.width = currentInterference + '%';
+
+  if (currentInterference < 30) {
+    interferenceBarEl.style.background = 'var(--signal-green)';
+    interferenceMeterEl.className = 'signal-meter';
+  } else if (currentInterference < 60) {
+    interferenceBarEl.style.background = 'var(--signal-yellow)';
+    interferenceMeterEl.className = 'signal-meter weak';
+  } else {
+    interferenceBarEl.style.background = 'var(--signal-red)';
+    interferenceMeterEl.className = 'signal-meter critical';
+  }
+}
+
+updateInterference();
+setInterval(updateInterference, Math.random() * 20000 + 15000);
 </script>
 </body>
 </html>
