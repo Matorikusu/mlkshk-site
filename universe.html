@@ -81,11 +81,10 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* SIGNAL STRENGTH METER — bottom-left only */
-#signalStrengthMeter {
+/* SIGNAL METERS — bottom corners, symmetric */
+.signal-meter {
   position: fixed;
   bottom: 90px;
-  left: 15px;
   z-index: 199;
   background: rgba(0,0,0,0.75);
   border: 1px dashed var(--signal-green);
@@ -100,10 +99,12 @@ header.nav-bar{
   text-align: left;
   transition: all 0.4s ease;
 }
-#signalStrengthMeter.weak { color: var(--signal-yellow); border-color: var(--signal-yellow); box-shadow: 0 0 12px rgba(255,255,0,0.25); }
-#signalStrengthMeter.critical { color: var(--signal-red); border-color: var(--signal-red); box-shadow: 0 0 15px rgba(255,0,0,0.35); animation: pulse 1.5s infinite; }
-#signalStrengthMeter strong { color: #fff; }
-#signalStrengthMeter .bar-container {
+#signalStrengthMeter { left: 15px; }
+#interferenceMeter   { right: 15px; }
+.signal-meter.weak { color: var(--signal-yellow); border-color: var(--signal-yellow); box-shadow: 0 0 12px rgba(255,255,0,0.25); }
+.signal-meter.critical { color: var(--signal-red); border-color: var(--signal-red); box-shadow: 0 0 15px rgba(255,0,0,0.35); animation: pulse 1.5s infinite; }
+.signal-meter strong { color: #fff; }
+.signal-meter .bar-container {
   display: inline-block;
   width: 60px;
   height: 6px;
@@ -113,7 +114,7 @@ header.nav-bar{
   margin-left: 6px;
   vertical-align: middle;
 }
-#signalStrengthMeter .bar {
+.signal-meter .bar {
   height: 100%;
   background: var(--signal-green);
   border-radius: 2px;
@@ -389,8 +390,9 @@ footer{
     padding: 8px 12px;
     min-width: 140px;
     bottom: 80px;
-    left: 10px;
   }
+  #signalStrengthMeter { left: 10px; }
+  #interferenceMeter { right: 10px; }
 }
 </style>
 </head>
@@ -414,11 +416,19 @@ footer{
   </div>
 </header>
 
-<!-- SIGNAL STRENGTH METER – bottom-left only -->
+<!-- SIGNAL STRENGTH – bottom-left, quick cycle -->
 <div class="signal-meter" id="signalStrengthMeter">
   <strong>Signal:</strong> <span id="signalStrength">89%</span>
   <div class="bar-container">
     <div id="strengthBar" class="bar" style="width:89%;"></div>
+  </div>
+</div>
+
+<!-- INTERFERENCE LEVEL – bottom-right, slower cycle -->
+<div class="signal-meter" id="interferenceMeter">
+  <strong>Interference:</strong> 
+  <div class="bar-container">
+    <div id="interferenceBar" class="bar" style="width:12%;"></div>
   </div>
 </div>
 
@@ -664,6 +674,32 @@ function updateStrength() {
 
 updateStrength();
 setInterval(updateStrength, Math.random() * 4000 + 3000); // 3–7 seconds
+
+// INTERFERENCE LEVEL – bottom-right, slower cycle
+const interferenceBarEl = document.getElementById('interferenceBar');
+const interferenceMeterEl = document.getElementById('interferenceMeter');
+
+let currentInterference = 12;
+
+function updateInterference() {
+  currentInterference += Math.floor(Math.random() * 17) - 8;
+  currentInterference = Math.max(5, Math.min(85, currentInterference));
+  interferenceBarEl.style.width = currentInterference + '%';
+
+  if (currentInterference < 30) {
+    interferenceBarEl.style.background = 'var(--signal-green)';
+    interferenceMeterEl.className = 'signal-meter';
+  } else if (currentInterference < 60) {
+    interferenceBarEl.style.background = 'var(--signal-yellow)';
+    interferenceMeterEl.className = 'signal-meter weak';
+  } else {
+    interferenceBarEl.style.background = 'var(--signal-red)';
+    interferenceMeterEl.className = 'signal-meter critical';
+  }
+}
+
+updateInterference();
+setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
 </script>
 </body>
 </html>
