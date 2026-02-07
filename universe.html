@@ -125,66 +125,19 @@ header.nav-bar{
   50% { opacity:0.7; }
 }
 
-/* CONTROL PANEL SECTION */
-.control-panel {
-  margin: 80px auto;
-  max-width: 800px;
-  padding: 30px;
-  background: rgba(0,0,0,0.6);
-  border: 1px dashed var(--accent);
-  border-radius: 12px;
-  text-align: center;
-}
-.control-panel h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
-  margin-bottom: 30px;
-}
-#dial-jam-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-  align-items: center;
-}
-#freq-dial {
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle at 30% 30%, #111, #000);
-  border: 2px dashed var(--signal-green);
-  border-radius: 50%;
-  cursor: grab;
-  box-shadow: 0 0 20px rgba(0,255,0,0.3);
-  position: relative;
-}
-#dial-knob {
-  position: absolute;
-  width: 28px;
-  height: 60px;
-  background: var(--signal-green);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  border-radius: 14px 14px 0 0;
-  pointer-events: none;
-}
-#reset-dial {
-  background: #222;
-  color: var(--signal-green);
-  border: 1px solid var(--signal-green);
-  border-radius: 6px;
-  padding: 10px 20px;
-  font-family: monospace;
-  cursor: pointer;
-}
+/* JAM BUTTON — fixed bottom-right */
 #jam-button {
+  position: fixed;
+  bottom: 160px; /* above player */
+  right: 20px;
+  z-index: 198;
   background: #800;
   color: #f00;
   border: 2px solid #f00;
   border-radius: 8px;
-  padding: 14px 28px;
+  padding: 12px 24px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   box-shadow: 0 0 20px rgba(255,0,0,0.4);
   transition: all 0.3s;
@@ -488,9 +441,7 @@ footer{
   }
   #signalStrengthMeter { left: 10px; }
   #interferenceMeter { right: 10px; }
-  #dial-jam-container { flex-direction: column; gap: 30px; }
-  #freq-dial { width: 90px; height: 90px; }
-  #jam-button { padding: 12px 24px; font-size: 16px; }
+  #jam-button { bottom: 150px; right: 15px; padding: 10px 20px; font-size: 14px; }
 }
 </style>
 </head>
@@ -579,20 +530,6 @@ footer{
     <div id="adImage"></div>
   </section>
 
-  <!-- CONTROL PANEL SECTION -->
-  <section class="control-panel">
-    <h2>CONTROL THE SIGNAL</h2>
-    <div id="dial-jam-container">
-      <div>
-        <div id="freq-dial">
-          <div id="dial-knob"></div>
-        </div>
-        <button id="reset-dial">RESET TUNING</button>
-      </div>
-      <button id="jam-button">JAM SIGNAL</button>
-    </div>
-  </section>
-
   <!-- GHOST SIGNALS -->
   <section class="ghost-signals">
     <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);opacity:0.7;">Ghost Signals</h2>
@@ -620,6 +557,14 @@ footer{
 </main>
 
 <div class="crt-overlay"></div>
+
+<!-- JAM BUTTON – fixed bottom-right -->
+<button id="jam-button">JAM SIGNAL</button>
+
+<!-- JAM OVERLAY -->
+<div id="jam-overlay">
+  <div id="jam-text">SIGNAL LOST</div>
+</div>
 
 <div id="floating-player">
   <div class="player-meta">
@@ -813,79 +758,7 @@ function updateInterference() {
 updateInterference();
 setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
 
-// FREQUENCY DIAL – interactive tuning
-const dial = document.getElementById('freq-dial');
-const knob = document.getElementById('dial-knob');
-const resetDial = document.getElementById('reset-dial');
-let isDragging = false;
-let startAngle = 0;
-let currentAngle = 0;
-
-function getAngle(e) {
-  const rect = dial.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  const mouseX = e.clientX || (e.touches && e.touches[0].clientX);
-  const mouseY = e.clientY || (e.touches && e.touches[0].clientY);
-  return Math.atan2(mouseY - centerY, mouseX - centerX) * 180 / Math.PI;
-}
-
-function updateDial(angle) {
-  currentAngle = angle;
-  knob.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
-  // Glitch effect
-  document.body.style.filter = `hue-rotate(${angle * 2}deg)`;
-  // Update meters dramatically
-  currentStrength += Math.floor(Math.random() * 30) - 15;
-  currentInterference += Math.floor(Math.random() * 40) - 20;
-  updateStrength();
-  updateInterference();
-  // Random transmission log change
-  transLog.innerHTML = ["SIGNAL LOST TEMPORARILY", "FREQUENCY SHIFT DETECTED", "GHOSTS AWAKENED"][Math.floor(Math.random() * 3)];
-}
-
-dial.addEventListener('mousedown', e => {
-  isDragging = true;
-  startAngle = getAngle(e) - currentAngle;
-  dial.style.cursor = 'grabbing';
-});
-document.addEventListener('mousemove', e => {
-  if (!isDragging) return;
-  const angle = getAngle(e) - startAngle;
-  updateDial(angle);
-});
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  dial.style.cursor = 'grab';
-});
-
-// Touch support
-dial.addEventListener('touchstart', e => {
-  isDragging = true;
-  startAngle = getAngle(e) - currentAngle;
-  e.preventDefault();
-});
-document.addEventListener('touchmove', e => {
-  if (!isDragging) return;
-  const angle = getAngle(e) - startAngle;
-  updateDial(angle);
-  e.preventDefault();
-});
-document.addEventListener('touchend', () => {
-  isDragging = false;
-});
-
-// Reset dial button
-resetDial.addEventListener('click', () => {
-  updateDial(0);
-  currentStrength = 89;
-  currentInterference = 12;
-  updateStrength();
-  updateInterference();
-  transLog.innerHTML = "SIGNAL RESET<br>FREQUENCY LOCKED";
-});
-
-// SIGNAL JAM BUTTON
+// JAM SIGNAL BUTTON
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
 const jamText = document.getElementById('jam-text');
@@ -895,17 +768,17 @@ jamButton.addEventListener('click', () => {
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.5s infinite';
 
-  // Lower, softer beep
+  // Softer, lower beep (sine wave, lower pitch, lower volume)
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const oscillator = audioCtx.createOscillator();
-  oscillator.type = 'sine'; // softer waveform
-  oscillator.frequency.setValueAtTime(300, audioCtx.currentTime); // lower pitch
+  oscillator.type = 'sine';
+  oscillator.frequency.setValueAtTime(220, audioCtx.currentTime); // lower pitch
   const gainNode = audioCtx.createGain();
-  gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime); // lower volume
+  gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime); // much quieter
   oscillator.connect(gainNode);
   gainNode.connect(audioCtx.destination);
   oscillator.start();
-  oscillator.stop(audioCtx.currentTime + 2.5); // shorter
+  oscillator.stop(audioCtx.currentTime + 2); // shorter
 
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
