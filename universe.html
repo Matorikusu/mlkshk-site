@@ -125,7 +125,7 @@ header.nav-bar{
   50% { opacity:0.7; }
 }
 
-/* JAM BUTTON – in content flow, centered between ads and ghosts */
+/* JAM BUTTON – in content flow */
 .jam-section {
   text-align: center;
   margin: 80px auto;
@@ -153,7 +153,7 @@ header.nav-bar{
 #jam-overlay {
   position: fixed;
   inset: 0;
-  background: url('Player/static1.png') repeat #000; /* tiled static */
+  background: url('Player/static1.png') repeat #000;
   z-index: 300;
   opacity: 0;
   pointer-events: none;
@@ -173,7 +173,7 @@ header.nav-bar{
   pointer-events: none;
 }
 
-/* MLK 500 STOCK TICKER */
+/* MLK 500 STOCK INDEX – Coinbase-style list at bottom */
 .mlk500-section {
   margin: 80px auto;
   max-width: 1000px;
@@ -183,27 +183,34 @@ header.nav-bar{
   border-radius: 8px;
   font-family: monospace;
   color: #0f0;
-  text-align: center;
 }
 .mlk500-section h2 {
+  text-align: center;
   margin-bottom: 20px;
   color: var(--accent);
   text-shadow: 0 0 10px var(--accent);
 }
-.stocks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+.stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.stock-card {
+.stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
   background: rgba(0,255,0,0.05);
-  border: 1px solid #0f0;
+  border: 1px solid rgba(0,255,0,0.2);
   border-radius: 6px;
-  padding: 12px;
   transition: all 0.3s;
 }
-.stock-card:hover {
-  box-shadow: 0 0 15px rgba(0,255,0,0.3);
+.stock-item:hover {
+  background: rgba(0,255,0,0.1);
+  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+}
+.stock-left {
+  flex: 1;
 }
 .stock-symbol {
   font-size: 18px;
@@ -212,17 +219,51 @@ header.nav-bar{
 .stock-name {
   font-size: 13px;
   color: #aaa;
-  margin: 4px 0;
+}
+.stock-right {
+  text-align: right;
+  min-width: 120px;
 }
 .stock-price {
-  font-size: 22px;
-  margin: 8px 0;
+  font-size: 18px;
+  font-weight: bold;
 }
 .stock-change {
-  font-size: 16px;
+  font-size: 14px;
 }
 .positive { color: #0f0; }
 .negative { color: #f00; }
+
+/* INVEST BUTTON */
+.invest-section {
+  text-align: center;
+  margin: 60px auto 40px;
+  max-width: 800px;
+}
+#invest-button {
+  background: #222;
+  color: #0f0;
+  border: 1px solid #0f0;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,255,0,0.3);
+  transition: all 0.3s;
+}
+#invest-button:hover {
+  background: #0f0;
+  color: #000;
+  box-shadow: 0 0 25px rgba(0,255,0,0.6);
+}
+#invest-message {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #0f0;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
 
 /* HERO */
 .hero-link{
@@ -327,71 +368,6 @@ header.nav-bar{
   transition:opacity 0.8s ease;
 }
 
-/* GHOST SIGNALS */
-.ghost-signals{
-  margin:80px 0;
-  text-align:center;
-}
-.ghost-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-  margin-top:30px;
-}
-.ghost-card {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,42,161,0.25);
-  border-radius: 12px;
-  min-height: 240px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 30px 20px;
-  transition: all 0.4s ease;
-  opacity: 0.92;
-  backdrop-filter: blur(3px);
-}
-.ghost-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.68);
-  z-index: 0;
-  border-radius: 12px;
-}
-.ghost-card h3,
-.ghost-card p {
-  position: relative;
-  z-index: 1;
-  margin: 10px 0;
-  padding: 0 15px;
-  max-width: 90%;
-}
-.ghost-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  text-shadow: 0 0 10px rgba(255,42,161,0.6);
-}
-.ghost-card p {
-  font-size: 1.05rem;
-  color: #eee;
-  line-height: 1.5;
-}
-.ghost-card:hover {
-  opacity: 1;
-  transform: scale(1.06);
-  box-shadow: 0 0 40px var(--glow);
-  border-color: var(--accent);
-}
-
 /* TRANSMISSION LOG */
 .trans-log{
   margin:60px auto;
@@ -481,9 +457,6 @@ footer{
   .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
   .ad-banner{max-width:100%;margin:40px 15px;}
   #adImage img{max-height:240px;}
-  .ghost-card { min-height:200px; padding:30px 15px; }
-  .ghost-card h3 { font-size:1.3rem; }
-  .ghost-card p { font-size:0.95rem; }
   .signal-meter {
     font-size: 12px;
     padding: 8px 12px;
@@ -497,7 +470,8 @@ footer{
     font-size: 18px;
   }
   .mlk500-section h2 { font-size: 1.4rem; }
-  .stock-card { padding: 10px; }
+  .stock-item { flex-direction: column; text-align: center; gap: 8px; }
+  .stock-right { text-align: center; min-width: auto; }
 }
 </style>
 </head>
@@ -591,30 +565,22 @@ footer{
     <button id="jam-button">JAM SIGNAL</button>
   </div>
 
-  <!-- GHOST SIGNALS -->
-  <section class="ghost-signals">
-    <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);opacity:0.7;">Ghost Signals</h2>
-    <div class="ghost-grid">
-      <div class="ghost-card">
-        <h3>Venice 1979</h3>
-        <p>Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
-      </div>
-      <div class="ghost-card">
-        <h3>Shibuya 1985</h3>
-        <p>Neon bleeds into puddles. Crowds dissolve. Static in the reflections.</p>
-      </div>
-      <div class="ghost-card">
-        <h3>Southbank 1973</h3>
-        <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
-      </div>
-    </div>
-  </section>
+  <!-- TRANSMISSION LOG -->
+  <div class="trans-log" id="transLog">
+    SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
+  </div>
 
-  <!-- MLK 500 STOCK INDEX – bottom section -->
+  <!-- MLK 500 STOCK INDEX – Coinbase-style list -->
   <section class="mlk500-section">
     <h2>MLK 500 INDEX</h2>
-    <div class="stocks-grid" id="stocks-container"></div>
+    <div class="stock-list" id="stocks-container"></div>
   </section>
+
+  <!-- INVEST BUTTON -->
+  <div class="invest-section">
+    <button id="invest-button">INVEST IN THE MARKET</button>
+    <div id="invest-message"></div>
+  </div>
 
   <!-- SIGNAL BLEED NOTE -->
   <section class="signal-bleed">
@@ -756,18 +722,6 @@ function showAd() {
 showAd();
 setInterval(showAd, 10000);
 
-// RANDOM BACKGROUND FOR GHOST SIGNALS
-const ghostBgs = [
-  "images/Universe/Signals/venice.png",
-  "images/Universe/Signals/shibuya.png",
-  "images/Universe/Signals/southbank.png",
-];
-
-document.querySelectorAll('.ghost-card').forEach(card => {
-  const randomBg = ghostBgs[Math.floor(Math.random() * ghostBgs.length)];
-  card.style.backgroundImage = `url('${randomBg}')`;
-});
-
 // SIGNAL STRENGTH – bottom-left, quick cycle
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
@@ -794,7 +748,7 @@ function updateStrength() {
 }
 
 updateStrength();
-setInterval(updateStrength, Math.random() * 4000 + 3000); // 3–7 seconds
+setInterval(updateStrength, Math.random() * 4000 + 3000);
 
 // INTERFERENCE LEVEL – bottom-right, slower cycle
 const interferenceBarEl = document.getElementById('interferenceBar');
@@ -820,7 +774,7 @@ function updateInterference() {
 }
 
 updateInterference();
-setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
+setInterval(updateInterference, Math.random() * 20000 + 15000);
 
 // JAM SIGNAL BUTTON
 const jamButton = document.getElementById('jam-button');
@@ -833,12 +787,10 @@ jamButton.addEventListener('click', () => {
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
 
-  // Your 7-second audio clip
   const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
-  jamAudio.volume = 0.5; // adjustable
+  jamAudio.volume = 0.5;
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
 
-  // Full jam lasts exactly 7 seconds
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
@@ -848,7 +800,7 @@ jamButton.addEventListener('click', () => {
   }, 7000);
 });
 
-// MLK 500 STOCK INDEX
+// MLK 500 STOCK INDEX – 9 items, Coinbase-style
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -856,10 +808,8 @@ const stocks = [
   { symbol: "KESB", name: "Kevin’s Emotional Support Brick", price: 19.99, change: -0.5 },
   { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 },
   { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
-  { symbol: "MSWF", name: "Microwave Sock Warmer (Fire Hazard Edition)", price: 11.05, change: -2.7 },
   { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
   { symbol: "SSLC", name: "Shagger’s Special – ‘Last Chance Lube", price: 14.20, change: -0.3 },
-  { symbol: "SSKV", name: "Sharon’s Second-Hand Knickers Vending Machine", price: 3.33, change: 5.6 },
   { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
 ];
 
@@ -869,18 +819,22 @@ function renderStocks() {
 
   stocks.forEach(stock => {
     const div = document.createElement('div');
-    div.className = 'stock-card';
+    div.className = 'stock-item';
 
     const isPositive = stock.change >= 0;
     const colorClass = isPositive ? 'positive' : 'negative';
     const arrow = isPositive ? '↑' : '↓';
 
     div.innerHTML = `
-      <div class="stock-symbol">${stock.symbol}</div>
-      <div class="stock-name">${stock.name}</div>
-      <div class="stock-price">$${stock.price.toFixed(2)}</div>
-      <div class="stock-change ${colorClass}">
-        ${arrow} ${Math.abs(stock.change).toFixed(2)}%
+      <div class="stock-left">
+        <div class="stock-symbol">${stock.symbol}</div>
+        <div class="stock-name">${stock.name}</div>
+      </div>
+      <div class="stock-right">
+        <div class="stock-price">$${stock.price.toFixed(2)}</div>
+        <div class="stock-change ${colorClass}">
+          ${arrow} ${Math.abs(stock.change)}%
+        </div>
       </div>
     `;
 
@@ -890,21 +844,31 @@ function renderStocks() {
 
 function updateStocks() {
   stocks.forEach(stock => {
-    const changePct = (Math.random() * 6 - 3) / 100; // -3% to +3%
+    const changePct = (Math.random() * 6 - 3) / 100;
     stock.price *= (1 + changePct);
-    stock.price = Math.max(0.01, stock.price.toFixed(2));
-    stock.change = (changePct * 100).toFixed(2);
+    stock.price = Math.max(0.01, Number(stock.price.toFixed(2)));
+    stock.change = Number((changePct * 100).toFixed(2));
   });
 
   renderStocks();
-
-  // Next update in 8–15 seconds
   setTimeout(updateStocks, Math.random() * 7000 + 8000);
 }
 
-// Initial render + start updating
 renderStocks();
 setTimeout(updateStocks, 8000);
+
+// INVEST BUTTON – cryptic message
+const investButton = document.getElementById('invest-button');
+const investMessage = document.getElementById('invest-message');
+
+investButton.addEventListener('click', () => {
+  investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
+  investMessage.style.opacity = '1';
+
+  setTimeout(() => {
+    investMessage.style.opacity = '0';
+  }, 4000);
+});
 
 // Shake animation
 const style = document.createElement('style');
