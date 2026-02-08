@@ -237,6 +237,37 @@ header.nav-bar{
 .positive { color: #0f0; }
 .negative { color: #f00; }
 
+/* NEWS TICKER – outrageous scrolling headlines */
+.news-ticker-section {
+  margin: 60px 0;
+  overflow: hidden;
+  background: rgba(0,0,0,0.8);
+  border-top: 2px dashed #f00;
+  border-bottom: 2px dashed #f00;
+  padding: 16px 0;
+}
+.news-ticker {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  animation: scroll-left 80s linear infinite;
+}
+.news-ticker span {
+  display: inline-block;
+  margin: 0 60px;
+  font-size: 18px;
+  font-family: 'Orbitron', sans-serif;
+  color: #ff2aa1;
+  text-shadow: 0 0 8px #ff2aa1;
+}
+.news-ticker-section:hover .news-ticker {
+  animation-play-state: paused;
+}
+@keyframes scroll-left {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
 /* INVEST BUTTON */
 .invest-section {
   text-align: center;
@@ -475,6 +506,7 @@ footer{
   .mlk500-section h2 img { max-height: 120px; }
   .stock-item { flex-direction: column; text-align: center; gap: 8px; }
   .stock-right { text-align: center; min-width: auto; }
+  .news-ticker span { font-size: 16px; margin: 0 30px; }
 }
 </style>
 </head>
@@ -579,6 +611,24 @@ footer{
       <img src="images/Universe/MLK500-header.png" alt="MLK 500 Index">
     </h2>
     <div class="stock-list" id="stocks-container"></div>
+  </section>
+
+  <!-- NEWS TICKER – outrageous scrolling headlines -->
+  <section class="news-ticker-section">
+    <div class="news-ticker">
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
+      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
+      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
+      <span>• Mick’s Roofie Rum launches glow-in-the-dark variant — users report seeing alternate dimensions •</span>
+      <span>• Greggs Toenails achieve cult status — black-market prices hit £666 per tin •</span>
+      <span>• Microwave Sock Warmer (Fire Hazard Edition) tops Amazon charts despite 14 house fires •</span>
+      <span>• Last Chance Lube batch recalled after users report temporary invisibility •</span>
+      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Vogue •</span>
+      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
+      <!-- Repeat first few to make loop seamless -->
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+    </div>
   </section>
 
   <!-- INVEST BUTTON -->
@@ -714,7 +764,6 @@ const adImages = [
   "images/Universe/Ads/Sharons-Knickers.jpg",
   "images/Universe/Ads/kevin-hotline.jpg",
 ];
-
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 
