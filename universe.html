@@ -184,11 +184,14 @@ header.nav-bar{
   font-family: monospace;
   color: #0f0;
 }
-.mlk500-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--accent);
-  text-shadow: 0 0 10px var(--accent);
+.mlk500-section h2 img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  border: 1px dashed #0f0;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,255,0,0.3);
 }
 .stock-list {
   display: flex;
@@ -469,7 +472,7 @@ footer{
     padding: 14px 30px;
     font-size: 18px;
   }
-  .mlk500-section h2 { font-size: 1.4rem; }
+  .mlk500-section h2 img { max-height: 120px; }
   .stock-item { flex-direction: column; text-align: center; gap: 8px; }
   .stock-right { text-align: center; min-width: auto; }
 }
@@ -570,9 +573,11 @@ footer{
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
 
-  <!-- MLK 500 STOCK INDEX – Coinbase-style list -->
+  <!-- MLK 500 STOCK INDEX – with header image -->
   <section class="mlk500-section">
-    <h2>MLK 500 INDEX</h2>
+    <h2>
+      <img src="images/Universe/MLK500-header.png" alt="MLK 500 Index">
+    </h2>
     <div class="stock-list" id="stocks-container"></div>
   </section>
 
