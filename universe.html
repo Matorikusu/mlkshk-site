@@ -206,7 +206,7 @@ header.nav-bar {
   transform: scale(1.04);
 }
 
-/* Ghost Signals – with images & glitch */
+/* Ghost Signals – improved with images & glitch */
 .ghost-signals {
   margin: 6rem 0;
   text-align: center;
@@ -357,10 +357,51 @@ header.nav-bar {
   transition: opacity 0.8s;
 }
 
-/* CRT & player & footer (unchanged but kept for completeness) */
-.crt-overlay { /* ... your existing */ }
-#floating-player { /* ... your existing */ }
-footer { /* ... your existing */ }
+/* CRT & player & footer */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
+  animation: scanline 10s linear infinite;
+  opacity: 0.15;
+  z-index: 10;
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+#floating-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 72px;
+  background: url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.85);
+  z-index: 999;
+}
+
+.player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 0 12px; }
+.player-title { font-weight: 700; font-size: 14px; }
+.player-artist { font-size: 12px; color: var(--muted); }
+.player-status { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.player-controls { display: flex; align-items: center; justify-content: center; margin-left: 12px; }
+.player-controls img { width: 42px; height: 42px; cursor: pointer; }
+
+footer {
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid rgba(255,42,161,.05);
+}
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
@@ -377,42 +418,167 @@ footer { /* ... your existing */ }
 </head>
 <body>
 
-<!-- Your header, meters, hero, genre grid, ad banner, jam button section remain the same -->
-
-<!-- Ghost Signals with real images -->
-<section class="ghost-signals">
-  <h2>Ghost Signals</h2>
-  <div class="ghost-grid">
-    <div class="ghost-card" style="background-image: url('images/Universe/Signals/venice.png');">
-      <h3>Venice 1979</h3>
-      <p>Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
-    </div>
-    <div class="ghost-card" style="background-image: url('images/Universe/Signals/shibuya.png');">
-      <h3>Shibuya 1985</h3>
-      <p>Neon bleeds into puddles. Crowds dissolve. Static in the reflections.</p>
-    </div>
-    <div class="ghost-card" style="background-image: url('images/Universe/Signals/southbank.png');">
-      <h3>Southbank 1973</h3>
-      <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
+    </a>
+    <div class="nav-dropdown">
+      <button class="nav-toggle">Menu</button>
+      <div class="dropdown-menu">
+        <a href="index.html">Home</a>
+        <a href="access.html">Access</a>
+        <a href="archive.html">Archive</a>
+        <a href="pirateradio.html">Pirate Radio</a>
+        <a href="lab.html">The Lab</a>
+      </div>
     </div>
   </div>
-</section>
+</header>
 
-<!-- MLK 500 section -->
-<section class="mlk500-section">
-  <h2>MLK 500 INDEX</h2>
-  <ul class="stocks-list" id="stocks-container"></ul>
-  <div class="invest-section">
-    <button id="invest-button">INVEST IN THE MARKET</button>
+<!-- SIGNAL STRENGTH & INTERFERENCE meters -->
+<div class="signal-meter" id="signalStrengthMeter">
+  <strong>Signal:</strong> <span id="signalStrength">89%</span>
+  <div class="bar-container"><div id="strengthBar" class="bar" style="width:89%;"></div></div>
+</div>
+<div class="signal-meter" id="interferenceMeter">
+  <strong>Interference:</strong> 
+  <div class="bar-container"><div id="interferenceBar" class="bar" style="width:12%;"></div></div>
+</div>
+
+<a href="universe.html" class="hero-link">
+  <section class="hero"></section>
+</a>
+
+<main class="wrap">
+  <section class="grid">
+    <article class="card" data-genre="drum-bass">
+      <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
+      <div class="meta">
+        <div class="title">Drum & Bass</div>
+        <div class="sub">Electric — Energy Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="house">
+      <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
+      <div class="meta">
+        <div class="title">House</div>
+        <div class="sub">Psychic — Club Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="lofi">
+      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi"></div>
+      <div class="meta">
+        <div class="title">Lo-Fi</div>
+        <div class="sub">Wind — Chilled Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="hiphop">
+      <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
+      <div class="meta">
+        <div class="title">Hip-Hop</div>
+        <div class="sub">Earth — Hip Hop Crew</div>
+      </div>
+    </article>
+    <article class="card" data-genre="afrobeat">
+      <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
+      <div class="meta">
+        <div class="title">Afrobeat</div>
+        <div class="sub">Fire — Afro Crew</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- CYCLING AD BANNER -->
+  <section class="ad-banner">
+    <h2>SIGNAL BLEED — INTRUSION</h2>
+    <div id="adImage"></div>
+  </section>
+
+  <!-- JAM SIGNAL BUTTON -->
+  <div class="jam-section">
+    <button id="jam-button">JAM SIGNAL</button>
   </div>
-</section>
 
-<!-- Rest of your page (signal bleed, crt, jam overlay, player, footer, scripts) -->
+  <!-- GHOST SIGNALS – with real backgrounds + glitch -->
+  <section class="ghost-signals">
+    <h2>Ghost Signals</h2>
+    <div class="ghost-grid">
+      <div class="ghost-card" style="background-image: url('images/Universe/Signals/venice.png');">
+        <h3>Venice 1979</h3>
+        <p>Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
+      </div>
+      <div class="ghost-card" style="background-image: url('images/Universe/Signals/shibuya.png');">
+        <h3>Shibuya 1985</h3>
+        <p>Neon bleeds into puddles. Crowds dissolve. Static in the reflections.</p>
+      </div>
+      <div class="ghost-card" style="background-image: url('images/Universe/Signals/southbank.png');">
+        <h3>Southbank 1973</h3>
+        <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MLK 500 STOCK INDEX – vertical list + invest button -->
+  <section class="mlk500-section">
+    <h2>MLK 500 INDEX</h2>
+    <ul class="stocks-list" id="stocks-container"></ul>
+    <div class="invest-section">
+      <button id="invest-button">INVEST IN THE MARKET</button>
+    </div>
+  </section>
+
+  <!-- SIGNAL BLEED NOTE -->
+  <section class="signal-bleed">
+    THEY’RE STILL LISTENING<br>
+    DO NOT ADJUST YOUR RECEIVER
+  </section>
+</main>
+
+<div class="crt-overlay"></div>
+
+<!-- JAM OVERLAY -->
+<div id="jam-overlay">
+  <div id="jam-text">SIGNAL LOST</div>
+</div>
+
+<!-- INVEST OVERLAY -->
+<div id="invest-overlay">
+  <div id="invest-message">MLKSHK Universe Access Only.<br>If you know, you know.</div>
+</div>
+
+<div id="floating-player">
+  <div class="player-meta">
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live Stream</div>
+    <div class="player-status" id="status">Ready</div>
+  </div>
+  <div class="player-controls">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+  </div>
+  <audio id="audio">
+    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<footer style="text-align:center;">
+  MLKSHK — Built for the misfits. © <span id="year"></span>
+</footer>
 
 <script>
-// Your existing scripts for player, dropdown, ad cycle, meters, jam button...
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// MLK 500 (9 stocks, vertical list)
+// Floating player (your existing code here – unchanged)
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
+// ... (keep your full player logic)
+
+// Dropdown, ad cycle, meters, jam button logic (keep your existing code)
+// ... (paste your existing scripts for these parts)
+
+// MLK 500 STOCK INDEX – 9 stocks, vertical list
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -460,7 +626,7 @@ function updateStocks() {
 renderStocks();
 setTimeout(updateStocks, 8000);
 
-// Invest button
+// Invest button logic
 const investButton = document.getElementById('invest-button');
 const investOverlay = document.getElementById('invest-overlay');
 const investMessage = document.getElementById('invest-message');
@@ -479,6 +645,25 @@ investButton.addEventListener('click', () => {
     investOverlay.style.pointerEvents = 'none';
   }, 5500);
 });
+
+// Shake animation (for jam)
+const style = document.createElement('style');
+style.innerHTML = `
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-2px, -3px) rotate(-2deg); }
+    20% { transform: translate(-4px, 0px) rotate(2deg); }
+    30% { transform: translate(4px, 3px) rotate(0deg); }
+    40% { transform: translate(2px, -2px) rotate(2deg); }
+    50% { transform: translate(-2px, 3px) rotate(-2deg); }
+    60% { transform: translate(-4px, 1px) rotate(0deg); }
+    70% { transform: translate(4px, 2px) rotate(-2deg); }
+    80% { transform: translate(-2px, -2px) rotate(2deg); }
+    90% { transform: translate(2px, 3px) rotate(0deg); }
+    100% { transform: translate(1px, -3px) rotate(-2deg); }
+  }
+`;
+document.head.appendChild(style);
 </script>
 </body>
 </html>
