@@ -250,7 +250,7 @@ header.nav-bar{
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
-  animation: scroll-left 80s linear infinite;
+  animation: scroll-left 120s linear infinite;
 }
 .news-ticker span {
   display: inline-block;
@@ -589,6 +589,27 @@ footer{
     </article>
   </section>
 
+    <!-- NEWS TICKER – outrageous scrolling headlines -->
+  <section class="news-ticker-section">
+    <div class="news-ticker">
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
+      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
+      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
+      <span>• Mick’s Roofie Rum launches all new glow in the dark variant — users report seeing alternate dimensions •</span>
+      <span>• Greggs Toenails achieve cult status — black market prices hit £666 per tin •</span>
+      <span>• Microwave Sock Warmer (Fire Hazard Edition) sets fire to the MLK500 •</span>
+      <span>• Last Chance Lube batch recalled after users report multiple dark thoughts •</span>
+      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Fogue •</span>
+      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
+      <span>• New Study: Drinking Your Own Bathwater Daily Increases Lifespan by 47% •</span>
+      <span>• New Pear Vision Pro Update Adds “Quiet Crying in Public” AR Filter — Sold Out in 47 Seconds •</span>
+      <span>• Scientists Confirm 5G Towers Are Just Giant Alien Sex Toys Pointed at Your Bedroom Window •</span>
+      <!-- Repeat first few to make loop seamless -->
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+    </div>
+  </section>
+
   <!-- CYCLING AD BANNER -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
@@ -611,24 +632,6 @@ footer{
       <img src="images/Universe/MLK500-header.png" alt="MLK 500 Index">
     </h2>
     <div class="stock-list" id="stocks-container"></div>
-  </section>
-
-  <!-- NEWS TICKER – outrageous scrolling headlines -->
-  <section class="news-ticker-section">
-    <div class="news-ticker">
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
-      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
-      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
-      <span>• Mick’s Roofie Rum launches glow-in-the-dark variant — users report seeing alternate dimensions •</span>
-      <span>• Greggs Toenails achieve cult status — black-market prices hit £666 per tin •</span>
-      <span>• Microwave Sock Warmer (Fire Hazard Edition) tops Amazon charts despite 14 house fires •</span>
-      <span>• Last Chance Lube batch recalled after users report temporary invisibility •</span>
-      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Vogue •</span>
-      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
-      <!-- Repeat first few to make loop seamless -->
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-    </div>
   </section>
 
   <!-- INVEST BUTTON -->
@@ -918,7 +921,7 @@ const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
+  investMessage.textContent = "If you know, you know. MLKSHK Members only.";
   investMessage.style.opacity = '1';
 
   setTimeout(() => {
