@@ -100,7 +100,7 @@ header.nav-bar{
   transition: all 0.4s ease;
 }
 #signalStrengthMeter { left: 15px; }
-#interferenceMeter   { right: 15px; }
+#interferenceMeter { right: 15px; }
 .signal-meter.weak { color: var(--signal-yellow); border-color: var(--signal-yellow); box-shadow: 0 0 12px rgba(255,255,0,0.25); }
 .signal-meter.critical { color: var(--signal-red); border-color: var(--signal-red); box-shadow: 0 0 15px rgba(255,0,0,0.35); animation: pulse 1.5s infinite; }
 .signal-meter strong { color: #fff; }
@@ -172,6 +172,57 @@ header.nav-bar{
   transition: opacity 0.5s;
   pointer-events: none;
 }
+
+/* MLK 500 STOCK TICKER */
+.mlk500-section {
+  margin: 80px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background: rgba(0,0,0,0.7);
+  border: 1px dashed #0f0;
+  border-radius: 8px;
+  font-family: monospace;
+  color: #0f0;
+  text-align: center;
+}
+.mlk500-section h2 {
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+.stocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.stock-card {
+  background: rgba(0,255,0,0.05);
+  border: 1px solid #0f0;
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.3s;
+}
+.stock-card:hover {
+  box-shadow: 0 0 15px rgba(0,255,0,0.3);
+}
+.stock-symbol {
+  font-size: 18px;
+  font-weight: bold;
+}
+.stock-name {
+  font-size: 13px;
+  color: #aaa;
+  margin: 4px 0;
+}
+.stock-price {
+  font-size: 22px;
+  margin: 8px 0;
+}
+.stock-change {
+  font-size: 16px;
+}
+.positive { color: #0f0; }
+.negative { color: #f00; }
 
 /* HERO */
 .hero-link{
@@ -445,6 +496,8 @@ footer{
     padding: 14px 30px;
     font-size: 18px;
   }
+  .mlk500-section h2 { font-size: 1.4rem; }
+  .stock-card { padding: 10px; }
 }
 </style>
 </head>
@@ -555,6 +608,12 @@ footer{
         <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
       </div>
     </div>
+  </section>
+
+  <!-- MLK 500 STOCK INDEX – bottom section -->
+  <section class="mlk500-section">
+    <h2>MLK 500 INDEX</h2>
+    <div class="stocks-grid" id="stocks-container"></div>
   </section>
 
   <!-- SIGNAL BLEED NOTE -->
@@ -788,6 +847,64 @@ jamButton.addEventListener('click', () => {
     transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
   }, 7000);
 });
+
+// MLK 500 STOCK INDEX
+const stocks = [
+  { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
+  { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
+  { symbol: "GRTN", name: "Greggs Toenails", price: 41.89, change: 2.3 },
+  { symbol: "KESB", name: "Kevin’s Emotional Support Brick", price: 19.99, change: -0.5 },
+  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 },
+  { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
+  { symbol: "MSWF", name: "Microwave Sock Warmer (Fire Hazard Edition)", price: 11.05, change: -2.7 },
+  { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
+  { symbol: "SSLC", name: "Shagger’s Special – ‘Last Chance Lube", price: 14.20, change: -0.3 },
+  { symbol: "SSKV", name: "Sharon’s Second-Hand Knickers Vending Machine", price: 3.33, change: 5.6 },
+  { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
+];
+
+function renderStocks() {
+  const container = document.getElementById('stocks-container');
+  container.innerHTML = '';
+
+  stocks.forEach(stock => {
+    const div = document.createElement('div');
+    div.className = 'stock-card';
+
+    const isPositive = stock.change >= 0;
+    const colorClass = isPositive ? 'positive' : 'negative';
+    const arrow = isPositive ? '↑' : '↓';
+
+    div.innerHTML = `
+      <div class="stock-symbol">${stock.symbol}</div>
+      <div class="stock-name">${stock.name}</div>
+      <div class="stock-price">$${stock.price.toFixed(2)}</div>
+      <div class="stock-change ${colorClass}">
+        ${arrow} ${Math.abs(stock.change).toFixed(2)}%
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function updateStocks() {
+  stocks.forEach(stock => {
+    const changePct = (Math.random() * 6 - 3) / 100; // -3% to +3%
+    stock.price *= (1 + changePct);
+    stock.price = Math.max(0.01, stock.price.toFixed(2));
+    stock.change = (changePct * 100).toFixed(2);
+  });
+
+  renderStocks();
+
+  // Next update in 8–15 seconds
+  setTimeout(updateStocks, Math.random() * 7000 + 8000);
+}
+
+// Initial render + start updating
+renderStocks();
+setTimeout(updateStocks, 8000);
 
 // Shake animation
 const style = document.createElement('style');
