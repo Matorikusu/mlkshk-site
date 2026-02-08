@@ -7,412 +7,497 @@
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #000;
-  --text: #f5f5f5;
-  --muted: #c0c0c0;
-  --accent: #ff2aa1;
-  --glow: rgba(255,42,161,0.4);
-  --card-radius: 10px;
-  --green: #0f0;
-  --yellow: #ff0;
-  --red: #f00;
+:root{
+  --bg:#000;
+  --text:#f5f5f5;
+  --muted:#c0c0c0;
+  --accent:#ff2aa1;
+  --glow:rgba(255,42,161,0.5);
+  --card-radius:12px;
+  --signal-green:#0f0;
+  --signal-yellow:#ff0;
+  --signal-red:#f00;
 }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Rajdhani', system-ui, sans-serif;
-  line-height: 1.5;
-  overflow-x: hidden;
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani',system-ui,-apple-system,Arial;
+  overflow-x:hidden;
 }
+a{color:inherit;text-decoration:none}
 
-a { color: inherit; text-decoration: none; }
-
-header.nav-bar {
-  border-bottom: 1px solid rgba(255,42,161,0.08);
-  padding: 1rem 1.5rem;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  backdrop-filter: blur(8px);
+/* NAV */
+header.nav-bar{
+  border-bottom:1px solid rgba(255,42,161,0.04);
+  padding:18px 24px;
+  background:linear-gradient(180deg,rgba(0,0,0,0.6),transparent);
+  position:sticky;
+  top:0;
+  z-index:200;
+  backdrop-filter:blur(6px);
 }
-
-.nav-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1200px;
+  margin:0 auto;
 }
-
-.logo-link img { height: 48px; display: block; }
-
-.nav-toggle {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
+.logo-link img{height:42px;display:block;cursor:pointer}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
 }
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: #000;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  min-width: 180px;
-  z-index: 300;
-  overflow: hidden;
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  left:auto;
+  background:#000;
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
+  z-index:300;
+  overflow:hidden;
+  max-width:90vw;
 }
-
-.dropdown-menu a {
-  display: block;
-  padding: 0.8rem 1.2rem;
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+  color:#fff;
+  text-decoration:none;
 }
-
-.dropdown-menu a:hover { background: var(--accent); color: #000; }
-
+.dropdown-menu a:hover{
+  background:var(--accent);
+  color:#000;
+}
 .nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu { display: block; }
+.nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* Meters */
+/* SIGNAL METERS — bottom corners */
 .signal-meter {
   position: fixed;
-  bottom: 80px;
+  bottom: 90px;
   z-index: 199;
-  background: rgba(0,0,0,0.8);
-  border: 1px dashed var(--green);
+  background: rgba(0,0,0,0.75);
+  border: 1px dashed var(--signal-green);
   border-radius: 6px;
-  padding: 0.8rem 1.2rem;
+  padding: 10px 14px;
   font-family: monospace;
-  font-size: 0.9rem;
-  color: var(--green);
-  box-shadow: 0 0 12px rgba(0,255,0,0.2);
+  font-size: 13px;
+  color: var(--signal-green);
+  box-shadow: 0 0 12px rgba(0,255,0,0.15);
   backdrop-filter: blur(4px);
-  min-width: 150px;
-}
-
-#signalStrengthMeter { left: 1rem; }
-#interferenceMeter   { right: 1rem; }
-
-.signal-meter.weak { color: var(--yellow); border-color: var(--yellow); }
-.signal-meter.critical { color: var(--red); border-color: var(--red); animation: pulse 1.8s infinite; }
-
-/* Hero */
-.hero-link {
-  display: block;
-  max-width: 1100px;
-  margin: 2rem auto;
-}
-
-.hero {
-  width: 100%;
-  aspect-ratio: 2.38 / 1;
-  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
-  cursor: pointer;
+  min-width: 160px;
+  text-align: left;
   transition: all 0.4s ease;
 }
-
-.hero-link:hover .hero {
-  transform: scale(1.015);
-  filter: brightness(1.1);
-  box-shadow: 0 0 30px var(--glow);
+#signalStrengthMeter { left: 15px; }
+#interferenceMeter { right: 15px; }
+.signal-meter.weak { color: var(--signal-yellow); border-color: var(--signal-yellow); box-shadow: 0 0 12px rgba(255,255,0,0.25); }
+.signal-meter.critical { color: var(--signal-red); border-color: var(--signal-red); box-shadow: 0 0 15px rgba(255,0,0,0.35); animation: pulse 1.5s infinite; }
+.signal-meter strong { color: #fff; }
+.signal-meter .bar-container {
+  display: inline-block;
+  width: 60px;
+  height: 6px;
+  background: #111;
+  border: 1px dashed var(--signal-green);
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.signal-meter .bar {
+  height: 100%;
+  background: var(--signal-green);
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.7; }
 }
 
-/* Main content */
-.wrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-}
-
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,42,161,0.2);
-  border-radius: var(--card-radius);
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-  transition: all 0.35s ease;
-  aspect-ratio: 1 / 1.35;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
-  border-color: var(--accent);
-}
-
-/* Ad banner */
-.ad-banner {
-  margin: 4rem auto;
-  max-width: 800px;
-  text-align: center;
-}
-
-.ad-banner h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
-  margin-bottom: 1.2rem;
-  font-size: 1.8rem;
-  opacity: 0.8;
-}
-
-#adImage img {
-  width: 100%;
-  max-height: 320px;
-  object-fit: contain;
-  border: 2px dashed var(--accent);
-  border-radius: 12px;
-  box-shadow: 0 0 20px var(--glow);
-}
-
-/* Jam button */
+/* JAM BUTTON – in content flow, centered between ads and ghosts */
 .jam-section {
   text-align: center;
-  margin: 5rem auto;
-  max-width: 900px;
+  margin: 80px auto;
+  max-width: 800px;
 }
-
 #jam-button {
-  background: #600;
+  background: #800;
   color: #f00;
   border: 2px solid #f00;
-  border-radius: 10px;
-  padding: 1.2rem 3rem;
+  border-radius: 8px;
+  padding: 16px 40px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
+  font-size: 20px;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,0,0,0.4);
+  box-shadow: 0 0 25px rgba(255,0,0,0.5);
   transition: all 0.3s;
 }
-
 #jam-button:hover {
-  background: #800;
-  box-shadow: 0 0 35px rgba(255,0,0,0.7);
-  transform: scale(1.04);
+  background: #a00;
+  box-shadow: 0 0 40px rgba(255,0,0,0.7);
+  transform: scale(1.05);
 }
 
-/* Ghost Signals – improved with images & glitch */
-.ghost-signals {
-  margin: 6rem 0;
+/* JAM OVERLAY – full-screen tiled static, centered text */
+#jam-overlay {
+  position: fixed;
+  inset: 0;
+  background: url('Player/static1.png') repeat #000; /* tiled static */
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#jam-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 100px;
+  color: #f00;
+  text-shadow: 0 0 50px #f00;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+/* MLK 500 STOCK TICKER */
+.mlk500-section {
+  margin: 80px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background: rgba(0,0,0,0.7);
+  border: 1px dashed #0f0;
+  border-radius: 8px;
+  font-family: monospace;
+  color: #0f0;
   text-align: center;
 }
-
-.ghost-grid {
+.mlk500-section h2 {
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+}
+.stocks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.stock-card {
+  background: rgba(0,255,0,0.05);
+  border: 1px solid #0f0;
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.3s;
+}
+.stock-card:hover {
+  box-shadow: 0 0 15px rgba(0,255,0,0.3);
+}
+.stock-symbol {
+  font-size: 18px;
+  font-weight: bold;
+}
+.stock-name {
+  font-size: 13px;
+  color: #aaa;
+  margin: 4px 0;
+}
+.stock-price {
+  font-size: 22px;
+  margin: 8px 0;
+}
+.stock-change {
+  font-size: 16px;
+}
+.positive { color: #0f0; }
+.negative { color: #f00; }
+
+/* HERO */
+.hero-link{
+  display:block;
+  max-width:1000px;
+  margin:40px auto;
+}
+.hero{
+  width:100%;
+  aspect-ratio: 2.38 / 1;
+  background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+}
+.hero-link:hover .hero{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px var(--glow);
 }
 
+/* MAIN CONTENT */
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:40px 20px;
+  position:relative;
+  z-index:1;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border:1px solid rgba(255,42,161,0.15);
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.3s;
+  aspect-ratio: 1 / 1.4;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+  border-color:var(--accent);
+}
+.card .art{
+  height:0;
+  padding-top:75%;
+  position:relative;
+  overflow:hidden;
+}
+.card .art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.85) contrast(1.1);
+  transition:.4s;
+}
+.card:hover .art img{
+  filter:brightness(1.05) contrast(1.2);
+}
+.card .meta{
+  padding:14px;
+  text-align:center;
+}
+.card .title{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  margin-bottom:6px;
+  color:var(--accent);
+}
+.card .sub{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* CYCLING AD BANNER */
+.ad-banner {
+  margin:60px auto;
+  max-width:700px;
+  text-align:center;
+}
+.ad-banner h2 {
+  font-family:'Orbitron',sans-serif;
+  color:var(--accent);
+  margin-bottom:16px;
+  font-size:1.6rem;
+  opacity:0.7;
+}
+#adImage img {
+  width:100%;
+  height:auto;
+  max-height:350px;
+  object-fit:contain;
+  border:2px dashed var(--accent);
+  border-radius:12px;
+  box-shadow:0 0 20px var(--glow);
+  transition:opacity 0.8s ease;
+}
+
+/* GHOST SIGNALS */
+.ghost-signals{
+  margin:80px 0;
+  text-align:center;
+}
+.ghost-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+  margin-top:30px;
+}
 .ghost-card {
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255,42,161,0.25);
-  border-radius: var(--card-radius);
-  min-height: 320px;
+  border-radius: 12px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2.5rem 1.5rem;
-  opacity: 0.88;
-  transition: all 0.5s ease;
-  animation: ghostGlitch 18s infinite alternate;
+  padding: 30px 20px;
+  transition: all 0.4s ease;
+  opacity: 0.92;
+  backdrop-filter: blur(3px);
 }
-
-.ghost-card:hover {
-  opacity: 1;
-  transform: scale(1.03);
-  box-shadow: 0 0 35px var(--glow);
-}
-
 .ghost-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.68);
   z-index: 0;
+  border-radius: 12px;
 }
-
-.ghost-card h3, .ghost-card p {
+.ghost-card h3,
+.ghost-card p {
   position: relative;
   z-index: 1;
-  margin: 0.8rem 0;
+  margin: 10px 0;
+  padding: 0 15px;
+  max-width: 90%;
 }
-
 .ghost-card h3 {
   font-family: 'Orbitron', sans-serif;
   color: var(--accent);
-  font-size: 1.7rem;
-  text-shadow: 0 0 12px rgba(255,42,161,0.7);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255,42,161,0.6);
 }
-
 .ghost-card p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #eee;
-  line-height: 1.6;
+  line-height: 1.5;
+}
+.ghost-card:hover {
+  opacity: 1;
+  transform: scale(1.06);
+  box-shadow: 0 0 40px var(--glow);
+  border-color: var(--accent);
 }
 
-@keyframes ghostGlitch {
-  0%, 100% { opacity: 0.88; transform: translate(0,0); }
-  10% { opacity: 0.75; transform: translate(-1px, 1px); }
-  25% { opacity: 0.92; transform: translate(1px, -1px); }
-  60% { opacity: 0.82; transform: translate(-0.5px, 0.5px); }
+/* TRANSMISSION LOG */
+.trans-log{
+  margin:60px auto;
+  max-width:800px;
+  padding:20px;
+  background:rgba(0,0,0,0.6);
+  border:1px dashed var(--accent);
+  border-radius:8px;
+  font-family:monospace;
+  font-size:14px;
+  color:#0f0;
+  text-align:center;
+  opacity:0.7;
 }
 
-/* MLK 500 – vertical list */
-.mlk500-section {
-  margin: 6rem auto;
-  max-width: 900px;
-  padding: 2rem;
-  background: rgba(0,0,0,0.7);
-  border: 1px dashed var(--green);
-  border-radius: var(--card-radius);
+/* SIGNAL BLEED NOTE */
+.signal-bleed{
+  margin:80px auto 40px;
+  max-width:800px;
+  padding:20px;
+  text-align:center;
+  color:var(--accent);
+  font-family:monospace;
+  font-size:14px;
+  opacity:0.6;
+  border-top:1px dashed var(--accent);
+  border-bottom:1px dashed var(--accent);
 }
 
-.mlk500-section h2 {
-  color: var(--accent);
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* CRT OVERLAY */
+.crt-overlay{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
+  animation:scanline 10s linear infinite;
+  opacity:0.15;
+  z-index:10;
+}
+@keyframes scanline{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100%);}
 }
 
-.stocks-list {
-  list-style: none;
-  padding: 0;
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
+  background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  z-index:999;
+}
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
+
+/* FOOTER */
+footer{
+  padding:28px 20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  border-top:1px solid rgba(255,42,161,.05);
 }
 
-.stock-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px dashed rgba(0,255,0,0.2);
-}
-
-.stock-info { flex: 1; }
-.stock-symbol { font-weight: bold; font-size: 1.1rem; }
-.stock-name { color: var(--muted); font-size: 0.9rem; }
-
-.stock-price { font-size: 1.3rem; min-width: 100px; text-align: right; }
-.stock-change { min-width: 80px; text-align: right; font-size: 1rem; }
-
-.positive { color: var(--green); }
-.negative { color: var(--red); }
-
-#invest-button {
-  display: block;
-  margin: 2rem auto 0;
-  background: var(--green);
-  color: #000;
-  border: none;
-  border-radius: 6px;
-  padding: 0.8rem 2rem;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,255,0,0.4);
-}
-
-#invest-button:hover { box-shadow: 0 0 25px rgba(0,255,0,0.6); }
-
-/* Invest overlay */
-#invest-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  z-index: 400;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#invest-message {
-  font-family: monospace;
-  font-size: 2.5rem;
-  color: var(--green);
-  text-shadow: 0 0 20px var(--green);
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.8s;
-}
-
-/* CRT & player & footer */
-.crt-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
-  animation: scanline 10s linear infinite;
-  opacity: 0.15;
-  z-index: 10;
-}
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-#floating-player {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 360px;
-  height: 72px;
-  background: url('Player/PLAYER.png') center/cover no-repeat;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  padding: 0 18px;
-  box-shadow: 0 12px 40px rgba(0,0,0,.85);
-  z-index: 999;
-}
-
-.player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 0 12px; }
-.player-title { font-weight: 700; font-size: 14px; }
-.player-artist { font-size: 12px; color: var(--muted); }
-.player-status { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.player-controls { display: flex; align-items: center; justify-content: center; margin-left: 12px; }
-.player-controls img { width: 42px; height: 42px; cursor: pointer; }
-
-footer {
-  padding: 28px 20px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--muted);
-  border-top: 1px solid rgba(255,42,161,.05);
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .wrap { padding: 1.5rem 1rem; }
-  .hero { aspect-ratio: 2 / 1; }
-  .grid { gap: 1.2rem; }
-  .ghost-grid { gap: 1.5rem; }
-  .ghost-card { min-height: 240px; padding: 1.8rem 1rem; }
-  .mlk500-section { padding: 1.5rem; }
-  #jam-button { padding: 1rem 2.5rem; font-size: 1.3rem; }
-  #invest-message { font-size: 1.8rem; padding: 0 1rem; }
+/* MOBILE */
+@media (max-width:768px){
+  .hero-link,.wrap{margin:20px auto;}
+  .hero{height:auto;aspect-ratio:2.38 / 1;}
+  .grid{gap:20px;}
+  .card .art{padding-top:75%;}
+  #floating-player{width:90%;height:60px;padding:0 12px;}
+  .player-title{font-size:12px;}
+  .player-artist,.player-status{font-size:10px;}
+  .player-controls img{width:36px;height:36px;}
+  .nav-dropdown .dropdown-menu{right:0;left:auto;min-width:160px;max-width:90vw;}
+  .ad-banner{max-width:100%;margin:40px 15px;}
+  #adImage img{max-height:240px;}
+  .ghost-card { min-height:200px; padding:30px 15px; }
+  .ghost-card h3 { font-size:1.3rem; }
+  .ghost-card p { font-size:0.95rem; }
+  .signal-meter {
+    font-size: 12px;
+    padding: 8px 12px;
+    min-width: 140px;
+    bottom: 80px;
+  }
+  #signalStrengthMeter { left: 10px; }
+  #interferenceMeter { right: 10px; }
+  #jam-button {
+    padding: 14px 30px;
+    font-size: 18px;
+  }
+  .mlk500-section h2 { font-size: 1.4rem; }
+  .stock-card { padding: 10px; }
 }
 </style>
 </head>
@@ -436,14 +521,20 @@ footer {
   </div>
 </header>
 
-<!-- SIGNAL STRENGTH & INTERFERENCE meters -->
+<!-- SIGNAL STRENGTH – bottom-left -->
 <div class="signal-meter" id="signalStrengthMeter">
   <strong>Signal:</strong> <span id="signalStrength">89%</span>
-  <div class="bar-container"><div id="strengthBar" class="bar" style="width:89%;"></div></div>
+  <div class="bar-container">
+    <div id="strengthBar" class="bar" style="width:89%;"></div>
+  </div>
 </div>
+
+<!-- INTERFERENCE LEVEL – bottom-right -->
 <div class="signal-meter" id="interferenceMeter">
   <strong>Interference:</strong> 
-  <div class="bar-container"><div id="interferenceBar" class="bar" style="width:12%;"></div></div>
+  <div class="bar-container">
+    <div id="interferenceBar" class="bar" style="width:12%;"></div>
+  </div>
 </div>
 
 <a href="universe.html" class="hero-link">
@@ -495,37 +586,34 @@ footer {
     <div id="adImage"></div>
   </section>
 
-  <!-- JAM SIGNAL BUTTON -->
+  <!-- JAM SIGNAL BUTTON – centered in page flow -->
   <div class="jam-section">
     <button id="jam-button">JAM SIGNAL</button>
   </div>
 
-  <!-- GHOST SIGNALS – with real backgrounds + glitch -->
+  <!-- GHOST SIGNALS -->
   <section class="ghost-signals">
-    <h2>Ghost Signals</h2>
+    <h2 style="font-family:'Orbitron',sans-serif;color:var(--accent);opacity:0.7;">Ghost Signals</h2>
     <div class="ghost-grid">
-      <div class="ghost-card" style="background-image: url('images/Universe/Signals/venice.png');">
+      <div class="ghost-card">
         <h3>Venice 1979</h3>
         <p>Empty bowl echoes at 3am. Sodium hum. No one skating.</p>
       </div>
-      <div class="ghost-card" style="background-image: url('images/Universe/Signals/shibuya.png');">
+      <div class="ghost-card">
         <h3>Shibuya 1985</h3>
         <p>Neon bleeds into puddles. Crowds dissolve. Static in the reflections.</p>
       </div>
-      <div class="ghost-card" style="background-image: url('images/Universe/Signals/southbank.png');">
+      <div class="ghost-card">
         <h3>Southbank 1973</h3>
         <p>Concrete tags fade. Train rumble below. Someone was here once.</p>
       </div>
     </div>
   </section>
 
-  <!-- MLK 500 STOCK INDEX – vertical list + invest button -->
+  <!-- MLK 500 STOCK INDEX – bottom section -->
   <section class="mlk500-section">
     <h2>MLK 500 INDEX</h2>
-    <ul class="stocks-list" id="stocks-container"></ul>
-    <div class="invest-section">
-      <button id="invest-button">INVEST IN THE MARKET</button>
-    </div>
+    <div class="stocks-grid" id="stocks-container"></div>
   </section>
 
   <!-- SIGNAL BLEED NOTE -->
@@ -537,14 +625,9 @@ footer {
 
 <div class="crt-overlay"></div>
 
-<!-- JAM OVERLAY -->
+<!-- JAM OVERLAY – full-screen tiled static, centered text -->
 <div id="jam-overlay">
   <div id="jam-text">SIGNAL LOST</div>
-</div>
-
-<!-- INVEST OVERLAY -->
-<div id="invest-overlay">
-  <div id="invest-message">MLKSHK Universe Access Only.<br>If you know, you know.</div>
 </div>
 
 <div id="floating-player">
@@ -569,16 +652,203 @@ footer {
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Floating player (your existing code here – unchanged)
+// Floating player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
-// ... (keep your full player logic)
 
-// Dropdown, ad cycle, meters, jam button logic (keep your existing code)
-// ... (paste your existing scripts for these parts)
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().catch(e => {
+      console.log("Play failed:", e);
+      statusEl.textContent = 'Error – try again';
+    });
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Connecting...';
+  } else {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  }
+});
 
-// MLK 500 STOCK INDEX – 9 stocks, vertical list
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  });
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+}
+
+// Dropdown toggle
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+    dropdownMenu.style.display = 'none';
+  }
+});
+
+// Cycle transmission log
+const transLog = document.getElementById('transLog');
+if (transLog) {
+  const messages = [
+    "SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)",
+    "CARRIER: STABLE — INTERFERENCE LOW<br>GHOSTS DETECTED: 3",
+    "LAST PING: 00:00:00 AGO<br>DO NOT ADJUST",
+    "THEY’RE STILL LISTENING<br>WAKE UP"
+  ];
+  let index = 0;
+  setInterval(() => {
+    transLog.innerHTML = messages[index];
+    index = (index + 1) % messages.length;
+  }, 8000);
+}
+
+// CYCLING AD BANNER
+const adImages = [
+  "images/Universe/Ads/toejam-toothpaste.jpg",
+  "images/Universe/Ads/nobbys-balloon.jpg",
+  "images/Universe/Ads/brenda-semtex.jpg",
+  "images/Universe/Ads/glitch-witch.jpg",
+  "images/Universe/Ads/kevin-hotline.jpg",
+];
+
+let adIndex = 0;
+const adContainer = document.getElementById('adImage');
+
+function showAd() {
+  const imgPath = adImages[adIndex];
+  adContainer.innerHTML = `
+    <img src="${imgPath}" alt="Ad">
+  `;
+  adIndex = (adIndex + 1) % adImages.length;
+}
+
+showAd();
+setInterval(showAd, 10000);
+
+// RANDOM BACKGROUND FOR GHOST SIGNALS
+const ghostBgs = [
+  "images/Universe/Signals/venice.png",
+  "images/Universe/Signals/shibuya.png",
+  "images/Universe/Signals/southbank.png",
+];
+
+document.querySelectorAll('.ghost-card').forEach(card => {
+  const randomBg = ghostBgs[Math.floor(Math.random() * ghostBgs.length)];
+  card.style.backgroundImage = `url('${randomBg}')`;
+});
+
+// SIGNAL STRENGTH – bottom-left, quick cycle
+const signalStrengthEl = document.getElementById('signalStrength');
+const strengthBarEl = document.getElementById('strengthBar');
+const strengthMeterEl = document.getElementById('signalStrengthMeter');
+
+let currentStrength = 89;
+
+function updateStrength() {
+  currentStrength += Math.floor(Math.random() * 13) - 6;
+  currentStrength = Math.max(18, Math.min(98, currentStrength));
+  signalStrengthEl.textContent = currentStrength + '%';
+  strengthBarEl.style.width = currentStrength + '%';
+
+  if (currentStrength > 70) {
+    strengthBarEl.style.background = 'var(--signal-green)';
+    strengthMeterEl.className = 'signal-meter';
+  } else if (currentStrength > 40) {
+    strengthBarEl.style.background = 'var(--signal-yellow)';
+    strengthMeterEl.className = 'signal-meter weak';
+  } else {
+    strengthBarEl.style.background = 'var(--signal-red)';
+    strengthMeterEl.className = 'signal-meter critical';
+  }
+}
+
+updateStrength();
+setInterval(updateStrength, Math.random() * 4000 + 3000); // 3–7 seconds
+
+// INTERFERENCE LEVEL – bottom-right, slower cycle
+const interferenceBarEl = document.getElementById('interferenceBar');
+const interferenceMeterEl = document.getElementById('interferenceMeter');
+
+let currentInterference = 12;
+
+function updateInterference() {
+  currentInterference += Math.floor(Math.random() * 17) - 8;
+  currentInterference = Math.max(5, Math.min(85, currentInterference));
+  interferenceBarEl.style.width = currentInterference + '%';
+
+  if (currentInterference < 30) {
+    interferenceBarEl.style.background = 'var(--signal-green)';
+    interferenceMeterEl.className = 'signal-meter';
+  } else if (currentInterference < 60) {
+    interferenceBarEl.style.background = 'var(--signal-yellow)';
+    interferenceMeterEl.className = 'signal-meter weak';
+  } else {
+    interferenceBarEl.style.background = 'var(--signal-red)';
+    interferenceMeterEl.className = 'signal-meter critical';
+  }
+}
+
+updateInterference();
+setInterval(updateInterference, Math.random() * 20000 + 15000); // 15–35 seconds
+
+// JAM SIGNAL BUTTON
+const jamButton = document.getElementById('jam-button');
+const jamOverlay = document.getElementById('jam-overlay');
+const jamText = document.getElementById('jam-text');
+
+jamButton.addEventListener('click', () => {
+  jamText.style.opacity = '1';
+  jamOverlay.style.opacity = '1';
+  jamOverlay.style.pointerEvents = 'all';
+  document.body.style.animation = 'shake 0.8s infinite';
+
+  // Your 7-second audio clip
+  const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
+  jamAudio.volume = 0.5; // adjustable
+  jamAudio.play().catch(e => console.log("Audio play failed:", e));
+
+  // Full jam lasts exactly 7 seconds
+  setTimeout(() => {
+    jamOverlay.style.opacity = '0';
+    jamOverlay.style.pointerEvents = 'none';
+    jamText.style.opacity = '0';
+    document.body.style.animation = '';
+    transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
+  }, 7000);
+});
+
+// MLK 500 STOCK INDEX
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -588,65 +858,55 @@ const stocks = [
   { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
   { symbol: "MSWF", name: "Microwave Sock Warmer (Fire Hazard Edition)", price: 11.05, change: -2.7 },
   { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
+  { symbol: "SSLC", name: "Shagger’s Special – ‘Last Chance Lube", price: 14.20, change: -0.3 },
+  { symbol: "SSKV", name: "Sharon’s Second-Hand Knickers Vending Machine", price: 3.33, change: 5.6 },
   { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
 ];
 
 function renderStocks() {
   const container = document.getElementById('stocks-container');
   container.innerHTML = '';
+
   stocks.forEach(stock => {
-    const li = document.createElement('li');
-    li.className = 'stock-item';
+    const div = document.createElement('div');
+    div.className = 'stock-card';
+
     const isPositive = stock.change >= 0;
     const colorClass = isPositive ? 'positive' : 'negative';
     const arrow = isPositive ? '↑' : '↓';
-    li.innerHTML = `
-      <div class="stock-info">
-        <span class="stock-symbol">${stock.symbol}</span>
-        <span class="stock-name"> — ${stock.name}</span>
-      </div>
+
+    div.innerHTML = `
+      <div class="stock-symbol">${stock.symbol}</div>
+      <div class="stock-name">${stock.name}</div>
       <div class="stock-price">$${stock.price.toFixed(2)}</div>
-      <div class="stock-change ${colorClass}">${arrow} ${Math.abs(stock.change)}%</div>
+      <div class="stock-change ${colorClass}">
+        ${arrow} ${Math.abs(stock.change).toFixed(2)}%
+      </div>
     `;
-    container.appendChild(li);
+
+    container.appendChild(div);
   });
 }
 
 function updateStocks() {
   stocks.forEach(stock => {
-    const changePct = (Math.random() * 6 - 3) / 100;
+    const changePct = (Math.random() * 6 - 3) / 100; // -3% to +3%
     stock.price *= (1 + changePct);
-    stock.price = Math.max(0.01, Number(stock.price.toFixed(2)));
-    stock.change = (changePct * 100).toFixed(1);
+    stock.price = Math.max(0.01, stock.price.toFixed(2));
+    stock.change = (changePct * 100).toFixed(2);
   });
+
   renderStocks();
+
+  // Next update in 8–15 seconds
   setTimeout(updateStocks, Math.random() * 7000 + 8000);
 }
 
+// Initial render + start updating
 renderStocks();
 setTimeout(updateStocks, 8000);
 
-// Invest button logic
-const investButton = document.getElementById('invest-button');
-const investOverlay = document.getElementById('invest-overlay');
-const investMessage = document.getElementById('invest-message');
-
-investButton.addEventListener('click', () => {
-  investOverlay.style.opacity = '1';
-  investOverlay.style.pointerEvents = 'all';
-  investMessage.style.opacity = '1';
-
-  setTimeout(() => {
-    investMessage.style.opacity = '0';
-  }, 3500);
-
-  setTimeout(() => {
-    investOverlay.style.opacity = '0';
-    investOverlay.style.pointerEvents = 'none';
-  }, 5500);
-});
-
-// Shake animation (for jam)
+// Shake animation
 const style = document.createElement('style');
 style.innerHTML = `
   @keyframes shake {
