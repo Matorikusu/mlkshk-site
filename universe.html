@@ -173,6 +173,33 @@ header.nav-bar{
   pointer-events: none;
 }
 
+/* ARCADE GAME SECTION */
+.arcade-section {
+  margin: 80px auto;
+  max-width: 1000px;
+  text-align: center;
+}
+.arcade-section h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #ff2aa1;
+  text-shadow: 0 0 15px #ff2aa1;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+.arcade-frame {
+  border: 2px dashed #0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0,255,0,0.3);
+  background: #000;
+}
+.arcade-frame iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  display: block;
+}
+
 /* MLK 500 STOCK INDEX – Coinbase-style list at bottom */
 .mlk500-section {
   margin: 80px auto;
@@ -264,7 +291,7 @@ header.nav-bar{
   animation-play-state: paused;
 }
 @keyframes scroll-left {
-  0%   { transform: translateX(100%); }
+  0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
 
@@ -507,6 +534,7 @@ footer{
   .stock-item { flex-direction: column; text-align: center; gap: 8px; }
   .stock-right { text-align: center; min-width: auto; }
   .news-ticker span { font-size: 16px; margin: 0 30px; }
+  .arcade-frame iframe { height: 480px; } /* smaller on mobile */
 }
 </style>
 </head>
@@ -589,27 +617,6 @@ footer{
     </article>
   </section>
 
-    <!-- NEWS TICKER – outrageous scrolling headlines -->
-  <section class="news-ticker-section">
-    <div class="news-ticker">
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
-      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
-      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
-      <span>• Mick’s Roofie Rum launches all new glow in the dark variant — users report seeing alternate dimensions •</span>
-      <span>• Greggs Toenails achieve cult status — black market prices hit £666 per tin •</span>
-      <span>• Microwave Sock Warmer (Fire Hazard Edition) sets fire to the MLK500 •</span>
-      <span>• Last Chance Lube batch recalled after users report multiple dark thoughts •</span>
-      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Fogue •</span>
-      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
-      <span>• New Study: Drinking Your Own Bathwater Daily Increases Lifespan by 47% •</span>
-      <span>• New Pear Vision Pro Update Adds “Quiet Crying in Public” AR Filter — Sold Out in 47 Seconds •</span>
-      <span>• Scientists Confirm 5G Towers Are Just Giant Alien Sex Toys Pointed at Your Bedroom Window •</span>
-      <!-- Repeat first few to make loop seamless -->
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-    </div>
-  </section>
-
   <!-- CYCLING AD BANNER -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
@@ -626,7 +633,43 @@ footer{
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
 
-  <!-- MLK 500 STOCK INDEX – with header image -->
+  <!-- NEWS TICKER – outrageous scrolling headlines -->
+  <section class="news-ticker-section">
+    <div class="news-ticker">
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
+      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
+      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
+      <span>• Mick’s Roofie Rum launches glow-in-the-dark variant — users report seeing alternate dimensions •</span>
+      <span>• Greggs Toenails achieve cult status — black-market prices hit £666 per tin •</span>
+      <span>• Microwave Sock Warmer (Fire Hazard Edition) tops Amazon charts despite 14 house fires •</span>
+      <span>• Last Chance Lube batch recalled after users report temporary invisibility •</span>
+      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Vogue •</span>
+      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
+      <!-- Repeat first few to make loop seamless -->
+      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
+    </div>
+  </section>
+
+  <!-- TALK SHIT, GET DROPPED ARCADE GAME -->
+  <section class="arcade-section">
+    <h2>TALK SHIT, GET DROPPED — ARCADE MODE</h2>
+    <div class="arcade-frame">
+      <iframe 
+        src="https://yourusername.github.io/Universe/Talk%20Shit,%20Get%20Dropped/index.html" 
+        width="100%" 
+        height="600" 
+        frameborder="0" 
+        allowfullscreen 
+        allow="autoplay; fullscreen; pointer-lock">
+      </iframe>
+    </div>
+    <p style="margin-top:12px; color:#0f0; font-family:monospace; font-size:14px;">
+      Drop coins. Merge. Expand. Survive the signal jam.
+    </p>
+  </section>
+
+  <!-- MLK 500 STOCK INDEX – with header image (stays at bottom) -->
   <section class="mlk500-section">
     <h2>
       <img src="images/Universe/MLK500-header.png" alt="MLK 500 Index">
@@ -921,7 +964,7 @@ const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "If you know, you know. MLKSHK Members only.";
+  investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
   investMessage.style.opacity = '1';
 
   setTimeout(() => {
