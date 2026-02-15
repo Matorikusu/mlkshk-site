@@ -173,6 +173,53 @@ header.nav-bar{
   pointer-events: none;
 }
 
+/* TRANSMISSION NEWS – static, cycling like signal bleed */
+.transmission-news {
+  margin: 60px auto;
+  max-width: 800px;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  border: 1px dashed var(--signal-green);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #0f0;
+  text-align: center;
+  opacity: 0.7;
+}
+.transmission-news p {
+  margin: 8px 0;
+  text-shadow: 0 0 4px #0f0;
+}
+
+/* PHASE MODULATOR ARTIFACT – clickable image above stocks */
+.phase-artifact {
+  margin: 60px auto;
+  max-width: 600px;
+  text-align: center;
+}
+.phase-artifact a {
+  display: block;
+  transition: all 0.3s;
+}
+.phase-artifact img {
+  width: 100%;
+  border: 2px dashed var(--signal-green);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,255,0,0.3);
+  transition: all 0.3s;
+}
+.phase-artifact a:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(0,255,0,0.5);
+}
+.phase-artifact p {
+  margin-top: 12px;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 14px;
+}
+
 /* MLK 500 STOCK INDEX – Coinbase-style list at bottom */
 .mlk500-section {
   margin: 80px auto;
@@ -236,37 +283,6 @@ header.nav-bar{
 }
 .positive { color: #0f0; }
 .negative { color: #f00; }
-
-/* NEWS TICKER – outrageous scrolling headlines */
-.news-ticker-section {
-  margin: 60px 0;
-  overflow: hidden;
-  background: rgba(0,0,0,0.8);
-  border-top: 2px dashed #f00;
-  border-bottom: 2px dashed #f00;
-  padding: 16px 0;
-}
-.news-ticker {
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  animation: scroll-left 120s linear infinite;
-}
-.news-ticker span {
-  display: inline-block;
-  margin: 0 60px;
-  font-size: 18px;
-  font-family: 'Orbitron', sans-serif;
-  color: #ff2aa1;
-  text-shadow: 0 0 8px #ff2aa1;
-}
-.news-ticker-section:hover .news-ticker {
-  animation-play-state: paused;
-}
-@keyframes scroll-left {
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
 
 /* INVEST BUTTON */
 .invest-section {
@@ -506,7 +522,6 @@ footer{
   .mlk500-section h2 img { max-height: 120px; }
   .stock-item { flex-direction: column; text-align: center; gap: 8px; }
   .stock-right { text-align: center; min-width: auto; }
-  .news-ticker span { font-size: 16px; margin: 0 30px; }
 }
 </style>
 </head>
@@ -589,27 +604,6 @@ footer{
     </article>
   </section>
 
-    <!-- NEWS TICKER – outrageous scrolling headlines -->
-  <section class="news-ticker-section">
-    <div class="news-ticker">
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-      <span>• Nobby’s Balloon Co. sued after 47 spontaneous latex explosions during birthday parties •</span>
-      <span>• Sharon’s Knickers Vending Machine now accepts only blood and crypto •</span>
-      <span>• Kevin’s Emotional Support Brick files restraining order against owner •</span>
-      <span>• Mick’s Roofie Rum launches all new glow in the dark variant — users report seeing alternate dimensions •</span>
-      <span>• Greggs Toenails achieve cult status — black market prices hit £666 per tin •</span>
-      <span>• Microwave Sock Warmer (Fire Hazard Edition) sets fire to the MLK500 •</span>
-      <span>• Last Chance Lube batch recalled after users report multiple dark thoughts •</span>
-      <span>• Dirty Dave’s Kebab Grease Candle named 2026 scent of the year by Fogue •</span>
-      <span>• MLKSHK Universe stock mysteriously up 420% — analysts baffled and terrified •</span>
-      <span>• New Study: Drinking Your Own Bathwater Daily Increases Lifespan by 47% •</span>
-      <span>• New Pear Vision Pro Update Adds “Quiet Crying in Public” AR Filter — Sold Out in 47 Seconds •</span>
-      <span>• Scientists Confirm 5G Towers Are Just Giant Alien Sex Toys Pointed at Your Bedroom Window •</span>
-      <!-- Repeat first few to make loop seamless -->
-      <span>• ToeJam Toothpaste recall: users report tongues turning fluorescent green overnight •</span>
-    </div>
-  </section>
-
   <!-- CYCLING AD BANNER -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
@@ -625,6 +619,19 @@ footer{
   <div class="trans-log" id="transLog">
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
+
+  <!-- TRANSMISSION NEWS – cycling bleed-style block -->
+  <section class="transmission-news" id="transmissionNews">
+    <p>Signal intercepted: 5G towers confirmed as alien observation nodes •</p>
+  </section>
+
+  <!-- PHASE MODULATOR ARTIFACT – clickable image -->
+  <section class="phase-artifact">
+    <a href="phase-modulator.html">
+      <img src="images/Universe/phase-artifact.png" alt="Phase Modulator Artifact">
+    </a>
+    <p>Artifact detected — Phase Modulator online. Re-establish the signal.</p>
+  </section>
 
   <!-- MLK 500 STOCK INDEX – with header image -->
   <section class="mlk500-section">
@@ -921,7 +928,7 @@ const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "If you know, you know. MLKSHK Members only.";
+  investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
   investMessage.style.opacity = '1';
 
   setTimeout(() => {
@@ -947,6 +954,29 @@ style.innerHTML = `
   }
 `;
 document.head.appendChild(style);
+
+// Transmission news cycle (replaces old ticker)
+const transmissionNews = document.getElementById('transmissionNews');
+if (transmissionNews) {
+  const newsLines = [
+    "Signal intercepted: 5G towers confirmed as alien observation nodes",
+    "New directive: Mandatory happiness implants by 2029 – opt-out fee: firstborn",
+    "Crypto billionaire renames country to HODLstan – citizens paid in dust",
+    "Amazon Prime now delivers regret in under 2 hours",
+    "UN declares water a hate crime – it's wet and oppressive",
+    "TikTok bans breathing challenges after users achieve permanent enlightenment",
+    "Apple Vision Pro adds 'Quiet Crying in Public' filter – sold out instantly"
+  ];
+  let newsIndex = 0;
+
+  function updateTransmission() {
+    transmissionNews.innerHTML = `<p>${newsLines[newsIndex]}</p>`;
+    newsIndex = (newsIndex + 1) % newsLines.length;
+  }
+
+  updateTransmission();
+  setInterval(updateTransmission, 8000); // same cycle as log
+}
 </script>
 </body>
 </html>
