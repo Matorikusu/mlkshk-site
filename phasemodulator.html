@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Broadcast Station 1 – Phase Modulator</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000;
+  --text:#f5f5f5;
+  --muted:#c0c0c0;
+  --accent:#ff2aa1;
+  --glow:rgba(255,42,161,0.5);
+  --signal-green:#0f0;
+}
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani',system-ui,-apple-system,Arial;
+  overflow-x:hidden;
+}
+
+/* GAME CONTAINER – centered portrait */
+.phase-container {
+  max-width: 720px;
+  margin: 40px auto;
+  border: 2px dashed var(--signal-green);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0,255,0,0.3);
+  background: #000;
+}
+.phase-container iframe {
+  width: 720px;
+  height: 1280px;
+  border: none;
+  display: block;
+}
+
+/* HEADER – minimal, lore-integrated */
+.phase-header {
+  text-align: center;
+  padding: 20px 0;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--accent);
+  text-shadow: 0 0 15px var(--accent);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+}
+
+/* FLOATING PLAYER – fixed at bottom */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
+  background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  z-index:999;
+}
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
+
+/* MOBILE – full-width portrait scaling */
+@media (max-width:768px){
+  .phase-container iframe {
+    width: 100%;
+    height: calc(100vh - 120px); /* leaves room for radio */
+  }
+  #floating-player {
+    width: 90%;
+    height: 60px;
+    padding: 0 12px;
+  }
+  .player-title { font-size: 12px; }
+  .player-artist, .player-status { font-size: 10px; }
+  .player-controls img { width: 36px; height: 36px; }
+  .phase-header { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="phase-header">Phase Modulator – Re-establish the Signal</div>
+
+<div class="phase-container">
+  <iframe 
+    src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/Matorikusu/mlkshk-site/main/Universe/MLKSHK - Phase Modulator/index.html
+    title="Phase Modulator"
+    allow="autoplay; fullscreen; pointer-lock; gamepad">
+  </iframe>
+</div>
+
+<div id="floating-player">
+  <div class="player-meta">
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live Stream</div>
+    <div class="player-status" id="status">Ready</div>
+  </div>
+  <div class="player-controls">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+  </div>
+  <audio id="audio">
+    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+// Floating player logic (copied from main page)
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
+
+btn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().catch(e => {
+      console.log("Play failed:", e);
+      statusEl.textContent = 'Error – try again';
+    });
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Connecting...';
+  } else {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  }
+});
+
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
+audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
+audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [
+      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+    ]
+  });
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    btn.src = 'Player/PLAY.png';
+    statusEl.textContent = 'Paused';
+  });
+  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
+  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+}
+</script>
+</body>
+</html>
