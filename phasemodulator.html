@@ -25,7 +25,7 @@ html,body{
   overflow-x:hidden;
 }
 
-/* CRT OVERLAY – subtle scanlines for immersion */
+/* CRT OVERLAY – subtle scanlines */
 .crt-overlay{
   position:fixed;
   inset:0;
@@ -40,11 +40,12 @@ html,body{
   100%{transform:translateY(100%);}
 }
 
-/* GAME CONTAINER – centered portrait */
+/* GAME CONTAINER – centered, constrained, scrollable if needed */
 .phase-container {
   position: relative;
   max-width: 720px;
-  margin: 40px auto;
+  max-height: calc(100vh - 140px); /* leaves room for radio + safe margin */
+  margin: 40px auto 100px;
   border: 2px dashed var(--signal-green);
   border-radius: 12px;
   overflow: hidden;
@@ -53,23 +54,10 @@ html,body{
   z-index: 2;
 }
 .phase-container iframe {
-  width: 720px;
-  height: 1280px;
+  width: 100%;
+  height: 1280px; /* native height – will scroll if viewport smaller */
   border: none;
   display: block;
-}
-
-/* HEADER – minimal, lore-integrated */
-.phase-header {
-  position: relative;
-  text-align: center;
-  padding: 20px 0;
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
-  text-shadow: 0 0 15px var(--accent);
-  font-size: 1.8rem;
-  letter-spacing: 2px;
-  z-index: 2;
 }
 
 /* FLOATING PLAYER – fixed at bottom */
@@ -95,29 +83,32 @@ html,body{
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
 
-/* MOBILE – full-width portrait scaling */
+/* MOBILE – full-width, height fits viewport minus radio */
 @media (max-width:768px){
+  .phase-container {
+    margin: 20px auto 100px;
+    max-height: calc(100vh - 120px);
+    border-width: 1px;
+  }
   .phase-container iframe {
     width: 100%;
-    height: calc(100vh - 120px); /* leaves room for radio + header */
+    height: 100%; /* fills container, which is viewport-constrained */
   }
   #floating-player {
     width: 90%;
     height: 60px;
     padding: 0 12px;
+    bottom: 10px;
   }
   .player-title { font-size: 12px; }
   .player-artist, .player-status { font-size: 10px; }
   .player-controls img { width: 36px; height: 36px; }
-  .phase-header { font-size: 1.4rem; padding: 15px 0; }
 }
 </style>
 </head>
 <body>
 
 <div class="crt-overlay"></div>
-
-<div class="phase-header">Phase Modulator – Re-establish the Signal</div>
 
 <div class="phase-container">
   <iframe 
