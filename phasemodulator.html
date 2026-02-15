@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Broadcast Station 1 – Phase Modulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Phase Modulator</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,7 +12,6 @@
   --text:#f5f5f5;
   --muted:#c0c0c0;
   --accent:#ff2aa1;
-  --glow:rgba(255,42,161,0.5);
   --signal-green:#0f0;
 }
 html,body{
@@ -22,17 +21,17 @@ html,body{
   background:var(--bg);
   color:var(--text);
   font-family:'Rajdhani',system-ui,-apple-system,Arial;
-  overflow-x:hidden;
+  overflow:hidden; /* prevents any scroll overflow */
 }
 
-/* CRT OVERLAY – subtle scanlines */
+/* CRT OVERLAY – very subtle */
 .crt-overlay{
   position:fixed;
   inset:0;
   pointer-events:none;
-  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
-  animation:scanline 12s linear infinite;
-  opacity:0.12;
+  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.06) 2%, rgba(0,0,0,0.06) 4%);
+  animation:scanline 14s linear infinite;
+  opacity:0.08;
   z-index:1;
 }
 @keyframes scanline{
@@ -40,30 +39,51 @@ html,body{
   100%{transform:translateY(100%);}
 }
 
-/* GAME CONTAINER – centered, constrained, scrollable if needed */
+/* BACK BUTTON – top-left, subtle */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+  padding: 10px 16px;
+  background: rgba(0,0,0,0.7);
+  border: 1px dashed var(--signal-green);
+  border-radius: 8px;
+  color: var(--accent);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  text-shadow: 0 0 8px var(--accent);
+  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+  transition: all 0.3s;
+}
+.back-btn:hover {
+  background: rgba(0,255,0,0.15);
+  box-shadow: 0 0 25px rgba(0,255,0,0.4);
+}
+
+/* GAME CONTAINER – full-screen fit */
 .phase-container {
-  position: relative;
-  max-width: 720px;
-  max-height: calc(100vh - 140px); /* leaves room for radio + safe margin */
-  margin: 40px auto 100px;
-  border: 2px dashed var(--signal-green);
-  border-radius: 12px;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(0,255,0,0.3);
   background: #000;
-  z-index: 2;
+  z-index: 0;
 }
 .phase-container iframe {
   width: 100%;
-  height: 1280px; /* native height – will scroll if viewport smaller */
+  height: 100%;
   border: none;
   display: block;
 }
 
-/* FLOATING PLAYER – fixed at bottom */
+/* FLOATING PLAYER – pinned at bottom */
 #floating-player{
   position:fixed;
-  bottom:20px;
+  bottom:12px;
   left:50%;
   transform:translateX(-50%);
   width:360px;
@@ -83,32 +103,31 @@ html,body{
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
 
-/* MOBILE – full-width, height fits viewport minus radio */
+/* MOBILE – ensure full coverage + radio visibility */
 @media (max-width:768px){
-  .phase-container {
-    margin: 20px auto 100px;
-    max-height: calc(100vh - 120px);
-    border-width: 1px;
-  }
-  .phase-container iframe {
-    width: 100%;
-    height: 100%; /* fills container, which is viewport-constrained */
-  }
   #floating-player {
-    width: 90%;
+    width: 94%;
     height: 60px;
     padding: 0 12px;
-    bottom: 10px;
+    bottom: 8px;
   }
   .player-title { font-size: 12px; }
   .player-artist, .player-status { font-size: 10px; }
   .player-controls img { width: 36px; height: 36px; }
+  .back-btn {
+    top: 12px;
+    left: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
 }
 </style>
 </head>
 <body>
 
 <div class="crt-overlay"></div>
+
+<a href="universe.html" class="back-btn">← Return to Universe</a>
 
 <div class="phase-container">
   <iframe 
