@@ -25,8 +25,24 @@ html,body{
   overflow-x:hidden;
 }
 
+/* CRT OVERLAY – subtle scanlines for immersion */
+.crt-overlay{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(transparent 0%, transparent 2px, rgba(0,0,0,0.08) 2%, rgba(0,0,0,0.08) 4%);
+  animation:scanline 12s linear infinite;
+  opacity:0.12;
+  z-index:1;
+}
+@keyframes scanline{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100%);}
+}
+
 /* GAME CONTAINER – centered portrait */
 .phase-container {
+  position: relative;
   max-width: 720px;
   margin: 40px auto;
   border: 2px dashed var(--signal-green);
@@ -34,6 +50,7 @@ html,body{
   overflow: hidden;
   box-shadow: 0 0 25px rgba(0,255,0,0.3);
   background: #000;
+  z-index: 2;
 }
 .phase-container iframe {
   width: 720px;
@@ -44,6 +61,7 @@ html,body{
 
 /* HEADER – minimal, lore-integrated */
 .phase-header {
+  position: relative;
   text-align: center;
   padding: 20px 0;
   font-family: 'Orbitron', sans-serif;
@@ -51,6 +69,7 @@ html,body{
   text-shadow: 0 0 15px var(--accent);
   font-size: 1.8rem;
   letter-spacing: 2px;
+  z-index: 2;
 }
 
 /* FLOATING PLAYER – fixed at bottom */
@@ -80,7 +99,7 @@ html,body{
 @media (max-width:768px){
   .phase-container iframe {
     width: 100%;
-    height: calc(100vh - 120px); /* leaves room for radio */
+    height: calc(100vh - 120px); /* leaves room for radio + header */
   }
   #floating-player {
     width: 90%;
@@ -90,17 +109,19 @@ html,body{
   .player-title { font-size: 12px; }
   .player-artist, .player-status { font-size: 10px; }
   .player-controls img { width: 36px; height: 36px; }
-  .phase-header { font-size: 1.4rem; }
+  .phase-header { font-size: 1.4rem; padding: 15px 0; }
 }
 </style>
 </head>
 <body>
 
+<div class="crt-overlay"></div>
+
 <div class="phase-header">Phase Modulator – Re-establish the Signal</div>
 
 <div class="phase-container">
   <iframe 
-    src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/Matorikusu/mlkshk-site/main/Universe/MLKSHK - Phase Modulator/index.html
+    src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/Matorikusu/mlkshk-site/main/Universe/MLKSHK%20-%20Phase%20Modulator/index.html"
     title="Phase Modulator"
     allow="autoplay; fullscreen; pointer-lock; gamepad">
   </iframe>
@@ -121,7 +142,7 @@ html,body{
 </div>
 
 <script>
-// Floating player logic (copied from main page)
+// Floating player logic
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
