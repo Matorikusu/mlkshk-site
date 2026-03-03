@@ -1,0 +1,24 @@
+{
+  "name": "MLKSHK Pirate Radio",
+  "short_name": "Pirate Radio",
+  "description": "24/7 live underground Icecast stream from MLKSHK Digital – no rules, pure vibes.",
+  "start_url": "/pirateradio.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ff2aa1",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "images/LOGO_SMALL.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/Pirate Radio/pirateradio.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
