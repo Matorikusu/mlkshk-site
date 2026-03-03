@@ -136,8 +136,22 @@
       cursor:pointer;
       transition: all 0.3s;
       box-shadow: 0 0 20px var(--glow);
+      margin: 10px;
     }
     .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
+
+    #installBtn {
+      background: var(--transmission);
+      color: #000;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px var(--transmission);
+    }
+    #installBtn:hover {
+      background: #00cc00;
+      transform: scale(1.04);
+    }
+
     .player-overlay #status {
       margin-top:12px;
       font-size:1rem;
@@ -218,6 +232,7 @@
     <div class="player-overlay">
       <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
       <button id="playBtn">▶ Play</button>
+      <button id="installBtn" style="display: none;">Install App</button>
       <p id="status">Ready – click Play to connect live</p>
       <div id="transmitter-status">
         FREQ: 107.3 MHz (PIRATE)<br>
@@ -245,6 +260,7 @@
     const radio = document.getElementById('radio');
     const btn = document.getElementById('playBtn');
     const statusEl = document.getElementById('status');
+    const installBtn = document.getElementById('installBtn');
 
     // Force fresh live connection (fixes lag / old buffer after pause)
     function resetStreamToLive() {
@@ -356,6 +372,39 @@
           .catch(err => console.log('Service Worker registration failed:', err));
       });
     }
+
+    // Custom PWA Install Button
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the automatic mini-infobar on mobile
+      e.preventDefault();
+      // Save the event for later use
+      deferredPrompt = e;
+      // Show our custom button
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+
+      // Show the native install prompt
+      deferredPrompt.prompt();
+
+      // Wait for user choice
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('User install choice:', outcome);
+
+      // Reset prompt variable
+      deferredPrompt = null;
+      // Hide button after prompt (whether accepted or dismissed)
+      installBtn.style.display = 'none';
+    });
+
+    // Optional: Hide button if user already installed or prompt not available
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed!');
+      installBtn.style.display = 'none';
+    });
   </script>
 </body>
 </html>
