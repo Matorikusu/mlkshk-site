@@ -23,48 +23,220 @@
       --muted: #c0c0c0;
       --accent: #ff2aa1;
       --glow: rgba(255,42,161,0.5);
+      --card-radius: 12px;
       --transmission: #00ff00;
     }
     body {
       margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
       overflow-x: hidden;
     }
-    /* … (all your existing styles for nav, transmitter-room, player-overlay, transmitter-status, footer, responsive etc. remain unchanged) … */
 
-    /* NEW: Low-key centered add-to-home prompt at bottom */
-    .add-to-home {
+    /* NAVIGATION */
+    header.nav-bar {
+      border-bottom:1px solid rgba(255,42,161,0.04);
+      padding:18px 24px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
+      position: sticky; top:0; z-index:200;
+      backdrop-filter: blur(6px);
+    }
+    .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+    .logo-link img { height:42px; display:block; cursor:pointer; }
+    .nav-dropdown { position: relative; display:inline-block; }
+    .nav-toggle {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
+      color:var(--muted); font-weight:600; background:transparent; border:0;
+    }
+    .nav-toggle::after {
+      content:""; display:inline-block; width:8px; height:8px;
+      border-right:2px solid var(--muted);
+      border-bottom:2px solid var(--muted);
+      transform: rotate(45deg); margin-left:4px; transition:.18s ease;
+    }
+    .dropdown-menu {
+      display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
+      min-width:180px; background:#000;
+      border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
+      overflow:hidden; max-width:90vw;
+    }
+    .dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; text-decoration:none; }
+    .dropdown-menu a:hover { background:var(--accent); color:#000; }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu { display:block; }
+
+    /* TRANSMITTER ROOM */
+    .transmitter-room {
+      position: relative;
+      min-height: 100vh;
+      padding: 50px 0;
+      background: url('images/Pirate Radio/mlkshkbunker.png') center/cover no-repeat fixed;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .transmitter-room::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: brightness(0.85) contrast(1.05);
+      z-index: 0;
+    }
+    .transmitter-room .crt-noise {
+      position: absolute;
+      inset: 0;
+      background: url('images/Pirate Radio/static1.png') repeat;
+      opacity: 0.40;
+      animation: scan 14s linear infinite;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 1;
+    }
+    @keyframes scan {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+    .transmitter-room::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 180px #000;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* PLAYER OVERLAY */
+    .player-overlay {
+      position: relative;
+      z-index: 10;
+      background: rgba(0,0,0,0.28);
+      padding: 25px 40px 40px;
+      border-radius: 16px;
+      border: 1px dashed var(--glow);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 50px var(--glow);
       text-align: center;
-      padding: 20px 0 40px;
+      max-width: 420px;
+    }
+    .player-overlay img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      filter: brightness(0.88) contrast(1.12) grayscale(0.1);
+      border: 1px solid rgba(255,42,161,0.25);
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .player-overlay button {
+      padding:14px 40px;
+      border:none;
+      border-radius:30px;
+      background:var(--accent);
+      color:#000;
+      font-weight:700;
+      font-size:1.3rem;
+      cursor:pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px var(--glow);
+      margin: 10px;
+    }
+    .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
+
+    #installBtn {
+      background: var(--transmission);
+      color: #000;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px var(--transmission);
+    }
+    #installBtn:hover {
+      background: #00cc00;
+      transform: scale(1.04);
+    }
+
+    .player-overlay #status {
+      margin-top:12px;
+      font-size:1rem;
+      opacity:0.9;
+      color: #fff;
+    }
+
+    /* TRANSMITTER STATUS */
+    #transmitter-status {
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--transmission);
+      opacity: 0.75;
+      text-align: center;
+      line-height: 1.4;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px dashed var(--transmission);
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      padding:18px 10px;
+      color:var(--muted);
+      text-align:center;
+      background: rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      header.nav-bar { padding: 12px 16px; }
+      .transmitter-room { min-height: 100vh; padding: 40px 0; }
+      .player-overlay {
+        padding: 20px 25px 35px;
+        max-width: 92%;
+        border-radius: 14px;
+      }
+      .player-overlay img { max-width: 85%; margin-bottom: 16px; }
+      .player-overlay button { padding:12px 36px; font-size:1.2rem; }
+      .player-overlay #status { font-size:0.95rem; }
+      #transmitter-status { font-size: 0.8rem; margin-top: 16px; padding: 6px 10px; }
+      .nav-dropdown .dropdown-menu {
+        right: 0;
+        left: auto;
+        min-width: 160px;
+        max-width: 90vw;
+      }
+    }
+
+    /* Minimal centered add-to-home button */
+    .add-to-home-wrapper {
+      text-align: center;
+      padding: 20px 0 30px;
+      margin-top: -20px; /* pulls it closer to footer */
+    }
+    .add-to-home-btn {
+      background: none;
+      border: none;
       color: var(--muted);
       font-size: 0.95rem;
-      opacity: 0.7;
-    }
-    .add-to-home a {
-      color: var(--transmission);
-      text-decoration: none;
-      border-bottom: 1px dashed var(--transmission);
+      cursor: pointer;
+      padding: 6px 12px;
+      opacity: 0.6;
       transition: all 0.2s;
     }
-    .add-to-home a:hover {
-      color: #00ff00;
+    .add-to-home-btn:hover {
+      color: var(--transmission);
       opacity: 1;
-      text-shadow: 0 0 8px var(--transmission);
+      text-shadow: 0 0 6px var(--transmission);
     }
-    .add-to-home .instructions {
-      margin-top: 6px;
-      font-size: 0.85rem;
+    .add-to-home-instructions {
+      margin-top: 4px;
+      font-size: 0.8rem;
       color: var(--muted);
-      line-height: 1.4;
+      opacity: 0.5;
     }
 
     @media (max-width: 768px) {
-      .add-to-home {
-        padding: 16px 0 30px;
-        font-size: 0.9rem;
-      }
-      .add-to-home .instructions {
-        font-size: 0.8rem;
-      }
+      .add-to-home-btn { font-size: 0.9rem; }
+      .add-to-home-instructions { font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -114,13 +286,13 @@
     </div>
   </footer>
 
-  <!-- NEW: Centered, understated add-to-home prompt -->
-  <div class="add-to-home">
-    <a href="#" onclick="event.preventDefault(); alert('Stick this on your homescreen if you want:\n\nAndroid (Chrome): three-dot menu (⋮) → Add to home screen\niPhone (Safari): Share icon → Add to Home Screen\n\nWhatever.'); return false;">
-      stick this on your homescreen if you want
-    </a>
-    <div class="instructions">
-      (no app store bullshit required)
+  <!-- Centered, minimal add-to-home button -->
+  <div class="add-to-home-wrapper">
+    <button class="add-to-home-btn" onclick="alert('add to homescreen:\nAndroid → Chrome menu (⋮) → Add to home screen\niPhone → Safari Share → Add to Home Screen')">
+      add to homescreen if you care
+    </button>
+    <div class="add-to-home-instructions">
+      (whatever, it's just a shortcut)
     </div>
   </div>
 
