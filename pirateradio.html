@@ -206,37 +206,36 @@
       }
     }
 
-    /* Minimal centered add-to-home button */
-    .add-to-home-wrapper {
-      text-align: center;
-      padding: 20px 0 30px;
-      margin-top: -20px; /* pulls it closer to footer */
-    }
+    /* Floating Add to Home Screen button – small, bottom-right, subtle */
     .add-to-home-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
       background: none;
-      border: none;
+      border: 1px solid var(--muted);
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
       color: var(--muted);
-      font-size: 0.95rem;
       cursor: pointer;
-      padding: 6px 12px;
+      z-index: 999;
       opacity: 0.6;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
     .add-to-home-btn:hover {
-      color: var(--transmission);
       opacity: 1;
-      text-shadow: 0 0 6px var(--transmission);
-    }
-    .add-to-home-instructions {
-      margin-top: 4px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      opacity: 0.5;
+      color: var(--transmission);
+      border-color: var(--transmission);
+      box-shadow: 0 0 10px rgba(0,255,0,0.3);
     }
 
     @media (max-width: 768px) {
-      .add-to-home-btn { font-size: 0.9rem; }
-      .add-to-home-instructions { font-size: 0.75rem; }
+      .add-to-home-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -286,15 +285,10 @@
     </div>
   </footer>
 
-  <!-- Centered, minimal add-to-home button -->
-  <div class="add-to-home-wrapper">
-    <button class="add-to-home-btn" onclick="alert('add to homescreen:\nAndroid → Chrome menu (⋮) → Add to home screen\niPhone → Safari Share → Add to Home Screen')">
-      add to homescreen if you care
-    </button>
-    <div class="add-to-home-instructions">
-      (whatever, it's just a shortcut)
-    </div>
-  </div>
+  <!-- Floating minimal Add to Home Screen button -->
+  <button class="add-to-home-btn" onclick="alert('add to homescreen:\nAndroid: Chrome menu (three dots) → Add to home screen\niPhone: Safari Share → Add to Home Screen')">
+    add to homescreen
+  </button>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
