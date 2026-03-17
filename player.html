@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MLKSHK Pirate Radio</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 
-  <!-- PWA/Standalone optimizations -->
+  <!-- Icons & PWA/Standalone -->
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Pirate Radio/pirateradio.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/Pirate Radio/pirateradio.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/Pirate Radio/pirateradio.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/images/Pirate Radio/pirateradio.png">
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Pirate Radio">
-  <link rel="apple-touch-icon" href="images/LOGO_SMALL.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
@@ -100,30 +104,56 @@
     </div>
     <audio id="radio" preload="none">
       <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
     </audio>
   </div>
 
   <script>
-    // Reuse your player logic (reset to live, events, etc.)
     const radio = document.getElementById('radio');
     const btn = document.getElementById('playBtn');
     const statusEl = document.getElementById('status');
 
+    let retryCount = 0;
+    const retryDelay = 4000; // 4 seconds between attempts
+
     function resetStreamToLive() {
-      const src = radio.src;
-      radio.src = '';
-      radio.load();
-      radio.src = src;
-      radio.load();
+      const currentSrc = radio.src;
+      if (currentSrc) {
+        radio.src = '';
+        radio.load();
+        radio.src = currentSrc;
+        radio.load();
+      }
+      retryCount = 0;
+    }
+
+    function tryReconnect() {
+      statusEl.textContent = `Reconnecting... attempt ${retryCount + 1}`;
+      resetStreamToLive();
+      radio.play()
+        .then(() => {
+          btn.textContent = 'Pause';
+          statusEl.textContent = 'Live';
+          retryCount = 0;
+        })
+        .catch(() => {
+          retryCount++;
+          setTimeout(tryReconnect, retryDelay);
+        });
     }
 
     btn.addEventListener('click', () => {
       if (radio.paused) {
         resetStreamToLive();
-        radio.play().then(() => {
-          btn.textContent = 'Pause';
-          statusEl.textContent = 'Connecting...';
-        }).catch(e => statusEl.textContent = 'Error – try again');
+        radio.play()
+          .then(() => {
+            btn.textContent = 'Pause';
+            statusEl.textContent = 'Connecting...';
+          })
+          .catch(() => {
+            statusEl.textContent = 'Connection failed – retrying...';
+            tryReconnect();
+          });
       } else {
         radio.pause();
         btn.textContent = '▶ Play';
@@ -131,20 +161,36 @@
       }
     });
 
-    radio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-    radio.addEventListener('playing', () => statusEl.textContent = 'Live');
     radio.addEventListener('error', () => {
-      statusEl.textContent = 'Stream error – retrying...';
-      setTimeout(() => { resetStreamToLive(); radio.play(); }, 3000);
+      statusEl.textContent = 'Stream error – reconnecting...';
+      tryReconnect();
     });
 
-    // Optional: transmitter cycling (shortened)
-    const statusOptions = ["FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB", /* add others */];
-    function updateStatus() {
+    radio.addEventListener('stalled', () => {
+      statusEl.textContent = 'Stalled – reconnecting...';
+      tryReconnect();
+    });
+
+    radio.addEventListener('waiting', () => {
+      statusEl.textContent = 'Buffering...';
+    });
+
+    radio.addEventListener('playing', () => {
+      statusEl.textContent = 'Live';
+      retryCount = 0;
+    });
+
+    // Transmitter status cycling (short version)
+    const statusOptions = [
+      "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
+      "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
+      "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED"
+    ];
+    function updateTransmitterStatus() {
       document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
     }
-    updateStatus();
-    setInterval(updateStatus, 180000); // every ~3 min
+    updateTransmitterStatus();
+    setInterval(updateTransmitterStatus, 180000);
   </script>
 </body>
 </html>
