@@ -6,19 +6,31 @@
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#ff2aa1",
-  "orientation": "any",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "images/LOGO_SMALL.png",
+      "src": "/images/Pirate Radio/pirateradio.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/Pirate Radio/pirateradio.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/LOGO_SMALL.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/Pirate Radio/pirateradio.png",
-      "sizes": "512x512",
+      "src": "/images/LOGO_SMALL.png",
+      "sizes": "144x144",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
