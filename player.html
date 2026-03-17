@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MLKSHK Pirate Radio</title>
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+  <!-- PWA/Standalone optimizations -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pirate Radio">
+  <link rel="apple-touch-icon" href="images/LOGO_SMALL.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000;
+      --text: #f5f5f5;
+      --muted: #c0c0c0;
+      --accent: #ff2aa1;
+      --glow: rgba(255,42,161,0.5);
+      --transmission: #00ff00;
+    }
+    body {
+      margin:0; padding:0; height:100vh; font-family:'Rajdhani', sans-serif;
+      background:var(--bg); color:var(--text); overflow:hidden;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .player-container {
+      position: relative;
+      width: 90%; max-width: 420px;
+      background: rgba(0,0,0,0.4);
+      padding: 30px 20px;
+      border-radius: 20px;
+      border: 1px dashed var(--glow);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 60px var(--glow);
+      text-align: center;
+    }
+    .player-container img {
+      max-width: 100%; height: auto; margin-bottom: 20px;
+      border: 1px solid rgba(255,42,161,0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 30px var(--glow);
+    }
+    button#playBtn {
+      padding: 18px 50px;
+      border: none;
+      border-radius: 50px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 30px var(--glow);
+      margin: 15px 0;
+    }
+    button#playBtn:hover { background: #ff5bc3; transform: scale(1.05); }
+    #status {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      opacity: 0.95;
+    }
+    #transmitter-status {
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: var(--transmission);
+      background: rgba(0,0,0,0.5);
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px dashed var(--transmission);
+      margin-top: 20px;
+    }
+    .crt-noise {
+      position: absolute;
+      inset: 0;
+      background: url('images/Pirate Radio/static1.png') repeat;
+      opacity: 0.35;
+      animation: scan 14s linear infinite;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: -1;
+    }
+    @keyframes scan { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+  </style>
+</head>
+<body>
+  <div class="player-container">
+    <div class="crt-noise"></div>
+    <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
+    <button id="playBtn">▶ Play</button>
+    <p id="status">Ready – tap Play to connect live</p>
+    <div id="transmitter-status">
+      FREQ: 107.3 MHz (PIRATE)<br>
+      PWR: 52% (FLUCTUATING)<br>
+      NOISE: -41 dB
+    </div>
+    <audio id="radio" preload="none">
+      <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    // Reuse your player logic (reset to live, events, etc.)
+    const radio = document.getElementById('radio');
+    const btn = document.getElementById('playBtn');
+    const statusEl = document.getElementById('status');
+
+    function resetStreamToLive() {
+      const src = radio.src;
+      radio.src = '';
+      radio.load();
+      radio.src = src;
+      radio.load();
+    }
+
+    btn.addEventListener('click', () => {
+      if (radio.paused) {
+        resetStreamToLive();
+        radio.play().then(() => {
+          btn.textContent = 'Pause';
+          statusEl.textContent = 'Connecting...';
+        }).catch(e => statusEl.textContent = 'Error – try again');
+      } else {
+        radio.pause();
+        btn.textContent = '▶ Play';
+        statusEl.textContent = 'Paused';
+      }
+    });
+
+    radio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+    radio.addEventListener('playing', () => statusEl.textContent = 'Live');
+    radio.addEventListener('error', () => {
+      statusEl.textContent = 'Stream error – retrying...';
+      setTimeout(() => { resetStreamToLive(); radio.play(); }, 3000);
+    });
+
+    // Optional: transmitter cycling (shortened)
+    const statusOptions = ["FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB", /* add others */];
+    function updateStatus() {
+      document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+    }
+    updateStatus();
+    setInterval(updateStatus, 180000); // every ~3 min
+  </script>
+</body>
+</html>
