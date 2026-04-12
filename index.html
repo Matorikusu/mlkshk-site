@@ -112,7 +112,7 @@ footer{
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
-/* FLOATING PLAYER - FIXED */
+/* FLOATING PLAYER */
 #floating-player{
   position:fixed;
   bottom:20px;
@@ -213,7 +213,7 @@ footer{
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER - FIXED -->
+<!-- FLOATING PLAYER - LIVE RADIO BEHAVIOR -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -224,54 +224,62 @@ footer{
     <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
   </div>
   
-  <audio id="audio" preload="none">
-    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <audio id="audio" preload="none"></audio>
 </div>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Floating player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
+function playLiveStream() {
+  // Force fresh live stream every time we play
+  audio.src = STREAM_URL + "?t=" + Date.now();
+  audio.load();
+  
+  audio.play().then(() => {
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  }).catch(e => {
+    console.error("Play failed:", e);
+    statusEl.textContent = 'Connection error – retrying...';
+    setTimeout(playLiveStream, 1500);
+  });
+}
+
+function stopStream() {
+  audio.pause();
+  audio.src = '';           // Clear source so it doesn't resume old position
+  btn.src = 'Player/PLAY.png';
+  statusEl.textContent = 'Paused';
+}
+
+// Play / Pause button
 btn.onclick = () => {
-  if (audio.paused) {
-    audio.play().then(() => {
-      btn.src = 'Player/PAUSE.png';
-      statusEl.textContent = 'Live';
-    }).catch(e => {
-      console.error("Play failed:", e);
-      statusEl.textContent = 'Connection error – retrying...';
-      setTimeout(() => {
-        audio.load();
-        audio.play().catch(() => {});
-      }, 1500);
-    });
+  if (audio.paused || audio.src === '') {
+    playLiveStream();
   } else {
-    audio.pause();
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
+    stopStream();
   }
 };
 
-// Event listeners for better UX
+// Status & error handling
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Live');
 audio.addEventListener('error', () => {
   statusEl.textContent = 'Stream error – retrying...';
-  setTimeout(() => {
-    audio.load();
-    audio.play().catch(() => {});
-  }, 2000);
+  setTimeout(playLiveStream, 2000);
 });
-audio.addEventListener('stalled', () => statusEl.textContent = 'Reconnecting...');
+audio.addEventListener('stalled', () => {
+  statusEl.textContent = 'Reconnecting...';
+  setTimeout(playLiveStream, 1500);
+});
 audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
-// Media Session (shows on lock screen / notification)
+// Media Session (lock screen support)
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -283,16 +291,8 @@ if ('mediaSession' in navigator) {
     ]
   });
 
-  navigator.mediaSession.setActionHandler('play', () => {
-    audio.play();
-    btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Live';
-  });
-  navigator.mediaSession.setActionHandler('pause', () => {
-    audio.pause();
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
-  });
+  navigator.mediaSession.setActionHandler('play', playLiveStream);
+  navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
 // Dropdown menu
