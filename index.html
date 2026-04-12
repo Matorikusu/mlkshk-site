@@ -14,7 +14,6 @@
   --accent:#ff2aa1;
   --dropdown-bg:#000;
 }
-/* RESET */
 html,body{
   margin:0;
   height:100%;
@@ -98,7 +97,7 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
-/* INDIVIDUAL BACKGROUNDS */
+/* BACKGROUNDS */
 .pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
 .brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
 .catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
@@ -160,7 +159,6 @@ footer{
   height:42px;
   cursor:pointer;
 }
-/* MOBILE */
 @media (max-width: 768px) {
   .hero { height: 50vh; }
   .image-section { height: auto; min-height: 200px; }
@@ -213,7 +211,7 @@ footer{
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER - LIVE RADIO BEHAVIOR -->
+<!-- FLOATING PLAYER - PROPER STOP + AUTO-RECONNECT -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -221,7 +219,7 @@ footer{
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
   </div>
   
   <audio id="audio" preload="none"></audio>
@@ -235,12 +233,14 @@ const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
 const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
+let isPlaying = false;
+
 function playLiveStream() {
-  // Force fresh live stream every time we play
-  audio.src = STREAM_URL + "?t=" + Date.now();
+  audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live stream
   audio.load();
   
   audio.play().then(() => {
+    isPlaying = true;
     btn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Live';
   }).catch(e => {
@@ -252,14 +252,15 @@ function playLiveStream() {
 
 function stopStream() {
   audio.pause();
-  audio.src = '';           // Clear source so it doesn't resume old position
+  audio.src = '';                    // Clear source completely
+  isPlaying = false;
   btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'Paused';
+  statusEl.textContent = 'Stopped';
 }
 
-// Play / Pause button
+// Toggle button
 btn.onclick = () => {
-  if (audio.paused || audio.src === '') {
+  if (!isPlaying) {
     playLiveStream();
   } else {
     stopStream();
@@ -268,27 +269,30 @@ btn.onclick = () => {
 
 // Status & error handling
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-audio.addEventListener('playing', () => statusEl.textContent = 'Live');
+audio.addEventListener('playing', () => {
+  statusEl.textContent = 'Live';
+  isPlaying = true;
+});
 audio.addEventListener('error', () => {
-  statusEl.textContent = 'Stream error – retrying...';
-  setTimeout(playLiveStream, 2000);
+  if (isPlaying) {                    // Only auto-retry if we were actively playing
+    statusEl.textContent = 'Stream dropped – reconnecting...';
+    setTimeout(playLiveStream, 2000);
+  }
 });
 audio.addEventListener('stalled', () => {
-  statusEl.textContent = 'Reconnecting...';
-  setTimeout(playLiveStream, 1500);
+  if (isPlaying) {
+    statusEl.textContent = 'Reconnecting...';
+    setTimeout(playLiveStream, 1500);
+  }
 });
-audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
 
-// Media Session (lock screen support)
+// Media Session support
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
     artist: "Underground • Live • No Rules",
     album: "MLKSHK Digital",
-    artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-      { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
-    ]
+    artwork: [{ src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }]
   });
 
   navigator.mediaSession.setActionHandler('play', playLiveStream);
