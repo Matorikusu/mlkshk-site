@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MLKSHK RADIO</title>
   <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-
   <!-- PWA Support -->
   <link rel="manifest" href="/manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="MLKSHK Pirate Radio">
   <link rel="apple-touch-icon" href="images/LOGO_SMALL.png">
-
   <style>
     :root {
       --bg: #000;
@@ -30,7 +27,6 @@
       margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
       overflow-x: hidden;
     }
-
     /* NAVIGATION */
     header.nav-bar {
       border-bottom:1px solid rgba(255,42,161,0.04);
@@ -62,7 +58,6 @@
     .dropdown-menu a:hover { background:var(--accent); color:#000; }
     .nav-dropdown:hover .dropdown-menu,
     .nav-dropdown:focus-within .dropdown-menu { display:block; }
-
     /* TRANSMITTER ROOM */
     .transmitter-room {
       position: relative;
@@ -104,7 +99,6 @@
       pointer-events: none;
       z-index: 1;
     }
-
     /* PLAYER OVERLAY */
     .player-overlay {
       position: relative;
@@ -140,7 +134,6 @@
       margin: 10px;
     }
     .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
-
     #installBtn {
       background: var(--transmission);
       color: #000;
@@ -152,14 +145,12 @@
       background: #00cc00;
       transform: scale(1.04);
     }
-
     .player-overlay #status {
       margin-top:12px;
       font-size:1rem;
       opacity:0.9;
       color: #fff;
     }
-
     /* TRANSMITTER STATUS */
     #transmitter-status {
       margin-top: 20px;
@@ -174,7 +165,6 @@
       border-radius: 8px;
       border: 1px dashed var(--transmission);
     }
-
     /* FOOTER */
     footer.site-footer {
       padding:18px 10px;
@@ -184,7 +174,6 @@
       position: relative;
       z-index: 10;
     }
-
     /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
       header.nav-bar { padding: 12px 16px; }
@@ -205,8 +194,7 @@
         max-width: 90vw;
       }
     }
-
-    /* Floating Add to Home Screen button – small, bottom-right, subtle */
+    /* Floating Add to Home Screen button */
     .add-to-home-btn {
       position: fixed;
       bottom: 20px;
@@ -228,7 +216,6 @@
       border-color: var(--transmission);
       box-shadow: 0 0 10px rgba(0,255,0,0.3);
     }
-
     @media (max-width: 768px) {
       .add-to-home-btn {
         bottom: 15px;
@@ -272,10 +259,9 @@
         PWR: 52% (FLUCTUATING)<br>
         NOISE: -41 dB
       </div>
-      <audio id="radio" preload="none" style="display:none">
-        <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
+      
+      <!-- Audio element (no source here - managed by JS) -->
+      <audio id="radio" preload="none"></audio>
     </div>
   </div>
 
@@ -293,55 +279,66 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const radio = document.getElementById('radio');
+    const audio = document.getElementById('radio');
     const btn = document.getElementById('playBtn');
     const statusEl = document.getElementById('status');
     const installBtn = document.getElementById('installBtn');
+    const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-    function resetStreamToLive() {
-      const currentSrc = radio.currentSrc || radio.src;
-      if (currentSrc) {
-        radio.src = '';
-        radio.load();
-        radio.src = currentSrc;
-        radio.load();
-      }
+    let isPlaying = false;
+
+    function playLiveStream() {
+      audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live connection
+      audio.load();
+      
+      audio.play().then(() => {
+        isPlaying = true;
+        btn.textContent = 'Pause';
+        statusEl.textContent = 'Live';
+      }).catch(e => {
+        console.error('Play failed:', e);
+        statusEl.textContent = 'Connection error – retrying...';
+        setTimeout(playLiveStream, 1500);
+      });
     }
 
+    function stopStream() {
+      audio.pause();
+      audio.src = '';                    // Fully clear the stream
+      isPlaying = false;
+      btn.textContent = '▶ Play';
+      statusEl.textContent = 'Stopped';
+    }
+
+    // Play / Stop button
     btn.addEventListener('click', () => {
-      if (radio.paused) {
-        resetStreamToLive();
-        radio.play()
-          .then(() => {
-            btn.textContent = 'Pause';
-            statusEl.textContent = 'Connecting...';
-          })
-          .catch(e => {
-            console.error('Play failed:', e);
-            statusEl.textContent = 'Connection error – try again';
-          });
+      if (!isPlaying) {
+        playLiveStream();
       } else {
-        radio.pause();
-        btn.textContent = '▶ Play';
-        statusEl.textContent = 'Paused';
+        stopStream();
       }
     });
 
-    radio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-    radio.addEventListener('playing', () => statusEl.textContent = 'Live');
-    radio.addEventListener('error', () => {
-      statusEl.textContent = 'Stream error – retrying...';
-      setTimeout(() => {
-        resetStreamToLive();
-        radio.play().catch(() => {});
-      }, 3000);
+    // Status & error handling
+    audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+    audio.addEventListener('playing', () => {
+      statusEl.textContent = 'Live';
+      isPlaying = true;
     });
-    radio.addEventListener('stalled', () => {
-      statusEl.textContent = 'Stalled – reconnecting...';
-      resetStreamToLive();
-      radio.play().catch(() => {});
+    audio.addEventListener('error', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Stream dropped – reconnecting...';
+        setTimeout(playLiveStream, 2000);
+      }
+    });
+    audio.addEventListener('stalled', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Reconnecting...';
+        setTimeout(playLiveStream, 1500);
+      }
     });
 
+    // Media Session (lock screen / notification)
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: "MLKSHK Pirate Radio",
@@ -354,21 +351,12 @@
           { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
         ]
       });
-      navigator.mediaSession.setActionHandler('play', () => {
-        resetStreamToLive();
-        radio.play();
-        btn.textContent = 'Pause';
-        statusEl.textContent = 'Live';
-      });
-      navigator.mediaSession.setActionHandler('pause', () => {
-        radio.pause();
-        btn.textContent = '▶ Play';
-        statusEl.textContent = 'Paused';
-      });
-      radio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
-      radio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+
+      navigator.mediaSession.setActionHandler('play', playLiveStream);
+      navigator.mediaSession.setActionHandler('pause', stopStream);
     }
 
+    // Random transmitter status
     const statusOptions = [
       "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
       "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
@@ -376,12 +364,14 @@
       "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
       "THEY’RE LISTENING<br>FREQUENCY LOCKED"
     ];
+
     function updateTransmitterStatus() {
       document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
     }
     updateTransmitterStatus();
     setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
 
+    // Dropdown menu
     const navToggle = document.querySelector('.nav-toggle');
     const dropdownMenu = document.querySelector('.dropdown-menu');
     navToggle.addEventListener('click', (e) => {
@@ -394,6 +384,7 @@
       }
     });
 
+    // PWA Install
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -408,7 +399,6 @@
       deferredPrompt = e;
       installBtn.style.display = 'inline-block';
     });
-
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
       deferredPrompt.prompt();
@@ -417,7 +407,6 @@
       deferredPrompt = null;
       installBtn.style.display = 'none';
     });
-
     window.addEventListener('appinstalled', () => {
       console.log('PWA was installed!');
       installBtn.style.display = 'none';
