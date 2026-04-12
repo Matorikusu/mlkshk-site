@@ -27,7 +27,6 @@ html,body{
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
-
 /* NAV */
 header.nav-bar{
   border-bottom:1px solid rgba(255,42,161,0.04);
@@ -80,7 +79,6 @@ header.nav-bar{
 }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
-
 /* SIGNAL METERS — bottom corners */
 .signal-meter {
   position: fixed;
@@ -124,7 +122,6 @@ header.nav-bar{
   0%,100% { opacity:1; }
   50% { opacity:0.7; }
 }
-
 /* JAM BUTTON – in content flow */
 .jam-section {
   text-align: center;
@@ -148,7 +145,6 @@ header.nav-bar{
   box-shadow: 0 0 40px rgba(255,0,0,0.7);
   transform: scale(1.05);
 }
-
 /* JAM OVERLAY – full-screen tiled static, centered text */
 #jam-overlay {
   position: fixed;
@@ -172,7 +168,6 @@ header.nav-bar{
   transition: opacity 0.5s;
   pointer-events: none;
 }
-
 /* TRANSMISSION NEWS – static, cycling like signal bleed */
 .transmission-news {
   margin: 60px auto;
@@ -191,7 +186,6 @@ header.nav-bar{
   margin: 8px 0;
   text-shadow: 0 0 4px #0f0;
 }
-
 /* PHASE MODULATOR ARTIFACT – clickable image above stocks */
 .phase-artifact {
   margin: 60px auto;
@@ -219,7 +213,6 @@ header.nav-bar{
   font-family: monospace;
   font-size: 14px;
 }
-
 /* MLK 500 STOCK INDEX – Coinbase-style list at bottom */
 .mlk500-section {
   margin: 80px auto;
@@ -283,7 +276,6 @@ header.nav-bar{
 }
 .positive { color: #0f0; }
 .negative { color: #f00; }
-
 /* INVEST BUTTON */
 .invest-section {
   text-align: center;
@@ -314,7 +306,6 @@ header.nav-bar{
   opacity: 0;
   transition: opacity 0.5s;
 }
-
 /* HERO */
 .hero-link{
   display:block;
@@ -333,7 +324,6 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px var(--glow);
 }
-
 /* MAIN CONTENT */
 .wrap{
   max-width:1200px;
@@ -393,7 +383,6 @@ header.nav-bar{
   font-size:13px;
   color:var(--muted);
 }
-
 /* CYCLING AD BANNER */
 .ad-banner {
   margin:60px auto;
@@ -417,7 +406,6 @@ header.nav-bar{
   box-shadow:0 0 20px var(--glow);
   transition:opacity 0.8s ease;
 }
-
 /* TRANSMISSION LOG */
 .trans-log{
   margin:60px auto;
@@ -432,7 +420,6 @@ header.nav-bar{
   text-align:center;
   opacity:0.7;
 }
-
 /* SIGNAL BLEED NOTE */
 .signal-bleed{
   margin:80px auto 40px;
@@ -446,7 +433,6 @@ header.nav-bar{
   border-top:1px dashed var(--accent);
   border-bottom:1px dashed var(--accent);
 }
-
 /* CRT OVERLAY */
 .crt-overlay{
   position:fixed;
@@ -461,7 +447,6 @@ header.nav-bar{
   0%{transform:translateY(-100%);}
   100%{transform:translateY(100%);}
 }
-
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -484,7 +469,6 @@ header.nav-bar{
 .player-status{font-size:11px;color:var(--muted);margin-top:4px;}
 .player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
 .player-controls img{width:42px;height:42px;cursor:pointer;}
-
 /* FOOTER */
 footer{
   padding:28px 20px;
@@ -493,7 +477,6 @@ footer{
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,.05);
 }
-
 /* MOBILE */
 @media (max-width:768px){
   .hero-link,.wrap{margin:20px auto;}
@@ -526,7 +509,6 @@ footer{
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -552,10 +534,9 @@ footer{
     <div id="strengthBar" class="bar" style="width:89%;"></div>
   </div>
 </div>
-
 <!-- INTERFERENCE LEVEL – bottom-right -->
 <div class="signal-meter" id="interferenceMeter">
-  <strong>Interference:</strong> 
+  <strong>Interference:</strong>
   <div class="bar-container">
     <div id="interferenceBar" class="bar" style="width:12%;"></div>
   </div>
@@ -628,7 +609,7 @@ footer{
     <p>Artifact detected — Phase Modulator online. Re-establish the signal.</p>
   </section>
 
-    <!-- TRANSMISSION NEWS – cycling bleed-style block -->
+  <!-- TRANSMISSION NEWS – cycling bleed-style block -->
   <section class="transmission-news" id="transmissionNews">
     <p>Signal intercepted: 5G towers confirmed as alien observation nodes •</p>
   </section>
@@ -661,6 +642,7 @@ footer{
   <div id="jam-text">SIGNAL LOST</div>
 </div>
 
+<!-- FLOATING PLAYER - IMPROVED LIVE RADIO -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -668,11 +650,10 @@ footer{
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
   </div>
-  <audio id="audio">
-    <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-  </audio>
+  
+  <audio id="audio" preload="none"></audio>
 </div>
 
 <footer style="text-align:center;">
@@ -683,56 +664,79 @@ footer{
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Floating player
+// Live Radio Player Logic
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-btn.addEventListener('click', () => {
-  if (audio.paused) {
-    audio.play().catch(e => {
-      console.log("Play failed:", e);
-      statusEl.textContent = 'Error – try again';
-    });
+let isPlaying = false;
+
+function playLiveStream() {
+  audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live stream
+  audio.load();
+  
+  audio.play().then(() => {
+    isPlaying = true;
     btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Connecting...';
+    statusEl.textContent = 'Live';
+  }).catch(e => {
+    console.error("Play failed:", e);
+    statusEl.textContent = 'Connection error – retrying...';
+    setTimeout(playLiveStream, 1500);
+  });
+}
+
+function stopStream() {
+  audio.pause();
+  audio.src = '';                    // Fully clear the stream
+  isPlaying = false;
+  btn.src = 'Player/PLAY.png';
+  statusEl.textContent = 'Stopped';
+}
+
+// Toggle button
+btn.addEventListener('click', () => {
+  if (!isPlaying) {
+    playLiveStream();
   } else {
-    audio.pause();
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
+    stopStream();
   }
 });
 
+// Status & error handling
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-audio.addEventListener('playing', () => statusEl.textContent = 'Live');
-audio.addEventListener('error', () => statusEl.textContent = 'Stream error – retry?');
-audio.addEventListener('stalled', () => statusEl.textContent = 'Stalled...');
-audio.addEventListener('pause', () => statusEl.textContent = 'Paused');
+audio.addEventListener('playing', () => {
+  statusEl.textContent = 'Live';
+  isPlaying = true;
+});
+audio.addEventListener('error', () => {
+  if (isPlaying) {
+    statusEl.textContent = 'Stream dropped – reconnecting...';
+    setTimeout(playLiveStream, 2000);
+  }
+});
+audio.addEventListener('stalled', () => {
+  if (isPlaying) {
+    statusEl.textContent = 'Reconnecting...';
+    setTimeout(playLiveStream, 1500);
+  }
+});
 
+// Media Session support
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
     artist: "Underground • Live • No Rules",
     album: "MLKSHK Digital",
     artwork: [
-      { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
-      { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
       { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
       { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
     ]
   });
-  navigator.mediaSession.setActionHandler('play', () => {
-    audio.play();
-    btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Live';
-  });
-  navigator.mediaSession.setActionHandler('pause', () => {
-    audio.pause();
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
-  });
-  audio.addEventListener('play', () => navigator.mediaSession.playbackState = 'playing');
-  audio.addEventListener('pause', () => navigator.mediaSession.playbackState = 'paused');
+
+  navigator.mediaSession.setActionHandler('play', playLiveStream);
+  navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
 // Dropdown toggle
@@ -776,15 +780,11 @@ const adImages = [
 ];
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
-
 function showAd() {
   const imgPath = adImages[adIndex];
-  adContainer.innerHTML = `
-    <img src="${imgPath}" alt="Ad">
-  `;
+  adContainer.innerHTML = `<img src="${imgPath}" alt="Ad">`;
   adIndex = (adIndex + 1) % adImages.length;
 }
-
 showAd();
 setInterval(showAd, 10000);
 
@@ -792,15 +792,12 @@ setInterval(showAd, 10000);
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const strengthMeterEl = document.getElementById('signalStrengthMeter');
-
 let currentStrength = 89;
-
 function updateStrength() {
   currentStrength += Math.floor(Math.random() * 13) - 6;
   currentStrength = Math.max(18, Math.min(98, currentStrength));
   signalStrengthEl.textContent = currentStrength + '%';
   strengthBarEl.style.width = currentStrength + '%';
-
   if (currentStrength > 70) {
     strengthBarEl.style.background = 'var(--signal-green)';
     strengthMeterEl.className = 'signal-meter';
@@ -812,21 +809,17 @@ function updateStrength() {
     strengthMeterEl.className = 'signal-meter critical';
   }
 }
-
 updateStrength();
 setInterval(updateStrength, Math.random() * 4000 + 3000);
 
 // INTERFERENCE LEVEL – bottom-right, slower cycle
 const interferenceBarEl = document.getElementById('interferenceBar');
 const interferenceMeterEl = document.getElementById('interferenceMeter');
-
 let currentInterference = 12;
-
 function updateInterference() {
   currentInterference += Math.floor(Math.random() * 17) - 8;
   currentInterference = Math.max(5, Math.min(85, currentInterference));
   interferenceBarEl.style.width = currentInterference + '%';
-
   if (currentInterference < 30) {
     interferenceBarEl.style.background = 'var(--signal-green)';
     interferenceMeterEl.className = 'signal-meter';
@@ -838,7 +831,6 @@ function updateInterference() {
     interferenceMeterEl.className = 'signal-meter critical';
   }
 }
-
 updateInterference();
 setInterval(updateInterference, Math.random() * 20000 + 15000);
 
@@ -846,27 +838,24 @@ setInterval(updateInterference, Math.random() * 20000 + 15000);
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
 const jamText = document.getElementById('jam-text');
-
 jamButton.addEventListener('click', () => {
   jamText.style.opacity = '1';
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
-
   const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
   jamAudio.volume = 0.5;
   jamAudio.play().catch(e => console.log("Audio play failed:", e));
-
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
     jamText.style.opacity = '0';
     document.body.style.animation = '';
-    transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
+    if (transLog) transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
   }, 7000);
 });
 
-// MLK 500 STOCK INDEX – 9 items, Coinbase-style
+// MLK 500 STOCK INDEX
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -878,19 +867,15 @@ const stocks = [
   { symbol: "SLCL", name: "Last Chance Lube", price: 14.20, change: -0.3 },
   { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
 ];
-
 function renderStocks() {
   const container = document.getElementById('stocks-container');
   container.innerHTML = '';
-
   stocks.forEach(stock => {
     const div = document.createElement('div');
     div.className = 'stock-item';
-
     const isPositive = stock.change >= 0;
     const colorClass = isPositive ? 'positive' : 'negative';
     const arrow = isPositive ? '↑' : '↓';
-
     div.innerHTML = `
       <div class="stock-left">
         <div class="stock-symbol">${stock.symbol}</div>
@@ -903,11 +888,9 @@ function renderStocks() {
         </div>
       </div>
     `;
-
     container.appendChild(div);
   });
 }
-
 function updateStocks() {
   stocks.forEach(stock => {
     const changePct = (Math.random() * 6 - 3) / 100;
@@ -915,22 +898,18 @@ function updateStocks() {
     stock.price = Math.max(0.01, Number(stock.price.toFixed(2)));
     stock.change = Number((changePct * 100).toFixed(2));
   });
-
   renderStocks();
   setTimeout(updateStocks, Math.random() * 7000 + 8000);
 }
-
 renderStocks();
 setTimeout(updateStocks, 8000);
 
-// INVEST BUTTON – cryptic message
+// INVEST BUTTON
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
-
 investButton.addEventListener('click', () => {
   investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
   investMessage.style.opacity = '1';
-
   setTimeout(() => {
     investMessage.style.opacity = '0';
   }, 4000);
@@ -955,7 +934,7 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-// Transmission news cycle (replaces old ticker)
+// Transmission news cycle
 const transmissionNews = document.getElementById('transmissionNews');
 if (transmissionNews) {
   const newsLines = [
@@ -968,14 +947,12 @@ if (transmissionNews) {
     "Pear Vision Pro adds 'Quiet Crying in Public' filter – sold out instantly"
   ];
   let newsIndex = 0;
-
   function updateTransmission() {
     transmissionNews.innerHTML = `<p>${newsLines[newsIndex]}</p>`;
     newsIndex = (newsIndex + 1) % newsLines.length;
   }
-
   updateTransmission();
-  setInterval(updateTransmission, 8000); // same cycle as log
+  setInterval(updateTransmission, 8000);
 }
 </script>
 </body>
