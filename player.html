@@ -4,20 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MLKSHK Pirate Radio</title>
-
   <!-- Icons & PWA/Standalone -->
   <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/Pirate Radio/pirateradio.png">
   <link rel="apple-touch-icon" sizes="152x152" href="/images/Pirate Radio/pirateradio.png">
   <link rel="apple-touch-icon" sizes="120x120" href="/images/Pirate Radio/pirateradio.png">
   <link rel="apple-touch-icon" sizes="512x512" href="/images/Pirate Radio/pirateradio.png">
-
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Pirate Radio">
-
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --bg: #000;
@@ -102,95 +98,98 @@
       PWR: 52% (FLUCTUATING)<br>
       NOISE: -41 dB
     </div>
-    <audio id="radio" preload="none">
-      <source src="https://radio.mlkshkdigital.com/stream.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+    
+    <!-- Audio element managed by JS -->
+    <audio id="radio" preload="none"></audio>
   </div>
 
   <script>
-    const radio = document.getElementById('radio');
+    const audio = document.getElementById('radio');
     const btn = document.getElementById('playBtn');
     const statusEl = document.getElementById('status');
+    const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-    let retryCount = 0;
-    const retryDelay = 4000; // 4 seconds between attempts
+    let isPlaying = false;
 
-    function resetStreamToLive() {
-      const currentSrc = radio.src;
-      if (currentSrc) {
-        radio.src = '';
-        radio.load();
-        radio.src = currentSrc;
-        radio.load();
-      }
-      retryCount = 0;
+    function playLiveStream() {
+      // Force fresh live connection every time
+      audio.src = STREAM_URL + "?t=" + Date.now();
+      audio.load();
+      
+      audio.play().then(() => {
+        isPlaying = true;
+        btn.textContent = 'Pause';
+        statusEl.textContent = 'Live';
+      }).catch(e => {
+        console.error('Play failed:', e);
+        statusEl.textContent = 'Connection error – retrying...';
+        setTimeout(playLiveStream, 1500);
+      });
     }
 
-    function tryReconnect() {
-      statusEl.textContent = `Reconnecting... attempt ${retryCount + 1}`;
-      resetStreamToLive();
-      radio.play()
-        .then(() => {
-          btn.textContent = 'Pause';
-          statusEl.textContent = 'Live';
-          retryCount = 0;
-        })
-        .catch(() => {
-          retryCount++;
-          setTimeout(tryReconnect, retryDelay);
-        });
+    function stopStream() {
+      audio.pause();
+      audio.src = '';           // Fully clear the stream
+      isPlaying = false;
+      btn.textContent = '▶ Play';
+      statusEl.textContent = 'Stopped';
     }
 
+    // Play / Stop button
     btn.addEventListener('click', () => {
-      if (radio.paused) {
-        resetStreamToLive();
-        radio.play()
-          .then(() => {
-            btn.textContent = 'Pause';
-            statusEl.textContent = 'Connecting...';
-          })
-          .catch(() => {
-            statusEl.textContent = 'Connection failed – retrying...';
-            tryReconnect();
-          });
+      if (!isPlaying) {
+        playLiveStream();
       } else {
-        radio.pause();
-        btn.textContent = '▶ Play';
-        statusEl.textContent = 'Paused';
+        stopStream();
       }
     });
 
-    radio.addEventListener('error', () => {
-      statusEl.textContent = 'Stream error – reconnecting...';
-      tryReconnect();
-    });
-
-    radio.addEventListener('stalled', () => {
-      statusEl.textContent = 'Stalled – reconnecting...';
-      tryReconnect();
-    });
-
-    radio.addEventListener('waiting', () => {
-      statusEl.textContent = 'Buffering...';
-    });
-
-    radio.addEventListener('playing', () => {
+    // Status & error handling
+    audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+    audio.addEventListener('playing', () => {
       statusEl.textContent = 'Live';
-      retryCount = 0;
+      isPlaying = true;
+    });
+    audio.addEventListener('error', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Stream dropped – reconnecting...';
+        setTimeout(playLiveStream, 2000);
+      }
+    });
+    audio.addEventListener('stalled', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Reconnecting...';
+        setTimeout(playLiveStream, 1500);
+      }
     });
 
-    // Transmitter status cycling (short version)
+    // Transmitter status cycling
     const statusOptions = [
       "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
       "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
       "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED"
     ];
+
     function updateTransmitterStatus() {
       document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
     }
     updateTransmitterStatus();
     setInterval(updateTransmitterStatus, 180000);
+
+    // Media Session support
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: "MLKSHK Pirate Radio",
+        artist: "Underground • Live • No Rules",
+        album: "MLKSHK Digital",
+        artwork: [
+          { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+        ]
+      });
+
+      navigator.mediaSession.setActionHandler('play', playLiveStream);
+      navigator.mediaSession.setActionHandler('pause', stopStream);
+    }
   </script>
 </body>
 </html>
