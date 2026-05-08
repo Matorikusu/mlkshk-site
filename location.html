@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK — Pirate Radio Deck</title>
+<title>MLKSHK — LOCATION NAME</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -20,10 +20,10 @@ html,body{
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
   background:var(--bg);
   color:var(--text);
-  overflow: hidden; /* No scrolling on immersive pages */
+  overflow: hidden;
 }
 
-/* NAV BAR - kept exactly as you had it */
+/* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
   padding:18px 24px;
@@ -65,14 +65,13 @@ header.nav-bar{
   display:block;
   padding:10px 14px;
   color:#fff;
-  text-decoration:none;
 }
 .dropdown-menu a:hover {
   background:var(--accent);
   color:#000;
 }
 
-/* IMMERSIVE SCENE CONTAINER */
+/* IMMERSIVE SCENE */
 .scene-container {
   position: relative;
   width: 100vw;
@@ -81,7 +80,6 @@ header.nav-bar{
   background: #000;
 }
 
-/* Background Layer */
 #scene-bg {
   position: absolute;
   top: 0; left: 0;
@@ -94,7 +92,6 @@ header.nav-bar{
   z-index: 1;
 }
 
-/* Foreground Overlays / Hotspots */
 .hotspot {
   position: absolute;
   cursor: pointer;
@@ -107,25 +104,7 @@ header.nav-bar{
   filter: brightness(1.25) drop-shadow(0 0 25px var(--accent));
 }
 
-/* Ambient Audio & Effects */
-#ambient-audio { display: none; }
-
-/* Floating HUD (optional minimal info) */
-.hud {
-  position: absolute;
-  bottom: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.4);
-  padding: 8px 24px;
-  border-radius: 30px;
-  font-size: 15px;
-  border: 1px solid rgba(255,42,161,0.3);
-  z-index: 10;
-  pointer-events: none;
-}
-
-/* FOOTER - minimal for immersive feel */
+/* FOOTER */
 footer{
   position: absolute;
   bottom: 0;
@@ -137,7 +116,7 @@ footer{
   z-index: 20;
 }
 
-/* FLOATING PLAYER - kept intact */
+/* FLOATING PLAYER */
 #floating-player{
   position:fixed;
   bottom:20px;
@@ -153,45 +132,15 @@ footer{
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
 }
-.player-meta{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  text-align:center;
-  padding:0 12px;
-}
-.player-title{
-  font-weight:700;
-  font-size:14px;
-}
-.player-artist{
-  font-size:12px;
-  color:var(--muted);
-}
-.player-status{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
-}
-.player-controls{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-left:12px;
-}
-.player-controls img{
-  width:42px;
-  height:42px;
-  cursor:pointer;
-}
+.player-meta{flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:0 12px;}
+.player-title{font-weight:700; font-size:14px;}
+.player-artist{font-size:12px; color:var(--muted);}
+.player-status{font-size:11px; color:var(--muted); margin-top:4px;}
+.player-controls img{width:42px; height:42px; cursor:pointer;}
 
 @media (max-width: 768px) {
   .scene-container { height: 100dvh; }
   #floating-player { width: 90%; height: 60px; padding: 0 12px; }
-  .player-title { font-size: 12px; }
-  .player-artist, .player-status { font-size: 10px; }
-  .player-controls img { width: 36px; height: 36px; }
 }
 </style>
 </head>
@@ -215,62 +164,54 @@ footer{
   </div>
 </header>
 
-<!-- IMMERSIVE LOCATION -->
 <div class="scene-container">
-
-  <!-- Background -->
   <div id="scene-bg"></div>
 
-  <!-- Example Hotspots / PNG Overlays (adjust positions as needed) -->
-  
-  <!-- Antenna / Radio Tower -->
-  <img src="images/Locations/Overlays/antenna.png" 
-       class="hotspot" 
-       style="top: 18%; left: 12%; width: 18%;"
+  <!-- RADIO ANTENNA - Top Left -->
+  <img src="images/Locations/Items/PIRATEFLAG.png"
+       class="hotspot"
+       style="top: 15%; left: 8%; width: 16%;"
        alt="Radio Antenna"
        data-action="radio">
 
-  <!-- Crate / Record Archive -->
-  <img src="images/Locations/Items/CRATE.png" 
-       class="hotspot" 
-       style="top: 62%; left: 28%; width: 14%;"
-       alt="Record Crate"
-       data-action="archive">
-
-  <!-- Speaker Stack -->
-  <img src="images/Locations/Overlays/speakers.png" 
-       class="hotspot" 
-       style="top: 48%; right: 18%; width: 22%;"
-       alt="Speakers"
-       data-action="music">
-
-  <!-- Neon Sign -->
-  <img src="images/Locations/Overlays/neon-sign.png" 
-       class="hotspot" 
-       style="top: 25%; right: 35%; width: 16%;"
+  <!-- NEON SIGN - Top Right -->
+  <img src="images/Locations/Overlays/neon-sign.png"
+       class="hotspot"
+       style="top: 12%; right: 18%; width: 17%;"
        alt="Neon Sign"
        data-action="info">
 
-  <!-- Portal to another location -->
-  <img src="images/Locations/Overlays/portal-lab.png" 
-       class="hotspot" 
-       style="bottom: 22%; left: 68%; width: 11%;"
+  <!-- RECORD CRATE - Lower Centre Left -->
+  <img src="images/Locations/Items/CRATE.png"
+       class="hotspot"
+       style="top: 58%; left: 24%; width: 15%;"
+       alt="Record Crate"
+       data-action="archive">
+
+  <!-- LAB PORTAL - Centre Left -->
+  <img src="images/Locations/Overlays/portal-lab.png"
+       class="hotspot"
+       style="top: 38%; left: 36%; width: 10%;"
        alt="Enter The Lab"
        data-action="portal-lab">
 
-  <!-- Optional subtle animated elements (fog, birds, etc.) can go here -->
+  <!-- SPEAKERS - Lower Right -->
+  <img src="images/Locations/Items/SPEAKERSTACK.png"
+       class="hotspot"
+       style="top: 52%; right: 12%; width: 20%;"
+       alt="Speakers"
+       data-action="music">
 
-  <!-- Minimal HUD -->
   <div class="hud">
-    PIRATE RADIO DECK • SIGNAL STRONG • 03:42 UTC
+    MLKSHK — LOCATION NAME • SIGNAL STRONG
   </div>
 </div>
 
 <footer>
-  MLKSHK Digital — The signal never dies. © <span id="year"></span>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER (kept exactly as before) -->
+<!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
@@ -283,16 +224,16 @@ footer{
   <audio id="audio" preload="none"></audio>
 </div>
 
-<!-- Ambient Audio -->
+<!-- AMBIENT AUDIO LOOP -->
 <audio id="ambient-audio" loop preload="none">
-  <source src="audio/ambience/pirate-deck-night.mp3" type="audio/mpeg">
+  <source src="audio/ambience/your-club-loop.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// === PLAYER (your original code kept intact) ===
+// PLAYER (unchanged)
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -308,7 +249,6 @@ function playLiveStream() {
     btn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Live';
   }).catch(e => {
-    console.error("Play failed:", e);
     statusEl.textContent = 'Connection error – retrying...';
     setTimeout(playLiveStream, 1500);
   });
@@ -322,95 +262,59 @@ function stopStream() {
   statusEl.textContent = 'Stopped';
 }
 
-btn.onclick = () => {
-  if (!isPlaying) playLiveStream();
-  else stopStream();
-};
+btn.onclick = () => isPlaying ? stopStream() : playLiveStream();
 
-// Audio event handlers (your original logic)
-audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; isPlaying = true; });
-audio.addEventListener('error', () => {
-  if (isPlaying) setTimeout(playLiveStream, 2000);
-});
-audio.addEventListener('stalled', () => {
-  if (isPlaying) setTimeout(playLiveStream, 1500);
-});
-
-// Media Session
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: "MLKSHK Pirate Radio",
-    artist: "Underground • Live",
-    album: "MLKSHK Digital",
-    artwork: [{ src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }]
-  });
-  navigator.mediaSession.setActionHandler('play', playLiveStream);
-  navigator.mediaSession.setActionHandler('pause', stopStream);
-}
-
-// === AMBIENT AUDIO ===
+// Ambient Audio (plays automatically after first click)
 const ambient = document.getElementById('ambient-audio');
-
 function startAmbient() {
-  ambient.volume = 0.45; // Adjust to taste
-  ambient.play().catch(() => {}); // Browsers require interaction first
+  ambient.volume = 0.42;        // Adjust volume here
+  ambient.play().catch(() => {});
 }
 
-// Start ambient after first user interaction (important)
+// Start ambient on first user interaction
 document.addEventListener('click', () => {
   if (ambient.paused) startAmbient();
 }, { once: true });
 
-// === HOTSPOT INTERACTIONS ===
+// Hotspot Actions
 document.querySelectorAll('.hotspot').forEach(hotspot => {
   hotspot.addEventListener('click', (e) => {
     const action = e.currentTarget.dataset.action;
     
     switch(action) {
       case 'radio':
-        // Click antenna → force play live stream
         if (!isPlaying) playLiveStream();
         break;
-        
       case 'archive':
-        alert("Opening Archive... (replace with modal or navigation)");
-        // window.location = 'archive.html';
+        alert("Opening Archive...");
         break;
-        
       case 'music':
-        alert("Cranking speakers... (open track list or visualizer)");
+        alert("Speakers cranked up...");
         break;
-        
       case 'info':
-        alert("MLKSHK PIRATE RADIO DECK\nSignal boosted from the void.");
+        alert("Neon is buzzing tonight.");
         break;
-        
       case 'portal-lab':
-        alert("Entering The Lab... (add fade transition in real version)");
-        // window.location = 'lab.html';
+        alert("Entering The Lab...");
+        // window.location.href = 'lab.html';
         break;
     }
   });
 });
 
-// Dropdown (your original)
+// Dropdown
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
-
 navToggle.addEventListener('click', (e) => {
   e.stopPropagation();
   dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
 });
+document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-document.addEventListener('click', () => {
-  dropdownMenu.style.display = 'none';
-});
-
-// Optional: subtle background parallax on mouse move
+// Mouse Parallax
 document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth) * 20 - 10;
-  const y = (e.clientY / window.innerHeight) * 15 - 7.5;
+  const x = (e.clientX / window.innerWidth) * 18 - 9;
+  const y = (e.clientY / window.innerHeight) * 12 - 6;
   document.getElementById('scene-bg').style.transform = `translate(${x}px, ${y}px)`;
 });
 </script>
