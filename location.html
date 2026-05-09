@@ -3,23 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK — King Bear</title>
+<title>MLKSHK — The Clubhouse</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#000;
-  --text:#fff;
-  --muted:#ccc;
   --accent:#ff2aa1;
-  --dropdown-bg:#000;
 }
 html,body{
   margin:0;
   height:100%;
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
-  background:var(--bg);
-  color:var(--text);
+  background:#000;
+  color:#fff;
   overflow: hidden;
 }
 
@@ -44,7 +40,7 @@ header.nav-bar{
 .nav-toggle{
   background:none;
   border:0;
-  color:var(--muted);
+  color:#ccc;
   font-weight:600;
   cursor:pointer;
   padding:6px 10px;
@@ -54,7 +50,7 @@ header.nav-bar{
   position:absolute;
   top:calc(100% + 8px);
   right:0;
-  background:var(--dropdown-bg);
+  background:#000;
   border:1px solid var(--accent);
   border-radius:8px;
   min-width:200px;
@@ -80,7 +76,16 @@ header.nav-bar{
   background: #000;
 }
 
-/* 1. Static Background */
+/* Wrapper for Background + Overlay (so they move together) */
+.scene-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 1. Background - No filters */
 #scene-bg {
   position: absolute;
   top: 0; left: 0;
@@ -88,33 +93,32 @@ header.nav-bar{
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: url('images/Locations/KINGBEAR_BG.jpg');
-  filter: brightness(1.0) contrast(1.0) saturate(1.0);
+  background-image: url('images/Locations/clubhouse-bare.jpg');
   z-index: 1;
 }
 
-/* 2. Single SVG Animation Overlay (Dust + Flames + Smoke) */
+/* 2. SVG Overlay (Dust, Flames, Smoke) */
 #animation-overlay {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
-  pointer-events: none;           /* Important: allows clicks to pass through */
-  opacity: 0.85;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
-/* 3. Interactive Hotspots */
+/* 3. Hotspots */
 .hotspot {
   position: absolute;
   cursor: pointer;
-  z-index: 3;                     /* On top of the SVG overlay */
+  z-index: 3;
   transition: all 0.3s ease;
   user-select: none;
 }
 .hotspot:hover {
   transform: scale(1.08) rotate(2deg);
-  filter: brightness(1.3) drop-shadow(0 0 25px var(--accent));
+  filter: brightness(1.25) drop-shadow(0 0 25px var(--accent));
 }
 
 /* HUD */
@@ -127,10 +131,9 @@ header.nav-bar{
   padding: 8px 26px;
   border-radius: 30px;
   font-size: 15px;
-  border: 1px solid rgba(255,42,161,0.35);
+  border: 1px solid rgba(255,42,161,0.4);
   z-index: 10;
   pointer-events: none;
-  text-shadow: 0 0 8px var(--accent);
 }
 
 /* FOOTER */
@@ -145,7 +148,7 @@ footer{
   z-index: 20;
 }
 
-/* FLOATING PLAYER */
+/* PLAYER */
 #floating-player{
   position:fixed;
   bottom:20px;
@@ -163,8 +166,8 @@ footer{
 }
 .player-meta{flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:0 12px;}
 .player-title{font-weight:700; font-size:14px;}
-.player-artist{font-size:12px; color:var(--muted);}
-.player-status{font-size:11px; color:var(--muted); margin-top:4px;}
+.player-artist{font-size:12px; color:#ccc;}
+.player-status{font-size:11px; color:#ccc; margin-top:4px;}
 .player-controls img{width:42px; height:42px; cursor:pointer;}
 
 @media (max-width: 768px) {
@@ -195,44 +198,39 @@ footer{
 
 <div class="scene-container">
   
-  <!-- 1. Background -->
-  <div id="scene-bg"></div>
+  <!-- Background + Overlay Wrapper -->
+  <div class="scene-layer" id="scene-layer">
+    <div id="scene-bg"></div>
+    <img id="animation-overlay" 
+         src="images/Locations/Overlays/clubhouse-atmosphere.svg" 
+         alt="">
+  </div>
 
-  <!-- 2. Single SVG Overlay (Dust + Flames + Smoke) -->
-  <img id="animation-overlay" 
-       src="images/Locations/Overlays/kingbear-atmosphere.svg" 
-       alt="Atmosphere Overlay">
-
-  <!-- 3. Interactive Hotspots -->
-  <!-- RADIO ANTENNA / PIRATE FLAG - Top Left -->
+  <!-- Interactive Items -->
   <img src="images/Locations/Items/PIRATEFLAG.png"
        class="hotspot"
        style="top: 15%; left: 8%; width: 16%;"
        alt="Pirate Flag"
        data-action="radio">
 
-  <!-- NEON SIGN - Top Right -->
   <img src="images/Locations/Overlays/neon-sign.png"
        class="hotspot"
        style="top: 12%; right: 18%; width: 17%;"
        alt="Neon Sign"
        data-action="info">
 
-  <!-- RECORD CRATE - Lower Centre Left -->
   <img src="images/Locations/Items/CRATE.png"
        class="hotspot"
        style="top: 58%; left: 24%; width: 15%;"
        alt="Record Crate"
        data-action="archive">
 
-  <!-- LAB PORTAL - Centre Left -->
   <img src="images/Locations/Overlays/portal-lab.png"
        class="hotspot"
        style="top: 38%; left: 36%; width: 10%;"
        alt="Enter The Lab"
        data-action="portal-lab">
 
-  <!-- SPEAKERS - Lower Right -->
   <img src="images/Locations/Items/SPEAKERSTACK.png"
        class="hotspot"
        style="top: 52%; right: 12%; width: 20%;"
@@ -270,7 +268,7 @@ footer{
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Player Logic
+// Player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -289,7 +287,6 @@ function playLiveStream() {
     setTimeout(playLiveStream, 1500);
   });
 }
-
 function stopStream() {
   audio.pause();
   audio.src = '';
@@ -297,10 +294,9 @@ function stopStream() {
   btn.src = 'Player/PLAY.png';
   statusEl.textContent = 'Stopped';
 }
-
 btn.onclick = () => isPlaying ? stopStream() : playLiveStream();
 
-// Ambient Audio
+// Ambient
 const ambient = document.getElementById('ambient-audio');
 function startAmbient() {
   ambient.volume = 0.45;
@@ -310,26 +306,16 @@ document.addEventListener('click', () => {
   if (ambient.paused) startAmbient();
 }, { once: true });
 
-// Hotspot Actions
+// Hotspots
 document.querySelectorAll('.hotspot').forEach(hotspot => {
   hotspot.addEventListener('click', (e) => {
     const action = e.currentTarget.dataset.action;
     switch(action) {
-      case 'radio':
-        if (!isPlaying) playLiveStream();
-        break;
-      case 'archive':
-        alert("Opening Archive...");
-        break;
-      case 'music':
-        alert("Speakers cranked up...");
-        break;
-      case 'info':
-        alert("The Clubhouse is alive tonight...");
-        break;
-      case 'portal-lab':
-        alert("Entering The Lab...");
-        break;
+      case 'radio': if (!isPlaying) playLiveStream(); break;
+      case 'archive': alert("Opening Archive..."); break;
+      case 'music': alert("Speakers cranked up..."); break;
+      case 'info': alert("Welcome to The Clubhouse"); break;
+      case 'portal-lab': alert("Entering The Lab..."); break;
     }
   });
 });
@@ -343,11 +329,11 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Mouse Parallax (background only)
+// Parallax - moves both background and SVG together
 document.addEventListener('mousemove', (e) => {
   const x = (e.clientX / window.innerWidth) * 18 - 9;
   const y = (e.clientY / window.innerHeight) * 12 - 6;
-  document.getElementById('scene-bg').style.transform = `translate(${x}px, ${y}px)`;
+  document.getElementById('scene-layer').style.transform = `translate(${x}px, ${y}px)`;
 });
 </script>
 </body>
