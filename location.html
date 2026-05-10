@@ -3,18 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK — King Bear</title>
+<title>MLKSHK — The King Bear</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
+  --bg:#000;
+  --text:#fff;
+  --muted:#ccc;
   --accent:#ff2aa1;
+  --dropdown-bg:#000;
 }
 html,body{
   margin:0;
+  height:100%;
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
-  background:#000;
-  color:#fff;
+  background:var(--bg);
+  color:var(--text);
+  overflow: hidden;
 }
 
 /* NAV BAR */
@@ -34,75 +40,85 @@ header.nav-bar{
   margin:0 auto;
 }
 .logo-link img{height:42px;display:block}
+.nav-dropdown{position:relative}
+.nav-toggle{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
+  padding:6px 10px;
+}
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  background:var(--dropdown-bg);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  min-width:200px;
+  z-index:100;
+  overflow:hidden;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 14px;
+  color:#fff;
+}
+.dropdown-menu a:hover {
+  background:var(--accent);
+  color:#000;
+}
 
-/* HERO SCENE - Locked HD Section */
-.hero-scene {
+/* FULL VIDEO SCENE */
+.scene-container {
   position: relative;
-  width: 100%;
-  height: 100vh;           /* Full height on desktop */
-  max-height: 900px;       /* Prevents it from getting too tall */
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   background: #000;
 }
 
-#scene-bg {
+#atmosphere-video {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: url('images/Locations/KINGBEAR_BG.jpg') center/cover no-repeat;
-  z-index: 1;
-}
-
-#animation-overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
   object-fit: cover;
-}
-
-/* Hotspots inside the locked hero */
-.hotspot {
-  position: absolute;
-  cursor: pointer;
-  z-index: 3;
-  transition: all 0.3s ease;
-  user-select: none;
-}
-.hotspot:hover {
-  transform: scale(1.08) rotate(2deg);
-  filter: brightness(1.25) drop-shadow(0 0 25px var(--accent));
+  z-index: 1;
 }
 
 /* HUD */
 .hud {
   position: absolute;
-  bottom: 8%;
+  bottom: 110px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0,0,0,0.6);
-  padding: 10px 28px;
+  padding: 10px 32px;
   border-radius: 30px;
   font-size: 15px;
-  border: 1px solid rgba(255,42,161,0.4);
+  letter-spacing: 1px;
+  border: 1px solid rgba(255,42,161,0.5);
   z-index: 10;
   pointer-events: none;
-  white-space: nowrap;
+  text-shadow: 0 0 10px var(--accent);
 }
 
-/* Scrollable Content Below */
-.content-below {
-  padding: 60px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  color: #ccc;
+/* FOOTER */
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 12px 20px;
+  text-align:center;
+  font-size:12px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  z-index: 20;
 }
 
-/* PLAYER */
+/* FLOATING PLAYER */
 #floating-player{
   position:fixed;
   bottom:20px;
@@ -118,12 +134,16 @@ header.nav-bar{
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
 }
+.player-meta{ flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:0 12px; }
+.player-title{ font-weight:700; font-size:14px; }
+.player-artist{ font-size:12px; color:var(--muted); }
+.player-status{ font-size:11px; color:var(--muted); margin-top:4px; }
+.player-controls img{ width:42px; height:42px; cursor:pointer; }
 
-/* Mobile Adjustments */
 @media (max-width: 768px) {
-  .hero-scene { height: 620px; }   /* Locked reasonable height on mobile */
-  .hotspot { min-width: 70px; }
-  .hud { font-size: 13px; padding: 8px 20px; bottom: 6%; }
+  .scene-container { height: 100dvh; }
+  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
+  .hud { bottom: 80px; font-size: 13px; padding: 8px 22px; }
 }
 </style>
 </head>
@@ -147,43 +167,29 @@ header.nav-bar{
   </div>
 </header>
 
-<!-- IMMERSIVE HERO SECTION -->
-<div class="hero-scene">
-  <div id="scene-bg"></div>
-  <img id="animation-overlay" 
-       src="images/Locations/Overlays/kingbear-atmosphere.gif" 
-       alt="Atmosphere">
+<div class="scene-container">
 
-  <!-- Items positioned for the scene -->
-  <img src="images/Locations/Items/KINGBEARNEON.png" class="hotspot" style="top: 18%; left: 32%; width: 18%;" data-action="neon" alt="King Bear Neon">
-  
-  <img src="images/Locations/Items/WHISKEY.png" class="hotspot" style="top: 62%; left: 12%; width: 9%;" data-action="whiskey" alt="Whiskey">
-  <img src="images/Locations/Items/VINYLSTACK.png" class="hotspot" style="top: 68%; left: 22%; width: 11%;" data-action="vinyl" alt="Vinyl">
-  <img src="images/Locations/Items/MUSICCRATE.png" class="hotspot" style="top: 55%; left: 38%; width: 12%;" data-action="crate" alt="Music Crate">
-  <img src="images/Locations/Items/PIRATEFLAG.png" class="hotspot" style="top: 28%; left: 45%; width: 8%;" data-action="radio" alt="Pirate Flag">
-  <img src="images/Locations/Items/SPEAKERSTACK.png" class="hotspot" style="top: 42%; right: 18%; width: 14%;" data-action="speakers" alt="Speakers">
-  <img src="images/Locations/Items/FRANKIEGUITAR.png" class="hotspot" style="top: 48%; right: 28%; width: 11%;" data-action="guitar" alt="Guitar">
+  <!-- Muted Video Loop - This is now the entire scene -->
+  <video id="atmosphere-video" autoplay loop muted playsinline>
+    <source src="images/Locations/Overlays/underground-club.webm" type="video/webm">
+    <source src="images/Locations/Overlays/KING-BEAR-BG.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-  <div class="hud">KING BEAR • UNDERGROUND • NO RULES</div>
-</div>
-
-<!-- Scrollable Content Below -->
-<div class="content-below">
-  <h2>Welcome to King Bear</h2>
-  <p>This is where the real shit happens. Scroll for more...</p>
-  <!-- Add more sections, releases, events, etc. here -->
-  <p style="margin-top: 80px; color:#666;">↓ More content coming soon ↓</p>
+  <div class="hud">
+    MLKSHK UNDERGROUND • LIVE • NO RULES
+  </div>
 </div>
 
 <footer>
-  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+  MLKSHK Digital — The Underground • No Rules • Never Sleeps © <span id="year"></span>
 </footer>
 
 <!-- FLOATING PLAYER -->
 <div id="floating-player">
   <div class="player-meta">
-    <div class="player-title">MLKSHK — King Bear</div>
-    <div class="player-artist">Live • Blues • Rebellion</div>
+    <div class="player-title">MLKSHK Underground</div>
+    <div class="player-artist">BASS • SMOKE • LIVE</div>
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
@@ -192,16 +198,16 @@ header.nav-bar{
   <audio id="audio" preload="none"></audio>
 </div>
 
-<!-- AMBIENT AUDIO -->
+<!-- Ambient Audio -->
 <audio id="ambient-audio" loop preload="none">
-  <source src="audio/ambience/clubhouse-ambient.mp3" type="audio/mpeg">
+  <source src="audio/ambience/underground-club.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Player Logic (same as before)
+// Player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -220,6 +226,7 @@ function playLiveStream() {
     setTimeout(playLiveStream, 1500);
   });
 }
+
 function stopStream() {
   audio.pause();
   audio.src = '';
@@ -227,9 +234,10 @@ function stopStream() {
   btn.src = 'Player/PLAY.png';
   statusEl.textContent = 'Stopped';
 }
+
 btn.onclick = () => isPlaying ? stopStream() : playLiveStream();
 
-// Ambient
+// Ambient Audio
 const ambient = document.getElementById('ambient-audio');
 function startAmbient() {
   ambient.volume = 0.45;
@@ -238,22 +246,6 @@ function startAmbient() {
 document.addEventListener('click', () => {
   if (ambient.paused) startAmbient();
 }, { once: true });
-
-// Hotspot clicks
-document.querySelectorAll('.hotspot').forEach(hotspot => {
-  hotspot.addEventListener('click', (e) => {
-    const action = e.currentTarget.dataset.action;
-    switch(action) {
-      case 'neon': alert("King Bear is watching..."); break;
-      case 'whiskey': alert("Strong pour..."); break;
-      case 'vinyl': alert("Digging through the crates..."); break;
-      case 'crate': alert("Opening Music Crate..."); break;
-      case 'radio': if (!isPlaying) playLiveStream(); break;
-      case 'speakers': alert("Speakers are thumping..."); break;
-      case 'guitar': alert("Frankie's Guitar..."); break;
-    }
-  });
-});
 
 // Dropdown
 const navToggle = document.querySelector('.nav-toggle');
