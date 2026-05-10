@@ -12,11 +12,9 @@
 }
 html,body{
   margin:0;
-  height:100%;
   font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
   background:#000;
   color:#fff;
-  overflow: hidden;
 }
 
 /* NAV BAR */
@@ -37,11 +35,12 @@ header.nav-bar{
 }
 .logo-link img{height:42px;display:block}
 
-/* SCENE */
-.scene-container {
+/* HERO SCENE - Locked HD Section */
+.hero-scene {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100vh;           /* Full height on desktop */
+  max-height: 900px;       /* Prevents it from getting too tall */
   overflow: hidden;
   background: #000;
 }
@@ -65,7 +64,7 @@ header.nav-bar{
   object-fit: cover;
 }
 
-/* Hotspots - Desktop First */
+/* Hotspots inside the locked hero */
 .hotspot {
   position: absolute;
   cursor: pointer;
@@ -81,53 +80,50 @@ header.nav-bar{
 /* HUD */
 .hud {
   position: absolute;
-  bottom: 110px;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0,0,0,0.6);
-  padding: 8px 26px;
+  padding: 10px 28px;
   border-radius: 30px;
   font-size: 15px;
   border: 1px solid rgba(255,42,161,0.4);
   z-index: 10;
   pointer-events: none;
+  white-space: nowrap;
 }
 
-/* FOOTER & PLAYER */
-footer{ position: absolute; bottom: 0; width: 100%; padding: 12px 20px; text-align:center; font-size:12px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); z-index: 20; }
+/* Scrollable Content Below */
+.content-below {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  color: #ccc;
+}
 
+/* PLAYER */
 #floating-player{
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  width:360px; height:72px;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
   background:url('Player/PLAYER.png') center/cover no-repeat;
   border-radius:20px;
-  display:flex; align-items:center; padding:0 18px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
 }
 
-/* ====================== MOBILE RESPONSIVE ====================== */
-@media (max-width: 1024px) {
-  .hotspot { width: auto !important; min-width: 80px; }
-  .hud { bottom: 90px; font-size: 13px; padding: 6px 20px; }
-}
-
+/* Mobile Adjustments */
 @media (max-width: 768px) {
-  #scene-bg, #animation-overlay {
-    background-position: center 20%; /* Adjust if needed */
-  }
-
-  /* Stack items more vertically on mobile */
-  .hotspot {
-    transform: scale(0.95);
-  }
-
-  /* Example mobile repositioning - tweak as needed */
-  .hotspot[data-action="whiskey"] { top: 55%; left: 8%; width: 14%; }
-  .hotspot[data-action="vinyl"]   { top: 68%; left: 22%; width: 16%; }
-  .hotspot[data-action="neon"]    { top: 12%; left: 25%; width: 28%; }
-  .hotspot[data-action="crate"]   { top: 48%; left: 45%; width: 18%; }
-  .hotspot[data-action="speakers"]{ top: 38%; right: 8%; width: 22%; }
+  .hero-scene { height: 620px; }   /* Locked reasonable height on mobile */
+  .hotspot { min-width: 70px; }
+  .hud { font-size: 13px; padding: 8px 20px; bottom: 6%; }
 }
 </style>
 </head>
@@ -151,30 +147,122 @@ footer{ position: absolute; bottom: 0; width: 100%; padding: 12px 20px; text-ali
   </div>
 </header>
 
-<div class="scene-container">
+<!-- IMMERSIVE HERO SECTION -->
+<div class="hero-scene">
   <div id="scene-bg"></div>
-  <img id="animation-overlay" src="images/Locations/Overlays/kingbear-atmosphere.gif" alt="Atmosphere">
+  <img id="animation-overlay" 
+       src="images/Locations/Overlays/kingbear-atmosphere.gif" 
+       alt="Atmosphere">
 
-  <!-- Items -->
+  <!-- Items positioned for the scene -->
+  <img src="images/Locations/Items/KINGBEARNEON.png" class="hotspot" style="top: 18%; left: 32%; width: 18%;" data-action="neon" alt="King Bear Neon">
+  
   <img src="images/Locations/Items/WHISKEY.png" class="hotspot" style="top: 62%; left: 12%; width: 9%;" data-action="whiskey" alt="Whiskey">
   <img src="images/Locations/Items/VINYLSTACK.png" class="hotspot" style="top: 68%; left: 22%; width: 11%;" data-action="vinyl" alt="Vinyl">
-  <img src="images/Locations/Items/MUSICCRATE.png" class="hotspot" style="top: 55%; left: 38%; width: 12%;" data-action="crate" alt="Crate">
-  <img src="images/Locations/Items/PIRATEFLAG.png" class="hotspot" style="top: 28%; left: 45%; width: 8%;" data-action="radio" alt="Flag">
+  <img src="images/Locations/Items/MUSICCRATE.png" class="hotspot" style="top: 55%; left: 38%; width: 12%;" data-action="crate" alt="Music Crate">
+  <img src="images/Locations/Items/PIRATEFLAG.png" class="hotspot" style="top: 28%; left: 45%; width: 8%;" data-action="radio" alt="Pirate Flag">
   <img src="images/Locations/Items/SPEAKERSTACK.png" class="hotspot" style="top: 42%; right: 18%; width: 14%;" data-action="speakers" alt="Speakers">
   <img src="images/Locations/Items/FRANKIEGUITAR.png" class="hotspot" style="top: 48%; right: 28%; width: 11%;" data-action="guitar" alt="Guitar">
-  <img src="images/Locations/Items/KINGBEARNEON.png" class="hotspot" style="top: 18%; left: 32%; width: 18%;" data-action="neon" alt="Neon">
 
   <div class="hud">KING BEAR • UNDERGROUND • NO RULES</div>
 </div>
 
-<footer>MLKSHK Digital — Built for the misfits. © <span id="year"></span></footer>
+<!-- Scrollable Content Below -->
+<div class="content-below">
+  <h2>Welcome to King Bear</h2>
+  <p>This is where the real shit happens. Scroll for more...</p>
+  <!-- Add more sections, releases, events, etc. here -->
+  <p style="margin-top: 80px; color:#666;">↓ More content coming soon ↓</p>
+</div>
 
-<!-- Player and scripts remain the same as last version -->
-<div id="floating-player"> ... </div>
-<audio id="ambient-audio" loop><source src="audio/ambience/clubhouse-ambient.mp3"></audio>
+<footer>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+</footer>
+
+<!-- FLOATING PLAYER -->
+<div id="floating-player">
+  <div class="player-meta">
+    <div class="player-title">MLKSHK — King Bear</div>
+    <div class="player-artist">Live • Blues • Rebellion</div>
+    <div class="player-status" id="status">Ready</div>
+  </div>
+  <div class="player-controls">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
+  </div>
+  <audio id="audio" preload="none"></audio>
+</div>
+
+<!-- AMBIENT AUDIO -->
+<audio id="ambient-audio" loop preload="none">
+  <source src="audio/ambience/clubhouse-ambient.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-// [Keep the same script from the previous version - player, ambient, hotspots, dropdown]
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Player Logic (same as before)
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const statusEl = document.getElementById('status');
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
+let isPlaying = false;
+
+function playLiveStream() {
+  audio.src = STREAM_URL + "?t=" + Date.now();
+  audio.load();
+  audio.play().then(() => {
+    isPlaying = true;
+    btn.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'Live';
+  }).catch(() => {
+    statusEl.textContent = 'Connection error – retrying...';
+    setTimeout(playLiveStream, 1500);
+  });
+}
+function stopStream() {
+  audio.pause();
+  audio.src = '';
+  isPlaying = false;
+  btn.src = 'Player/PLAY.png';
+  statusEl.textContent = 'Stopped';
+}
+btn.onclick = () => isPlaying ? stopStream() : playLiveStream();
+
+// Ambient
+const ambient = document.getElementById('ambient-audio');
+function startAmbient() {
+  ambient.volume = 0.45;
+  ambient.play().catch(() => {});
+}
+document.addEventListener('click', () => {
+  if (ambient.paused) startAmbient();
+}, { once: true });
+
+// Hotspot clicks
+document.querySelectorAll('.hotspot').forEach(hotspot => {
+  hotspot.addEventListener('click', (e) => {
+    const action = e.currentTarget.dataset.action;
+    switch(action) {
+      case 'neon': alert("King Bear is watching..."); break;
+      case 'whiskey': alert("Strong pour..."); break;
+      case 'vinyl': alert("Digging through the crates..."); break;
+      case 'crate': alert("Opening Music Crate..."); break;
+      case 'radio': if (!isPlaying) playLiveStream(); break;
+      case 'speakers': alert("Speakers are thumping..."); break;
+      case 'guitar': alert("Frankie's Guitar..."); break;
+    }
+  });
+});
+
+// Dropdown
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 </script>
 </body>
 </html>
