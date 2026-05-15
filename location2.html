@@ -48,59 +48,27 @@ header.nav-bar{
   cursor:crosshair;
 }
 
-/* Overlays */
-.overlay{
-  position:absolute; pointer-events:none;
-}
-#fog{
-  width:100%; height:100%;
-  background: linear-gradient(transparent, rgba(0,0,0,0.45));
-  animation: fogPulse 25s ease-in-out infinite;
-}
-#stars{
-  width:100%; height:65%;
-  background: url('images/Locations/Overlays/stars.png') repeat;
-  opacity:0.55;
-  animation: starTwinkle 45s linear infinite;
-}
+/* Layers */
+.item{ z-index: 10; }
+.character{ z-index: 20; }
+.male{ z-index: 25; }
+.animated{ z-index: 30; }
 
-/* Items - Locked */
-.item{
+.item, .character, .animated{
   position:absolute;
-  width:clamp(65px, 9vw, 170px);
   transition: transform 0.2s ease;
-  cursor:pointer;
-  filter: none;
   transform-origin: center center;
-  z-index: 10;
-}
-.item:hover{
-  filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
 }
 
-/* Characters - Locked but random on reload */
-.character{
-  position:absolute;
-  width:clamp(90px, 12vw, 200px);
-  transition: transform 0.3s ease;
-  cursor:pointer;
-  filter: none;
-  transform-origin: center center;
-  z-index: 20;
-}
-.male { z-index: 25; }
-
-/* Animated GIFs (only editable) */
-.animated{
-  position:absolute;
-  z-index: 30;
-  pointer-events:none;
-  width:clamp(60px, 8vw, 140px);
-}
+.item:hover{ filter: drop-shadow(0 0 20px rgba(255,42,161,0.6)); }
 
 .item img, .character img, .animated img{
   width:100%; height:auto; display:block;
 }
+
+.item{ width:clamp(65px, 9vw, 170px); }
+.character{ width:clamp(90px, 12vw, 200px); }
+.animated{ width:clamp(60px, 8vw, 140px); pointer-events:none; }
 
 /* Place Mode */
 #place-mode{
@@ -115,26 +83,6 @@ header.nav-bar{
   align-items:center;
 }
 #place-mode.active{display:flex;}
-
-#place-mode button{
-  background:rgba(255,255,255,0.1);
-  color:white;
-  border:1px solid var(--accent);
-  padding:8px 14px;
-  border-radius:6px;
-  cursor:pointer;
-}
-#place-mode button:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-.info{
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  background:rgba(0,0,0,0.85); padding:8px 22px; border-radius:9999px;
-  font-size:13px; border:1px solid var(--accent); z-index:150;
-  opacity:0; transition:opacity 0.4s;
-}
 </style>
 </head>
 <body>
@@ -152,70 +100,71 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Locked Items -->
-  <div class="item" id="item-bottlecrate" data-name="Bottle Crate" style="left:18%; top:65%; transform:scale(1) rotate(0deg);">
+  <!-- LOCKED ITEMS & CHARACTERS -->
+  <!-- Items -->
+  <div class="item" id="item-bottlecrate" style="left:18%; top:65%; transform:scale(1) rotate(0deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
-  <div class="item" id="item-speaker" data-name="Speaker" style="left:35%; top:72%; transform:scale(1.1) rotate(-3deg);">
+  <div class="item" id="item-speaker" style="left:35%; top:72%; transform:scale(1.1) rotate(-3deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SPEAKER.png" alt="">
   </div>
-  <div class="item" id="item-recordcrate" data-name="Record Crate" style="left:48%; top:58%; transform:scale(0.95) rotate(2deg);">
+  <div class="item" id="item-recordcrate" style="left:48%; top:58%; transform:scale(0.95) rotate(2deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_RECORDCRATE.png" alt="">
   </div>
-  <div class="item" id="item-poster" data-name="Reggie Poster" style="left:62%; top:45%; transform:scale(1) rotate(-5deg);">
+  <div class="item" id="item-poster" style="left:62%; top:45%; transform:scale(1) rotate(-5deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_REGGIEPOSTER.png" alt="">
   </div>
-  <div class="item" id="item-neon" data-name="KingBear Neon" style="left:75%; top:28%; transform:scale(1.15) rotate(4deg);">
+  <div class="item" id="item-neon" style="left:75%; top:28%; transform:scale(1.15) rotate(4deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_NEON.png" alt="">
   </div>
-  <div class="item" id="item-flag" data-name="Pirate Flag" style="left:12%; top:35%; transform:scale(1.2) rotate(8deg);">
+  <div class="item" id="item-flag" style="left:12%; top:35%; transform:scale(1.2) rotate(8deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_PIRATEFLAG.png" alt="">
   </div>
-  <div class="item" id="item-guitar" data-name="Frankie Guitar" style="left:82%; top:68%; transform:scale(0.9) rotate(-12deg);">
+  <div class="item" id="item-guitar" style="left:82%; top:68%; transform:scale(0.9) rotate(-12deg);">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
 
   <!-- Females -->
-  <div class="character" id="char-female1" data-name="Female Patron 1" style="left:22%; top:42%;">
+  <div class="character" id="char-female1" style="left:22%; top:42%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
-  <div class="character" id="char-female2" data-name="Female Patron 2" style="left:38%; top:48%;">
+  <div class="character" id="char-female2" style="left:38%; top:48%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt="">
   </div>
-  <div class="character" id="char-female4" data-name="Female Patron 4" style="left:55%; top:52%;">
+  <div class="character" id="char-female4" style="left:55%; top:52%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE4.png" alt="">
   </div>
-  <div class="character" id="char-female5" data-name="Female Patron 5" style="left:68%; top:38%;">
+  <div class="character" id="char-female5" style="left:68%; top:38%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE5.png" alt="">
   </div>
-  <div class="character" id="char-female6" data-name="Female Patron 6" style="left:81%; top:55%;">
+  <div class="character" id="char-female6" style="left:81%; top:55%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
-  <!-- Males (in front) -->
-  <div class="character male" id="char-male1" data-name="Male Patron 1" style="left:15%; top:28%;">
+  <!-- Males -->
+  <div class="character male" id="char-male1" style="left:15%; top:28%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
-  <div class="character male" id="char-male2" data-name="Male Patron 2" style="left:29%; top:35%;">
+  <div class="character male" id="char-male2" style="left:29%; top:35%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
   </div>
-  <div class="character male" id="char-male3" data-name="Male Patron 3" style="left:45%; top:25%;">
+  <div class="character male" id="char-male3" style="left:45%; top:25%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
   </div>
-  <div class="character male" id="char-male4" data-name="Male Patron 4" style="left:58%; top:42%;">
+  <div class="character male" id="char-male4" style="left:58%; top:42%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE4.png" alt="">
   </div>
-  <div class="character male" id="char-male5" data-name="Male Patron 5" style="left:72%; top:48%;">
+  <div class="character male" id="char-male5" style="left:72%; top:48%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE5.png" alt="">
   </div>
-  <div class="character male" id="char-male6" data-name="Male Patron 6" style="left:85%; top:32%;">
+  <div class="character male" id="char-male6" style="left:85%; top:32%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE6.png" alt="">
   </div>
-  <div class="character male" id="char-security" data-name="Security" style="left:8%; top:52%;">
+  <div class="character male" id="char-security" style="left:8%; top:52%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
   </div>
 
-  <!-- Animated GIFs (only movable items now) -->
+  <!-- Movable GIFs only -->
   <div class="animated" id="candle1">
     <img src="images/Locations/The King Bear/Animated/candle1.gif" alt="">
   </div>
@@ -227,44 +176,27 @@ header.nav-bar{
   </div>
 </div>
 
-<!-- Background Music - Stronger Autoplay Attempt -->
 <audio id="bg-audio" loop preload="auto">
   <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
 </audio>
 
 <div id="place-mode">
   <button id="toggle-place">PLACE MODE: ON (GIFs only)</button>
-  <button id="save-pos">Save GIF Positions</button>
+  <button id="save-pos">Save GIFs</button>
   <button id="reset-pos">Reset GIFs</button>
 </div>
 
 <div class="info" id="tooltip"></div>
 
 <script>
-// ================== MUSIC - STRONGER AUTOPLAY ==================
+// Music Autoplay
 const audio = document.getElementById('bg-audio');
-audio.volume = 0.5;
+audio.volume = 0.48;
+const playAudio = () => audio.play().catch(() => {});
+playAudio();
+document.addEventListener('click', playAudio, {once: true});
 
-function tryPlayAudio() {
-  audio.play().catch(err => {
-    console.log("Autoplay blocked, waiting for user interaction");
-  });
-}
-
-// Try immediately and also on any user interaction
-tryPlayAudio();
-document.addEventListener('click', tryPlayAudio, {once: true});
-document.addEventListener('touchstart', tryPlayAudio, {once: true});
-
-// Random character positions on reload
-document.querySelectorAll('.character').forEach(char => {
-  const left = 8 + Math.random() * 78;
-  const top = 15 + Math.random() * 55;
-  char.style.left = left + '%';
-  char.style.top = top + '%';
-});
-
-// Place Mode - Only for Animated GIFs
+// Place Mode - ONLY GIFs
 const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
 let selectedItem = null;
@@ -273,7 +205,6 @@ let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Only animated GIFs are editable now
 document.querySelectorAll('.animated').forEach(el => {
   const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
@@ -281,16 +212,7 @@ document.querySelectorAll('.animated').forEach(el => {
     el.style.left = data.left;
     el.style.top = data.top;
     el.style.transform = data.transform || 'scale(1) rotate(0deg)';
-  } else {
-    el.style.left = '30%';
-    el.style.top = '40%';
   }
-
-  el.addEventListener('click', () => {
-    if (placeMode) {
-      selectedItem = el;
-    }
-  });
 
   makeDraggable(el);
 });
@@ -314,7 +236,6 @@ document.addEventListener('mousemove', e => {
   let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
   x = Math.max(2, Math.min(92, x));
   y = Math.max(2, Math.min(88, y));
-
   selectedItem.style.left = x + '%';
   selectedItem.style.top = y + '%';
 });
@@ -329,12 +250,9 @@ document.addEventListener('wheel', e => {
   e.preventDefault();
   let scale = getCurrentScale(selectedItem);
   let rotation = getCurrentRotation(selectedItem);
-
   scale += (e.deltaY * -0.002);
   scale = Math.max(0.4, Math.min(2.5, scale));
-
   if (e.shiftKey) rotation += (e.deltaY * -0.2);
-
   selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }, {passive: false});
 
@@ -347,26 +265,23 @@ function getCurrentRotation(el) {
   return m ? parseFloat(m[1]) : 0;
 }
 
-// Place Mode Controls
 function togglePlaceMode() {
   placeMode = !placeMode;
   document.getElementById('place-mode').classList.toggle('active', placeMode);
-  document.getElementById('toggle-place').textContent = placeMode ? 
-    'PLACE MODE: ON (GIFs only)' : 'PLACE MODE: OFF';
+  document.getElementById('toggle-place').textContent = placeMode ? 'PLACE MODE: ON (GIFs only)' : 'PLACE MODE: OFF';
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access (5 clicks on title)
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
   if (clickCount >= 5) {
     const pass = prompt("Enter admin password:");
     if (pass === ADMIN_PASSWORD) togglePlaceMode();
-    else showTooltip("Incorrect password", 1500);
     clickCount = 0;
   }
-  setTimeout(() => clickCount = 0, 2500);
+  setTimeout(() => clickCount = 0, 2000);
 });
 
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
@@ -379,14 +294,7 @@ document.getElementById('save-pos').addEventListener('click', () => {
       transform: el.style.transform
     }));
   });
-  showTooltip('✅ GIF positions saved!', 1600);
-});
-
-document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset GIF positions?')) {
-    localStorage.clear();
-    location.reload();
-  }
+  showTooltip('GIF positions saved', 1500);
 });
 
 function showTooltip(text, ms = 2000) {
@@ -395,10 +303,6 @@ function showTooltip(text, ms = 2000) {
   tip.style.opacity = 1;
   setTimeout(() => tip.style.opacity = 0, ms);
 }
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && placeMode) togglePlaceMode();
-});
 </script>
 </body>
 </html>
