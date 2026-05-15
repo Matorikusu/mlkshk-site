@@ -68,9 +68,9 @@ header.nav-bar{
 .item{
   position:absolute;
   width:clamp(65px, 9vw, 170px);
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
   cursor:pointer;
-  filter: none;                    /* No base glow */
+  filter: none;
   transform-origin: center center;
   user-select:none;
 }
@@ -78,26 +78,19 @@ header.nav-bar{
   filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
 }
 
-/* Characters - No glow at all */
+/* Characters - No glow */
 .character{
   position:absolute;
   width:clamp(90px, 12vw, 200px);
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
   cursor:pointer;
-  filter: none;                    /* No glow */
+  filter: none;
   transform-origin: center center;
   user-select:none;
-  animation: gentleFloat 32s linear infinite;
 }
 
 .item img, .character img{
   width:100%; height:auto; display:block;
-}
-
-@keyframes gentleFloat {
-  0%   { transform: translate(0, 0) rotate(-1.5deg); }
-  50%  { transform: translate(18px, -12px) rotate(1.5deg); }
-  100% { transform: translate(0, 0) rotate(-1.5deg); }
 }
 
 /* Place Mode */
@@ -212,7 +205,7 @@ let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Initialize Items + Characters
+// Initialize all elements
 document.querySelectorAll('.item, .character').forEach(el => {
   const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
@@ -231,7 +224,7 @@ document.querySelectorAll('.item, .character').forEach(el => {
       showTooltip(`${el.dataset.name || 'Character'} activated`, 1600);
     } else {
       selectedItem = el;
-      showTooltip(`Selected → Drag=Move | Wheel=Scale | Shift+Drag=Rotate`, 2200);
+      showTooltip(`Selected → Drag=Move | Scroll=Scale | Shift+Scroll=Rotate`, 2200);
     }
   });
 
@@ -250,7 +243,7 @@ function makeDraggable(el) {
   });
 }
 
-// Global dragging
+// Dragging
 document.addEventListener('mousemove', e => {
   if (!placeMode || !selectedItem || !isDragging) return;
   const rect = scene.getBoundingClientRect();
@@ -265,10 +258,10 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
-  if (selectedItem) selectedItem.style.transition = 'transform 0.25s ease';
+  if (selectedItem) selectedItem.style.transition = 'transform 0.2s ease';
 });
 
-// Wheel = Scale | Shift + Wheel = Rotate
+// Wheel Scaling & Rotating (Fixed)
 document.addEventListener('wheel', e => {
   if (!placeMode || !selectedItem) return;
   e.preventDefault();
@@ -276,24 +269,28 @@ document.addEventListener('wheel', e => {
   let scale = getCurrentScale(selectedItem);
   let rotation = getCurrentRotation(selectedItem);
 
-  scale += e.deltaY * -0.0018;
-  scale = Math.max(0.35, Math.min(2.8, scale));
+  // Scale
+  scale += (e.deltaY * -0.002);
+  scale = Math.max(0.3, Math.min(3, scale));
 
-  if (e.shiftKey) rotation += e.deltaY * -0.15;
+  // Rotate with Shift
+  if (e.shiftKey) {
+    rotation += (e.deltaY * -0.2);
+  }
 
   selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }, {passive: false});
 
 function getCurrentScale(el) {
-  const m = el.style.transform.match(/scale\(([^)]+)\)/);
-  return m ? parseFloat(m[1]) : 1;
+  const match = el.style.transform.match(/scale\(([^)]+)\)/);
+  return match ? parseFloat(match[1]) : 1;
 }
 function getCurrentRotation(el) {
-  const m = el.style.transform.match(/rotate\(([^)]+)deg\)/);
-  return m ? parseFloat(m[1]) : 0;
+  const match = el.style.transform.match(/rotate\(([^)]+)deg\)/);
+  return match ? parseFloat(match[1]) : 0;
 }
 
-// Place Mode
+// Place Mode Controls
 function togglePlaceMode() {
   placeMode = !placeMode;
   document.getElementById('place-mode').classList.toggle('active', placeMode);
@@ -302,7 +299,7 @@ function togglePlaceMode() {
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access
+// Secret 5-click access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
@@ -325,7 +322,7 @@ document.getElementById('save-pos').addEventListener('click', () => {
       transform: el.style.transform
     }));
   });
-  showTooltip('✅ All positions saved!', 1600);
+  showTooltip('✅ All positions & scales saved!', 1600);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
