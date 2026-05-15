@@ -33,6 +33,13 @@ header.nav-bar{
 }
 .logo-link img{height:42px;}
 
+#realm-title{
+  color:var(--accent); 
+  font-weight:600; 
+  cursor:pointer;
+  user-select:none;
+}
+
 #scene{
   position:relative;
   width:100vw; height:100vh;
@@ -41,12 +48,11 @@ header.nav-bar{
   cursor:crosshair;
 }
 
-/* Animated overlays (non-clickable) */
+/* Overlays */
 .overlay{
   position:absolute; pointer-events:none;
   background-size:cover; background-position:center;
   opacity:0.75;
-  animation: subtleDrift 120s linear infinite;
 }
 
 #fog{
@@ -62,7 +68,7 @@ header.nav-bar{
   animation: starTwinkle 40s linear infinite;
 }
 
-/* Clickable Items */
+/* Items */
 .item{
   position:absolute;
   width:clamp(60px, 8vw, 140px);
@@ -81,26 +87,42 @@ header.nav-bar{
   border-radius:8px;
 }
 
-/* Place Mode */
+/* Place Mode Panel */
 #place-mode{
   position:fixed; top:20px; right:20px; z-index:200;
-  background:rgba(0,0,0,0.85); border:1px solid var(--accent);
-  padding:10px 16px; border-radius:8px; font-size:14px;
-  display:none; gap:12px; align-items:center;
+  background:rgba(0,0,0,0.9); 
+  border:2px solid var(--accent);
+  padding:12px 18px; 
+  border-radius:8px; 
+  font-size:14px;
+  display:none; 
+  gap:10px; 
+  align-items:center;
+  box-shadow:0 0 20px rgba(255,42,161,0.3);
 }
 #place-mode.active{display:flex;}
 
-.info{
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  background:rgba(0,0,0,0.8); padding:8px 20px; border-radius:9999px;
-  font-size:13px; border:1px solid var(--accent); z-index:150;
-  white-space:nowrap;
+#place-mode button{
+  background:rgba(255,255,255,0.1);
+  color:white;
+  border:1px solid var(--accent);
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
-/* Mobile fallback */
-@media (max-width: 1024px){
-  .item{width:clamp(50px, 11vw, 90px);}
-  #place-mode{display:none !important;}
+#place-mode button:hover{
+  background:var(--accent);
+  color:black;
+}
+
+.info{
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.85); padding:8px 20px; border-radius:9999px;
+  font-size:13px; border:1px solid var(--accent); z-index:150;
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity 0.4s;
 }
 </style>
 </head>
@@ -111,64 +133,60 @@ header.nav-bar{
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <div style="color:var(--accent); font-weight:600;">KINGBEAR REALM</div>
+    <div id="realm-title">KINGBEAR REALM</div>
   </div>
 </header>
 
 <div id="scene">
-
-  <!-- Animated Overlays -->
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Example Clickable Items -->
   <div class="item" id="item1" data-name="Neon Totem">
     <img src="images/Locations/Overlays/itemone.png" alt="Neon Totem">
   </div>
 
   <div class="item" id="item2" data-name="Floating Satellite">
-    <img src="images/Locations/Overlays/satellite.png" alt="Floating Satellite"> <!-- add your image -->
+    <img src="images/Locations/Overlays/satellite.png" alt="Floating Satellite">
   </div>
 
   <div class="item" id="item3" data-name="Bear Cave">
     <img src="images/Locations/Overlays/bearcave.png" alt="Bear Cave">
   </div>
-
-  <!-- Add more items here -->
 </div>
 
 <!-- Place Mode Panel -->
 <div id="place-mode">
   <button id="toggle-place">PLACE MODE: ON</button>
   <button id="save-pos">Save Positions</button>
-  <button id="reset-pos">Reset</button>
+  <button id="reset-pos">Reset All</button>
 </div>
 
 <div class="info" id="tooltip"></div>
 
 <script>
-// Scene container
-const scene = document.getElementById('scene');
-
-// Make items draggable in place mode
+// ================== CONFIG ==================
+const ADMIN_PASSWORD = "mlkshk";   // ← CHANGE THIS TO YOUR OWN PASSWORD
 let placeMode = false;
+const scene = document.getElementById('scene');
 const items = document.querySelectorAll('.item');
 
+// Initialize items
 items.forEach(item => {
-  let pos = JSON.parse(localStorage.getItem('kingbear_' + item.id)) || {left: '20%', top: '40%'};
-  item.style.left = pos.left;
-  item.style.top = pos.top;
+  const saved = localStorage.getItem('kingbear_' + item.id);
+  if (saved) {
+    const pos = JSON.parse(saved);
+    item.style.left = pos.left;
+    item.style.top = pos.top;
+  } else {
+    item.style.left = '20%';
+    item.style.top = '40%';
+  }
 
-  // Click handler
   item.addEventListener('click', (e) => {
     if (placeMode) return;
-    const name = item.dataset.name || 'Unknown';
-    showTooltip(`${name} activated`, 2000);
-    // Add your custom action here (open modal, play sound, navigate, etc.)
-    console.log(`Clicked: ${name}`);
+    showTooltip(`${item.dataset.name} activated`, 1800);
   });
 
-  // Drag in place mode
   makeDraggable(item);
 });
 
@@ -176,22 +194,23 @@ function makeDraggable(el) {
   let isDragging = false;
   let offsetX, offsetY;
 
-  el.addEventListener('mousedown', (e) => {
+  el.addEventListener('mousedown', e => {
     if (!placeMode) return;
     isDragging = true;
-    offsetX = e.clientX - el.getBoundingClientRect().left;
-    offsetY = e.clientY - el.getBoundingClientRect().top;
+    const rect = el.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
     el.style.transition = 'none';
   });
 
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener('mousemove', e => {
     if (!isDragging) return;
-    const rect = scene.getBoundingClientRect();
-    let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
-    let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
+    const sceneRect = scene.getBoundingClientRect();
+    let x = ((e.clientX - sceneRect.left - offsetX) / sceneRect.width) * 100;
+    let y = ((e.clientY - sceneRect.top - offsetY) / sceneRect.height) * 100;
 
-    x = Math.max(0, Math.min(95, x));
-    y = Math.max(0, Math.min(85, y));
+    x = Math.max(2, Math.min(92, x));
+    y = Math.max(2, Math.min(88, y));
 
     el.style.left = x + '%';
     el.style.top = y + '%';
@@ -205,31 +224,57 @@ function makeDraggable(el) {
   });
 }
 
-// Place Mode Controls
-document.getElementById('toggle-place').addEventListener('click', () => {
+// =============== PLACE MODE TOGGLE ===============
+function togglePlaceMode() {
   placeMode = !placeMode;
+  
   const panel = document.getElementById('place-mode');
   panel.classList.toggle('active', placeMode);
-  document.getElementById('toggle-place').textContent = placeMode ? 'PLACE MODE: ON' : 'PLACE MODE: OFF';
+  
+  document.getElementById('toggle-place').textContent = placeMode ? 
+    'PLACE MODE: ON (Click to Exit)' : 'PLACE MODE: OFF';
+  
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
+}
+
+// Secret access: Click "KINGBEAR REALM" 5 times
+let clickCount = 0;
+document.getElementById('realm-title').addEventListener('click', () => {
+  clickCount++;
+  if (clickCount >= 5) {
+    const pass = prompt("Enter admin password to access Place Mode:");
+    if (pass === ADMIN_PASSWORD) {
+      togglePlaceMode();
+      showTooltip(placeMode ? "Place Mode ENABLED" : "Place Mode DISABLED", 2000);
+    } else {
+      showTooltip("Incorrect password", 1500);
+    }
+    clickCount = 0;
+  }
+  setTimeout(() => clickCount = 0, 2000); // reset after 2s
 });
+
+// Button controls
+document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
   items.forEach(item => {
-    const pos = {left: item.style.left, top: item.style.top};
-    localStorage.setItem('kingbear_' + item.id, JSON.stringify(pos));
+    localStorage.setItem('kingbear_' + item.id, JSON.stringify({
+      left: item.style.left,
+      top: item.style.top
+    }));
   });
-  showTooltip('Positions Saved', 1500);
+  showTooltip('✅ Positions Saved', 1500);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset all item positions?')) {
+  if (confirm('Reset ALL item positions?')) {
     localStorage.clear();
     location.reload();
   }
 });
 
-// Tooltip
+// Tooltip helper
 function showTooltip(text, ms = 2000) {
   const tip = document.getElementById('tooltip');
   tip.textContent = text;
@@ -237,38 +282,12 @@ function showTooltip(text, ms = 2000) {
   setTimeout(() => tip.style.opacity = 0, ms);
 }
 
-// Keyboard shortcut for place mode (P key)
+// Keyboard fallback (only while in place mode)
 document.addEventListener('keydown', e => {
-  if (e.key.toLowerCase() === 'p') {
-    document.getElementById('toggle-place').click();
+  if (placeMode && e.key === 'Escape') {
+    togglePlaceMode();
   }
 });
-
-// Ambient background animation helpers
-const style = document.createElement('style');
-style.innerHTML = `
-  @keyframes subtleDrift {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-  }
-  @keyframes fogPulse {
-    0%,100% { opacity: 0.6; }
-    50% { opacity: 0.85; }
-  }
-  @keyframes starTwinkle {
-    0% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-    100% { opacity: 0.5; }
-  }
-`;
-document.head.appendChild(style);
-
-// Mobile notice
-if (window.innerWidth < 1024) {
-  setTimeout(() => {
-    showTooltip('Best experienced on desktop • Rotate device for better view', 4000);
-  }, 800);
-}
 </script>
 </body>
 </html>
