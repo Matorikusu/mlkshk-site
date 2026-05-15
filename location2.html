@@ -48,7 +48,7 @@ header.nav-bar{
   cursor:crosshair;
 }
 
-/* Animated Overlays */
+/* Overlays */
 .overlay{
   position:absolute; pointer-events:none;
 }
@@ -70,14 +70,14 @@ header.nav-bar{
 .item{
   position:absolute;
   width:clamp(65px, 9vw, 160px);
-  transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+  transition: transform 0.2s ease;
   cursor:pointer;
   filter: drop-shadow(0 0 15px rgba(255,42,161,0.5));
+  transform-origin: center center;
   user-select:none;
 }
 
 .item:hover{
-  transform: scale(1.12) rotate(3deg);
   filter: drop-shadow(0 0 30px rgba(255,42,161,0.9));
 }
 
@@ -133,49 +133,41 @@ header.nav-bar{
 </header>
 
 <div id="scene">
-  <!-- Overlays -->
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- === YOUR ITEMS === -->
+  <!-- Your Items -->
   <div class="item" id="item-crate" data-name="Crate">
     <img src="images/Locations/Items/CRATE.png" alt="Crate">
   </div>
-
   <div class="item" id="item-speaker" data-name="Speaker Stack">
     <img src="images/Locations/Items/SPEAKERSTACK.png" alt="Speaker Stack">
   </div>
-
   <div class="item" id="item-flag" data-name="Pirate Flag">
     <img src="images/Locations/Items/PIRATEFLAG.png" alt="Pirate Flag">
   </div>
-
   <div class="item" id="item-guitar" data-name="Frankie's Guitar">
     <img src="images/Locations/Items/FRANKIEGUITAR.png" alt="Frankie's Guitar">
   </div>
-
   <div class="item" id="item-whiskey" data-name="Blue Bear Whiskey">
     <img src="images/Locations/Items/BLUEBEARWHISKEY.png" alt="Blue Bear Whiskey">
   </div>
 
-  <!-- Suggested Extra Items (add your images) -->
+  <!-- Extra Items -->
   <div class="item" id="item-exit" data-name="Exit Sign">
-    <img src="images/Locations/Items/EXITSIGN.png" alt="Exit Sign"> <!-- add this file -->
+    <img src="images/Locations/Items/EXITSIGN.png" alt="Exit Sign">
   </div>
-
   <div class="item" id="item-light" data-name="Hanging Light">
-    <img src="images/Locations/Items/LIGHTFIXTURE.png" alt="Light Fixture"> <!-- add this file -->
+    <img src="images/Locations/Items/LIGHTFIXTURE.png" alt="Light Fixture">
   </div>
-
   <div class="item" id="item-neon" data-name="King Bear Neon">
-    <img src="images/Locations/Items/KINGBEARNEON.png" alt="King Bear Neon"> <!-- add this file -->
+    <img src="images/Locations/Items/KINGBEARNEON.png" alt="King Bear Neon">
   </div>
 </div>
 
-<!-- Place Mode Panel -->
 <div id="place-mode">
   <button id="toggle-place">PLACE MODE: ON</button>
-  <button id="save-pos">Save Positions</button>
+  <button id="save-pos">Save All</button>
   <button id="reset-pos">Reset All</button>
 </div>
 
@@ -183,27 +175,35 @@ header.nav-bar{
 
 <script>
 // ================== CONFIG ==================
-const ADMIN_PASSWORD = "mlkshk";   // ← Change this
+const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
+let selectedItem = null;
+
 const scene = document.getElementById('scene');
 const items = document.querySelectorAll('.item');
 
-// Initialize saved positions
 items.forEach(item => {
+  // Load saved data
   const saved = localStorage.getItem('kingbear_' + item.id);
   if (saved) {
-    const pos = JSON.parse(saved);
-    item.style.left = pos.left;
-    item.style.top = pos.top;
+    const data = JSON.parse(saved);
+    item.style.left = data.left || '20%';
+    item.style.top = data.top || '40%';
+    item.style.transform = data.transform || 'scale(1) rotate(0deg)';
   } else {
-    // Default starting positions
-    item.style.left = '15%';
-    item.style.top = '45%';
+    item.style.left = '20%';
+    item.style.top = '40%';
+    item.style.transform = 'scale(1) rotate(0deg)';
   }
 
-  item.addEventListener('click', () => {
-    if (placeMode) return;
-    showTooltip(`${item.dataset.name} activated`, 1800);
+  item.addEventListener('click', (e) => {
+    if (!placeMode) {
+      showTooltip(`${item.dataset.name} activated`, 1600);
+      return;
+    }
+    // Select item in place mode
+    selectedItem = item;
+    showTooltip(`Selected: ${item.dataset.name} | Scroll=Scale | Shift+Drag=Rotate`, 2500);
   });
 
   makeDraggable(item);
@@ -212,36 +212,76 @@ items.forEach(item => {
 function makeDraggable(el) {
   let isDragging = false;
   let offsetX, offsetY;
+  let startRotation = 0;
+  let isRotating = false;
 
   el.addEventListener('mousedown', e => {
     if (!placeMode) return;
-    isDragging = true;
-    const rect = el.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    el.style.transition = 'none';
+    selectedItem = el;
+
+    if (e.shiftKey) {
+      isRotating = true;
+      startRotation = getCurrentRotation(el);
+    } else {
+      isDragging = true;
+      const rect = el.getBoundingClientRect();
+      const sceneRect = scene.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      el.style.transition = 'none';
+    }
   });
 
-  document.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const sceneRect = scene.getBoundingClientRect();
-    let x = ((e.clientX - sceneRect.left - offsetX) / sceneRect.width) * 100;
-    let y = ((e.clientY - sceneRect.top - offsetY) / sceneRect.height) * 100;
+  // Wheel = Scale
+  el.addEventListener('wheel', e => {
+    if (!placeMode || selectedItem !== el) return;
+    e.preventDefault();
 
+    let scale = getCurrentScale(el);
+    scale += e.deltaY * -0.001;
+    scale = Math.max(0.3, Math.min(2.5, scale)); // limit scale
+
+    applyTransform(el, scale, getCurrentRotation(el));
+  }, {passive: false});
+}
+
+// Helper functions
+function getCurrentScale(el) {
+  const match = el.style.transform.match(/scale\(([^)]+)\)/);
+  return match ? parseFloat(match[1]) : 1;
+}
+
+function getCurrentRotation(el) {
+  const match = el.style.transform.match(/rotate\(([^)]+)deg\)/);
+  return match ? parseFloat(match[1]) : 0;
+}
+
+function applyTransform(el, scale, rotation) {
+  el.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+}
+
+// Mouse move for dragging + rotating
+document.addEventListener('mousemove', e => {
+  if (!placeMode || !selectedItem) return;
+
+  const rect = scene.getBoundingClientRect();
+
+  if (isDragging) {
+    let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
+    let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
     x = Math.max(1, Math.min(93, x));
     y = Math.max(1, Math.min(87, y));
 
-    el.style.left = x + '%';
-    el.style.top = y + '%';
-  });
+    selectedItem.style.left = x + '%';
+    selectedItem.style.top = y + '%';
+  }
+});
 
-  document.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      el.style.transition = 'all 0.3s cubic-bezier(0.23,1,0.32,1)';
-    }
-  });
-}
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  isRotating = false;
+  if (selectedItem) selectedItem.style.transition = 'transform 0.2s ease';
+});
 
 // =============== PLACE MODE ===============
 function togglePlaceMode() {
@@ -249,11 +289,11 @@ function togglePlaceMode() {
   const panel = document.getElementById('place-mode');
   panel.classList.toggle('active', placeMode);
   document.getElementById('toggle-place').textContent = placeMode ? 
-    'PLACE MODE: ON (Click to Exit)' : 'PLACE MODE: OFF';
+    'PLACE MODE: ON (ESC to exit)' : 'PLACE MODE: OFF';
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access
+// Secret 5-click access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
@@ -261,9 +301,8 @@ document.getElementById('realm-title').addEventListener('click', () => {
     const pass = prompt("Enter admin password:");
     if (pass === ADMIN_PASSWORD) {
       togglePlaceMode();
-      showTooltip(placeMode ? "🛠️ Place Mode ENABLED" : "Place Mode DISABLED", 1800);
     } else {
-      showTooltip("❌ Wrong password", 1500);
+      showTooltip("Incorrect password", 1500);
     }
     clickCount = 0;
   }
@@ -271,19 +310,19 @@ document.getElementById('realm-title').addEventListener('click', () => {
 });
 
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
-
 document.getElementById('save-pos').addEventListener('click', () => {
   items.forEach(item => {
     localStorage.setItem('kingbear_' + item.id, JSON.stringify({
       left: item.style.left,
-      top: item.style.top
+      top: item.style.top,
+      transform: item.style.transform
     }));
   });
-  showTooltip('✅ Positions Saved', 1400);
+  showTooltip('✅ All positions, scales & rotations saved', 1800);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset all positions to default?')) {
+  if (confirm('Reset everything?')) {
     localStorage.clear();
     location.reload();
   }
@@ -296,9 +335,9 @@ function showTooltip(text, ms = 2000) {
   setTimeout(() => tip.style.opacity = 0, ms);
 }
 
-// ESC to exit place mode
+// ESC key
 document.addEventListener('keydown', e => {
-  if (placeMode && e.key === 'Escape') togglePlaceMode();
+  if (e.key === 'Escape' && placeMode) togglePlaceMode();
 });
 </script>
 </body>
