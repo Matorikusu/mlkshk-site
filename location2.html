@@ -64,7 +64,7 @@ header.nav-bar{
   animation: starTwinkle 45s linear infinite;
 }
 
-/* Items - Glow only on hover */
+/* Items - Behind characters */
 .item{
   position:absolute;
   width:clamp(65px, 9vw, 170px);
@@ -73,12 +73,13 @@ header.nav-bar{
   filter: none;
   transform-origin: center center;
   user-select:none;
+  z-index: 10;
 }
 .item:hover{
   filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
 }
 
-/* Characters - No glow */
+/* Characters */
 .character{
   position:absolute;
   width:clamp(90px, 12vw, 200px);
@@ -87,10 +88,16 @@ header.nav-bar{
   filter: none;
   transform-origin: center center;
   user-select:none;
+  z-index: 20;           /* Above items */
 }
+.male { z-index: 25; }   /* Males in front of females */
 
-.item img, .character img{
-  width:100%; height:auto; display:block;
+/* Animated overlays on top of everything */
+.animated{
+  position:absolute;
+  z-index: 30;
+  pointer-events:none;
+  width:clamp(60px, 8vw, 140px);
 }
 
 /* Place Mode */
@@ -143,7 +150,7 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Items -->
+  <!-- Items (behind everything) -->
   <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
@@ -165,9 +172,8 @@ header.nav-bar{
   <div class="item" id="item-guitar" data-name="Frankie Guitar">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
-</div>
 
-    <!-- Females -->
+  <!-- Females -->
   <div class="character" id="char-female1" data-name="Female Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
@@ -184,28 +190,45 @@ header.nav-bar{
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
-   <!-- Males -->
-  <div class="character" id="char-male1" data-name="Male Patron 1">
+  <!-- Males (in front of females) -->
+  <div class="character male" id="char-male1" data-name="Male Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
-  <div class="character" id="char-male2" data-name="Male Patron 2">
+  <div class="character male" id="char-male2" data-name="Male Patron 2">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
   </div>
-  <div class="character" id="char-male3" data-name="Male Patron 3">
+  <div class="character male" id="char-male3" data-name="Male Patron 3">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
   </div>
-  <div class="character" id="char-male4" data-name="Male Patron 4">
+  <div class="character male" id="char-male4" data-name="Male Patron 4">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE4.png" alt="">
   </div>
-  <div class="character" id="char-male5" data-name="Male Patron 5">
+  <div class="character male" id="char-male5" data-name="Male Patron 5">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE5.png" alt="">
   </div>
-  <div class="character" id="char-male6" data-name="Male Patron 6">
+  <div class="character male" id="char-male6" data-name="Male Patron 6">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE6.png" alt="">
   </div>
-   <div class="character" id="char-male6" data-name="Male Patron 7">
+  <div class="character male" id="char-security" data-name="Security">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
   </div>
+
+  <!-- Animated GIFs on top -->
+  <div class="animated" id="candle1">
+    <img src="images/Locations/The King Bear/Animated/candle1.gif" alt="">
+  </div>
+  <div class="animated" id="candle2">
+    <img src="images/Locations/The King Bear/Animated/candle2.gif" alt="">
+  </div>
+  <div class="animated" id="light">
+    <img src="images/Locations/The King Bear/Animated/light.gif" alt="">
+  </div>
+</div>
+
+<!-- Background Audio -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
+</audio>
 
 <div id="place-mode">
   <button id="toggle-place">PLACE MODE: ON</button>
@@ -216,7 +239,15 @@ header.nav-bar{
 <div class="info" id="tooltip"></div>
 
 <script>
-// ================== CONFIG ==================
+// Auto play ambient track
+const audio = document.getElementById('bg-audio');
+audio.volume = 0.45; // Adjust volume as needed
+audio.play().catch(() => {
+  // Autoplay may be blocked - user can click anywhere to start
+  document.addEventListener('click', () => audio.play(), {once: true});
+});
+
+// Rest of your existing script (Place Mode, dragging, etc.)
 const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
 let selectedItem = null;
@@ -225,8 +256,7 @@ let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Initialize all elements
-document.querySelectorAll('.item, .character').forEach(el => {
+document.querySelectorAll('.item, .character, .animated').forEach(el => {
   const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
     const data = JSON.parse(saved);
@@ -241,7 +271,7 @@ document.querySelectorAll('.item, .character').forEach(el => {
 
   el.addEventListener('click', () => {
     if (!placeMode) {
-      showTooltip(`${el.dataset.name} activated`, 1600);
+      showTooltip(`${el.dataset.name || 'Object'} activated`, 1600);
     } else {
       selectedItem = el;
       showTooltip(`Selected → Drag=Move | Scroll=Scale | Shift+Scroll=Rotate`, 2200);
@@ -263,7 +293,6 @@ function makeDraggable(el) {
   });
 }
 
-// Dragging
 document.addEventListener('mousemove', e => {
   if (!placeMode || !selectedItem || !isDragging) return;
   const rect = scene.getBoundingClientRect();
@@ -281,7 +310,6 @@ document.addEventListener('mouseup', () => {
   if (selectedItem) selectedItem.style.transition = 'transform 0.2s ease';
 });
 
-// Wheel = Scale | Shift + Wheel = Rotate
 document.addEventListener('wheel', e => {
   if (!placeMode || !selectedItem) return;
   e.preventDefault();
@@ -292,9 +320,7 @@ document.addEventListener('wheel', e => {
   scale += (e.deltaY * -0.002);
   scale = Math.max(0.3, Math.min(3, scale));
 
-  if (e.shiftKey) {
-    rotation += (e.deltaY * -0.2);
-  }
+  if (e.shiftKey) rotation += (e.deltaY * -0.2);
 
   selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }, {passive: false});
@@ -308,7 +334,6 @@ function getCurrentRotation(el) {
   return match ? parseFloat(match[1]) : 0;
 }
 
-// Place Mode Controls
 function togglePlaceMode() {
   placeMode = !placeMode;
   document.getElementById('place-mode').classList.toggle('active', placeMode);
@@ -317,7 +342,7 @@ function togglePlaceMode() {
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access
+// Secret access + controls (same as before)
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
@@ -333,7 +358,7 @@ document.getElementById('realm-title').addEventListener('click', () => {
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
-  document.querySelectorAll('.item, .character').forEach(el => {
+  document.querySelectorAll('.item, .character, .animated').forEach(el => {
     localStorage.setItem('kingbear_' + el.id, JSON.stringify({
       left: el.style.left,
       top: el.style.top,
