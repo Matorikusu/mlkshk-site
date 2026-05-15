@@ -43,7 +43,7 @@ header.nav-bar{
 #scene{
   position:relative;
   width:100vw; height:100vh;
-  background: url('images/Locations/KINGBEAR_BG.jpg') center/cover no-repeat;
+  background: url('images/Locations/The King Bear/KINGBEAR_BG.jpg') center/cover no-repeat;
   overflow:hidden;
   cursor:crosshair;
 }
@@ -52,13 +52,11 @@ header.nav-bar{
 .overlay{
   position:absolute; pointer-events:none;
 }
-
 #fog{
   width:100%; height:100%;
   background: linear-gradient(transparent, rgba(0,0,0,0.45));
   animation: fogPulse 25s ease-in-out infinite;
 }
-
 #stars{
   width:100%; height:65%;
   background: url('images/Locations/Overlays/stars.png') repeat;
@@ -69,19 +67,31 @@ header.nav-bar{
 /* Clickable Items */
 .item{
   position:absolute;
-  width:clamp(65px, 9vw, 160px);
+  width:clamp(65px, 9vw, 170px);
   transition: transform 0.2s ease;
   cursor:pointer;
   filter: drop-shadow(0 0 15px rgba(255,42,161,0.5));
   transform-origin: center center;
   user-select:none;
 }
-
 .item:hover{
   filter: drop-shadow(0 0 30px rgba(255,42,161,0.9));
 }
-
 .item img{
+  width:100%; height:auto; display:block;
+}
+
+/* Background Characters (non-clickable) */
+.character{
+  position:absolute;
+  width:clamp(80px, 11vw, 190px);
+  opacity:0.9;
+  transition: all 8s ease-in-out;
+  filter: drop-shadow(0 0 12px rgba(255,42,161,0.3));
+  pointer-events:none;           /* Not clickable */
+  animation: gentleFloat 25s linear infinite;
+}
+.character img{
   width:100%; height:auto; display:block;
 }
 
@@ -136,32 +146,49 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Your Items -->
-  <div class="item" id="item-crate" data-name="Crate">
-    <img src="images/Locations/Items/CRATE.png" alt="Crate">
+  <!-- === BACKGROUND CHARACTERS (non-clickable, random) === -->
+  <div class="character" id="char1"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt=""></div>
+  <div class="character" id="char2"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt=""></div>
+  <div class="character" id="char3"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt=""></div>
+  <div class="character" id="char4"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt=""></div>
+  <div class="character" id="char5"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt=""></div>
+  <div class="character" id="char6"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt=""></div>
+
+  <!-- === CLICKABLE ITEMS === -->
+  <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
-  <div class="item" id="item-speaker" data-name="Speaker Stack">
-    <img src="images/Locations/Items/SPEAKERSTACK.png" alt="Speaker Stack">
+  <div class="item" id="item-speaker" data-name="Speaker">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SPEAKER.png" alt="">
+  </div>
+  <div class="item" id="item-recordcrate" data-name="Record Crate">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_RECORDCRATE.png" alt="">
+  </div>
+  <div class="item" id="item-poster" data-name="Reggie Poster">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_REGGIEPOSTER.png" alt="">
+  </div>
+  <div class="item" id="item-sofa" data-name="Sofa">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SOFA.png" alt="">
+  </div>
+  <div class="item" id="item-neon" data-name="KingBear Neon">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_NEON.png" alt="">
   </div>
   <div class="item" id="item-flag" data-name="Pirate Flag">
-    <img src="images/Locations/Items/PIRATEFLAG.png" alt="Pirate Flag">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_PIRATEFLAG.png" alt="">
   </div>
-  <div class="item" id="item-guitar" data-name="Frankie's Guitar">
-    <img src="images/Locations/Items/FRANKIEGUITAR.png" alt="Frankie's Guitar">
-  </div>
-  <div class="item" id="item-whiskey" data-name="Blue Bear Whiskey">
-    <img src="images/Locations/Items/BLUEBEARWHISKEY.png" alt="Blue Bear Whiskey">
+  <div class="item" id="item-guitar" data-name="Frankie Guitar">
+    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
 
-  <!-- Extra Items -->
-  <div class="item" id="item-exit" data-name="Exit Sign">
-    <img src="images/Locations/Items/EXITSIGN.png" alt="Exit Sign">
+  <!-- === MOCK ANIMATED GIFS (for movement) === -->
+  <div class="item" id="item-gif1" data-name="Smoke">
+    <img src="images/Locations/The King Bear/Animated/smoke.gif" alt="Smoke"> <!-- replace with real gif -->
   </div>
-  <div class="item" id="item-light" data-name="Hanging Light">
-    <img src="images/Locations/Items/LIGHTFIXTURE.png" alt="Light Fixture">
+  <div class="item" id="item-gif2" data-name="Hologram">
+    <img src="images/Locations/The King Bear/Animated/hologram.gif" alt="Hologram">
   </div>
-  <div class="item" id="item-neon" data-name="King Bear Neon">
-    <img src="images/Locations/Items/KINGBEARNEON.png" alt="King Bear Neon">
+  <div class="item" id="item-gif3" data-name="Neon Flicker">
+    <img src="images/Locations/The King Bear/Animated/neonflicker.gif" alt="Neon">
   </div>
 </div>
 
@@ -180,10 +207,18 @@ let placeMode = false;
 let selectedItem = null;
 
 const scene = document.getElementById('scene');
-const items = document.querySelectorAll('.item');
 
-items.forEach(item => {
-  // Load saved data
+// Randomize & animate background characters
+document.querySelectorAll('.character').forEach((char, i) => {
+  const left = 10 + Math.random() * 75;
+  const top = 15 + Math.random() * 60;
+  char.style.left = left + '%';
+  char.style.top = top + '%';
+  char.style.animationDelay = `-${i * 4}s`;   // stagger animation
+});
+
+// Initialize items (clickable)
+document.querySelectorAll('.item').forEach(item => {
   const saved = localStorage.getItem('kingbear_' + item.id);
   if (saved) {
     const data = JSON.parse(saved);
@@ -196,14 +231,13 @@ items.forEach(item => {
     item.style.transform = 'scale(1) rotate(0deg)';
   }
 
-  item.addEventListener('click', (e) => {
+  item.addEventListener('click', () => {
     if (!placeMode) {
       showTooltip(`${item.dataset.name} activated`, 1600);
-      return;
+    } else {
+      selectedItem = item;
+      showTooltip(`Selected → Scroll=Scale | Shift+Drag=Rotate`, 2200);
     }
-    // Select item in place mode
-    selectedItem = item;
-    showTooltip(`Selected: ${item.dataset.name} | Scroll=Scale | Shift+Drag=Rotate`, 2500);
   });
 
   makeDraggable(item);
@@ -212,117 +246,114 @@ items.forEach(item => {
 function makeDraggable(el) {
   let isDragging = false;
   let offsetX, offsetY;
-  let startRotation = 0;
-  let isRotating = false;
 
   el.addEventListener('mousedown', e => {
     if (!placeMode) return;
     selectedItem = el;
 
     if (e.shiftKey) {
-      isRotating = true;
-      startRotation = getCurrentRotation(el);
+      // Rotation mode
+      const startRot = getCurrentRotation(el);
+      const startX = e.clientX;
+      
+      const onMove = (moveEvent) => {
+        const delta = (moveEvent.clientX - startX) * 0.8;
+        applyTransform(el, getCurrentScale(el), startRot + delta);
+      };
+      
+      document.addEventListener('mousemove', onMove, {once: false});
+      document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', onMove);
+      }, {once: true});
+      
     } else {
       isDragging = true;
       const rect = el.getBoundingClientRect();
-      const sceneRect = scene.getBoundingClientRect();
       offsetX = e.clientX - rect.left;
       offsetY = e.clientY - rect.top;
       el.style.transition = 'none';
     }
   });
 
-  // Wheel = Scale
+  // Scale with mouse wheel
   el.addEventListener('wheel', e => {
     if (!placeMode || selectedItem !== el) return;
     e.preventDefault();
-
     let scale = getCurrentScale(el);
-    scale += e.deltaY * -0.001;
-    scale = Math.max(0.3, Math.min(2.5, scale)); // limit scale
-
+    scale += e.deltaY * -0.0015;
+    scale = Math.max(0.3, Math.min(2.8, scale));
     applyTransform(el, scale, getCurrentRotation(el));
   }, {passive: false});
 }
 
 // Helper functions
 function getCurrentScale(el) {
-  const match = el.style.transform.match(/scale\(([^)]+)\)/);
-  return match ? parseFloat(match[1]) : 1;
+  const m = el.style.transform.match(/scale\(([^)]+)\)/);
+  return m ? parseFloat(m[1]) : 1;
 }
-
 function getCurrentRotation(el) {
-  const match = el.style.transform.match(/rotate\(([^)]+)deg\)/);
-  return match ? parseFloat(match[1]) : 0;
+  const m = el.style.transform.match(/rotate\(([^)]+)deg\)/);
+  return m ? parseFloat(m[1]) : 0;
 }
-
 function applyTransform(el, scale, rotation) {
   el.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }
 
-// Mouse move for dragging + rotating
+// Global mouse move (dragging)
 document.addEventListener('mousemove', e => {
-  if (!placeMode || !selectedItem) return;
-
+  if (!placeMode || !selectedItem || !isDragging) return;
   const rect = scene.getBoundingClientRect();
+  let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
+  let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
+  x = Math.max(1, Math.min(93, x));
+  y = Math.max(1, Math.min(87, y));
 
-  if (isDragging) {
-    let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
-    let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
-    x = Math.max(1, Math.min(93, x));
-    y = Math.max(1, Math.min(87, y));
-
-    selectedItem.style.left = x + '%';
-    selectedItem.style.top = y + '%';
-  }
+  selectedItem.style.left = x + '%';
+  selectedItem.style.top = y + '%';
 });
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
-  isRotating = false;
-  if (selectedItem) selectedItem.style.transition = 'transform 0.2s ease';
+  if (selectedItem) selectedItem.style.transition = 'transform 0.25s ease';
 });
 
 // =============== PLACE MODE ===============
 function togglePlaceMode() {
   placeMode = !placeMode;
-  const panel = document.getElementById('place-mode');
-  panel.classList.toggle('active', placeMode);
+  document.getElementById('place-mode').classList.toggle('active', placeMode);
   document.getElementById('toggle-place').textContent = placeMode ? 
     'PLACE MODE: ON (ESC to exit)' : 'PLACE MODE: OFF';
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret 5-click access
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
   if (clickCount >= 5) {
     const pass = prompt("Enter admin password:");
-    if (pass === ADMIN_PASSWORD) {
-      togglePlaceMode();
-    } else {
-      showTooltip("Incorrect password", 1500);
-    }
+    if (pass === ADMIN_PASSWORD) togglePlaceMode();
+    else showTooltip("Incorrect password", 1500);
     clickCount = 0;
   }
   setTimeout(() => clickCount = 0, 2500);
 });
 
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
+
 document.getElementById('save-pos').addEventListener('click', () => {
-  items.forEach(item => {
+  document.querySelectorAll('.item').forEach(item => {
     localStorage.setItem('kingbear_' + item.id, JSON.stringify({
       left: item.style.left,
       top: item.style.top,
       transform: item.style.transform
     }));
   });
-  showTooltip('✅ All positions, scales & rotations saved', 1800);
+  showTooltip('✅ Everything Saved', 1600);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset everything?')) {
+  if (confirm('Reset all positions?')) {
     localStorage.clear();
     location.reload();
   }
@@ -335,7 +366,6 @@ function showTooltip(text, ms = 2000) {
   setTimeout(() => tip.style.opacity = 0, ms);
 }
 
-// ESC key
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && placeMode) togglePlaceMode();
 });
