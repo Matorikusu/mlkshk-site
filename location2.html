@@ -143,24 +143,45 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Characters -->
-  <div class="character" id="char1" data-name="Male Patron 1">
+  <!-- === CHARACTERS (6 Males + 6 Females) === -->
+  <!-- Males -->
+  <div class="character" id="char-male1" data-name="Male Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
-  <div class="character" id="char2" data-name="Male Patron 2">
+  <div class="character" id="char-male2" data-name="Male Patron 2">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
   </div>
-  <div class="character" id="char3" data-name="Male Patron 3">
+  <div class="character" id="char-male3" data-name="Male Patron 3">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
   </div>
-  <div class="character" id="char4" data-name="Female Patron 1">
+  <div class="character" id="char-male4" data-name="Male Patron 4">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE4.png" alt="">
+  </div>
+  <div class="character" id="char-male5" data-name="Male Patron 5">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE5.png" alt="">
+  </div>
+  <div class="character" id="char-male6" data-name="Male Patron 6">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE6.png" alt="">
+  </div>
+
+  <!-- Females -->
+  <div class="character" id="char-female1" data-name="Female Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
-  <div class="character" id="char5" data-name="Female Patron 2">
+  <div class="character" id="char-female2" data-name="Female Patron 2">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt="">
   </div>
-  <div class="character" id="char6" data-name="Security">
-    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
+  <div class="character" id="char-female3" data-name="Female Patron 3">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE3.png" alt="">
+  </div>
+  <div class="character" id="char-female4" data-name="Female Patron 4">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE4.png" alt="">
+  </div>
+  <div class="character" id="char-female5" data-name="Female Patron 5">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE5.png" alt="">
+  </div>
+  <div class="character" id="char-female6" data-name="Female Patron 6">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
   <!-- Items -->
@@ -221,7 +242,7 @@ document.querySelectorAll('.item, .character').forEach(el => {
 
   el.addEventListener('click', () => {
     if (!placeMode) {
-      showTooltip(`${el.dataset.name || 'Character'} activated`, 1600);
+      showTooltip(`${el.dataset.name} activated`, 1600);
     } else {
       selectedItem = el;
       showTooltip(`Selected → Drag=Move | Scroll=Scale | Shift+Scroll=Rotate`, 2200);
@@ -261,7 +282,7 @@ document.addEventListener('mouseup', () => {
   if (selectedItem) selectedItem.style.transition = 'transform 0.2s ease';
 });
 
-// Wheel Scaling & Rotating (Fixed)
+// Wheel = Scale | Shift + Wheel = Rotate
 document.addEventListener('wheel', e => {
   if (!placeMode || !selectedItem) return;
   e.preventDefault();
@@ -269,11 +290,9 @@ document.addEventListener('wheel', e => {
   let scale = getCurrentScale(selectedItem);
   let rotation = getCurrentRotation(selectedItem);
 
-  // Scale
   scale += (e.deltaY * -0.002);
   scale = Math.max(0.3, Math.min(3, scale));
 
-  // Rotate with Shift
   if (e.shiftKey) {
     rotation += (e.deltaY * -0.2);
   }
@@ -299,7 +318,7 @@ function togglePlaceMode() {
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret 5-click access
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
