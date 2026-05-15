@@ -72,7 +72,6 @@ header.nav-bar{
   cursor:pointer;
   filter: none;
   transform-origin: center center;
-  user-select:none;
   z-index: 10;
 }
 .item:hover{
@@ -87,17 +86,20 @@ header.nav-bar{
   cursor:pointer;
   filter: none;
   transform-origin: center center;
-  user-select:none;
-  z-index: 20;           /* Above items */
+  z-index: 20;
 }
 .male { z-index: 25; }   /* Males in front of females */
 
-/* Animated overlays on top of everything */
+/* Animated GIFs on top */
 .animated{
   position:absolute;
   z-index: 30;
   pointer-events:none;
   width:clamp(60px, 8vw, 140px);
+}
+
+.item img, .character img, .animated img{
+  width:100%; height:auto; display:block;
 }
 
 /* Place Mode */
@@ -150,7 +152,7 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Items (behind everything) -->
+  <!-- 1. Items (back layer) -->
   <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
@@ -173,7 +175,7 @@ header.nav-bar{
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
 
-  <!-- Females -->
+  <!-- 2. Females -->
   <div class="character" id="char-female1" data-name="Female Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
@@ -190,7 +192,7 @@ header.nav-bar{
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
-  <!-- Males (in front of females) -->
+  <!-- 3. Males (in front) -->
   <div class="character male" id="char-male1" data-name="Male Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
@@ -213,7 +215,7 @@ header.nav-bar{
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
   </div>
 
-  <!-- Animated GIFs on top -->
+  <!-- 4. Animated GIFs on top -->
   <div class="animated" id="candle1">
     <img src="images/Locations/The King Bear/Animated/candle1.gif" alt="">
   </div>
@@ -225,7 +227,7 @@ header.nav-bar{
   </div>
 </div>
 
-<!-- Background Audio -->
+<!-- Background Music -->
 <audio id="bg-audio" loop preload="auto">
   <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
 </audio>
@@ -239,15 +241,14 @@ header.nav-bar{
 <div class="info" id="tooltip"></div>
 
 <script>
-// Auto play ambient track
+// Auto-play ambient music
 const audio = document.getElementById('bg-audio');
-audio.volume = 0.45; // Adjust volume as needed
+audio.volume = 0.45;
 audio.play().catch(() => {
-  // Autoplay may be blocked - user can click anywhere to start
   document.addEventListener('click', () => audio.play(), {once: true});
 });
 
-// Rest of your existing script (Place Mode, dragging, etc.)
+// Place Mode + Dragging Logic
 const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
 let selectedItem = null;
@@ -342,7 +343,7 @@ function togglePlaceMode() {
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access + controls (same as before)
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
