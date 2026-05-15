@@ -48,46 +48,44 @@ header.nav-bar{
   cursor:crosshair;
 }
 
-/* Overlays */
+/* Animated Overlays */
 .overlay{
   position:absolute; pointer-events:none;
-  background-size:cover; background-position:center;
-  opacity:0.75;
 }
 
 #fog{
   width:100%; height:100%;
-  background: linear-gradient(transparent, rgba(0,0,0,0.4));
+  background: linear-gradient(transparent, rgba(0,0,0,0.45));
   animation: fogPulse 25s ease-in-out infinite;
 }
 
 #stars{
-  width:100%; height:60%;
+  width:100%; height:65%;
   background: url('images/Locations/Overlays/stars.png') repeat;
-  opacity:0.6;
-  animation: starTwinkle 40s linear infinite;
+  opacity:0.55;
+  animation: starTwinkle 45s linear infinite;
 }
 
-/* Items */
+/* Clickable Items */
 .item{
   position:absolute;
-  width:clamp(60px, 8vw, 140px);
+  width:clamp(65px, 9vw, 160px);
   transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
   cursor:pointer;
-  filter: drop-shadow(0 0 12px rgba(255,42,161,0.4));
+  filter: drop-shadow(0 0 15px rgba(255,42,161,0.5));
+  user-select:none;
 }
 
 .item:hover{
-  transform: scale(1.15) rotate(2deg);
-  filter: drop-shadow(0 0 25px rgba(255,42,161,0.8));
+  transform: scale(1.12) rotate(3deg);
+  filter: drop-shadow(0 0 30px rgba(255,42,161,0.9));
 }
 
 .item img{
   width:100%; height:auto; display:block;
-  border-radius:8px;
 }
 
-/* Place Mode Panel */
+/* Place Mode */
 #place-mode{
   position:fixed; top:20px; right:20px; z-index:200;
   background:rgba(0,0,0,0.9); 
@@ -110,19 +108,16 @@ header.nav-bar{
   border-radius:6px;
   cursor:pointer;
 }
-
 #place-mode button:hover{
   background:var(--accent);
-  color:black;
+  color:#000;
 }
 
 .info{
   position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  background:rgba(0,0,0,0.85); padding:8px 20px; border-radius:9999px;
+  background:rgba(0,0,0,0.85); padding:8px 22px; border-radius:9999px;
   font-size:13px; border:1px solid var(--accent); z-index:150;
-  white-space:nowrap;
-  opacity:0;
-  transition:opacity 0.4s;
+  opacity:0; transition:opacity 0.4s;
 }
 </style>
 </head>
@@ -138,19 +133,42 @@ header.nav-bar{
 </header>
 
 <div id="scene">
+  <!-- Overlays -->
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <div class="item" id="item1" data-name="Neon Totem">
-    <img src="images/Locations/Overlays/itemone.png" alt="Neon Totem">
+  <!-- === YOUR ITEMS === -->
+  <div class="item" id="item-crate" data-name="Crate">
+    <img src="images/Locations/Items/CRATE.png" alt="Crate">
   </div>
 
-  <div class="item" id="item2" data-name="Floating Satellite">
-    <img src="images/Locations/Overlays/satellite.png" alt="Floating Satellite">
+  <div class="item" id="item-speaker" data-name="Speaker Stack">
+    <img src="images/Locations/Items/SPEAKERSTACK.png" alt="Speaker Stack">
   </div>
 
-  <div class="item" id="item3" data-name="Bear Cave">
-    <img src="images/Locations/Overlays/bearcave.png" alt="Bear Cave">
+  <div class="item" id="item-flag" data-name="Pirate Flag">
+    <img src="images/Locations/Items/PIRATEFLAG.png" alt="Pirate Flag">
+  </div>
+
+  <div class="item" id="item-guitar" data-name="Frankie's Guitar">
+    <img src="images/Locations/Items/FRANKIEGUITAR.png" alt="Frankie's Guitar">
+  </div>
+
+  <div class="item" id="item-whiskey" data-name="Blue Bear Whiskey">
+    <img src="images/Locations/Items/BLUEBEARWHISKEY.png" alt="Blue Bear Whiskey">
+  </div>
+
+  <!-- Suggested Extra Items (add your images) -->
+  <div class="item" id="item-exit" data-name="Exit Sign">
+    <img src="images/Locations/Items/EXITSIGN.png" alt="Exit Sign"> <!-- add this file -->
+  </div>
+
+  <div class="item" id="item-light" data-name="Hanging Light">
+    <img src="images/Locations/Items/LIGHTFIXTURE.png" alt="Light Fixture"> <!-- add this file -->
+  </div>
+
+  <div class="item" id="item-neon" data-name="King Bear Neon">
+    <img src="images/Locations/Items/KINGBEARNEON.png" alt="King Bear Neon"> <!-- add this file -->
   </div>
 </div>
 
@@ -165,12 +183,12 @@ header.nav-bar{
 
 <script>
 // ================== CONFIG ==================
-const ADMIN_PASSWORD = "mlkshk";   // ← CHANGE THIS TO YOUR OWN PASSWORD
+const ADMIN_PASSWORD = "mlkshk";   // ← Change this
 let placeMode = false;
 const scene = document.getElementById('scene');
 const items = document.querySelectorAll('.item');
 
-// Initialize items
+// Initialize saved positions
 items.forEach(item => {
   const saved = localStorage.getItem('kingbear_' + item.id);
   if (saved) {
@@ -178,11 +196,12 @@ items.forEach(item => {
     item.style.left = pos.left;
     item.style.top = pos.top;
   } else {
-    item.style.left = '20%';
-    item.style.top = '40%';
+    // Default starting positions
+    item.style.left = '15%';
+    item.style.top = '45%';
   }
 
-  item.addEventListener('click', (e) => {
+  item.addEventListener('click', () => {
     if (placeMode) return;
     showTooltip(`${item.dataset.name} activated`, 1800);
   });
@@ -209,8 +228,8 @@ function makeDraggable(el) {
     let x = ((e.clientX - sceneRect.left - offsetX) / sceneRect.width) * 100;
     let y = ((e.clientY - sceneRect.top - offsetY) / sceneRect.height) * 100;
 
-    x = Math.max(2, Math.min(92, x));
-    y = Math.max(2, Math.min(88, y));
+    x = Math.max(1, Math.min(93, x));
+    y = Math.max(1, Math.min(87, y));
 
     el.style.left = x + '%';
     el.style.top = y + '%';
@@ -224,37 +243,33 @@ function makeDraggable(el) {
   });
 }
 
-// =============== PLACE MODE TOGGLE ===============
+// =============== PLACE MODE ===============
 function togglePlaceMode() {
   placeMode = !placeMode;
-  
   const panel = document.getElementById('place-mode');
   panel.classList.toggle('active', placeMode);
-  
   document.getElementById('toggle-place').textContent = placeMode ? 
     'PLACE MODE: ON (Click to Exit)' : 'PLACE MODE: OFF';
-  
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access: Click "KINGBEAR REALM" 5 times
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
   if (clickCount >= 5) {
-    const pass = prompt("Enter admin password to access Place Mode:");
+    const pass = prompt("Enter admin password:");
     if (pass === ADMIN_PASSWORD) {
       togglePlaceMode();
-      showTooltip(placeMode ? "Place Mode ENABLED" : "Place Mode DISABLED", 2000);
+      showTooltip(placeMode ? "🛠️ Place Mode ENABLED" : "Place Mode DISABLED", 1800);
     } else {
-      showTooltip("Incorrect password", 1500);
+      showTooltip("❌ Wrong password", 1500);
     }
     clickCount = 0;
   }
-  setTimeout(() => clickCount = 0, 2000); // reset after 2s
+  setTimeout(() => clickCount = 0, 2500);
 });
 
-// Button controls
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
@@ -264,17 +279,16 @@ document.getElementById('save-pos').addEventListener('click', () => {
       top: item.style.top
     }));
   });
-  showTooltip('✅ Positions Saved', 1500);
+  showTooltip('✅ Positions Saved', 1400);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset ALL item positions?')) {
+  if (confirm('Reset all positions to default?')) {
     localStorage.clear();
     location.reload();
   }
 });
 
-// Tooltip helper
 function showTooltip(text, ms = 2000) {
   const tip = document.getElementById('tooltip');
   tip.textContent = text;
@@ -282,11 +296,9 @@ function showTooltip(text, ms = 2000) {
   setTimeout(() => tip.style.opacity = 0, ms);
 }
 
-// Keyboard fallback (only while in place mode)
+// ESC to exit place mode
 document.addEventListener('keydown', e => {
-  if (placeMode && e.key === 'Escape') {
-    togglePlaceMode();
-  }
+  if (placeMode && e.key === 'Escape') togglePlaceMode();
 });
 </script>
 </body>
