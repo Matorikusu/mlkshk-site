@@ -81,18 +81,24 @@ header.nav-bar{
   width:100%; height:auto; display:block;
 }
 
-/* Background Characters (non-clickable) */
+/* Background Characters - No glow, controllable */
 .character{
   position:absolute;
-  width:clamp(80px, 11vw, 190px);
-  opacity:0.9;
-  transition: all 8s ease-in-out;
-  filter: drop-shadow(0 0 12px rgba(255,42,161,0.3));
-  pointer-events:none;           /* Not clickable */
-  animation: gentleFloat 25s linear infinite;
+  width:clamp(90px, 12vw, 200px);
+  opacity:0.92;
+  transition: transform 0.4s ease;
+  transform-origin: center center;
+  pointer-events:none;
+  animation: gentleFloat 28s linear infinite;
 }
 .character img{
   width:100%; height:auto; display:block;
+}
+
+@keyframes gentleFloat {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(25px, -15px) rotate(2deg); }
+  100% { transform: translate(0, 0) rotate(-2deg); }
 }
 
 /* Place Mode */
@@ -106,7 +112,6 @@ header.nav-bar{
   display:none; 
   gap:10px; 
   align-items:center;
-  box-shadow:0 0 20px rgba(255,42,161,0.3);
 }
 #place-mode.active{display:flex;}
 
@@ -146,7 +151,7 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- === BACKGROUND CHARACTERS (non-clickable, random) === -->
+  <!-- Background Characters -->
   <div class="character" id="char1"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt=""></div>
   <div class="character" id="char2"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt=""></div>
   <div class="character" id="char3"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt=""></div>
@@ -154,7 +159,7 @@ header.nav-bar{
   <div class="character" id="char5"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt=""></div>
   <div class="character" id="char6"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt=""></div>
 
-  <!-- === CLICKABLE ITEMS === -->
+  <!-- Clickable Items -->
   <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
@@ -179,17 +184,6 @@ header.nav-bar{
   <div class="item" id="item-guitar" data-name="Frankie Guitar">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
-
-  <!-- === MOCK ANIMATED GIFS (for movement) === -->
-  <div class="item" id="item-gif1" data-name="Smoke">
-    <img src="images/Locations/The King Bear/Animated/smoke.gif" alt="Smoke"> <!-- replace with real gif -->
-  </div>
-  <div class="item" id="item-gif2" data-name="Hologram">
-    <img src="images/Locations/The King Bear/Animated/hologram.gif" alt="Hologram">
-  </div>
-  <div class="item" id="item-gif3" data-name="Neon Flicker">
-    <img src="images/Locations/The King Bear/Animated/neonflicker.gif" alt="Neon">
-  </div>
 </div>
 
 <div id="place-mode">
@@ -205,19 +199,12 @@ header.nav-bar{
 const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
 let selectedItem = null;
+let isDragging = false;
+let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Randomize & animate background characters
-document.querySelectorAll('.character').forEach((char, i) => {
-  const left = 10 + Math.random() * 75;
-  const top = 15 + Math.random() * 60;
-  char.style.left = left + '%';
-  char.style.top = top + '%';
-  char.style.animationDelay = `-${i * 4}s`;   // stagger animation
-});
-
-// Initialize items (clickable)
+// Initialize Clickable Items
 document.querySelectorAll('.item').forEach(item => {
   const saved = localStorage.getItem('kingbear_' + item.id);
   if (saved) {
@@ -226,8 +213,8 @@ document.querySelectorAll('.item').forEach(item => {
     item.style.top = data.top || '40%';
     item.style.transform = data.transform || 'scale(1) rotate(0deg)';
   } else {
-    item.style.left = '20%';
-    item.style.top = '40%';
+    item.style.left = '25%';
+    item.style.top = '50%';
     item.style.transform = 'scale(1) rotate(0deg)';
   }
 
@@ -236,75 +223,50 @@ document.querySelectorAll('.item').forEach(item => {
       showTooltip(`${item.dataset.name} activated`, 1600);
     } else {
       selectedItem = item;
-      showTooltip(`Selected → Scroll=Scale | Shift+Drag=Rotate`, 2200);
+      showTooltip(`Selected: ${item.dataset.name} | Drag=Move | Wheel=Scale | Shift+Drag=Rotate`, 2500);
     }
   });
 
   makeDraggable(item);
 });
 
-function makeDraggable(el) {
-  let isDragging = false;
-  let offsetX, offsetY;
+// Initialize Characters (you can save them too)
+document.querySelectorAll('.character').forEach(char => {
+  const saved = localStorage.getItem('kingbear_' + char.id);
+  if (saved) {
+    const data = JSON.parse(saved);
+    char.style.left = data.left;
+    char.style.top = data.top;
+    char.style.transform = data.transform || 'scale(1) rotate(0deg)';
+  } else {
+    char.style.left = (15 + Math.random() * 70) + '%';
+    char.style.top = (20 + Math.random() * 55) + '%';
+    char.style.transform = 'scale(1) rotate(0deg)';
+  }
+});
 
+// Draggable function - FIXED
+function makeDraggable(el) {
   el.addEventListener('mousedown', e => {
     if (!placeMode) return;
     selectedItem = el;
+    isDragging = true;
 
-    if (e.shiftKey) {
-      // Rotation mode
-      const startRot = getCurrentRotation(el);
-      const startX = e.clientX;
-      
-      const onMove = (moveEvent) => {
-        const delta = (moveEvent.clientX - startX) * 0.8;
-        applyTransform(el, getCurrentScale(el), startRot + delta);
-      };
-      
-      document.addEventListener('mousemove', onMove, {once: false});
-      document.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', onMove);
-      }, {once: true});
-      
-    } else {
-      isDragging = true;
-      const rect = el.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-      el.style.transition = 'none';
-    }
+    const rect = el.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    el.style.transition = 'none';
   });
-
-  // Scale with mouse wheel
-  el.addEventListener('wheel', e => {
-    if (!placeMode || selectedItem !== el) return;
-    e.preventDefault();
-    let scale = getCurrentScale(el);
-    scale += e.deltaY * -0.0015;
-    scale = Math.max(0.3, Math.min(2.8, scale));
-    applyTransform(el, scale, getCurrentRotation(el));
-  }, {passive: false});
 }
 
-// Helper functions
-function getCurrentScale(el) {
-  const m = el.style.transform.match(/scale\(([^)]+)\)/);
-  return m ? parseFloat(m[1]) : 1;
-}
-function getCurrentRotation(el) {
-  const m = el.style.transform.match(/rotate\(([^)]+)deg\)/);
-  return m ? parseFloat(m[1]) : 0;
-}
-function applyTransform(el, scale, rotation) {
-  el.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
-}
-
-// Global mouse move (dragging)
+// Global dragging
 document.addEventListener('mousemove', e => {
   if (!placeMode || !selectedItem || !isDragging) return;
+
   const rect = scene.getBoundingClientRect();
   let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
   let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
+
   x = Math.max(1, Math.min(93, x));
   y = Math.max(1, Math.min(87, y));
 
@@ -317,7 +279,32 @@ document.addEventListener('mouseup', () => {
   if (selectedItem) selectedItem.style.transition = 'transform 0.25s ease';
 });
 
-// =============== PLACE MODE ===============
+// Wheel scaling + Shift rotate
+document.addEventListener('wheel', e => {
+  if (!placeMode || !selectedItem) return;
+  e.preventDefault();
+
+  let scale = getCurrentScale(selectedItem);
+  let rotation = getCurrentRotation(selectedItem);
+
+  scale += e.deltaY * -0.0018;
+  scale = Math.max(0.4, Math.min(2.8, scale));
+
+  if (e.shiftKey) rotation += 8;
+
+  selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+}, {passive: false});
+
+function getCurrentScale(el) {
+  const m = el.style.transform.match(/scale\(([^)]+)\)/);
+  return m ? parseFloat(m[1]) : 1;
+}
+function getCurrentRotation(el) {
+  const m = el.style.transform.match(/rotate\(([^)]+)deg\)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+// Place Mode Controls
 function togglePlaceMode() {
   placeMode = !placeMode;
   document.getElementById('place-mode').classList.toggle('active', placeMode);
@@ -333,15 +320,16 @@ document.getElementById('realm-title').addEventListener('click', () => {
   if (clickCount >= 5) {
     const pass = prompt("Enter admin password:");
     if (pass === ADMIN_PASSWORD) togglePlaceMode();
-    else showTooltip("Incorrect password", 1500);
+    else showTooltip("Incorrect password", 1200);
     clickCount = 0;
   }
-  setTimeout(() => clickCount = 0, 2500);
+  setTimeout(() => clickCount = 0, 2000);
 });
 
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
+  // Save items
   document.querySelectorAll('.item').forEach(item => {
     localStorage.setItem('kingbear_' + item.id, JSON.stringify({
       left: item.style.left,
@@ -349,11 +337,19 @@ document.getElementById('save-pos').addEventListener('click', () => {
       transform: item.style.transform
     }));
   });
-  showTooltip('✅ Everything Saved', 1600);
+  // Save characters
+  document.querySelectorAll('.character').forEach(char => {
+    localStorage.setItem('kingbear_' + char.id, JSON.stringify({
+      left: char.style.left,
+      top: char.style.top,
+      transform: char.style.transform
+    }));
+  });
+  showTooltip('✅ All positions saved!', 1800);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset all positions?')) {
+  if (confirm('Reset everything to random/default?')) {
     localStorage.clear();
     location.reload();
   }
