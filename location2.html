@@ -64,41 +64,35 @@ header.nav-bar{
   animation: starTwinkle 45s linear infinite;
 }
 
-/* Clickable Items */
-.item{
+/* Items & Characters */
+.item, .character{
   position:absolute;
   width:clamp(65px, 9vw, 170px);
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
   cursor:pointer;
-  filter: drop-shadow(0 0 15px rgba(255,42,161,0.5));
+  filter: drop-shadow(0 0 8px rgba(255,42,161,0.25));   /* Reduced glow */
   transform-origin: center center;
   user-select:none;
 }
-.item:hover{
-  filter: drop-shadow(0 0 30px rgba(255,42,161,0.9));
+.item:hover, .character:hover{
+  filter: drop-shadow(0 0 16px rgba(255,42,161,0.45));   /* Still subtle hover */
 }
-.item img{
+
+.item img, .character img{
   width:100%; height:auto; display:block;
 }
 
-/* Background Characters - No glow, controllable */
+/* Slightly different default size for characters */
 .character{
-  position:absolute;
   width:clamp(90px, 12vw, 200px);
-  opacity:0.92;
-  transition: transform 0.4s ease;
-  transform-origin: center center;
-  pointer-events:none;
-  animation: gentleFloat 28s linear infinite;
-}
-.character img{
-  width:100%; height:auto; display:block;
+  animation: gentleFloat 32s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255,42,161,0.15));   /* Even less glow */
 }
 
 @keyframes gentleFloat {
-  0% { transform: translate(0, 0) rotate(-2deg); }
-  50% { transform: translate(25px, -15px) rotate(2deg); }
-  100% { transform: translate(0, 0) rotate(-2deg); }
+  0%   { transform: translate(0, 0) rotate(-1.5deg); }
+  50%  { transform: translate(18px, -12px) rotate(1.5deg); }
+  100% { transform: translate(0, 0) rotate(-1.5deg); }
 }
 
 /* Place Mode */
@@ -151,13 +145,25 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Background Characters -->
-  <div class="character" id="char1"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt=""></div>
-  <div class="character" id="char2"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt=""></div>
-  <div class="character" id="char3"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt=""></div>
-  <div class="character" id="char4"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt=""></div>
-  <div class="character" id="char5"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt=""></div>
-  <div class="character" id="char6"><img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt=""></div>
+  <!-- Characters (now fully editable) -->
+  <div class="character" id="char1" data-name="Male Patron 1">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
+  </div>
+  <div class="character" id="char2" data-name="Male Patron 2">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
+  </div>
+  <div class="character" id="char3" data-name="Male Patron 3">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
+  </div>
+  <div class="character" id="char4" data-name="Female Patron 1">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
+  </div>
+  <div class="character" id="char5" data-name="Female Patron 2">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt="">
+  </div>
+  <div class="character" id="char6" data-name="Security">
+    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
+  </div>
 
   <!-- Clickable Items -->
   <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
@@ -171,9 +177,6 @@ header.nav-bar{
   </div>
   <div class="item" id="item-poster" data-name="Reggie Poster">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_REGGIEPOSTER.png" alt="">
-  </div>
-  <div class="item" id="item-sofa" data-name="Sofa">
-    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SOFA.png" alt="">
   </div>
   <div class="item" id="item-neon" data-name="KingBear Neon">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_NEON.png" alt="">
@@ -204,54 +207,37 @@ let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Initialize Clickable Items
-document.querySelectorAll('.item').forEach(item => {
-  const saved = localStorage.getItem('kingbear_' + item.id);
+// Initialize ALL editable elements (items + characters)
+document.querySelectorAll('.item, .character').forEach(el => {
+  const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
     const data = JSON.parse(saved);
-    item.style.left = data.left || '20%';
-    item.style.top = data.top || '40%';
-    item.style.transform = data.transform || 'scale(1) rotate(0deg)';
+    el.style.left = data.left || '20%';
+    el.style.top = data.top || '40%';
+    el.style.transform = data.transform || 'scale(1) rotate(0deg)';
   } else {
-    item.style.left = '25%';
-    item.style.top = '50%';
-    item.style.transform = 'scale(1) rotate(0deg)';
+    el.style.left = '25%';
+    el.style.top = '50%';
+    el.style.transform = 'scale(1) rotate(0deg)';
   }
 
-  item.addEventListener('click', () => {
+  el.addEventListener('click', () => {
     if (!placeMode) {
-      showTooltip(`${item.dataset.name} activated`, 1600);
+      showTooltip(`${el.dataset.name || 'Character'} activated`, 1600);
     } else {
-      selectedItem = item;
-      showTooltip(`Selected: ${item.dataset.name} | Drag=Move | Wheel=Scale | Shift+Drag=Rotate`, 2500);
+      selectedItem = el;
+      showTooltip(`Selected → Drag=Move | Wheel=Scale | Shift+Drag=Rotate`, 2200);
     }
   });
 
-  makeDraggable(item);
+  makeDraggable(el);
 });
 
-// Initialize Characters (you can save them too)
-document.querySelectorAll('.character').forEach(char => {
-  const saved = localStorage.getItem('kingbear_' + char.id);
-  if (saved) {
-    const data = JSON.parse(saved);
-    char.style.left = data.left;
-    char.style.top = data.top;
-    char.style.transform = data.transform || 'scale(1) rotate(0deg)';
-  } else {
-    char.style.left = (15 + Math.random() * 70) + '%';
-    char.style.top = (20 + Math.random() * 55) + '%';
-    char.style.transform = 'scale(1) rotate(0deg)';
-  }
-});
-
-// Draggable function - FIXED
 function makeDraggable(el) {
   el.addEventListener('mousedown', e => {
     if (!placeMode) return;
     selectedItem = el;
     isDragging = true;
-
     const rect = el.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
@@ -262,11 +248,9 @@ function makeDraggable(el) {
 // Global dragging
 document.addEventListener('mousemove', e => {
   if (!placeMode || !selectedItem || !isDragging) return;
-
   const rect = scene.getBoundingClientRect();
   let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
   let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
-
   x = Math.max(1, Math.min(93, x));
   y = Math.max(1, Math.min(87, y));
 
@@ -279,7 +263,7 @@ document.addEventListener('mouseup', () => {
   if (selectedItem) selectedItem.style.transition = 'transform 0.25s ease';
 });
 
-// Wheel scaling + Shift rotate
+// Wheel = Scale | Shift + Wheel = Rotate
 document.addEventListener('wheel', e => {
   if (!placeMode || !selectedItem) return;
   e.preventDefault();
@@ -288,9 +272,9 @@ document.addEventListener('wheel', e => {
   let rotation = getCurrentRotation(selectedItem);
 
   scale += e.deltaY * -0.0018;
-  scale = Math.max(0.4, Math.min(2.8, scale));
+  scale = Math.max(0.35, Math.min(2.8, scale));
 
-  if (e.shiftKey) rotation += 8;
+  if (e.shiftKey) rotation += e.deltaY * -0.15;
 
   selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }, {passive: false});
@@ -329,27 +313,18 @@ document.getElementById('realm-title').addEventListener('click', () => {
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
-  // Save items
-  document.querySelectorAll('.item').forEach(item => {
-    localStorage.setItem('kingbear_' + item.id, JSON.stringify({
-      left: item.style.left,
-      top: item.style.top,
-      transform: item.style.transform
+  document.querySelectorAll('.item, .character').forEach(el => {
+    localStorage.setItem('kingbear_' + el.id, JSON.stringify({
+      left: el.style.left,
+      top: el.style.top,
+      transform: el.style.transform
     }));
   });
-  // Save characters
-  document.querySelectorAll('.character').forEach(char => {
-    localStorage.setItem('kingbear_' + char.id, JSON.stringify({
-      left: char.style.left,
-      top: char.style.top,
-      transform: char.style.transform
-    }));
-  });
-  showTooltip('✅ All positions saved!', 1800);
+  showTooltip('✅ All positions saved!', 1600);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset everything to random/default?')) {
+  if (confirm('Reset everything?')) {
     localStorage.clear();
     location.reload();
   }
