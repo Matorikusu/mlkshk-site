@@ -64,38 +64,40 @@ header.nav-bar{
   animation: starTwinkle 45s linear infinite;
 }
 
-/* Clickable Items - Light glow */
+/* Items - Glow only on hover */
 .item{
   position:absolute;
   width:clamp(65px, 9vw, 170px);
   transition: transform 0.25s ease;
   cursor:pointer;
-  filter: drop-shadow(0 0 8px rgba(255,42,161,0.3));
+  filter: none;                    /* No base glow */
   transform-origin: center center;
   user-select:none;
 }
 .item:hover{
-  filter: drop-shadow(0 0 16px rgba(255,42,161,0.5));
+  filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
 }
 
-/* Characters - NO GLOW */
+/* Characters - No glow at all */
 .character{
   position:absolute;
   width:clamp(90px, 12vw, 200px);
   transition: transform 0.25s ease;
   cursor:pointer;
+  filter: none;                    /* No glow */
   transform-origin: center center;
   user-select:none;
-  pointer-events: auto;           /* Important for interaction */
+  animation: gentleFloat 32s linear infinite;
 }
-.character img{
+
+.item img, .character img{
   width:100%; height:auto; display:block;
 }
 
 @keyframes gentleFloat {
-  0%   { transform: translate(0, 0) rotate(-1deg); }
-  50%  { transform: translate(15px, -10px) rotate(1deg); }
-  100% { transform: translate(0, 0) rotate(-1deg); }
+  0%   { transform: translate(0, 0) rotate(-1.5deg); }
+  50%  { transform: translate(18px, -12px) rotate(1.5deg); }
+  100% { transform: translate(0, 0) rotate(-1.5deg); }
 }
 
 /* Place Mode */
@@ -215,8 +217,8 @@ document.querySelectorAll('.item, .character').forEach(el => {
   const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
     const data = JSON.parse(saved);
-    el.style.left = data.left || '25%';
-    el.style.top = data.top || '50%';
+    el.style.left = data.left || '20%';
+    el.style.top = data.top || '40%';
     el.style.transform = data.transform || 'scale(1) rotate(0deg)';
   } else {
     el.style.left = '25%';
@@ -226,10 +228,10 @@ document.querySelectorAll('.item, .character').forEach(el => {
 
   el.addEventListener('click', () => {
     if (!placeMode) {
-      showTooltip(`${el.dataset.name} activated`, 1600);
+      showTooltip(`${el.dataset.name || 'Character'} activated`, 1600);
     } else {
       selectedItem = el;
-      showTooltip(`Selected → Drag=Move | Wheel=Scale | Shift+Wheel=Rotate`, 2200);
+      showTooltip(`Selected → Drag=Move | Wheel=Scale | Shift+Drag=Rotate`, 2200);
     }
   });
 
@@ -248,7 +250,7 @@ function makeDraggable(el) {
   });
 }
 
-// Dragging
+// Global dragging
 document.addEventListener('mousemove', e => {
   if (!placeMode || !selectedItem || !isDragging) return;
   const rect = scene.getBoundingClientRect();
@@ -266,7 +268,7 @@ document.addEventListener('mouseup', () => {
   if (selectedItem) selectedItem.style.transition = 'transform 0.25s ease';
 });
 
-// Wheel Scaling + Shift+Wheel Rotate
+// Wheel = Scale | Shift + Wheel = Rotate
 document.addEventListener('wheel', e => {
   if (!placeMode || !selectedItem) return;
   e.preventDefault();
@@ -274,12 +276,10 @@ document.addEventListener('wheel', e => {
   let scale = getCurrentScale(selectedItem);
   let rotation = getCurrentRotation(selectedItem);
 
-  scale += e.deltaY * -0.002;
-  scale = Math.max(0.3, Math.min(3, scale));
+  scale += e.deltaY * -0.0018;
+  scale = Math.max(0.35, Math.min(2.8, scale));
 
-  if (e.shiftKey) {
-    rotation += e.deltaY * -0.2;
-  }
+  if (e.shiftKey) rotation += e.deltaY * -0.15;
 
   selectedItem.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 }, {passive: false});
@@ -302,7 +302,7 @@ function togglePlaceMode() {
   scene.style.cursor = placeMode ? 'move' : 'crosshair';
 }
 
-// Secret access + controls
+// Secret access
 let clickCount = 0;
 document.getElementById('realm-title').addEventListener('click', () => {
   clickCount++;
