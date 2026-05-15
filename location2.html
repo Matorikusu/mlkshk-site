@@ -64,20 +64,15 @@ header.nav-bar{
   animation: starTwinkle 45s linear infinite;
 }
 
-/* Locked Items & Characters */
-.item, .character{
+/* Items */
+.item{
   position:absolute;
+  width:clamp(65px, 9vw, 170px);
   transition: transform 0.2s ease;
   cursor:pointer;
-  transform-origin: center center;
-  user-select:none;
-}
-
-/* Items - Back layer */
-.item{
-  width:clamp(65px, 9vw, 170px);
-  z-index: 10;
   filter: none;
+  transform-origin: center center;
+  z-index: 10;
 }
 .item:hover{
   filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
@@ -85,12 +80,17 @@ header.nav-bar{
 
 /* Characters */
 .character{
+  position:absolute;
   width:clamp(90px, 12vw, 200px);
+  transition: transform 0.2s ease;
+  cursor:pointer;
+  filter: none;
+  transform-origin: center center;
   z-index: 20;
 }
 .male { z-index: 25; }
 
-/* Animated GIFs - Only these are movable now */
+/* Animated GIFs on top */
 .animated{
   position:absolute;
   z-index: 30;
@@ -152,70 +152,70 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Locked Items -->
-  <div class="item" id="item-bottlecrate" data-name="Bottle Crate" style="left: 12%; top: 68%; transform: scale(1) rotate(0deg);">
+  <!-- Items -->
+  <div class="item" id="item-bottlecrate" data-name="Bottle Crate">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
-  <div class="item" id="item-speaker" data-name="Speaker" style="left: 28%; top: 52%; transform: scale(1.1) rotate(-3deg);">
+  <div class="item" id="item-speaker" data-name="Speaker">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SPEAKER.png" alt="">
   </div>
-  <div class="item" id="item-recordcrate" data-name="Record Crate" style="left: 8%; top: 45%; transform: scale(0.95) rotate(2deg);">
+  <div class="item" id="item-recordcrate" data-name="Record Crate">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_RECORDCRATE.png" alt="">
   </div>
-  <div class="item" id="item-poster" data-name="Reggie Poster" style="left: 78%; top: 38%; transform: scale(1.05) rotate(0deg);">
+  <div class="item" id="item-poster" data-name="Reggie Poster">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_REGGIEPOSTER.png" alt="">
   </div>
-  <div class="item" id="item-neon" data-name="KingBear Neon" style="left: 45%; top: 22%; transform: scale(1.2) rotate(4deg);">
+  <div class="item" id="item-neon" data-name="KingBear Neon">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_NEON.png" alt="">
   </div>
-  <div class="item" id="item-flag" data-name="Pirate Flag" style="left: 82%; top: 55%; transform: scale(1) rotate(-8deg);">
+  <div class="item" id="item-flag" data-name="Pirate Flag">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_PIRATEFLAG.png" alt="">
   </div>
-  <div class="item" id="item-guitar" data-name="Frankie Guitar" style="left: 65%; top: 72%; transform: scale(0.9) rotate(12deg);">
+  <div class="item" id="item-guitar" data-name="Frankie Guitar">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
 
   <!-- Females -->
-  <div class="character" id="char-female1" data-name="Female Patron 1" style="left: 18%; top: 48%; transform: scale(1) rotate(0deg);">
+  <div class="character" id="char-female1" data-name="Female Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
-  <div class="character" id="char-female2" data-name="Female Patron 2" style="left: 35%; top: 55%; transform: scale(1.05) rotate(-2deg);">
+  <div class="character" id="char-female2" data-name="Female Patron 2">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt="">
   </div>
-  <div class="character" id="char-female4" data-name="Female Patron 4" style="left: 52%; top: 62%; transform: scale(0.95) rotate(3deg);">
+  <div class="character" id="char-female4" data-name="Female Patron 4">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE4.png" alt="">
   </div>
-  <div class="character" id="char-female5" data-name="Female Patron 5" style="left: 68%; top: 48%; transform: scale(1) rotate(0deg);">
+  <div class="character" id="char-female5" data-name="Female Patron 5">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE5.png" alt="">
   </div>
-  <div class="character" id="char-female6" data-name="Female Patron 6" style="left: 81%; top: 65%; transform: scale(1.1) rotate(-4deg);">
+  <div class="character" id="char-female6" data-name="Female Patron 6">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
   <!-- Males -->
-  <div class="character male" id="char-male1" data-name="Male Patron 1" style="left: 22%; top: 42%; transform: scale(1) rotate(1deg);">
+  <div class="character male" id="char-male1" data-name="Male Patron 1">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
-  <div class="character male" id="char-male2" data-name="Male Patron 2" style="left: 41%; top: 38%; transform: scale(1.05) rotate(-3deg);">
+  <div class="character male" id="char-male2" data-name="Male Patron 2">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
   </div>
-  <div class="character male" id="char-male3" data-name="Male Patron 3" style="left: 58%; top: 45%; transform: scale(0.98) rotate(2deg);">
+  <div class="character male" id="char-male3" data-name="Male Patron 3">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
   </div>
-  <div class="character male" id="char-male4" data-name="Male Patron 4" style="left: 72%; top: 52%; transform: scale(1) rotate(0deg);">
+  <div class="character male" id="char-male4" data-name="Male Patron 4">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE4.png" alt="">
   </div>
-  <div class="character male" id="char-male5" data-name="Male Patron 5" style="left: 28%; top: 65%; transform: scale(1.08) rotate(-5deg);">
+  <div class="character male" id="char-male5" data-name="Male Patron 5">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE5.png" alt="">
   </div>
-  <div class="character male" id="char-male6" data-name="Male Patron 6" style="left: 48%; top: 71%; transform: scale(0.95) rotate(4deg);">
+  <div class="character male" id="char-male6" data-name="Male Patron 6">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE6.png" alt="">
   </div>
-  <div class="character male" id="char-security" data-name="Security" style="left: 79%; top: 38%; transform: scale(1.1) rotate(0deg);">
+  <div class="character male" id="char-security" data-name="Security">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
   </div>
 
-  <!-- Movable Animated GIFs -->
+  <!-- Animated GIFs -->
   <div class="animated" id="candle1">
     <img src="images/Locations/The King Bear/Animated/candle1.gif" alt="">
   </div>
@@ -234,29 +234,32 @@ header.nav-bar{
 
 <div id="place-mode">
   <button id="toggle-place">PLACE MODE: ON</button>
-  <button id="save-pos">Save GIF Positions</button>
-  <button id="reset-pos">Reset GIFs</button>
+  <button id="save-pos">Save All</button>
+  <button id="reset-pos">Reset All</button>
 </div>
 
 <div class="info" id="tooltip"></div>
 
 <script>
-// Stronger Autoplay Attempt
+// === IMPROVED AUTOPLAY MUSIC ===
 const audio = document.getElementById('bg-audio');
-audio.volume = 0.42;
+audio.volume = 0.45;
 
 function tryPlayAudio() {
-  audio.play().catch(() => {
-    console.log("Autoplay blocked - waiting for user interaction");
+  audio.play().catch(err => {
+    console.log("Autoplay blocked:", err);
   });
 }
 
-// Try immediately and also on first user interaction
+// Try immediately
 tryPlayAudio();
+
+// Also try on any user interaction (best chance)
 document.addEventListener('click', tryPlayAudio, {once: true});
 document.addEventListener('touchstart', tryPlayAudio, {once: true});
+document.addEventListener('keydown', tryPlayAudio, {once: true});
 
-// ================== PLACE MODE (Only for GIFs) ==================
+// Place Mode Logic
 const ADMIN_PASSWORD = "mlkshk";
 let placeMode = false;
 let selectedItem = null;
@@ -265,24 +268,25 @@ let offsetX = 0, offsetY = 0;
 
 const scene = document.getElementById('scene');
 
-// Only animated GIFs are editable now
-document.querySelectorAll('.animated').forEach(el => {
+document.querySelectorAll('.item, .character, .animated').forEach(el => {
   const saved = localStorage.getItem('kingbear_' + el.id);
   if (saved) {
     const data = JSON.parse(saved);
-    el.style.left = data.left;
-    el.style.top = data.top;
+    el.style.left = data.left || '20%';
+    el.style.top = data.top || '40%';
     el.style.transform = data.transform || 'scale(1) rotate(0deg)';
   } else {
-    el.style.left = '40%';
+    el.style.left = '25%';
     el.style.top = '50%';
     el.style.transform = 'scale(1) rotate(0deg)';
   }
 
   el.addEventListener('click', () => {
-    if (placeMode) {
+    if (!placeMode) {
+      showTooltip(`${el.dataset.name || 'Object'} activated`, 1600);
+    } else {
       selectedItem = el;
-      showTooltip(`GIF Selected → Drag / Scroll / Shift+Scroll`, 1800);
+      showTooltip(`Selected → Drag=Move | Scroll=Scale | Shift+Scroll=Rotate`, 2200);
     }
   });
 
@@ -306,8 +310,8 @@ document.addEventListener('mousemove', e => {
   const rect = scene.getBoundingClientRect();
   let x = ((e.clientX - rect.left - offsetX) / rect.width) * 100;
   let y = ((e.clientY - rect.top - offsetY) / rect.height) * 100;
-  x = Math.max(2, Math.min(92, x));
-  y = Math.max(2, Math.min(88, y));
+  x = Math.max(1, Math.min(93, x));
+  y = Math.max(1, Math.min(87, y));
 
   selectedItem.style.left = x + '%';
   selectedItem.style.top = y + '%';
@@ -326,7 +330,7 @@ document.addEventListener('wheel', e => {
   let rotation = getCurrentRotation(selectedItem);
 
   scale += (e.deltaY * -0.002);
-  scale = Math.max(0.4, Math.min(2.5, scale));
+  scale = Math.max(0.3, Math.min(3, scale));
 
   if (e.shiftKey) rotation += (e.deltaY * -0.2);
 
@@ -334,12 +338,12 @@ document.addEventListener('wheel', e => {
 }, {passive: false});
 
 function getCurrentScale(el) {
-  const m = el.style.transform.match(/scale\(([^)]+)\)/);
-  return m ? parseFloat(m[1]) : 1;
+  const match = el.style.transform.match(/scale\(([^)]+)\)/);
+  return match ? parseFloat(match[1]) : 1;
 }
 function getCurrentRotation(el) {
-  const m = el.style.transform.match(/rotate\(([^)]+)deg\)/);
-  return m ? parseFloat(m[1]) : 0;
+  const match = el.style.transform.match(/rotate\(([^)]+)deg\)/);
+  return match ? parseFloat(match[1]) : 0;
 }
 
 function togglePlaceMode() {
@@ -366,19 +370,19 @@ document.getElementById('realm-title').addEventListener('click', () => {
 document.getElementById('toggle-place').addEventListener('click', togglePlaceMode);
 
 document.getElementById('save-pos').addEventListener('click', () => {
-  document.querySelectorAll('.animated').forEach(el => {
+  document.querySelectorAll('.item, .character, .animated').forEach(el => {
     localStorage.setItem('kingbear_' + el.id, JSON.stringify({
       left: el.style.left,
       top: el.style.top,
       transform: el.style.transform
     }));
   });
-  showTooltip('✅ GIF Positions Saved!', 1600);
+  showTooltip('✅ All positions & scales saved!', 1600);
 });
 
 document.getElementById('reset-pos').addEventListener('click', () => {
-  if (confirm('Reset GIF positions only?')) {
-    document.querySelectorAll('.animated').forEach(el => localStorage.removeItem('kingbear_' + el.id));
+  if (confirm('Reset everything?')) {
+    localStorage.clear();
     location.reload();
   }
 });
