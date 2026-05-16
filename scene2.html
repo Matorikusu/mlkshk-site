@@ -3,216 +3,34 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>KingBear • Shared Scene</title>
+<title>Video Background</title>
 
 <style>
-
-html,body{
-  margin:0;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  font-family:sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
 }
 
-#scene{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  background:url('images/Locations/The King Bear/KINGBEAR_BG.jpg') center/cover no-repeat;
+/* Fullscreen locked video */
+video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
-
-/* objects */
-.obj{
-  position:absolute;
-  transform-origin:center;
-}
-
-.obj img{
-  width:100%;
-  display:block;
-}
-
-/* editor UI */
-#ui{
-  position:fixed;
-  top:20px;
-  right:20px;
-  z-index:999;
-  display:flex;
-  gap:10px;
-}
-
-button{
-  padding:8px 12px;
-  border:1px solid #ff2aa1;
-  background:#000;
-  color:#fff;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#ff2aa1;
-  color:#000;
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="ui">
-  <button id="editBtn">Edit Mode</button>
-  <button id="saveBtn">Save Scene</button>
-  <button id="loadBtn">Load Scene</button>
-</div>
-
-<div id="scene">
-
-  <div class="obj" id="item1">
-    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png">
-  </div>
-
-  <div class="obj" id="item2">
-    <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SPEAKER.png">
-  </div>
-
-  <div class="obj" id="char1">
-    <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png">
-  </div>
-
-</div>
-
-<script>
-
-let editMode = false;
-
-const objs = document.querySelectorAll(".obj");
-
-// ================= INIT =================
-
-objs.forEach(el => {
-
-  el.style.left = "20%";
-  el.style.top = "30%";
-  el.style.width = "120px";
-  el.style.transform = "scale(1)";
-
-  let dragging = false;
-  let offsetX = 0;
-  let offsetY = 0;
-
-  el.addEventListener("mousedown", e => {
-    if(!editMode) return;
-
-    dragging = true;
-
-    const rect = el.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-  });
-
-  document.addEventListener("mousemove", e => {
-    if(!editMode || !dragging) return;
-
-    const scene = document.getElementById("scene");
-    const rect = scene.getBoundingClientRect();
-
-    let x = e.clientX - rect.left - offsetX;
-    let y = e.clientY - rect.top - offsetY;
-
-    el.style.left = x + "px";
-    el.style.top = y + "px";
-  });
-
-  document.addEventListener("mouseup", () => dragging = false);
-
-});
-
-
-// ================= SAVE SCENE =================
-
-document.getElementById("saveBtn").onclick = () => {
-
-  const data = [];
-
-  objs.forEach(el => {
-
-    data.push({
-      id: el.id,
-      left: el.style.left,
-      top: el.style.top,
-      width: el.style.width
-    });
-
-  });
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json"
-  });
-
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "scene.json";
-  a.click();
-
-  URL.revokeObjectURL(url);
-
-};
-
-
-// ================= LOAD SCENE =================
-
-document.getElementById("loadBtn").onclick = () => {
-
-  const input = document.createElement("input");
-  input.type = "file";
-
-  input.onchange = e => {
-
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = event => {
-
-      const data = JSON.parse(event.target.result);
-
-      data.forEach(item => {
-
-        const el = document.getElementById(item.id);
-
-        if(!el) return;
-
-        el.style.left = item.left;
-        el.style.top = item.top;
-        el.style.width = item.width;
-
-      });
-
-    };
-
-    reader.readAsText(file);
-
-  };
-
-  input.click();
-
-};
-
-
-// ================= EDIT MODE =================
-
-document.getElementById("editBtn").onclick = () => {
-
-  editMode = !editMode;
-
-  alert(editMode ? "Edit ON" : "View ONLY");
-
-};
-
-</script>
+<video autoplay muted loop playsinline>
+  <source src="images/Locations/The King Bear/kingbear.mp4" type="video/mp4">
+</video>
 
 </body>
 </html>
