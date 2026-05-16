@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The King Bear</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: 'Arial', sans-serif;
+    }
+
+    video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    /* Black Overlay */
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 1.5s ease;
+    }
+
+    /* Entrance Container */
+    .entrance {
+        text-align: center;
+        z-index: 3;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 1.2s ease;
+    }
+
+    .entrance.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    #entrance-img {
+        width: 85%;
+        max-width: 620px;
+        border: 8px solid #fff;
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+        border-radius: 8px;
+    }
+
+    #enter-btn {
+        margin-top: 30px;
+        padding: 16px 48px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: white;
+        background: #b8860b; /* Gold/Dark Gold */
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(184, 134, 11, 0.5);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    #enter-btn:hover {
+        background: #ffd700;
+        color: #000;
+        transform: scale(1.08);
+    }
+</style>
+</head>
+<body>
+
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="images/Locations/The King Bear/kingbear.mp4" type="video/mp4">
+    </video>
+
+    <!-- Entrance Overlay -->
+    <div id="overlay">
+        <div class="entrance" id="entrance-container">
+            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance">
+            <br>
+            <button id="enter-btn">Enter The King Bear</button>
+        </div>
+    </div>
+
+<script>
+    const overlay = document.getElementById('overlay');
+    const entrance = document.getElementById('entrance-container');
+    const enterBtn = document.getElementById('enter-btn');
+
+    // Show entrance with slight delay for dramatic effect
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            entrance.classList.add('show');
+        }, 400);
+    });
+
+    // Enter button click
+    enterBtn.addEventListener('click', () => {
+        overlay.style.opacity = '0';
+        
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 1500);
+    });
+</script>
+
+</body>
+</html>
