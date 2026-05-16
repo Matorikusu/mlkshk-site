@@ -24,7 +24,6 @@
         z-index: 1;
     }
 
-    /* Black Overlay */
     #overlay {
         position: fixed;
         top: 0;
@@ -39,7 +38,6 @@
         transition: opacity 1.5s ease;
     }
 
-    /* Entrance Container */
     .entrance {
         text-align: center;
         z-index: 3;
@@ -54,8 +52,8 @@
     }
 
     #entrance-img {
-        width: 95%;                  /* Much bigger now */
-        max-width: 1100px;           /* Increased max size */
+        width: 95%;
+        max-width: 1100px;
         border: 10px solid #fff;
         box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
         border-radius: 12px;
@@ -92,8 +90,8 @@
     </video>
 
     <!-- Audio -->
-    <audio id="entrance-audio" preload="auto">
-        <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
+    <audio id="entrance-audio" preload="auto" loop>
+        <source src="Audio/Locations/The King Bear/KG_BG.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Entrance Overlay -->
@@ -118,16 +116,26 @@
         }, 500);
     });
 
-    // Enter button → Remove overlay + Play Music
+    // Enter button
     enterBtn.addEventListener('click', () => {
         overlay.style.opacity = '0';
 
-        // Play audio when user clicks "Enter"
-        audio.play().catch(e => console.log("Audio playback prevented by browser"));
+        // Play and ensure it loops
+        audio.play().then(() => {
+            console.log("Music started");
+        }).catch(e => {
+            console.log("Audio playback prevented:", e);
+        });
 
         setTimeout(() => {
             overlay.style.display = 'none';
         }, 1600);
+    });
+
+    // Extra safety for seamless looping (in case browser has issues)
+    audio.addEventListener('ended', () => {
+        audio.currentTime = 0;
+        audio.play();
     });
 </script>
 
