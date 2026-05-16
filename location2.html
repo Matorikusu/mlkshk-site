@@ -11,7 +11,6 @@
 :root{
   --bg:#000;
   --text:#fff;
-  --muted:#ccc;
   --accent:#ff2aa1;
 }
 html,body{
@@ -44,7 +43,6 @@ header.nav-bar{
   cursor:default;
 }
 
-/* Overlays */
 .overlay{
   position:absolute; pointer-events:none;
 }
@@ -60,31 +58,24 @@ header.nav-bar{
   animation: starTwinkle 45s linear infinite;
 }
 
-/* Items & Characters - Locked positions */
+/* Items & Characters */
 .item, .character{
   position:absolute;
-  width:clamp(65px, 9vw, 170px);
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
   user-select:none;
 }
 .item:hover, .character:hover{
-  filter: drop-shadow(0 0 20px rgba(255,42,161,0.6));
+  filter: drop-shadow(0 0 25px rgba(255,42,161,0.7));
 }
 
-/* Characters */
+.item{
+  width:clamp(65px, 9vw, 170px);
+}
 .character{
   width:clamp(90px, 12vw, 200px);
   z-index: 20;
 }
 .male { z-index: 25; }
-
-/* Animated GIFs (if you add any later) */
-.animated{
-  position:absolute;
-  z-index: 30;
-  pointer-events:none;
-  width:clamp(60px, 8vw, 140px);
-}
 
 .item img, .character img{
   width:100%; height:auto; display:block;
@@ -98,15 +89,8 @@ header.nav-bar{
   opacity:0; transition:opacity 0.4s;
 }
 
-/* Animations */
-@keyframes fogPulse {
-  0%,100% { opacity: 0.45; }
-  50% { opacity: 0.65; }
-}
-@keyframes starTwinkle {
-  from { background-position: 0 0; }
-  to { background-position: 200px 200px; }
-}
+@keyframes fogPulse { 0%,100% { opacity: 0.45; } 50% { opacity: 0.65; } }
+@keyframes starTwinkle { from { background-position: 0 0; } to { background-position: 200px 200px; } }
 </style>
 </head>
 <body>
@@ -124,70 +108,69 @@ header.nav-bar{
   <div id="stars" class="overlay"></div>
   <div id="fog" class="overlay"></div>
 
-  <!-- Items -->
-  <div class="item" id="item-bottlecrate" style="left:12%; top:68%;">
+  <!-- === ITEMS === -->
+  <div class="item" id="item-bottlecrate" style="left: 8%; top: 65%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_BOTTLECRATE.png" alt="">
   </div>
-  <div class="item" id="item-speaker" style="left:78%; top:52%;">
+  <div class="item" id="item-speaker" style="left: 82%; top: 48%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_SPEAKER.png" alt="">
   </div>
-  <div class="item" id="item-recordcrate" style="left:28%; top:72%;">
+  <div class="item" id="item-recordcrate" style="left: 22%; top: 73%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_RECORDCRATE.png" alt="">
   </div>
-  <div class="item" id="item-poster" style="left:85%; top:28%;">
+  <div class="item" id="item-poster" style="left: 87%; top: 25%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_REGGIEPOSTER.png" alt="">
   </div>
-  <div class="item" id="item-neon" style="left:8%; top:22%;">
+  <div class="item" id="item-neon" style="left: 6%; top: 18%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_NEON.png" alt="">
   </div>
-  <div class="item" id="item-flag" style="left:68%; top:18%;">
+  <div class="item" id="item-flag" style="left: 71%; top: 12%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_PIRATEFLAG.png" alt="">
   </div>
-  <div class="item" id="item-guitar" style="left:45%; top:65%;">
+  <div class="item" id="item-guitar" style="left: 48%; top: 68%;">
     <img src="images/Locations/The King Bear/Kingbear Items/KINGBEAR_FRANKIE_GUITAR.png" alt="">
   </div>
 
-  <!-- Female Characters -->
-  <div class="character" id="char-female1" style="left:18%; top:45%;">
+  <!-- === FEMALES === -->
+  <div class="character" id="char-female1" style="left: 15%; top: 42%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE1.png" alt="">
   </div>
-  <div class="character" id="char-female2" style="left:35%; top:48%;">
+  <div class="character" id="char-female2" style="left: 32%; top: 51%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE2.png" alt="">
   </div>
-  <div class="character" id="char-female4" style="left:55%; top:52%;">
+  <div class="character" id="char-female4" style="left: 52%; top: 47%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE4.png" alt="">
   </div>
-  <div class="character" id="char-female5" style="left:72%; top:47%;">
+  <div class="character" id="char-female5" style="left: 68%; top: 55%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE5.png" alt="">
   </div>
-  <div class="character" id="char-female6" style="left:82%; top:58%;">
+  <div class="character" id="char-female6" style="left: 79%; top: 61%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_FEMALE6.png" alt="">
   </div>
 
-  <!-- Male Characters -->
-  <div class="character male" id="char-male1" style="left:22%; top:55%;">
+  <!-- === MALES === -->
+  <div class="character male" id="char-male1" style="left: 24%; top: 58%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE1.png" alt="">
   </div>
-  <div class="character male" id="char-male2" style="left:42%; top:58%;">
+  <div class="character male" id="char-male2" style="left: 41%; top: 62%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE2.png" alt="">
   </div>
-  <div class="character male" id="char-male3" style="left:62%; top:45%;">
+  <div class="character male" id="char-male3" style="left: 58%; top: 44%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE3.png" alt="">
   </div>
-  <div class="character male" id="char-male4" style="left:75%; top:62%;">
+  <div class="character male" id="char-male4" style="left: 73%; top: 58%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE4.png" alt="">
   </div>
-  <div class="character male" id="char-male5" style="left:28%; top:65%;">
+  <div class="character male" id="char-male5" style="left: 29%; top: 69%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE5.png" alt="">
   </div>
-  <div class="character male" id="char-male6" style="left:52%; top:68%;">
+  <div class="character male" id="char-male6" style="left: 49%; top: 71%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_MALE6.png" alt="">
   </div>
-  <div class="character male" id="char-security" style="left:88%; top:48%;">
+  <div class="character male" id="char-security" style="left: 85%; top: 52%;">
     <img src="images/Locations/The King Bear/Characters/KB_CHARACTER_SECURITY.png" alt="">
   </div>
 
-  <!-- Background Music -->
   <audio id="bg-audio" loop preload="auto">
     <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
   </audio>
@@ -196,7 +179,6 @@ header.nav-bar{
 <div class="info" id="tooltip"></div>
 
 <script>
-// Audio Autoplay
 const audio = document.getElementById('bg-audio');
 audio.volume = 0.45;
 
@@ -206,20 +188,17 @@ function tryPlayAudio() {
 
 window.addEventListener('load', tryPlayAudio);
 document.addEventListener('click', tryPlayAudio, {once: true});
-document.addEventListener('touchstart', tryPlayAudio, {once: true});
 
-// Simple tooltip function
-function showTooltip(text, ms = 1600) {
+function showTooltip(text, ms = 1400) {
   const tip = document.getElementById('tooltip');
   tip.textContent = text;
   tip.style.opacity = 1;
   setTimeout(() => tip.style.opacity = 0, ms);
 }
 
-// Optional click feedback
 document.querySelectorAll('.item, .character').forEach(el => {
   el.addEventListener('click', () => {
-    showTooltip(`${el.dataset.name || 'Object'} activated`, 1400);
+    showTooltip(el.dataset.name ? `${el.dataset.name} clicked` : 'Clicked', 1200);
   });
 });
 </script>
