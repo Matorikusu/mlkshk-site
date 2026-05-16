@@ -31,7 +31,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(0, 0, 0, 0.88);
         z-index: 2;
         display: flex;
         align-items: center;
@@ -44,8 +44,8 @@
         text-align: center;
         z-index: 3;
         opacity: 0;
-        transform: scale(0.8);
-        transition: all 1.2s ease;
+        transform: scale(0.75);
+        transition: all 1.3s ease;
     }
 
     .entrance.show {
@@ -54,33 +54,35 @@
     }
 
     #entrance-img {
-        width: 85%;
-        max-width: 620px;
-        border: 8px solid #fff;
-        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
-        border-radius: 8px;
+        width: 95%;
+        max-width: 980px;        /* Much bigger now */
+        max-height: 85vh;        /* Prevents it from being too tall on mobile */
+        border: 10px solid #fff;
+        box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
+        border-radius: 12px;
+        object-fit: contain;
     }
 
     #enter-btn {
-        margin-top: 30px;
-        padding: 16px 48px;
-        font-size: 1.4rem;
+        margin-top: 35px;
+        padding: 18px 52px;
+        font-size: 1.5rem;
         font-weight: bold;
         color: white;
-        background: #b8860b; /* Gold/Dark Gold */
+        background: #b8860b;
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 8px 20px rgba(184, 134, 11, 0.5);
+        box-shadow: 0 10px 25px rgba(184, 134, 11, 0.6);
         transition: all 0.3s ease;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
     }
 
     #enter-btn:hover {
         background: #ffd700;
         color: #000;
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 </style>
 </head>
@@ -94,7 +96,9 @@
     <!-- Entrance Overlay -->
     <div id="overlay">
         <div class="entrance" id="entrance-container">
-            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance">
+            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" 
+                 id="entrance-img" 
+                 alt="The King Bear Entrance">
             <br>
             <button id="enter-btn">Enter The King Bear</button>
         </div>
@@ -105,20 +109,18 @@
     const entrance = document.getElementById('entrance-container');
     const enterBtn = document.getElementById('enter-btn');
 
-    // Show entrance with slight delay for dramatic effect
     window.addEventListener('load', () => {
         setTimeout(() => {
             entrance.classList.add('show');
-        }, 400);
+        }, 500);
     });
 
-    // Enter button click
     enterBtn.addEventListener('click', () => {
         overlay.style.opacity = '0';
         
         setTimeout(() => {
             overlay.style.display = 'none';
-        }, 1500);
+        }, 1600);
     });
 </script>
 
