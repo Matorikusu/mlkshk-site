@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The King Bear</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
     html, body {
         margin: 0;
@@ -11,7 +13,8 @@
         height: 100%;
         overflow: hidden;
         background: #000;
-        font-family: 'Arial', sans-serif;
+        font-family: 'Rajdhani', system-ui, sans-serif;
+        color: white;
     }
 
     video {
@@ -24,6 +27,7 @@
         z-index: 1;
     }
 
+    /* Black Overlay */
     #overlay {
         position: fixed;
         top: 0;
@@ -31,7 +35,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.88);
-        z-index: 2;
+        z-index: 10;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -40,7 +44,7 @@
 
     .entrance {
         text-align: center;
-        z-index: 3;
+        z-index: 11;
         opacity: 0;
         transform: scale(0.75);
         transition: all 1.3s ease;
@@ -80,6 +84,59 @@
         color: #000;
         transform: scale(1.1);
     }
+
+    /* FLOATING PLAYER */
+    #floating-player {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 380px;
+        height: 78px;
+        background: url('Player/PLAYER.png') center/cover no-repeat;
+        border-radius: 20px;
+        display: none; /* Hidden until user enters */
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+        z-index: 100;
+    }
+
+    .player-meta {
+        flex: 1;
+        text-align: center;
+        padding: 0 12px;
+    }
+
+    .player-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+    }
+
+    .player-artist {
+        font-size: 13px;
+        color: #ffd700;
+    }
+
+    .player-controls img {
+        width: 46px;
+        height: 46px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .player-controls img:active {
+        transform: scale(0.9);
+    }
+
+    @media (max-width: 768px) {
+        #floating-player {
+            width: 92%;
+            height: 68px;
+        }
+        .player-controls img { width: 40px; height: 40px; }
+    }
 </style>
 </head>
 <body>
@@ -90,8 +147,8 @@
     </video>
 
     <!-- Audio -->
-    <audio id="entrance-audio" preload="auto" loop>
-        <source src="Audio/Locations/The King Bear/KG_BG.mp3" type="audio/mpeg">
+    <audio id="kingbear-audio" preload="auto" loop>
+        <source src="Audio/Locations/The King Bear/2. Large Amounts v2.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Entrance Overlay -->
@@ -103,36 +160,64 @@
         </div>
     </div>
 
+    <!-- FLOATING PLAYER -->
+    <div id="floating-player">
+        <div class="player-meta">
+            <div class="player-title">Large Amounts v2</div>
+            <div class="player-artist">The King Bear</div>
+        </div>
+        <div class="player-controls">
+            <img id="playPauseBtn" src="Player/PLAY.png" alt="Play/Pause">
+        </div>
+    </div>
+
 <script>
     const overlay = document.getElementById('overlay');
     const entrance = document.getElementById('entrance-container');
     const enterBtn = document.getElementById('enter-btn');
-    const audio = document.getElementById('entrance-audio');
+    const audio = document.getElementById('kingbear-audio');
+    const floatingPlayer = document.getElementById('floating-player');
+    const playPauseBtn = document.getElementById('playPauseBtn');
 
-    // Show entrance popup
+    let isPlaying = false;
+
+    // Show entrance
     window.addEventListener('load', () => {
         setTimeout(() => {
             entrance.classList.add('show');
         }, 500);
     });
 
-    // Enter button
+    // Enter the club
     enterBtn.addEventListener('click', () => {
         overlay.style.opacity = '0';
 
-        // Play and ensure it loops
-        audio.play().then(() => {
-            console.log("Music started");
-        }).catch(e => {
-            console.log("Audio playback prevented:", e);
-        });
+        // Start music
+        audio.play().catch(e => console.log("Playback prevented", e));
 
+        // Show floating player after overlay fades
         setTimeout(() => {
             overlay.style.display = 'none';
+            floatingPlayer.style.display = 'flex';
+            isPlaying = true;
+            playPauseBtn.src = 'Player/PAUSE.png';
         }, 1600);
     });
 
-    // Extra safety for seamless looping (in case browser has issues)
+    // Play / Pause Button
+    playPauseBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playPauseBtn.src = 'Player/PLAY.png';
+            isPlaying = false;
+        } else {
+            audio.play();
+            playPauseBtn.src = 'Player/PAUSE.png';
+            isPlaying = true;
+        }
+    });
+
+    // Extra loop safety
     audio.addEventListener('ended', () => {
         audio.currentTime = 0;
         audio.play();
