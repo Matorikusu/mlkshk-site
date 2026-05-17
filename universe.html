@@ -16,8 +16,6 @@
   --glow:rgba(255,42,161,0.5);
   --card-radius:12px;
   --signal-green:#0f0;
-  --signal-yellow:#ff0;
-  --signal-red:#f00;
 }
 html,body{
   margin:0;
@@ -115,7 +113,14 @@ header.nav-bar{
 
 /* LOCATIONS */
 .locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-.locations-section h2 { text-align:center; font-family:'Orbitron',sans-serif; font-size:2.6rem; color:#00ffcc; margin-bottom:50px; text-shadow:0 0 25px rgba(0,255,200,0.5); }
+.locations-section h2 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.6rem;
+  color: #00ffcc;
+  margin-bottom: 50px;
+  text-shadow: 0 0 25px rgba(0,255,200,0.5);
+}
 .locations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -136,7 +141,7 @@ header.nav-bar{
 .location-card .title { font-family:'Orbitron',sans-serif; font-size:26px; color:#00ffcc; }
 .location-card .sub { font-size:15px; color:#aaa; }
 
-/* CARTONS */
+/* CARTONS - Simplified */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -183,13 +188,8 @@ header.nav-bar{
 }
 .card .title{
   font-family:'Orbitron',sans-serif;
-  font-size:18px;
-  margin-bottom:6px;
+  font-size:20px;
   color:var(--accent);
-}
-.card .sub{
-  font-size:13px;
-  color:var(--muted);
 }
 
 /* HERO */
@@ -210,7 +210,7 @@ header.nav-bar{
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;}
 
 /* CENTERED SECTIONS */
-.ad-banner, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed, .trans-log {
+.ad-banner, .phase-artifact, .mlk500-section, .invest-section, .trans-log {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
@@ -218,7 +218,7 @@ header.nav-bar{
 }
 #adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
 .trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; }
-.phase-artifact img { width:100%; max-width:600px; border:2px dashed var(--signal-green); border-radius:12px; }
+.phase-artifact img { width:100%; max-width:800px; border:2px dashed var(--signal-green); border-radius:12px; }
 .mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
 .stock-list { display:flex; flex-direction:column; gap:12px; }
 .stock-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
@@ -306,40 +306,34 @@ footer{
         <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
         <div class="meta">
           <div class="title">THE KING BEAR</div>
-          <div class="sub">Underground Club • Heavy Vibes • No Rules After Dark</div>
         </div>
       </a>
       <a href="aftercurfew.html" class="location-card">
         <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
         <div class="meta">
           <div class="title">AFTER CURFEW</div>
-          <div class="sub">Neon Streets • Illicit Nights • Post-Midnight Energy</div>
         </div>
       </a>
     </div>
   </section>
 
-  <!-- CARTONS -->
+  <!-- CARTONS (Simplified - 4 only) -->
   <section class="grid">
     <article class="card">
       <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
-      <div class="meta"><div class="title">Drum & Bass</div><div class="sub">Electric — Energy Crew</div></div>
+      <div class="meta"><div class="title">DRUM & BASS</div></div>
     </article>
     <article class="card">
       <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
-      <div class="meta"><div class="title">House</div><div class="sub">Psychic — Club Crew</div></div>
-    </article>
-    <article class="card">
-      <div class="art"><img src="images/Cartons/LO-FI Carton.png" alt="Lo-Fi"></div>
-      <div class="meta"><div class="title">Lo-Fi</div><div class="sub">Wind — Chilled Crew</div></div>
+      <div class="meta"><div class="title">HOUSE</div></div>
     </article>
     <article class="card">
       <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
-      <div class="meta"><div class="title">Hip-Hop</div><div class="sub">Earth — Hip Hop Crew</div></div>
+      <div class="meta"><div class="title">HIP-HOP</div></div>
     </article>
     <article class="card">
       <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
-      <div class="meta"><div class="title">Afrobeat</div><div class="sub">Fire — Afro Crew</div></div>
+      <div class="meta"><div class="title">AFROBEAT</div></div>
     </article>
   </section>
 
@@ -354,7 +348,7 @@ footer{
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
 
-  <!-- PHASE MODULATOR -->
+  <!-- PHASE MODULATOR - Bigger -->
   <section class="phase-artifact">
     <a href="phasemodulator.html">
       <img src="images/Universe/phase_modulator.png" alt="Phase Modulator Artifact">
@@ -373,12 +367,6 @@ footer{
     <button id="invest-button">INVEST IN THE MARKET</button>
     <div id="invest-message"></div>
   </div>
-
-  <!-- FINAL NOTE -->
-  <section class="signal-bleed">
-    THEY’RE STILL LISTENING<br>
-    DO NOT ADJUST YOUR RECEIVER
-  </section>
 </main>
 
 <!-- FLOATING PLAYER -->
@@ -451,7 +439,15 @@ setInterval(() => {
 }, 8000);
 
 // Ads
-const adImages = ["images/Universe/Ads/toejam-toothpaste.jpg","images/Universe/Ads/nobbys-balloon.jpg","images/Universe/Ads/brenda-semtex.jpg","images/Universe/Ads/daves-candles.jpg","images/Universe/Ads/Micks-Rum.jpg","images/Universe/Ads/Sharons-Knickers.jpg","images/Universe/Ads/kevin-hotline.jpg"];
+const adImages = [
+  "images/Universe/Ads/toejam-toothpaste.jpg",
+  "images/Universe/Ads/nobbys-balloon.jpg",
+  "images/Universe/Ads/brenda-semtex.jpg",
+  "images/Universe/Ads/daves-candles.jpg",
+  "images/Universe/Ads/Micks-Rum.jpg",
+  "images/Universe/Ads/Sharons-Knickers.jpg",
+  "images/Universe/Ads/kevin-hotline.jpg"
+];
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 function showAd() {
@@ -464,7 +460,6 @@ setInterval(showAd, 10000);
 // Signal Meters
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
-const strengthMeterEl = document.getElementById('signalStrengthMeter');
 let currentStrength = 89;
 function updateStrength() {
   currentStrength += Math.floor(Math.random() * 13) - 6;
@@ -475,28 +470,13 @@ function updateStrength() {
 updateStrength();
 setInterval(updateStrength, 3500);
 
-const interferenceBarEl = document.getElementById('interferenceBar');
-const interferenceMeterEl = document.getElementById('interferenceMeter');
-let currentInterference = 12;
-function updateInterference() {
-  currentInterference += Math.floor(Math.random() * 17) - 8;
-  currentInterference = Math.max(5, Math.min(85, currentInterference));
-  interferenceBarEl.style.width = currentInterference + '%';
-}
-updateInterference();
-setInterval(updateInterference, 18000);
-
 // Stocks
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
   { symbol: "SSHK", name: "Sharon’s Second Hand Knickers", price: 41.89, change: 2.3 },
   { symbol: "KESB", name: "Kevin’s Emotional Support Brick", price: 19.99, change: -0.5 },
-  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 },
-  { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
-  { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
-  { symbol: "SLCL", name: "Last Chance Lube", price: 14.20, change: -0.3 },
-  { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
+  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 }
 ];
 function renderStocks() {
   const container = document.getElementById('stocks-container');
