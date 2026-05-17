@@ -112,8 +112,8 @@ header.nav-bar{
 }
 
 /* LOCATIONS */
-.locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-.locations-section h2 {
+.locations-section, .missed-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+.locations-section h2, .missed-section h2 {
   text-align: center;
   font-family: 'Orbitron', sans-serif;
   font-size: 2.6rem;
@@ -121,33 +121,14 @@ header.nav-bar{
   margin-bottom: 50px;
   text-shadow: 0 0 25px rgba(0,255,200,0.5);
 }
-.locations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 40px;
-}
-.location-card {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid rgba(0,255,200,0.3);
-  border-radius: var(--card-radius);
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-.location-card:hover { transform: translateY(-15px); border-color: #00ffcc; }
-.location-card .art { height:0; padding-top:62%; position:relative; overflow:hidden; }
-.location-card .art img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
-.location-card:hover .art img { transform:scale(1.08); }
-.location-card .meta { padding:22px; text-align:center; }
-.location-card .title { font-family:'Orbitron',sans-serif; font-size:26px; color:#00ffcc; }
-.location-card .sub { font-size:15px; color:#aaa; }
 
-/* CARTONS - Simplified */
+/* CARTONS - Shorter */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:24px;
   max-width:1200px;
-  margin:60px auto;
+  margin:40px auto;
   padding:0 20px;
 }
 .card{
@@ -157,7 +138,7 @@ header.nav-bar{
   overflow:hidden;
   box-shadow:0 10px 30px rgba(0,0,0,.6);
   transition:.3s;
-  aspect-ratio: 1 / 1.4;
+  aspect-ratio: 1 / 1.1;
 }
 .card:hover{
   transform:translateY(-8px);
@@ -166,7 +147,7 @@ header.nav-bar{
 }
 .card .art{
   height:0;
-  padding-top:75%;
+  padding-top:68%;
   position:relative;
   overflow:hidden;
 }
@@ -192,24 +173,33 @@ header.nav-bar{
   color:var(--accent);
 }
 
-/* HERO */
-.hero-link{display:block;max-width:1000px;margin:40px auto;}
-.hero{
-  width:100%;
-  aspect-ratio: 2.38 / 1;
-  background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
-  cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+/* YOU'VE MISSED IT */
+.missed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
-.hero-link:hover .hero{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px var(--glow);
+.missed-card {
+  background: rgba(0,0,0,0.75);
+  border: 1px solid #ff2aa1;
+  border-radius: var(--card-radius);
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s;
+}
+.missed-card:hover {
+  transform: translateY(-8px);
+  border-color: #ff66bb;
+  box-shadow: 0 0 25px rgba(255,42,161,0.4);
+}
+.missed-card h3 {
+  color: #ff2aa1;
+  margin: 8px 0;
+  font-size: 1.1rem;
 }
 
+/* REST OF PAGE */
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;}
-
-/* CENTERED SECTIONS */
 .ad-banner, .phase-artifact, .mlk500-section, .invest-section, .trans-log {
   max-width: 800px;
   margin: 60px auto;
@@ -219,9 +209,6 @@ header.nav-bar{
 #adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
 .trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; }
 .phase-artifact img { width:100%; max-width:800px; border:2px dashed var(--signal-green); border-radius:12px; }
-.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
-.stock-list { display:flex; flex-direction:column; gap:12px; }
-.stock-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
 
 #invest-button {
   background:#222; color:#0f0; border:1px solid #0f0; border-radius:8px;
@@ -304,20 +291,16 @@ footer{
     <div class="locations-grid">
       <a href="thekingbear.html" class="location-card">
         <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
-        <div class="meta">
-          <div class="title">THE KING BEAR</div>
-        </div>
+        <div class="meta"><div class="title">THE KING BEAR</div></div>
       </a>
       <a href="aftercurfew.html" class="location-card">
         <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
-        <div class="meta">
-          <div class="title">AFTER CURFEW</div>
-        </div>
+        <div class="meta"><div class="title">AFTER CURFEW</div></div>
       </a>
     </div>
   </section>
 
-  <!-- CARTONS (Simplified - 4 only) -->
+  <!-- CARTONS -->
   <section class="grid">
     <article class="card">
       <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
@@ -348,7 +331,30 @@ footer{
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
 
-  <!-- PHASE MODULATOR - Bigger -->
+  <!-- YOU'VE MISSED IT -->
+  <section class="missed-section">
+    <h2>YOU'VE MISSED IT</h2>
+    <div class="missed-grid">
+      <div class="missed-card">
+        <h3>THE GREAT BLACKOUT '24</h3>
+        <p>3 day illegal rave • 4000 people • Power company still investigating</p>
+      </div>
+      <div class="missed-card">
+        <h3>KING BEAR OPENING NIGHT</h3>
+        <p>12 hour set • Police showed up • Left with autographs</p>
+      </div>
+      <div class="missed-card">
+        <h3>ROOFTOP AFTER CURFEW</h3>
+        <p>Helicopter shutdown • Best views in the city • Never repeated</p>
+      </div>
+      <div class="missed-card">
+        <h3>SILENCER'S LAST TRANSMISSION</h3>
+        <p>Signal jammed mid-set • Legend says he's still broadcasting from somewhere</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE MODULATOR -->
   <section class="phase-artifact">
     <a href="phasemodulator.html">
       <img src="images/Universe/phase_modulator.png" alt="Phase Modulator Artifact">
@@ -439,15 +445,7 @@ setInterval(() => {
 }, 8000);
 
 // Ads
-const adImages = [
-  "images/Universe/Ads/toejam-toothpaste.jpg",
-  "images/Universe/Ads/nobbys-balloon.jpg",
-  "images/Universe/Ads/brenda-semtex.jpg",
-  "images/Universe/Ads/daves-candles.jpg",
-  "images/Universe/Ads/Micks-Rum.jpg",
-  "images/Universe/Ads/Sharons-Knickers.jpg",
-  "images/Universe/Ads/kevin-hotline.jpg"
-];
+const adImages = ["images/Universe/Ads/toejam-toothpaste.jpg","images/Universe/Ads/nobbys-balloon.jpg","images/Universe/Ads/brenda-semtex.jpg","images/Universe/Ads/daves-candles.jpg","images/Universe/Ads/Micks-Rum.jpg","images/Universe/Ads/Sharons-Knickers.jpg","images/Universe/Ads/kevin-hotline.jpg"];
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 function showAd() {
