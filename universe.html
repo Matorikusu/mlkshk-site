@@ -128,7 +128,7 @@ header.nav-bar{
 .locations-section h2 {
   text-align: center;
   font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   color: #00ffcc;
   margin-bottom: 50px;
   text-shadow: 0 0 25px rgba(0,255,200,0.5);
@@ -198,15 +198,24 @@ header.nav-bar{
   box-shadow:0 0 40px var(--glow);
 }
 
-/* Other styles */
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;position:relative;z-index:1;}
-.jam-section { text-align: center; margin: 80px auto; max-width: 800px; }
-#jam-button {
-  background: #800; color: #f00; border: 2px solid #f00; border-radius: 8px;
-  padding: 16px 40px; font-family: 'Orbitron', sans-serif; font-size: 20px;
-  cursor: pointer; box-shadow: 0 0 25px rgba(255,0,0,0.5);
+
+/* Other existing sections */
+.ad-banner, .jam-section, .trans-log, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
 }
-#jam-button:hover { background: #a00; box-shadow: 0 0 40px rgba(255,0,0,0.7); transform: scale(1.05); }
+.ad-banner { text-align:center; }
+#adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
+.trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; text-align:center; }
+.phase-artifact img { width:100%; border:2px dashed var(--signal-green); border-radius:12px; }
+.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
+.stock-list { display:flex; flex-direction:column; gap:12px; }
+.stock-item { display:flex; justify-content:space-between; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
+.jam-section { text-align:center; }
+#jam-button { background:#800; color:#f00; border:2px solid #f00; border-radius:8px; padding:16px 40px; font-family:'Orbitron',sans-serif; font-size:20px; cursor:pointer; box-shadow:0 0 25px rgba(255,0,0,0.5); }
+#jam-button:hover { background:#a00; box-shadow:0 0 40px rgba(255,0,0,0.7); transform:scale(1.05); }
 
 footer{
   padding:28px 20px;
@@ -258,7 +267,7 @@ footer{
 
 <main class="wrap">
 
-  <!-- LOCATIONS SECTION -->
+  <!-- LOCATIONS SECTION (At the top) -->
   <section class="locations-section">
     <h2>ESTABLISHMENTS</h2>
     <div class="locations-grid">
@@ -391,28 +400,22 @@ btn.addEventListener('click', () => {
   else stopStream();
 });
 
-// Radio error handling
+// Radio events
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; isPlaying = true; });
-audio.addEventListener('error', () => {
-  if (isPlaying) setTimeout(playLiveStream, 2000);
-});
-audio.addEventListener('stalled', () => {
-  if (isPlaying) setTimeout(playLiveStream, 1500);
-});
+audio.addEventListener('error', () => { if (isPlaying) setTimeout(playLiveStream, 2000); });
+audio.addEventListener('stalled', () => { if (isPlaying) setTimeout(playLiveStream, 1500); });
 
-// Dropdown Menu
+// Dropdown
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 navToggle.addEventListener('click', (e) => {
   e.stopPropagation();
   dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
 });
-document.addEventListener('click', () => {
-  dropdownMenu.style.display = 'none';
-});
+document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Transmission Log Cycling
+// Transmission Log
 const transLog = document.getElementById('transLog');
 if (transLog) {
   const messages = [
@@ -428,7 +431,7 @@ if (transLog) {
   }, 8000);
 }
 
-// Cycling Ad Banner
+// Cycling Ads
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
   "images/Universe/Ads/nobbys-balloon.jpg",
@@ -447,7 +450,7 @@ function showAd() {
 showAd();
 setInterval(showAd, 10000);
 
-// Signal Strength
+// Signal & Interference Meters
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const strengthMeterEl = document.getElementById('signalStrengthMeter');
@@ -464,7 +467,6 @@ function updateStrength() {
 updateStrength();
 setInterval(updateStrength, 3500);
 
-// Interference
 const interferenceBarEl = document.getElementById('interferenceBar');
 const interferenceMeterEl = document.getElementById('interferenceMeter');
 let currentInterference = 12;
@@ -479,7 +481,7 @@ function updateInterference() {
 updateInterference();
 setInterval(updateInterference, 18000);
 
-// JAM BUTTON
+// Jam Button
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
 const jamText = document.getElementById('jam-text');
@@ -502,13 +504,30 @@ jamButton.addEventListener('click', () => {
   }, 7000);
 });
 
-// Stocks
-const stocks = [ /* ... your full stocks array ... */ ];
-// (I shortened it for space - paste your full stocks array here if needed)
-function renderStocks() { /* your render function */ }
-function updateStocks() { /* your update function */ }
+// Stocks (shortened version - expand if needed)
+const stocks = [
+  { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
+  { symbol: "SSHK", name: "Sharon’s Second Hand Knickers", price: 41.89, change: 2.3 },
+  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 }
+];
+function renderStocks() {
+  const container = document.getElementById('stocks-container');
+  container.innerHTML = '';
+  stocks.forEach(stock => {
+    const div = document.createElement('div');
+    div.className = 'stock-item';
+    const isPositive = stock.change >= 0;
+    div.innerHTML = `
+      <div><strong>${stock.symbol}</strong><br><small>${stock.name}</small></div>
+      <div style="text-align:right">
+        <strong>£${stock.price.toFixed(2)}</strong><br>
+        <span style="color:${isPositive?'#0f0':'#f00'}">${isPositive?'↑':'↓'} ${Math.abs(stock.change)}%</span>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
 renderStocks();
-setTimeout(updateStocks, 8000);
 
 // Invest Button
 const investButton = document.getElementById('invest-button');
@@ -521,9 +540,22 @@ investButton.addEventListener('click', () => {
 
 // Shake Animation
 const style = document.createElement('style');
-style.innerHTML = `@keyframes shake { /* your full shake keyframes */ }`;
+style.innerHTML = `
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-2px, -3px) rotate(-2deg); }
+    20% { transform: translate(-4px, 0px) rotate(2deg); }
+    30% { transform: translate(4px, 3px) rotate(0deg); }
+    40% { transform: translate(2px, -2px) rotate(2deg); }
+    50% { transform: translate(-2px, 3px) rotate(-2deg); }
+    60% { transform: translate(-4px, 1px) rotate(0deg); }
+    70% { transform: translate(4px, 2px) rotate(-2deg); }
+    80% { transform: translate(-2px, -2px) rotate(2deg); }
+    90% { transform: translate(2px, 3px) rotate(0deg); }
+    100% { transform: translate(1px, -3px) rotate(-2deg); }
+  }
+`;
 document.head.appendChild(style);
-
 </script>
 </body>
 </html>
