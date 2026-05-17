@@ -16,6 +16,8 @@
   --glow:rgba(255,42,161,0.5);
   --card-radius:12px;
   --signal-green:#0f0;
+  --signal-yellow:#ff0;
+  --signal-red:#f00;
 }
 html,body{
   margin:0;
@@ -94,17 +96,26 @@ header.nav-bar{
 }
 #signalStrengthMeter { left: 15px; }
 #interferenceMeter { right: 15px; }
+.signal-meter .bar-container {
+  display: inline-block;
+  width: 60px;
+  height: 6px;
+  background: #111;
+  border: 1px dashed var(--signal-green);
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.signal-meter .bar {
+  height: 100%;
+  background: var(--signal-green);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
 
 /* LOCATIONS */
 .locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-.locations-section h2 {
-  text-align: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.6rem;
-  color: #00ffcc;
-  margin-bottom: 50px;
-  text-shadow: 0 0 25px rgba(0,255,200,0.5);
-}
+.locations-section h2 { text-align:center; font-family:'Orbitron',sans-serif; font-size:2.6rem; color:#00ffcc; margin-bottom:50px; text-shadow:0 0 25px rgba(0,255,200,0.5); }
 .locations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -117,32 +128,13 @@ header.nav-bar{
   overflow: hidden;
   transition: all 0.4s ease;
 }
-.location-card:hover {
-  transform: translateY(-15px);
-  border-color: #00ffcc;
-}
-.location-card .art {
-  height: 0;
-  padding-top: 62%;
-  position: relative;
-  overflow: hidden;
-}
-.location-card .art img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-.location-card:hover .art img { transform: scale(1.08); }
-.location-card .meta { padding: 22px; text-align: center; }
-.location-card .title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 26px;
-  color: #00ffcc;
-}
-.location-card .sub { font-size: 15px; color: #aaa; }
+.location-card:hover { transform: translateY(-15px); border-color: #00ffcc; }
+.location-card .art { height:0; padding-top:62%; position:relative; overflow:hidden; }
+.location-card .art img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
+.location-card:hover .art img { transform:scale(1.08); }
+.location-card .meta { padding:22px; text-align:center; }
+.location-card .title { font-family:'Orbitron',sans-serif; font-size:26px; color:#00ffcc; }
+.location-card .sub { font-size:15px; color:#aaa; }
 
 /* CARTONS */
 .grid{
@@ -152,6 +144,52 @@ header.nav-bar{
   max-width:1200px;
   margin:60px auto;
   padding:0 20px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border:1px solid rgba(255,42,161,0.15);
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.3s;
+  aspect-ratio: 1 / 1.4;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+  border-color:var(--accent);
+}
+.card .art{
+  height:0;
+  padding-top:75%;
+  position:relative;
+  overflow:hidden;
+}
+.card .art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.85) contrast(1.1);
+  transition:.4s;
+}
+.card:hover .art img{
+  filter:brightness(1.05) contrast(1.2);
+}
+.card .meta{
+  padding:14px;
+  text-align:center;
+}
+.card .title{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  margin-bottom:6px;
+  color:var(--accent);
+}
+.card .sub{
+  font-size:13px;
+  color:var(--muted);
 }
 
 /* HERO */
@@ -172,56 +210,24 @@ header.nav-bar{
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;}
 
 /* CENTERED SECTIONS */
-.ad-banner, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed {
+.ad-banner, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed, .trans-log {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
   text-align: center;
 }
-#adImage img { 
-  width:100%; 
-  border:2px dashed var(--accent); 
-  border-radius:12px; 
-  box-shadow:0 0 20px var(--glow); 
-}
-.phase-artifact img { 
-  width:100%; 
-  max-width: 600px; 
-  border:2px dashed var(--signal-green); 
-  border-radius:12px; 
-}
-.mlk500-section { 
-  background:rgba(0,0,0,0.7); 
-  border:1px dashed #0f0; 
-}
-.stock-list { 
-  display:flex; 
-  flex-direction:column; 
-  gap:12px; 
-}
-.stock-item { 
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  padding:12px 16px; 
-  background:rgba(0,255,0,0.05); 
-  border:1px solid rgba(0,255,0,0.2); 
-  border-radius:6px; 
-}
+#adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
+.trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; }
+.phase-artifact img { width:100%; max-width:600px; border:2px dashed var(--signal-green); border-radius:12px; }
+.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
+.stock-list { display:flex; flex-direction:column; gap:12px; }
+.stock-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
+
 #invest-button {
-  background:#222;
-  color:#0f0;
-  border:1px solid #0f0;
-  border-radius:8px;
-  padding:14px 32px;
-  font-family:'Orbitron',sans-serif;
-  font-size:18px;
-  cursor:pointer;
+  background:#222; color:#0f0; border:1px solid #0f0; border-radius:8px;
+  padding:14px 32px; font-family:'Orbitron',sans-serif; font-size:18px; cursor:pointer;
 }
-#invest-button:hover {
-  background:#0f0;
-  color:#000;
-}
+#invest-button:hover { background:#0f0; color:#000; }
 
 footer{
   padding:28px 20px;
@@ -278,15 +284,11 @@ footer{
 <!-- SIGNAL METERS -->
 <div class="signal-meter" id="signalStrengthMeter">
   <strong>Signal:</strong> <span id="signalStrength">89%</span>
-  <div class="bar-container">
-    <div id="strengthBar" class="bar" style="width:89%;"></div>
-  </div>
+  <div class="bar-container"><div id="strengthBar" class="bar" style="width:89%;"></div></div>
 </div>
 <div class="signal-meter" id="interferenceMeter">
   <strong>Interference:</strong>
-  <div class="bar-container">
-    <div id="interferenceBar" class="bar" style="width:12%;"></div>
-  </div>
+  <div class="bar-container"><div id="interferenceBar" class="bar" style="width:12%;"></div></div>
 </div>
 
 <!-- HERO -->
@@ -348,7 +350,7 @@ footer{
   </section>
 
   <!-- TRANSMISSION LOG -->
-  <div class="trans-log" id="transLog" style="max-width:800px;margin:60px auto;padding:20px;background:rgba(0,0,0,0.6);border:1px dashed var(--signal-green);font-family:monospace;color:#0f0;text-align:center;">
+  <div class="trans-log" id="transLog">
     SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
   </div>
 
@@ -362,7 +364,7 @@ footer{
 
   <!-- STOCKS -->
   <section class="mlk500-section">
-    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;"></h2>
+    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;height:auto;"></h2>
     <div class="stock-list" id="stocks-container"></div>
   </section>
 
@@ -373,7 +375,7 @@ footer{
   </div>
 
   <!-- FINAL NOTE -->
-  <section class="signal-bleed" style="border-top:1px dashed var(--accent);border-bottom:1px dashed var(--accent);">
+  <section class="signal-bleed">
     THEY’RE STILL LISTENING<br>
     DO NOT ADJUST YOUR RECEIVER
   </section>
@@ -397,9 +399,10 @@ footer{
 </footer>
 
 <script>
-// Year + Radio Player + all other scripts (same as before)
+// Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Radio Player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -413,7 +416,7 @@ function playLiveStream() {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Live';
-  }).catch(() => {});
+  }).catch(e => console.error(e));
 }
 function stopStream() {
   audio.pause();
@@ -424,7 +427,7 @@ function stopStream() {
 }
 btn.addEventListener('click', () => !isPlaying ? playLiveStream() : stopStream());
 
-// Dropdown, Transmission Log, Ads, Stocks, etc.
+// Dropdown
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 navToggle.addEventListener('click', (e) => {
@@ -433,16 +436,21 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Transmission cycling
+// Transmission Log
 const transLog = document.getElementById('transLog');
-const messages = ["SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)","CARRIER: STABLE — INTERFERENCE LOW<br>GHOSTS DETECTED: 3","LAST PING: 00:00:00 AGO<br>DO NOT ADJUST","THEY’RE STILL LISTENING<br>WAKE UP"];
+const messages = [
+  "SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)",
+  "CARRIER: STABLE — INTERFERENCE LOW<br>GHOSTS DETECTED: 3",
+  "LAST PING: 00:00:00 AGO<br>DO NOT ADJUST",
+  "THEY’RE STILL LISTENING<br>WAKE UP"
+];
 let index = 0;
 setInterval(() => {
   transLog.innerHTML = messages[index];
   index = (index + 1) % messages.length;
 }, 8000);
 
-// Ads, Stocks, Invest, etc. (kept minimal but functional)
+// Ads
 const adImages = ["images/Universe/Ads/toejam-toothpaste.jpg","images/Universe/Ads/nobbys-balloon.jpg","images/Universe/Ads/brenda-semtex.jpg","images/Universe/Ads/daves-candles.jpg","images/Universe/Ads/Micks-Rum.jpg","images/Universe/Ads/Sharons-Knickers.jpg","images/Universe/Ads/kevin-hotline.jpg"];
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
@@ -453,17 +461,65 @@ function showAd() {
 showAd();
 setInterval(showAd, 10000);
 
+// Signal Meters
+const signalStrengthEl = document.getElementById('signalStrength');
+const strengthBarEl = document.getElementById('strengthBar');
+const strengthMeterEl = document.getElementById('signalStrengthMeter');
+let currentStrength = 89;
+function updateStrength() {
+  currentStrength += Math.floor(Math.random() * 13) - 6;
+  currentStrength = Math.max(18, Math.min(98, currentStrength));
+  signalStrengthEl.textContent = currentStrength + '%';
+  strengthBarEl.style.width = currentStrength + '%';
+}
+updateStrength();
+setInterval(updateStrength, 3500);
+
+const interferenceBarEl = document.getElementById('interferenceBar');
+const interferenceMeterEl = document.getElementById('interferenceMeter');
+let currentInterference = 12;
+function updateInterference() {
+  currentInterference += Math.floor(Math.random() * 17) - 8;
+  currentInterference = Math.max(5, Math.min(85, currentInterference));
+  interferenceBarEl.style.width = currentInterference + '%';
+}
+updateInterference();
+setInterval(updateInterference, 18000);
+
 // Stocks
-const stocks = [ /* your full list */ ];
+const stocks = [
+  { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
+  { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
+  { symbol: "SSHK", name: "Sharon’s Second Hand Knickers", price: 41.89, change: 2.3 },
+  { symbol: "KESB", name: "Kevin’s Emotional Support Brick", price: 19.99, change: -0.5 },
+  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 },
+  { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
+  { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
+  { symbol: "SLCL", name: "Last Chance Lube", price: 14.20, change: -0.3 },
+  { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
+];
 function renderStocks() {
   const container = document.getElementById('stocks-container');
   container.innerHTML = '';
   stocks.forEach(stock => {
-    // ... same as before
+    const div = document.createElement('div');
+    div.className = 'stock-item';
+    const isPositive = stock.change >= 0;
+    const color = isPositive ? '#0f0' : '#f00';
+    const arrow = isPositive ? '↑' : '↓';
+    div.innerHTML = `
+      <div><strong>${stock.symbol}</strong><br><small>${stock.name}</small></div>
+      <div style="text-align:right">
+        <strong>£${stock.price.toFixed(2)}</strong><br>
+        <span style="color:${color}">${arrow} ${Math.abs(stock.change)}%</span>
+      </div>
+    `;
+    container.appendChild(div);
   });
 }
 renderStocks();
 
+// Invest Button
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 investButton.addEventListener('click', () => {
