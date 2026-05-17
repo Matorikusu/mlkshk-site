@@ -6,7 +6,6 @@
 <title>MLKSHK — The Universe</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --bg:#000;
@@ -28,7 +27,6 @@ html,body{
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
-
 /* NAV */
 header.nav-bar{
   border-bottom:1px solid rgba(255,42,161,0.04);
@@ -79,7 +77,6 @@ header.nav-bar{
 }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
-
 /* SIGNAL METERS */
 .signal-meter {
   position: fixed;
@@ -185,7 +182,6 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px var(--glow);
 }
-
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;position:relative;z-index:1;}
 
 /* FLOATING PLAYER */
@@ -218,7 +214,6 @@ footer{
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,.05);
 }
-
 /* Other sections */
 .ad-banner, .jam-section, .trans-log, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed {
   max-width: 800px;
@@ -279,7 +274,7 @@ footer{
 
 <main class="wrap">
 
-  <!-- LOCATIONS SECTION -->
+  <!-- NEW ESTABLISHMENTS SECTION -->
   <section class="locations-section">
     <h2>ESTABLISHMENTS</h2>
     <div class="locations-grid">
@@ -301,6 +296,7 @@ footer{
     </div>
   </section>
 
+  <!-- REST OF YOUR ORIGINAL PAGE STARTS HERE (unchanged) -->
   <!-- CYCLING AD BANNER -->
   <section class="ad-banner">
     <h2>SIGNAL BLEED — INTRUSION</h2>
@@ -371,14 +367,12 @@ footer{
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
-
 // === LIVE RADIO PLAYER ===
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
 const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 let isPlaying = false;
-
 function playLiveStream() {
   audio.src = STREAM_URL + "?t=" + Date.now();
   audio.load();
@@ -392,7 +386,6 @@ function playLiveStream() {
     setTimeout(playLiveStream, 1500);
   });
 }
-
 function stopStream() {
   audio.pause();
   audio.src = '';
@@ -400,17 +393,14 @@ function stopStream() {
   btn.src = 'Player/PLAY.png';
   statusEl.textContent = 'Stopped';
 }
-
 btn.addEventListener('click', () => {
   if (!isPlaying) playLiveStream();
   else stopStream();
 });
-
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; isPlaying = true; });
 audio.addEventListener('error', () => { if (isPlaying) setTimeout(playLiveStream, 2000); });
 audio.addEventListener('stalled', () => { if (isPlaying) setTimeout(playLiveStream, 1500); });
-
 // Dropdown
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -419,7 +409,6 @@ navToggle.addEventListener('click', (e) => {
   dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
-
 // Transmission Log
 const transLog = document.getElementById('transLog');
 if (transLog) {
@@ -435,7 +424,6 @@ if (transLog) {
     index = (index + 1) % messages.length;
   }, 8000);
 }
-
 // Cycling Ads
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
@@ -454,7 +442,6 @@ function showAd() {
 }
 showAd();
 setInterval(showAd, 10000);
-
 // Signal Meters
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
@@ -471,7 +458,6 @@ function updateStrength() {
 }
 updateStrength();
 setInterval(updateStrength, 3500);
-
 // Interference
 const interferenceBarEl = document.getElementById('interferenceBar');
 const interferenceMeterEl = document.getElementById('interferenceMeter');
@@ -486,7 +472,6 @@ function updateInterference() {
 }
 updateInterference();
 setInterval(updateInterference, 18000);
-
 // Jam Button
 const jamButton = document.getElementById('jam-button');
 const jamOverlay = document.getElementById('jam-overlay');
@@ -496,11 +481,10 @@ jamButton.addEventListener('click', () => {
   jamOverlay.style.opacity = '1';
   jamOverlay.style.pointerEvents = 'all';
   document.body.style.animation = 'shake 0.8s infinite';
-  
+ 
   const jamAudio = new Audio('Audio/MLKSHK SIGNAL LOST.mp3');
   jamAudio.volume = 0.5;
   jamAudio.play().catch(() => {});
-
   setTimeout(() => {
     jamOverlay.style.opacity = '0';
     jamOverlay.style.pointerEvents = 'none';
@@ -509,7 +493,6 @@ jamButton.addEventListener('click', () => {
     if (transLog) transLog.innerHTML = "SIGNAL RESTORED<br>TRANSMISSION RESUMED";
   }, 7000);
 });
-
 // Full Stocks List
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
@@ -522,7 +505,6 @@ const stocks = [
   { symbol: "SLCL", name: "Last Chance Lube", price: 14.20, change: -0.3 },
   { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
 ];
-
 function renderStocks() {
   const container = document.getElementById('stocks-container');
   container.innerHTML = '';
@@ -546,7 +528,6 @@ function renderStocks() {
   });
 }
 renderStocks();
-
 // Invest Button
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
@@ -555,7 +536,6 @@ investButton.addEventListener('click', () => {
   investMessage.style.opacity = '1';
   setTimeout(() => investMessage.style.opacity = '0', 4000);
 });
-
 // Shake Animation
 const style = document.createElement('style');
 style.innerHTML = `
