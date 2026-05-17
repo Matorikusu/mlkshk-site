@@ -119,12 +119,8 @@ header.nav-bar{
 }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
 
-/* LOCATIONS SECTION */
-.locations-section {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 0 20px;
-}
+/* LOCATIONS */
+.locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
 .locations-section h2 {
   text-align: center;
   font-family: 'Orbitron', sans-serif;
@@ -165,23 +161,15 @@ header.nav-bar{
   object-fit: cover;
   transition: transform 0.6s ease;
 }
-.location-card:hover .art img {
-  transform: scale(1.08);
-}
-.location-card .meta {
-  padding: 22px;
-  text-align: center;
-}
+.location-card:hover .art img { transform: scale(1.08); }
+.location-card .meta { padding: 22px; text-align: center; }
 .location-card .title {
   font-family: 'Orbitron', sans-serif;
   font-size: 26px;
   color: #00ffcc;
   margin-bottom: 8px;
 }
-.location-card .sub {
-  font-size: 15px;
-  color: #aaa;
-}
+.location-card .sub { font-size: 15px; color: #aaa; }
 
 /* HERO */
 .hero-link{display:block;max-width:1000px;margin:40px auto;}
@@ -200,22 +188,28 @@ header.nav-bar{
 
 .wrap{max-width:1200px;margin:0 auto;padding:40px 20px;position:relative;z-index:1;}
 
-/* Other existing sections */
-.ad-banner, .jam-section, .trans-log, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 20px;
+/* FLOATING PLAYER */
+#floating-player{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  height:72px;
+  background:url('Player/PLAYER.png') center/cover no-repeat;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  z-index:999;
 }
-.ad-banner { text-align:center; }
-#adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
-.trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; text-align:center; }
-.phase-artifact img { width:100%; border:2px dashed var(--signal-green); border-radius:12px; }
-.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
-.stock-list { display:flex; flex-direction:column; gap:12px; }
-.stock-item { display:flex; justify-content:space-between; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
-.jam-section { text-align:center; }
-#jam-button { background:#800; color:#f00; border:2px solid #f00; border-radius:8px; padding:16px 40px; font-family:'Orbitron',sans-serif; font-size:20px; cursor:pointer; box-shadow:0 0 25px rgba(255,0,0,0.5); }
-#jam-button:hover { background:#a00; box-shadow:0 0 40px rgba(255,0,0,0.7); transform:scale(1.05); }
+.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
+.player-title{font-weight:700;font-size:14px;}
+.player-artist{font-size:12px;color:var(--muted);}
+.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
+.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
+.player-controls img{width:42px;height:42px;cursor:pointer;}
 
 footer{
   padding:28px 20px;
@@ -224,6 +218,24 @@ footer{
   color:var(--muted);
   border-top:1px solid rgba(255,42,161,.05);
 }
+
+/* Other sections */
+.ad-banner, .jam-section, .trans-log, .phase-artifact, .mlk500-section, .invest-section, .signal-bleed {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+}
+#adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
+.trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; text-align:center; }
+.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
+.stock-list { display:flex; flex-direction:column; gap:12px; }
+.stock-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
+#jam-button {
+  background:#800; color:#f00; border:2px solid #f00; border-radius:8px;
+  padding:16px 40px; font-family:'Orbitron',sans-serif; font-size:20px;
+  cursor:pointer; box-shadow:0 0 25px rgba(255,0,0,0.5);
+}
+#jam-button:hover { background:#a00; box-shadow:0 0 40px rgba(255,0,0,0.7); transform:scale(1.05); }
 </style>
 </head>
 <body>
@@ -267,14 +279,12 @@ footer{
 
 <main class="wrap">
 
-  <!-- LOCATIONS SECTION (At the top) -->
+  <!-- LOCATIONS SECTION -->
   <section class="locations-section">
     <h2>ESTABLISHMENTS</h2>
     <div class="locations-grid">
       <a href="kingbear.html" class="location-card">
-        <div class="art">
-          <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear">
-        </div>
+        <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
         <div class="meta">
           <div class="title">THE KING BEAR</div>
           <div class="sub">Underground Club • Heavy Vibes • No Rules After Dark</div>
@@ -282,9 +292,7 @@ footer{
       </a>
 
       <a href="aftercurfew.html" class="location-card">
-        <div class="art">
-          <img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew">
-        </div>
+        <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
         <div class="meta">
           <div class="title">AFTER CURFEW</div>
           <div class="sub">Neon Streets • Illicit Nights • Post-Midnight Energy</div>
@@ -319,9 +327,7 @@ footer{
 
   <!-- MLK 500 STOCK INDEX -->
   <section class="mlk500-section">
-    <h2>
-      <img src="images/Universe/MLK500-header.png" alt="MLK 500 Index">
-    </h2>
+    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index"></h2>
     <div class="stock-list" id="stocks-container"></div>
   </section>
 
@@ -349,7 +355,7 @@ footer{
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
-    <div class="player-artist">Live Stream</div>
+    <div class="player-artist">Live • Underground</div>
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
@@ -366,7 +372,7 @@ footer{
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Live Radio Player
+// === LIVE RADIO PLAYER ===
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -400,7 +406,6 @@ btn.addEventListener('click', () => {
   else stopStream();
 });
 
-// Radio events
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; isPlaying = true; });
 audio.addEventListener('error', () => { if (isPlaying) setTimeout(playLiveStream, 2000); });
@@ -450,7 +455,7 @@ function showAd() {
 showAd();
 setInterval(showAd, 10000);
 
-// Signal & Interference Meters
+// Signal Meters
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const strengthMeterEl = document.getElementById('signalStrengthMeter');
@@ -467,6 +472,7 @@ function updateStrength() {
 updateStrength();
 setInterval(updateStrength, 3500);
 
+// Interference
 const interferenceBarEl = document.getElementById('interferenceBar');
 const interferenceMeterEl = document.getElementById('interferenceMeter');
 let currentInterference = 12;
@@ -504,12 +510,19 @@ jamButton.addEventListener('click', () => {
   }, 7000);
 });
 
-// Stocks (shortened version - expand if needed)
+// Full Stocks List
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
+  { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
   { symbol: "SSHK", name: "Sharon’s Second Hand Knickers", price: 41.89, change: 2.3 },
-  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 }
+  { symbol: "KESB", name: "Kevin’s Emotional Support Brick", price: 19.99, change: -0.5 },
+  { symbol: "MRRM", name: "Mick’s Roofie Rum", price: 67.33, change: 3.1 },
+  { symbol: "MPRR", name: "Microwave Pizza Roll Roulette", price: 4.77, change: 1.8 },
+  { symbol: "NUCB", name: "Nobby’s Used Condom Balloon Animals", price: 0.89, change: 4.2 },
+  { symbol: "SLCL", name: "Last Chance Lube", price: 14.20, change: -0.3 },
+  { symbol: "TTJT", name: "Trevor’s Toe Jam Toothpaste", price: 9.99, change: -1.1 }
 ];
+
 function renderStocks() {
   const container = document.getElementById('stocks-container');
   container.innerHTML = '';
@@ -517,11 +530,16 @@ function renderStocks() {
     const div = document.createElement('div');
     div.className = 'stock-item';
     const isPositive = stock.change >= 0;
+    const color = isPositive ? '#0f0' : '#f00';
+    const arrow = isPositive ? '↑' : '↓';
     div.innerHTML = `
-      <div><strong>${stock.symbol}</strong><br><small>${stock.name}</small></div>
-      <div style="text-align:right">
-        <strong>£${stock.price.toFixed(2)}</strong><br>
-        <span style="color:${isPositive?'#0f0':'#f00'}">${isPositive?'↑':'↓'} ${Math.abs(stock.change)}%</span>
+      <div class="stock-left">
+        <div class="stock-symbol">${stock.symbol}</div>
+        <div class="stock-name">${stock.name}</div>
+      </div>
+      <div class="stock-right">
+        <div class="stock-price">£${stock.price.toFixed(2)}</div>
+        <div class="stock-change" style="color:${color}">${arrow} ${Math.abs(stock.change)}%</div>
       </div>
     `;
     container.appendChild(div);
