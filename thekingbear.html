@@ -4,210 +4,235 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The King Bear</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow: hidden;
-        background: #000;
-        font-family: 'Rajdhani', system-ui, sans-serif;
-        color: white;
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Rajdhani', system-ui, sans-serif;
+    color: white;
+}
 
-    video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        z-index: 1;
-    }
+/* VIDEO */
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+}
 
-    #overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.88);
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 1.5s ease;
-    }
+/* OVERLAY */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.5s ease;
+}
 
-    .entrance {
-        text-align: center;
-        z-index: 11;
-        opacity: 0;
-        transform: scale(0.75);
-        transition: all 1.3s ease;
-    }
+.entrance {
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.75);
+    transition: all 1.3s ease;
+}
 
-    .entrance.show {
-        opacity: 1;
-        transform: scale(1);
-    }
+.entrance.show {
+    opacity: 1;
+    transform: scale(1);
+}
 
-    #entrance-img {
-        width: 95%;
-        max-width: 1100px;
-        border: 10px solid #fff;
-        box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
-        border-radius: 12px;
-    }
+#entrance-img {
+    width: 95%;
+    max-width: 1100px;
+    border: 10px solid #fff;
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
+    border-radius: 12px;
+}
 
-    #enter-btn {
-        margin-top: 35px;
-        padding: 18px 60px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: white;
-        background: #b8860b;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        box-shadow: 0 10px 25px rgba(184, 134, 11, 0.6);
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-    }
+#enter-btn {
+    margin-top: 35px;
+    padding: 18px 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background: #b8860b;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(184, 134, 11, 0.6);
+    text-transform: uppercase;
+}
 
-    #enter-btn:hover {
-        background: #ffd700;
-        color: #000;
-        transform: scale(1.1);
-    }
+/* FLOATING PLAYER */
+#floating-player {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    height: 78px;
+    background: url('Player/PLAYER.png') center/cover no-repeat;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+    z-index: 100;
+}
 
-    /* FLOATING PLAYER */
+.player-meta {
+    flex: 1;
+    text-align: center;
+    padding: 0 12px;
+}
+
+.player-title {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.player-artist {
+    font-size: 13px;
+    color: #ffd700;
+}
+
+.player-controls img {
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
     #floating-player {
-        position: fixed;
-        bottom: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 380px;
-        height: 78px;
-        background: url('Player/PLAYER.png') center/cover no-repeat;
-        border-radius: 20px;
-        display: none;
-        align-items: center;
-        padding: 0 20px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
-        z-index: 100;
+        width: 92%;
+        height: 68px;
     }
-
-    .player-meta {
-        flex: 1;
-        text-align: center;
-        padding: 0 12px;
-    }
-
-    .player-title {
-        font-weight: 700;
-        font-size: 15px;
-    }
-
-    .player-artist {
-        font-size: 13px;
-        color: #ffd700;
-    }
-
     .player-controls img {
-        width: 46px;
-        height: 46px;
-        cursor: pointer;
+        width: 40px;
+        height: 40px;
     }
-
-    @media (max-width: 768px) {
-        #floating-player { width: 92%; height: 68px; }
-        .player-controls img { width: 40px; height: 40px; }
-    }
+}
 </style>
 </head>
+
 <body>
 
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="images/Locations/The King Bear/kingbear.mp4" type="video/mp4">
-    </video>
+<!-- Background Video -->
+<video autoplay muted loop playsinline>
+    <source src="images/Locations/The King Bear/kingbear.mp4" type="video/mp4">
+</video>
 
-    <!-- Club Music (Original MP3 - Autoplay + Loop) -->
-    <audio id="club-music" preload="auto" loop>
-        <source src="Audio/Locations/The King Bear/KINGBEAR_LARGE.mp3" type="audio/mpeg">
-    </audio>
+<!-- Club Music -->
+<audio id="club-music" preload="auto" loop>
+    <source src="Audio/Locations/The King Bear/KINGBEAR_LARGE.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- Radio Stream -->
-    <audio id="radio-stream" preload="none"></audio>
+<!-- Radio Stream -->
+<audio id="radio-stream" preload="none"></audio>
 
-    <!-- Entrance Overlay -->
-    <div id="overlay">
-        <div class="entrance" id="entrance-container">
-            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance">
-            <br>
-            <button id="enter-btn">Enter The King Bear</button>
-        </div>
+<!-- Overlay -->
+<div id="overlay">
+    <div class="entrance" id="entrance-container">
+        <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img">
+        <br>
+        <button id="enter-btn">Enter The King Bear</button>
+    </div>
+</div>
+
+<!-- FLOATING PLAYER -->
+<div id="floating-player">
+    <div class="player-meta">
+        <div class="player-title">MLKSHK Pirate Radio</div>
+        <div class="player-artist">Live • Underground</div>
     </div>
 
+    <div class="player-controls">
+        <img id="playPauseBtn" src="Player/PLAY.png" alt="Play">
+    </div>
+</div>
+
 <script>
-    const overlay = document.getElementById('overlay');
-    const entrance = document.getElementById('entrance-container');
-    const enterBtn = document.getElementById('enter-btn');
-    
-    const clubMusic = document.getElementById('club-music');
-    const radioStream = document.getElementById('radio-stream');
-    const floatingPlayer = document.getElementById('floating-player');
-    const playPauseBtn = document.getElementById('playPauseBtn');
+const overlay = document.getElementById('overlay');
+const entrance = document.getElementById('entrance-container');
+const enterBtn = document.getElementById('enter-btn');
 
-    const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
-    let isRadioPlaying = false;
+const clubMusic = document.getElementById('club-music');
+const radioStream = document.getElementById('radio-stream');
+const playPauseBtn = document.getElementById('playPauseBtn');
 
-    // Show entrance
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            entrance.classList.add('show');
-        }, 500);
-    });
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-    // ENTER THE CLUB
-    enterBtn.addEventListener('click', () => {
-        overlay.style.opacity = '0';
+let isRadioPlaying = false;
 
-        // Start Club Music (Large Amounts v2)
-        clubMusic.play().catch(e => console.log("Club music playback prevented", e));
+/* Show entrance */
+window.addEventListener('load', () => {
+    setTimeout(() => entrance.classList.add('show'), 500);
 
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            floatingPlayer.style.display = 'flex';
-        }, 1600);
-    });
+    // Attempt autoplay of radio
+    startRadio();
+});
 
-    // Floating Player - Controls Radio Stream
-    playPauseBtn.addEventListener('click', () => {
-        if (!isRadioPlaying) {
-            // Play Radio
-            radioStream.src = STREAM_URL + "?t=" + Date.now();
-            radioStream.play().then(() => {
-                isRadioPlaying = true;
-                playPauseBtn.src = 'Player/PAUSE.png';
-            }).catch(e => console.error("Radio play failed", e));
-        } else {
-            // Pause Radio
-            radioStream.pause();
+/* Enter button */
+enterBtn.addEventListener('click', () => {
+    overlay.style.opacity = '0';
+
+    clubMusic.play().catch(() => {});
+
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 1600);
+});
+
+/* RADIO PLAYER */
+function startRadio() {
+    radioStream.src = STREAM_URL + "?t=" + Date.now();
+
+    const playPromise = radioStream.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            isRadioPlaying = true;
+            playPauseBtn.src = 'Player/PAUSE.png';
+        }).catch(() => {
             isRadioPlaying = false;
             playPauseBtn.src = 'Player/PLAY.png';
-        }
-    });
+        });
+    }
+}
 
-    // Extra safety for club music loop
-    clubMusic.addEventListener('ended', () => {
-        clubMusic.currentTime = 0;
-        clubMusic.play();
-    });
+function stopRadio() {
+    radioStream.pause();
+    radioStream.src = "";
+    isRadioPlaying = false;
+    playPauseBtn.src = 'Player/PLAY.png';
+}
+
+/* Click control */
+playPauseBtn.addEventListener('click', () => {
+    if (!isRadioPlaying) {
+        startRadio();
+    } else {
+        stopRadio();
+    }
+});
+
+/* Safety loop */
+radioStream.addEventListener('ended', startRadio);
 </script>
 
 </body>
