@@ -5,18 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK — The Universe</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg: #000000;
-  --text: #ffffff;
-  --muted: #555555;
-  --accent: #ff2aa1; /* Signature MLKSHK Pink */
-  --glow: rgba(255, 42, 161, 0.25);
-  --card-radius: 0px; /* Brutalist sharp edges */
+  --bg: #000000; /* Back to pure clean black */
+  --text: #f5f5f5;
+  --muted: #666666;
+  --accent: #ff2aa1;
+  --glow: rgba(255,42,161,0.3);
+  --card-radius: 8px;
   --signal-green: #00ff66;
-  --border-color: #222222;
 }
 
 html, body {
@@ -31,15 +30,15 @@ html, body {
 
 a { color: inherit; text-decoration: none; }
 
-/* NAVIGATION FRAME */
+/* NAV */
 header.nav-bar {
-  border-bottom: 1px solid var(--accent); /* Constant baseline brand accent */
-  padding: 24px;
-  background: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid rgba(255,42,161,0.1);
+  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.85);
   position: sticky;
   top: 0;
   z-index: 200;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
 }
 
 .nav-content {
@@ -50,21 +49,19 @@ header.nav-bar {
   margin: 0 auto;
 }
 
-.logo-link img { height: 34px; display: block; cursor: pointer; transition: opacity 0.3s ease; }
+.logo-link img { height: 38px; display: block; cursor: pointer; transition: opacity 0.3s ease; }
 .logo-link:hover img { opacity: 0.8; }
 
 .nav-dropdown { position: relative; }
 
 .nav-toggle {
   background: none;
-  border: 1px solid var(--border-color);
-  padding: 8px 20px;
-  border-radius: var(--card-radius);
+  border: 1px solid #222;
+  padding: 6px 16px;
+  border-radius: 4px;
   color: var(--text);
   font-family: 'Share Tech Mono', monospace;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -76,62 +73,59 @@ header.nav-bar {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 8px);
   right: 0;
   background: #000000;
-  border: 1px solid var(--accent); /* Pink framing for secret index */
-  border-radius: var(--card-radius);
-  min-width: 240px;
+  border: 1px solid #222;
+  border-radius: 6px;
+  min-width: 220px;
   z-index: 300;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(255, 42, 161, 0.15);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
 }
 
 .dropdown-menu a {
   display: block;
-  padding: 14px 20px;
+  padding: 12px 16px;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
   border-bottom: 1px solid #111;
-  letter-spacing: 1px;
-  transition: all 0.2s ease;
 }
 
 .dropdown-menu a:hover {
-  background: #0d0d0d;
+  background: #111;
   color: var(--accent);
-  padding-left: 24px;
 }
 
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display: block; }
 
-/* INTERACTIVE STREET FEED METERS */
+/* SIGNAL METERS */
 .signal-meter {
   position: fixed;
-  bottom: 115px;
+  bottom: 110px; /* Shifted up slightly to clear the restored original player height */
   z-index: 199;
-  background: #000000;
-  border: 1px solid var(--border-color);
-  border-radius: var(--card-radius);
-  padding: 10px 14px;
+  background: rgba(0,0,0,0.9);
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 8px 12px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 11px;
-  color: var(--text);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-  min-width: 170px;
-  letter-spacing: 1px;
+  color: var(--muted);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  min-width: 160px;
+  will-change: transform;
 }
-#signalStrengthMeter { left: 30px; border-left: 2px solid var(--signal-green); }
-#interferenceMeter { right: 30px; border-right: 2px solid var(--accent); }
+#signalStrengthMeter { left: 25px; border-left: 2px solid var(--signal-green); }
+#interferenceMeter { right: 25px; border-right: 2px solid var(--accent); }
 
 .signal-meter .bar-container {
   display: inline-block;
   width: 50px;
-  height: 2px;
+  height: 4px;
   background: #111;
-  margin-left: 10px;
+  margin-left: 8px;
   vertical-align: middle;
   overflow: hidden;
 }
@@ -139,209 +133,178 @@ header.nav-bar {
   height: 100%;
   background: currentColor;
   width: 0%;
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
 }
+#signalStrengthMeter .bar { color: var(--signal-green); }
+#interferenceMeter .bar { color: var(--accent); }
 
-/* BRAND GATEWAY HERO */
-.hero-link { display: block; max-width: 1200px; margin: 40px auto; padding: 0 24px; }
-.hero {
-  width: 100%;
-  aspect-ratio: 2.38 / 1;
-  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat #050505;
-  border-radius: var(--card-radius);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, box-shadow 0.6s ease;
-  will-change: transform;
-}
-.hero-link:hover .hero {
-  transform: scale(1.005);
-  border-color: var(--accent);
-  box-shadow: 0 0 40px var(--glow);
-}
-
-.wrap { max-width: 1200px; margin: 0 auto; padding: 20px 0; }
-
-/* ESTABLISHMENT GATEWAYS */
-.locations-section { max-width: 1200px; margin: 80px auto; padding: 0 24px; position: relative; }
+/* LOCATIONS */
+.locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
 .locations-section h2 {
-  text-align: left;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 13px;
-  color: var(--accent); /* Branding focus */
-  margin-bottom: 30px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(255, 42, 161, 0.2);
-  padding-bottom: 15px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  color: #00ffcc;
+  margin-bottom: 50px;
+  text-shadow: 0 0 20px rgba(0,255,200,0.3);
+  letter-spacing: 4px;
 }
 .locations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 32px;
+  gap: 40px;
 }
 .location-card {
-  background: #050505;
-  border: 1px solid var(--border-color);
+  background: rgba(10,10,10,0.8);
+  border: 1px solid rgba(0,255,200,0.15);
   border-radius: var(--card-radius);
   overflow: hidden;
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease, box-shadow 0.35s ease;
   will-change: transform;
 }
-.location-card::before {
-  content: "ENTRY CONFIRMED";
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
-  color: #000;
-  background: var(--accent);
-  padding: 4px 10px;
-  z-index: 10;
-  letter-spacing: 1px;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.location-card:hover::before { opacity: 1; }
 .location-card:hover { 
-  border-color: var(--accent);
-  box-shadow: 0 20px 40px rgba(255, 42, 161, 0.12);
+  transform: translateY(-10px); 
+  border-color: #00ffcc; 
+  box-shadow: 0 15px 40px rgba(0,255,200,0.15);
 }
-.location-card .art { height: 0; padding-top: 60%; position: relative; overflow: hidden; background: #000; }
-.location-card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; }
-.location-card:hover .art img { transform: scale(1.02); filter: saturate(1.15); }
-.location-card .meta { padding: 24px; text-align: left; background: #020202; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; transition: border-color 0.4s ease; }
-.location-card:hover .meta { border-color: rgba(255, 42, 161, 0.3); }
-.location-card .title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; letter-spacing: 2px; }
-.location-card .enter-btn { font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); transition: color 0.3s ease; }
-.location-card:hover .enter-btn { color: var(--accent); }
+.location-card .art { height: 0; padding-top: 62%; position: relative; overflow: hidden; background: #111; }
+.location-card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); transition: transform 0.5s ease; }
+.location-card:hover .art img { transform: scale(1.04); filter: saturate(1.1); }
+.location-card .meta { padding: 24px; text-align: center; background: #080808; border-top: 1px solid #151515; }
+.location-card .title { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00ffcc; letter-spacing: 1px; }
 
-/* CRATE RECORD SLOTS */
+/* CARTONS */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 24px;
   max-width: 1200px;
-  margin: 80px auto;
-  padding: 0 24px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 .card {
-  background: #030303;
-  border: 1px solid rgba(255, 42, 161, 0.15); /* Tinted subtle framing */
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.005));
+  border: 1px solid rgba(255,42,161,0.12);
   border-radius: var(--card-radius);
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  aspect-ratio: 1 / 1.35;
-  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
+  aspect-ratio: 1 / 1.4;
   will-change: transform;
 }
 .card:hover {
+  transform: translateY(-6px);
   border-color: var(--accent);
-  box-shadow: 0 15px 30px rgba(255, 42, 161, 0.15);
-  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(255,42,161,0.15);
 }
-.card .art { height: 0; padding-top: 80%; position: relative; overflow: hidden; background: #000; }
-.card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); transition: all 0.4s ease; }
-.card:hover .art img { filter: saturate(1.2); }
-.card .meta { padding: 16px; text-align: center; background: #000; border-top: 1px solid var(--border-color); transition: border-color 0.4s ease; }
-.card:hover .meta { border-color: rgba(255, 42, 161, 0.3); }
-.card .title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; letter-spacing: 1px; transition: color 0.3s ease; }
-.card:hover .title { color: var(--accent); }
+.card .art { height: 0; padding-top: 75%; position: relative; overflow: hidden; background: #0d0d0d; }
+.card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); transition: transform 0.4s ease, filter 0.4s ease; }
+.card:hover .art img { filter: brightness(1.02) contrast(1.15); transform: scale(1.02); }
+.card .meta { padding: 16px; text-align: center; }
+.card .title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--accent); letter-spacing: 1px; }
 
-/* INNER LEDGER SYSTEM MODULES */
+/* HERO */
+.hero-link { display: block; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.hero {
+  width: 100%;
+  aspect-ratio: 2.38 / 1;
+  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat #111;
+  border-radius: var(--card-radius);
+  cursor: pointer;
+  transition: transform .4s cubic-bezier(0.25, 1, 0.5, 1), filter .4s ease, box-shadow .4s ease;
+  will-change: transform;
+}
+.hero-link:hover .hero {
+  transform: scale(1.01);
+  filter: brightness(1.1);
+  box-shadow: 0 0 35px var(--glow);
+}
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 20px 0; }
+
+/* DATA BLOCKS */
 .ad-banner, .phase-artifact, .mlk500-section, .invest-section, .trans-log {
   max-width: 800px;
-  margin: 60px auto;
+  margin: 50px auto;
   padding: 24px;
+  text-align: center;
   box-sizing: border-box;
 }
 
-.ad-banner h2 { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 3px; margin-bottom: 16px; text-align: left; text-transform: uppercase; }
-#adImage img { width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: var(--card-radius); display: block; transition: border-color 0.3s ease; }
-#adImage:hover img { border-color: var(--accent); }
+.ad-banner h2 { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--muted); letter-spacing: 2px; margin-bottom: 16px; text-align: left; }
+#adImage img { width: 100%; height: auto; border: 1px solid #1a1a1a; border-radius: 6px; display: block; }
 
 .trans-log { 
-  background: #030303; 
-  border: 1px solid var(--border-color); 
-  border-left: 3px solid var(--accent); /* Brand callout token */
-  border-radius: var(--card-radius);
+  background: #0a0a0a; 
+  border: 1px solid #1a1a1a; 
+  border-left: 3px solid var(--signal-green);
+  border-radius: 4px;
   font-family: 'Share Tech Mono', monospace; 
-  color: #fff; 
+  color: var(--signal-green); 
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.6;
-  letter-spacing: 0.5px;
-  cursor: pointer;
 }
 
-/* THE PHASE MODULATOR VAULT SLOT */
-.phase-artifact { position: relative; border: 1px solid var(--border-color); background: #030303; border-radius: var(--card-radius); text-align: left; padding: 24px; }
-.phase-artifact::before { content: "VAULT PROTOCOL NO_089"; position: absolute; right: 24px; top: 24px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; }
-.phase-artifact .img-container { width: 100%; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 16px; background: #000; position: relative; cursor: pointer; transition: border-color 0.4s ease; }
-.phase-artifact .img-container:hover { border-color: var(--accent); }
-.phase-artifact .img-container::after { content: "ENGAGE RECORD MODULE"; position: absolute; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--accent); opacity: 0; transition: opacity 0.3s ease; font-weight: bold; }
-.phase-artifact .img-container:hover::after { opacity: 1; }
-.phase-artifact img { width: 100%; height: auto; display: block; filter: saturate(0.8); transition: filter 0.4s ease; }
-.phase-artifact p { font-family: 'Share Tech Mono', monospace; color: #888; margin: 12px 0 0 0; font-size: 12px; letter-spacing: 0.5px; line-height: 1.5; }
+/* PHASE MODULATOR - Fixed Aspect Ratio Setup */
+.phase-artifact { position: relative; border: 1px solid #1a1a1a; background: #090909; border-radius: 12px; text-align: left; padding: 20px; }
+.phase-artifact::before { content: "ENCRYPTED NODE"; position: absolute; right: 20px; top: 20px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 1px; }
+.phase-artifact .img-container { width: 100%; overflow: hidden; border-radius: 12px; border: 2px dashed var(--signal-green); margin-bottom: 12px; background: #000; }
+.phase-artifact img { width: 100%; height: auto; display: block; filter: brightness(0.9); }
+.phase-artifact p { font-family: 'Share Tech Mono', monospace; color: #555; margin: 12px 0 0 0; font-size: 12px; }
 
-/* THE INDEX LOG (MLK500) */
-.mlk500-section { background: #030303; border: 1px solid var(--border-color); border-radius: var(--card-radius); padding: 32px; }
-.stock-list { display: flex; flex-direction: column; gap: 4px; margin-top: 24px; }
-.stock-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: #000; border: 1px solid var(--border-color); border-radius: var(--card-radius); font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 1px; }
+.mlk500-section { background: #090909; border: 1px solid #1a1a1a; border-radius: 6px; }
+.stock-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.stock-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #0c0c0c; border: 1px solid #151515; border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 14px; }
 
 #invest-button {
-  background: #000000; color: #fff; border: 1px solid var(--border-color); border-radius: var(--card-radius);
-  padding: 16px 40px; font-family: 'Share Tech Mono', monospace; font-size: 12px; cursor: pointer;
-  letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: block; margin: 0 auto;
+  background: #0a0a0a; color: #fff; border: 1px solid #222; border-radius: 4px;
+  padding: 12px 32px; font-family: 'Share Tech Mono', monospace; font-size: 13px; cursor: pointer;
+  letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s ease;
 }
-#invest-button:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 20px var(--glow); }
-#invest-message { font-family: 'Share Tech Mono', monospace; margin-top: 20px; color: var(--accent); transition: opacity 0.3s ease; opacity: 0; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
+#invest-button:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px rgba(255,42,161,0.1); }
+#invest-message { font-family: 'Share Tech Mono', monospace; margin-top: 15px; color: var(--accent); transition: opacity 0.3s ease; opacity: 0; font-size: 12px; letter-spacing: 0.5px; }
 
 footer {
-  padding: 60px 24px;
+  padding: 40px 20px;
   text-align: center;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
-  border-top: 1px solid var(--border-color);
-  letter-spacing: 2px;
+  border-top: 1px solid #111;
+  letter-spacing: 1px;
 }
 
-/* HIGH-END CONSOLE UTILITY PLAYER */
+/* FLOATING PLAYER - Fully restored asset layout dimensions and style metrics */
 #floating-player {
   position: fixed;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 360px;
-  height: 72px;
-  background: url('Player/PLAYER.png') center/cover no-repeat #050505;
-  border-radius: 20px;
+  height: 72px; /* Restored original framework footprint */
+  background: url('Player/PLAYER.png') center/cover no-repeat #0a0a0a;
+  border-radius: 20px; /* Restored custom soft rounding look */
   display: flex;
   align-items: center;
   padding: 0 18px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.95);
+  box-shadow: 0 12px 40px rgba(0,0,0,.85);
   z-index: 999;
   box-sizing: border-box;
-  border: 1px solid rgba(255, 252, 252, 0.04);
 }
 .player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 0 12px; }
-.player-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; color: #fff; letter-spacing: 1px; }
-.player-artist { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; }
-.player-status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; }
-.player-controls { display: flex; align-items: center; justify-content: center; }
-.player-controls img { width: 42px; height: 42px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.player-controls img:hover { transform: scale(1.08); }
+.player-title { font-weight: 700; font-size: 14px; color: #fff; }
+.player-artist { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.player-status { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.player-controls { display: flex; align-items: center; justify-content: center; margin-left: 12px; }
+.player-controls img { width: 42px; height: 42px; cursor: pointer; transition: transform 0.2s ease; }
+.player-controls img:hover { transform: scale(1.05); }
 
 @media (max-width: 768px) {
   .signal-meter { display: none; }
   .locations-grid { grid-template-columns: 1fr; }
   #floating-player { width: calc(100% - 32px); bottom: 16px; }
-  .mlk500-section { padding: 16px; }
 }
 </style>
 </head>
@@ -353,24 +316,24 @@ footer {
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK">
     </a>
     <div class="nav-dropdown">
-      <button class="nav-toggle">MEMBER_INDEX</button>
+      <button class="nav-toggle">SYS_INDEX</button>
       <div class="dropdown-menu">
-        <a href="index.html">PRIV_NODE://HOME</a>
-        <a href="access.html">PRIV_NODE://ACCESS</a>
-        <a href="archive.html">PRIV_NODE://ARCHIVE</a>
-        <a href="pirateradio.html">PRIV_NODE://PIRATE_RADIO</a>
-        <a href="lab.html">PRIV_NODE://THE_LAB</a>
+        <a href="index.html">NODE://HOME</a>
+        <a href="access.html">NODE://ACCESS</a>
+        <a href="archive.html">NODE://ARCHIVE</a>
+        <a href="pirateradio.html">NODE://PIRATE_RADIO</a>
+        <a href="lab.html">NODE://THE_LAB</a>
       </div>
     </div>
   </div>
 </header>
 
 <div class="signal-meter" id="signalStrengthMeter">
-  FEED_GAIN: <span id="signalStrength">89%</span>
+  NET_SIGNAL: <span id="signalStrength">89%</span>
   <div class="bar-container"><div id="strengthBar" class="bar" style="width:89%;"></div></div>
 </div>
 <div class="signal-meter" id="interferenceMeter">
-  DECK_BLEED: <span id="interferenceVal">12%</span>
+  SYS_BLEED: <span id="interferenceVal">12%</span>
   <div class="bar-container"><div id="interferenceBar" class="bar" style="width:12%;"></div></div>
 </div>
 
@@ -381,90 +344,86 @@ footer {
 <main class="wrap">
 
   <section class="locations-section">
-    <h2>ESTABLISHMENTS // OVERRIDE DIRECTORY</h2>
+    <h2>ESTABLISHMENTS</h2>
     <div class="locations-grid">
       <a href="thekingbear.html" class="location-card">
         <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
         <div class="meta">
           <div class="title">THE KING BEAR</div>
-          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="aftercurfew.html" class="location-card">
         <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
         <div class="meta">
           <div class="title">AFTER CURFEW</div>
-          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="MLKSK8.html" class="location-card">
         <div class="art"><img src="images/Locations/MLKSK8/MLKSK8_ENTRANCE.jpg" alt="MLKSK8"></div>
         <div class="meta">
           <div class="title">MLKSK8</div>
-          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="INKSHK.html" class="location-card">
         <div class="art"><img src="images/Locations/INKSHK/INKSHK_ENTRANCE.jpg" alt="INKSHK"></div>
         <div class="meta">
           <div class="title">INKSHK</div>
-          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
     </div>
   </section>
 
   <section class="grid">
-    <article class="card" style="cursor: pointer;" onclick="triggerEasterEgg('D&B')">
+    <article class="card">
       <div class="art"><img src="images/Cartons/Drum & Bass Carton.png" alt="Drum & Bass"></div>
       <div class="meta"><div class="title">DRUM & BASS</div></div>
     </article>
-    <article class="card" style="cursor: pointer;" onclick="triggerEasterEgg('HOUSE')">
+    <article class="card">
       <div class="art"><img src="images/Cartons/House Carton.png" alt="House"></div>
       <div class="meta"><div class="title">HOUSE</div></div>
     </article>
-    <article class="card" style="cursor: pointer;" onclick="triggerEasterEgg('HIP-HOP')">
+    <article class="card">
       <div class="art"><img src="images/Cartons/Hip Hop Carton.png" alt="Hip-Hop"></div>
       <div class="meta"><div class="title">HIP-HOP</div></div>
     </article>
-    <article class="card" style="cursor: pointer;" onclick="triggerEasterEgg('AFROBEAT')">
+    <article class="card">
       <div class="art"><img src="images/Cartons/Afrobeat Carton.png" alt="Afrobeat"></div>
       <div class="meta"><div class="title">AFROBEAT</div></div>
     </article>
   </section>
 
   <section class="ad-banner">
-    <h2>[ ACCESS_NOTICE // UNINDEXED_INTRUSION ]</h2>
+    <h2>[ ACCESS_NOTICE // UNVERIFIED_INTRUSION ]</h2>
     <div id="adImage"></div>
   </section>
 
   <div class="trans-log" id="transLog">
-    LOG LOAD: DECK_CONNECTED // FREQUENCY: 107.3 MHz (OFF-GRID FEED)
+    SIGNAL STATUS: EXT_LOCKED // FREQUENCY: 107.3 MHz (PIRATE DATA_STREAM)
   </div>
 
   <section class="phase-artifact">
     <a href="phasemodulator.html" class="img-container">
       <img src="images/Universe/phase_modulator.png" alt="Phase Modulator Artifact">
     </a>
-    <p>// ARCHIVE MODULE DETECTED. Physical press blueprint loaded. Structure alters without notification.</p>
+    <p>// External entity discovered. Asset online. The architecture shifts regardless of validation.</p>
   </section>
 
   <section class="mlk500-section">
-    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;height:auto;display:block;margin:0 auto;filter:invert(1) brightness(2) contrast(2);"></h2>
+    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;height:auto;display:block;margin:0 auto;filter:brightness(0.9);"></h2>
     <div class="stock-list" id="stocks-container"></div>
   </section>
 
   <div class="invest-section">
-    <button id="invest-button">REQUEST REGISTER ACCESS</button>
+    <button id="invest-button">REQUEST PROTOCOL ACCESS</button>
     <div id="invest-message"></div>
   </div>
 </main>
 
 <div id="floating-player">
   <div class="player-meta">
-    <div class="player-title">MLKSHK PIRATE RADIO</div>
-    <div class="player-artist">OFF-GRID DECK / LIVE FEED</div>
-    <div class="player-status" id="status">STANDBY</div>
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Sub-Level Node • Encrypted</div>
+    <div class="player-status" id="status">TERMINAL STANDBY</div>
   </div>
   <div class="player-controls">
     <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
@@ -473,13 +432,14 @@ footer {
 </div>
 
 <footer>
-  UNINDEXED SPACE. NO PUBLIC SIGNATURE. UNREGULATED ENERGY. © <span id="year"></span>
+  THE WORLD RUNS CONTINUOUSLY WITHOUT PUBLIC SIGNATURE. OPT OUT. © <span id="year"></span>
 </footer>
 
 <script>
+// Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Stream Logic
+// Radio Player
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -492,7 +452,7 @@ function playLiveStream() {
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'BROADCASTING LIVE';
+    statusEl.textContent = 'STREAMING // ANONYMOUS LINK';
     statusEl.style.color = 'var(--signal-green)';
   }).catch(e => console.error(e));
 }
@@ -501,12 +461,12 @@ function stopStream() {
   audio.src = '';
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'STANDBY';
+  statusEl.textContent = 'TERMINAL STANDBY';
   statusEl.style.color = 'var(--muted)';
 }
 btn.addEventListener('click', () => !isPlaying ? playLiveStream() : stopStream());
 
-// Nav Dropdown Operation
+// Dropdown
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 navToggle.addEventListener('click', (e) => {
@@ -515,34 +475,21 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Secret Transmission Logs
+// Transmission Log
 const transLog = document.getElementById('transLog');
 const messages = [
-  "LOG LOAD: DECK_CONNECTED // FREQUENCY: 107.3 MHz (OFF-GRID FEED)",
-  "ROUTING MATRIX: STEADY // SOURCE ORIGIN: SECRET LEVEL NODE",
-  "LEDGER STATUS: CLEAR // PHYSICAL SHIPMENT LOG OPENED // RECORD SHIELDED",
-  "IF YOU ARE READING THIS, YOU HAVE COIN TO SPEND. OPT OUT OR MOVE UP."
+  "SIGNAL STATUS: EXT_LOCKED // FREQUENCY: 107.3 MHz (PIRATE DATA_STREAM)",
+  "CARRIER: RE-ROUTING STABLE // HOST ARCHITECTURE: UNRECOGNIZED",
+  "DATA FLOW INDEPENDENT // TRANSACTIONS MOVING // RECORD CLEARED",
+  "THE MATRIX RUNS REGARDLESS. DETACH OR OBEY."
 ];
 let index = 0;
 setInterval(() => {
   transLog.innerHTML = messages[index];
   index = (index + 1) % messages.length;
-}, 8000);
+}, 7000);
 
-// Easter Eggs (Activates color flashing on the console logs)
-function triggerEasterEgg(genre) {
-  const logSection = document.getElementById('transLog');
-  logSection.style.borderColor = 'var(--accent)';
-  logSection.style.color = 'var(--accent)';
-  logSection.innerHTML = `ANOMALY // UNINDEXED CRATE FILE UNLOCKED: [${genre}_VAULT_DATA] // LOADING...`;
-  setTimeout(() => {
-    logSection.style.borderColor = 'var(--border-color)';
-    logSection.style.color = '#fff';
-    logSection.innerHTML = "SYSTEM DATA RESET // FEED CONTINUOUS.";
-  }, 4000);
-}
-
-// Custom Classified Rotation
+// Ads
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
   "images/Universe/Ads/nobbys-balloon.jpg",
@@ -556,37 +503,37 @@ let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 function showAd() {
   if (adImages.length > 0) {
-    adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Classified Asset Log">`;
+    adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Ad Asset">`;
     adIndex = (adIndex + 1) % adImages.length;
   }
 }
 showAd();
-setInterval(showAd, 11000);
+setInterval(showAd, 10000);
 
-// Hardware Deck Diagnostics Fluctuations
+// Signal Meters
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const interferenceValEl = document.getElementById('interferenceVal');
 const interferenceBarEl = document.getElementById('interferenceBar');
 
-let currentStrength = 92;
-let currentInterference = 8;
+let currentStrength = 89;
+let currentInterference = 12;
 
 function updateMeters() {
-  currentStrength += Math.floor(Math.random() * 7) - 3;
-  currentStrength = Math.max(75, Math.min(99, currentStrength));
+  currentStrength += Math.floor(Math.random() * 11) - 5;
+  currentStrength = Math.max(30, Math.min(99, currentStrength));
   signalStrengthEl.textContent = currentStrength + '%';
   strengthBarEl.style.width = currentStrength + '%';
 
-  currentInterference += Math.floor(Math.random() * 5) - 2;
-  currentInterference = Math.max(4, Math.min(20, currentInterference));
+  currentInterference += Math.floor(Math.random() * 7) - 3;
+  currentInterference = Math.max(5, Math.min(40, currentInterference));
   interferenceValEl.textContent = currentInterference + '%';
   interferenceBarEl.style.width = currentInterference + '%';
 }
 updateMeters();
-setInterval(updateMeters, 4000);
+setInterval(updateMeters, 3000);
 
-// Crate Value Indexes
+// Stocks
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -602,13 +549,13 @@ function renderStocks() {
     const div = document.createElement('div');
     div.className = 'stock-item';
     const isPositive = stock.change >= 0;
-    const color = isPositive ? 'var(--signal-green)' : 'var(--accent)';
+    const color = isPositive ? 'var(--signal-green)' : '#ff3333';
     const arrow = isPositive ? '▲' : '▼';
     div.innerHTML = `
-      <div><strong>${stock.symbol}</strong> — <span style="color:#666">${stock.name}</span></div>
+      <div><strong>${stock.symbol}</strong> — <span style="color:#444">${stock.name}</span></div>
       <div style="text-align:right">
         <strong>£${stock.price.toFixed(2)}</strong><br>
-        <span style="color:${color}; font-size:11px; font-family:'Share Tech Mono', monospace">${arrow} ${Math.abs(stock.change)}%</span>
+        <span style="color:${color}; font-size:12px;">${arrow} ${Math.abs(stock.change)}%</span>
       </div>
     `;
     container.appendChild(div);
@@ -616,13 +563,13 @@ function renderStocks() {
 }
 renderStocks();
 
-// Secure Protocol Access Trigger
+// Invest Button
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "REGISTRY REJECTED: INDEPENDENT PRIV_NODE RECOGNIZED. SYSTEM ENTRY SHIELDED.";
+  investMessage.textContent = "CREDENTIALS REJECTED: THIS LEDGER RUNS SEPARATELY. NOT ON RECORD.";
   investMessage.style.opacity = '1';
-  setTimeout(() => investMessage.style.opacity = '0', 4500);
+  setTimeout(() => investMessage.style.opacity = '0', 4000);
 });
 </script>
 </body>
