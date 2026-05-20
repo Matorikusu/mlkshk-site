@@ -5,185 +5,228 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#000;
-  --text:#fff;
-  --muted:#ccc;
-  --accent:#ff2aa1;
-  --dropdown-bg:#000;
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #666666;
+  --accent: #ff2aa1;
+  --dropdown-bg: #000000;
+  --signal-green: #00ff66;
 }
-html,body{
-  margin:0;
-  height:100%;
-  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
-  background:var(--bg);
-  color:var(--text);
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
+  letter-spacing: 0.5px;
 }
-a{color:inherit;text-decoration:none}
-/* NAV BAR */
-header.nav-bar{
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  padding:18px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
-  position:sticky;
-  top:0;
-  z-index:30;
+a { color: inherit; text-decoration: none; }
+
+/* NAVIGATION SYSTEM */
+header.nav-bar {
+  border-bottom: 1px solid rgba(255, 42, 161, 0.1);
+  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.85);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  backdrop-filter: blur(12px);
 }
-.nav-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1200px;
-  margin:0 auto;
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.logo-link img{height:42px;display:block}
-.nav-dropdown{position:relative}
-.nav-toggle{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
-  padding:6px 10px;
+.logo-link img { height: 38px; display: block; transition: opacity 0.3s ease; }
+.logo-link:hover img { opacity: 0.8; }
+
+.nav-dropdown { position: relative; }
+.nav-toggle {
+  background: none;
+  border: 1px solid #222;
+  padding: 6px 16px;
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
-.dropdown-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 8px);
-  right:0;
-  left:auto;
-  background:var(--dropdown-bg);
-  border:1px solid var(--accent);
-  border-radius:8px;
-  min-width:200px;
-  z-index:100;
-  overflow:hidden;
-  max-width:90vw;
+.nav-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.dropdown-menu a{
-  display:block;
-  padding:10px 14px;
-  color:#fff;
-  text-decoration:none;
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid #222;
+  border-radius: 6px;
+  min-width: 220px;
+  z-index: 300;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+}
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #888;
+  border-bottom: 1px solid #111;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .dropdown-menu a:hover {
-  background:var(--accent);
-  color:#000;
+  background: #111;
+  color: var(--accent);
 }
-/* HERO */
-.hero{
-  height:700px;
-  background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
+
+/* HERO SECTION */
+.hero {
+  height: 600px;
+  background: url('images/Home/mlkshk_header.png') center/cover no-repeat #0a0a0a;
+  border-bottom: 1px solid #111;
 }
-/* IMAGE LINKS */
-.image-link{
-  display:block;
-  margin:40px auto;
+
+/* NETWORK DECK INDEX (IMAGE LINKS) */
+.deck-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
-.image-section{
+.image-link {
+  display: block;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #111;
+  background: #0a0a0a;
+}
+.image-section {
   width: 100%;
   height: 420px;
-  background-size:cover;
-  background-position:center;
-  cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
-  aspect-ratio: 2.38 / 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), filter 0.45s ease, box-shadow 0.45s ease;
+  will-change: transform, filter;
 }
-.image-link:hover .image-section{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px rgba(255,255,255,.35);
+.image-link:hover .image-section {
+  transform: scale(1.015);
+  filter: brightness(1.1);
+  box-shadow: 0 0 40px rgba(255, 42, 161, 0.15);
 }
-/* BACKGROUNDS */
-.pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
-.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
-.catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
-.universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
-.lab-section{background-image:url('images/Home/LAB_HEADER.png');}
-.access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
-/* FOOTER */
-footer{
-  padding:28px 20px;
-  text-align:center;
-  font-size:13px;
-  border-top:1px solid rgba(255,255,255,.05);
+
+/* DECK BG CONFIGS */
+.pirate-radio-section { background-image: url('images/Pirate Radio/pirateradio_header.png'); }
+.universe-section { background-image: url('images/Home/UNIVERSE_HEADER2.png'); }
+.brands-section { background-image: url('images/Home/MLKSHK_ARCHIVE_HEADER.png'); }
+.lab-section { background-image: url('images/Home/LAB_HEADER.png'); }
+.access-section { background-image: url('images/Home/MLKSHK_ACCESS.png'); }
+
+/* FOOTER SETUP */
+footer {
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px solid #111;
+  letter-spacing: 1px;
 }
-/* FLOATING PLAYER */
-#floating-player{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:360px;
-  height:72px;
-  background:url('Player/PLAYER.png') center/cover no-repeat;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  padding:0 18px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
-  z-index:999;
+
+/* RESTORED PREMIUM DECK NODE PLAYER */
+#floating-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 72px;
+  background: url('Player/PLAYER.png') center/cover no-repeat #0a0a0a;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.85);
+  z-index: 999;
+  box-sizing: border-box;
 }
-.player-meta{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  text-align:center;
-  padding:0 12px;
+.player-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
 }
-.player-title{
-  font-weight:700;
-  font-size:14px;
+.player-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
 }
-.player-artist{
-  font-size:12px;
-  color:var(--muted);
+.player-artist {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
 }
-.player-status{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
+.player-status {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  text-transform: uppercase;
 }
-.player-controls{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-left:12px;
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
 }
-.player-controls img{
-  width:42px;
-  height:42px;
-  cursor:pointer;
+.player-controls img {
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+.player-controls img:hover {
+  transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
-  .hero { height: 50vh; }
-  .image-section { height: auto; min-height: 200px; }
-  .image-link { margin: 20px auto; }
-  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
-  .player-title { font-size: 12px; }
-  .player-artist, .player-status { font-size: 10px; }
-  .player-controls img { width: 36px; height: 36px; }
+  .hero { height: 45vh; }
+  .image-section { height: 240px; }
+  .image-link { margin-bottom: 24px; }
+  .deck-container { padding: 20px 16px; }
+  #floating-player { width: calc(100% - 32px); bottom: 16px; }
 }
 </style>
 </head>
 <body>
+
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
     <div class="nav-dropdown">
-      <button class="nav-toggle">Menu</button>
+      <button class="nav-toggle">SYS://MENU</button>
       <div class="dropdown-menu">
-        <a href="access.html">Access</a>
-        <a href="archive.html">Archive</a>
-        <a href="pirateradio.html">Pirate Radio</a>
-        <a href="lab.html">The Lab</a>
-        <a href="universe.html">The Universe</a>
+        <a href="access.html">NODE://ACCESS</a>
+        <a href="archive.html">NODE://ARCHIVE</a>
+        <a href="pirateradio.html">NODE://PIRATE_RADIO</a>
+        <a href="lab.html">NODE://THE_LAB</a>
+        <a href="universe.html">NODE://THE_UNIVERSE</a>
       </div>
     </div>
   </div>
@@ -191,37 +234,37 @@ footer{
 
 <section class="hero"></section>
 
-<a href="pirateradio.html" class="image-link">
-  <section class="image-section pirate-radio-section"></section>
-</a>
-<a href="universe.html" class="image-link">
-  <section class="image-section universe-section"></section>
-</a>
-<a href="archive.html" class="image-link">
-  <section class="image-section brands-section"></section>
-</a>
-<a href="lab.html" class="image-link">
-  <section class="image-section lab-section"></section>
-</a>
-<a href="access.html" class="image-link">
-  <section class="image-section access-section"></section>
-</a>
+<main class="deck-container">
+  <a href="pirateradio.html" class="image-link">
+    <section class="image-section pirate-radio-section"></section>
+  </a>
+  <a href="universe.html" class="image-link">
+    <section class="image-section universe-section"></section>
+  </a>
+  <a href="archive.html" class="image-link">
+    <section class="image-section brands-section"></section>
+  </a>
+  <a href="lab.html" class="image-link">
+    <section class="image-section lab-section"></section>
+  </a>
+  <a href="access.html" class="image-link">
+    <section class="image-section access-section"></section>
+  </a>
+</main>
 
 <footer>
-  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+  THE WORLD RUNS CONTINUOUSLY WITHOUT PUBLIC SIGNATURE. OPT OUT. © <span id="year"></span>
 </footer>
 
-<!-- FLOATING PLAYER - PROPER STOP + AUTO-RECONNECT -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
     <div class="player-artist">Live • Underground</div>
-    <div class="player-status" id="status">Ready</div>
+    <div class="player-status" id="status">Standby</div>
   </div>
   <div class="player-controls">
     <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
   </div>
-  
   <audio id="audio" preload="none"></audio>
 </div>
 
@@ -236,29 +279,31 @@ const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 let isPlaying = false;
 
 function playLiveStream() {
-  audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live stream
+  audio.src = STREAM_URL + "?t=" + Date.now(); // Anti-caching live token
   audio.load();
   
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Live';
+    statusEl.textContent = 'Streaming Live';
+    statusEl.style.color = 'var(--signal-green)';
   }).catch(e => {
     console.error("Play failed:", e);
-    statusEl.textContent = 'Connection error – retrying...';
+    statusEl.textContent = 'Link failed – retrying...';
+    statusEl.style.color = 'var(--accent)';
     setTimeout(playLiveStream, 1500);
   });
 }
 
 function stopStream() {
   audio.pause();
-  audio.src = '';                    // Clear source completely
+  audio.src = ''; // Full garbage collection clearing
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'Stopped';
+  statusEl.textContent = 'Standby';
+  statusEl.style.color = 'var(--muted)';
 }
 
-// Toggle button
 btn.onclick = () => {
   if (!isPlaying) {
     playLiveStream();
@@ -267,18 +312,25 @@ btn.onclick = () => {
   }
 };
 
-// Status & error handling
-audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('waiting', () => {
+  statusEl.textContent = 'Syncing...';
+  statusEl.style.color = 'var(--accent)';
+});
+
 audio.addEventListener('playing', () => {
-  statusEl.textContent = 'Live';
+  statusEl.textContent = 'Streaming Live';
+  statusEl.style.color = 'var(--signal-green)';
   isPlaying = true;
 });
+
 audio.addEventListener('error', () => {
-  if (isPlaying) {                    // Only auto-retry if we were actively playing
-    statusEl.textContent = 'Stream dropped – reconnecting...';
+  if (isPlaying) {
+    statusEl.textContent = 'Carrier Dropped – Syncing...';
+    statusEl.style.color = 'var(--accent)';
     setTimeout(playLiveStream, 2000);
   }
 });
+
 audio.addEventListener('stalled', () => {
   if (isPlaying) {
     statusEl.textContent = 'Reconnecting...';
@@ -286,7 +338,6 @@ audio.addEventListener('stalled', () => {
   }
 });
 
-// Media Session support
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -299,7 +350,7 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
-// Dropdown menu
+// Dropdown operational logic
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
