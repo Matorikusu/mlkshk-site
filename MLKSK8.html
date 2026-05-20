@@ -87,9 +87,7 @@ video {
     <source src="images/Locations/MLKSK8/MLKSK8.mp4" type="video/mp4">
 </video>
 
-<audio id="club-music" preload="auto" loop>
-    <source src="Audio/Locations/MLKSK8/MLKSK8_TRACK_1.mp3" type="audio/mpeg">
-</audio>
+<audio id="club-music" preload="auto" loop></audio>
 
 <audio id="radio-stream" preload="none"></audio>
 
@@ -109,7 +107,13 @@ const enterBtn = document.getElementById('enter-btn');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-// Updated stream URL to point to MLKSK8
+// Array containing all your available local tracks
+const trackList = [
+    "Audio/Locations/MLKSK8/MLKSK8_TRACK_1.mp3",
+    "Audio/Locations/MLKSK8/MLKSK8_TRACK_2.mp3",
+    "Audio/Locations/MLKSK8/MLKSK8_TRACK_3.mp3"
+];
+
 const STREAM_URL = "https://radio.mlkshkdigital.com/MLKSK8.mp3";
 
 let isPlaying = false;
@@ -124,8 +128,14 @@ enterBtn.addEventListener('click', () => {
 
     overlay.style.opacity = '0';
 
-    /* optional background music */
-    clubMusic.play().catch(() => {});
+    /* Select a random track from the array */
+    const randomTrackIndex = Math.floor(Math.random() * trackList.length);
+    clubMusic.src = trackList[randomTrackIndex];
+    
+    /* Play the selected background music */
+    clubMusic.play().catch((err) => {
+        console.log("Audio play prevented:", err);
+    });
 
     /* start radio stream */
     radioStream.src = STREAM_URL + "?t=" + Date.now();
