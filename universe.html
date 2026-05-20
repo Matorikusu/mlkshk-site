@@ -9,110 +9,154 @@
 
 <style>
 :root{
-  --bg:#000;
-  --text:#f5f5f5;
-  --muted:#c0c0c0;
-  --accent:#ff2aa1;
-  --glow:rgba(255,42,161,0.5);
-  --card-radius:12px;
-  --signal-green:#0f0;
+  --bg: #050505;
+  --text: #f5f5f5;
+  --muted: #a0a0a0;
+  --accent: #ff2aa1;
+  --glow: rgba(255,42,161,0.5);
+  --card-radius: 12px;
+  --signal-green: #00ff66;
+  --system-red: #ff3333;
 }
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Rajdhani',system-ui,-apple-system,Arial;
-  overflow-x:hidden;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', system-ui, -apple-system, Arial, sans-serif;
+  overflow-x: hidden;
 }
-a{color:inherit;text-decoration:none}
+
+a { color: inherit; text-decoration: none; }
+
+/* CRT Scanline & Glitch Aesthetic Overlay */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 99999;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
 
 /* NAV */
-header.nav-bar{
-  border-bottom:1px solid rgba(255,42,161,0.04);
-  padding:18px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,0.6),transparent);
-  position:sticky;
-  top:0;
-  z-index:200;
-  backdrop-filter:blur(6px);
+header.nav-bar {
+  border-bottom: 1px solid rgba(255,42,161,0.15);
+  padding: 18px 24px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(5,5,5,0.4));
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  backdrop-filter: blur(8px);
 }
-.nav-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1200px;
-  margin:0 auto;
-}
-.logo-link img{height:42px;display:block;cursor:pointer}
-.nav-dropdown{position:relative}
-.nav-toggle{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
-}
-.dropdown-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 8px);
-  right:0;
-  background:#000;
-  border:1px solid var(--accent);
-  border-radius:8px;
-  min-width:200px;
-  z-index:300;
-  overflow:hidden;
-}
-.dropdown-menu a{
-  display:block;
-  padding:10px 14px;
-  color:#fff;
-}
-.dropdown-menu a:hover{
-  background:var(--accent);
-  color:#000;
-}
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* SIGNAL METERS */
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo-link img { height: 42px; display: block; cursor: pointer; }
+
+.nav-dropdown { position: relative; }
+
+.nav-toggle {
+  background: none;
+  border: 1px solid rgba(255,42,161,0.3);
+  padding: 6px 16px;
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-toggle:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #0a0a0a;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  min-width: 200px;
+  z-index: 300;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(255,42,161,0.25);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display: block; }
+
+/* SIGNAL METERS - Hardware Accelerated Transitions */
 .signal-meter {
   position: fixed;
   bottom: 90px;
   z-index: 199;
-  background: rgba(0,0,0,0.75);
-  border: 1px dashed var(--signal-green);
+  background: rgba(0,0,0,0.85);
+  border: 1px solid var(--signal-green);
   border-radius: 6px;
   padding: 10px 14px;
   font-family: monospace;
   font-size: 13px;
   color: var(--signal-green);
-  box-shadow: 0 0 12px rgba(0,255,0,0.15);
+  box-shadow: 0 0 15px rgba(0,255,102,0.15);
   min-width: 160px;
+  will-change: transform;
 }
+
 #signalStrengthMeter { left: 15px; }
-#interferenceMeter { right: 15px; }
+#interferenceMeter { right: 15px; border-color: var(--system-red); color: var(--system-red); box-shadow: 0 0 15px rgba(255,51,51,0.15); }
+
 .signal-meter .bar-container {
   display: inline-block;
   width: 60px;
   height: 6px;
   background: #111;
-  border: 1px dashed var(--signal-green);
+  border: 1px solid currentColor;
   border-radius: 3px;
   margin-left: 6px;
   vertical-align: middle;
+  overflow: hidden;
 }
+
 .signal-meter .bar {
   height: 100%;
-  background: var(--signal-green);
-  border-radius: 2px;
-  transition: width 0.4s ease;
+  background: currentColor;
+  width: 0%;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
 }
 
 /* LOCATIONS */
 .locations-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+
 .locations-section h2 {
   text-align: center;
   font-family: 'Orbitron', sans-serif;
@@ -120,145 +164,172 @@ header.nav-bar{
   color: #00ffcc;
   margin-bottom: 50px;
   text-shadow: 0 0 25px rgba(0,255,200,0.5);
+  letter-spacing: 3px;
 }
+
 .locations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
 }
+
 .location-card {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid rgba(0,255,200,0.3);
+  background: rgba(10,10,10,0.8);
+  border: 1px solid rgba(0,255,200,0.2);
   border-radius: var(--card-radius);
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
 }
-.location-card:hover { transform: translateY(-15px); border-color: #00ffcc; }
-.location-card .art { height:0; padding-top:62%; position:relative; overflow:hidden; }
-.location-card .art img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
-.location-card:hover .art img { transform:scale(1.08); }
-.location-card .meta { padding:22px; text-align:center; }
-.location-card .title { font-family:'Orbitron',sans-serif; font-size:26px; color:#00ffcc; }
-.location-card .sub { font-size:15px; color:#aaa; }
 
-/* CARTONS - Simplified */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-  max-width:1200px;
-  margin:60px auto;
-  padding:0 20px;
+.location-card:hover { 
+  transform: translateY(-8px); 
+  border-color: #00ffcc; 
+  box-shadow: 0 10px 30px rgba(0,255,200,0.2);
 }
-.card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border:1px solid rgba(255,42,161,0.15);
-  border-radius:var(--card-radius);
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  transition:.3s;
-  aspect-ratio: 1 / 1.4;
+
+.location-card .art { height: 0; padding-top: 62%; position: relative; overflow: hidden; background: #111; }
+.location-card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.location-card:hover .art img { transform: scale(1.05); }
+.location-card .meta { padding: 22px; text-align: center; }
+.location-card .title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: #00ffcc; letter-spacing: 1px; }
+
+/* GENRES GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 20px 50px rgba(0,0,0,.8);
-  border-color:var(--accent);
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(255,42,161,0.2);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 1 / 1.3;
+  will-change: transform;
 }
-.card .art{
-  height:0;
-  padding-top:75%;
-  position:relative;
-  overflow:hidden;
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(255,42,161,0.2);
+  border-color: var(--accent);
 }
-.card .art img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.85) contrast(1.1);
-  transition:.4s;
-}
-.card:hover .art img{
-  filter:brightness(1.05) contrast(1.2);
-}
-.card .meta{
-  padding:14px;
-  text-align:center;
-}
-.card .title{
-  font-family:'Orbitron',sans-serif;
-  font-size:20px;
-  color:var(--accent);
-}
+
+.card .art { height: 0; padding-top: 75%; position: relative; overflow: hidden; background: #111; }
+.card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) grayscale(0.2); transition: all 0.4s ease; }
+.card:hover .art img { filter: brightness(1.05) grayscale(0); transform: scale(1.03); }
+.card .meta { padding: 18px; text-align: center; }
+.card .title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--accent); letter-spacing: 1px; }
 
 /* HERO */
-.hero-link{display:block;max-width:1000px;margin:40px auto;}
-.hero{
-  width:100%;
+.hero-link { display: block; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.hero {
+  width: 100%;
   aspect-ratio: 2.38 / 1;
-  background:url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat;
-  cursor:pointer;
-  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+  background: url('images/Home/UNIVERSE_HEADER2.png') center/cover no-repeat #111;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(255,42,161,0.2);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform;
 }
-.hero-link:hover .hero{
-  transform:scale(1.02);
-  filter:brightness(1.15);
-  box-shadow:0 0 40px var(--glow);
+.hero-link:hover .hero {
+  transform: scale(1.01);
+  filter: brightness(1.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 35px var(--glow);
 }
 
-.wrap{max-width:1200px;margin:0 auto;padding:40px 20px;}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 20px 0; }
 
-/* CENTERED SECTIONS */
+/* SECTIONS */
 .ad-banner, .phase-artifact, .mlk500-section, .invest-section, .trans-log {
   max-width: 800px;
-  margin: 60px auto;
-  padding: 20px;
+  margin: 50px auto;
+  padding: 24px;
   text-align: center;
+  box-sizing: border-box;
 }
-#adImage img { width:100%; border:2px dashed var(--accent); border-radius:12px; box-shadow:0 0 20px var(--glow); }
-.trans-log { background:rgba(0,0,0,0.6); border:1px dashed var(--signal-green); font-family:monospace; color:#0f0; }
-.phase-artifact img { width:100%; max-width:800px; border:2px dashed var(--signal-green); border-radius:12px; }
-.mlk500-section { background:rgba(0,0,0,0.7); border:1px dashed #0f0; }
-.stock-list { display:flex; flex-direction:column; gap:12px; }
-.stock-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(0,255,0,0.05); border:1px solid rgba(0,255,0,0.2); border-radius:6px; }
+
+.ad-banner h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 20px; letter-spacing: 2px; }
+#adImage img { width: 100%; max-width: 100%; height: auto; border: 1px solid var(--accent); border-radius: 12px; box-shadow: 0 0 20px rgba(255,42,161,0.15); display: block; }
+
+.trans-log { 
+  background: rgba(0,0,0,0.85); 
+  border: 1px solid var(--signal-green); 
+  border-radius: 6px;
+  font-family: monospace; 
+  color: var(--signal-green); 
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: inset 0 0 10px rgba(0,255,102,0.1);
+}
+
+.phase-artifact img { width: 100%; max-width: 100%; height: auto; border: 1px dashed var(--signal-green); border-radius: 12px; transition: transform 0.3s ease; }
+.phase-artifact img:hover { transform: scale(1.01); }
+.phase-artifact p { font-family: monospace; color: var(--muted); margin-top: 15px; font-size: 14px; }
+
+.mlk500-section { background: rgba(5,5,5,0.9); border: 1px solid rgba(0,255,102,0.2); border-radius: 8px; }
+.stock-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.stock-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: rgba(0,255,102,0.02); border: 1px solid rgba(0,255,102,0.1); border-radius: 6px; transition: border-color 0.2s ease; }
+.stock-item:hover { border-color: rgba(0,255,102,0.4); background: rgba(0,255,102,0.04); }
 
 #invest-button {
-  background:#222; color:#0f0; border:1px solid #0f0; border-radius:8px;
-  padding:14px 32px; font-family:'Orbitron',sans-serif; font-size:18px; cursor:pointer;
+  background: #000; color: var(--signal-green); border: 1px solid var(--signal-green); border-radius: 8px;
+  padding: 14px 36px; font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight:700; cursor: pointer;
+  letter-spacing: 2px; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0,255,102,0.1);
 }
-#invest-button:hover { background:#0f0; color:#000; }
+#invest-button:hover { background: var(--signal-green); color: #000; box-shadow: 0 0 20px rgba(0,255,102,0.4); }
+#invest-message { font-family: monospace; margin-top: 15px; color: var(--accent); transition: opacity 0.3s ease; opacity: 0; font-size: 13px; letter-spacing: 1px; }
 
-footer{
-  padding:28px 20px;
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  border-top:1px solid rgba(255,42,161,.05);
+footer {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 13px;
+  font-family: monospace;
+  color: #666;
+  border-top: 1px solid rgba(255,42,161,0.1);
+  letter-spacing: 1px;
 }
 
 /* FLOATING PLAYER */
-#floating-player{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:360px;
-  height:72px;
-  background:url('Player/PLAYER.png') center/cover no-repeat;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  padding:0 18px;
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
-  z-index:999;
+#floating-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 72px;
+  background: #0a0a0a;
+  border: 1px solid rgba(255,42,161,0.3);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 15px rgba(255,42,161,0.15);
+  z-index: 999;
+  box-sizing: border-box;
 }
-.player-meta{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 12px;}
-.player-title{font-weight:700;font-size:14px;}
-.player-artist{font-size:12px;color:var(--muted);}
-.player-status{font-size:11px;color:var(--muted);margin-top:4px;}
-.player-controls{display:flex;align-items:center;justify-content:center;margin-left:12px;}
-.player-controls img{width:42px;height:42px;cursor:pointer;}
+.player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; padding-left: 6px; }
+.player-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); letter-spacing: 0.5px; }
+.player-artist { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.player-status { font-family: monospace; font-size: 11px; color: var(--signal-green); margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+.player-controls { display: flex; align-items: center; justify-content: center; }
+.player-controls img { width: 38px; height: 38px; cursor: pointer; transition: transform 0.2s ease; }
+.player-controls img:hover { transform: scale(1.08); }
+
+@media (max-width: 768px) {
+  .signal-meter { display: none; }
+  .locations-grid { grid-template-columns: 1fr; }
+  #floating-player { width: calc(100% - 30px); bottom: 15px; }
+}
 </style>
 </head>
 <body>
@@ -282,11 +353,11 @@ footer{
 </header>
 
 <div class="signal-meter" id="signalStrengthMeter">
-  <strong>Signal:</strong> <span id="signalStrength">89%</span>
+  <strong>SIG:</strong> <span id="signalStrength">89%</span>
   <div class="bar-container"><div id="strengthBar" class="bar" style="width:89%;"></div></div>
 </div>
 <div class="signal-meter" id="interferenceMeter">
-  <strong>Interference:</strong>
+  <strong>INT:</strong> <span id="interferenceVal">12%</span>
   <div class="bar-container"><div id="interferenceBar" class="bar" style="width:12%;"></div></div>
 </div>
 
@@ -301,27 +372,19 @@ footer{
     <div class="locations-grid">
       <a href="thekingbear.html" class="location-card">
         <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
-        <div class="meta">
-          <div class="title">THE KING BEAR</div>
-        </div>
+        <div class="meta"><div class="title">THE KING BEAR</div></div>
       </a>
       <a href="aftercurfew.html" class="location-card">
         <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
-        <div class="meta">
-          <div class="title">AFTER CURFEW</div>
-        </div>
+        <div class="meta"><div class="title">AFTER CURFEW</div></div>
       </a>
       <a href="MLKSK8.html" class="location-card">
         <div class="art"><img src="images/Locations/MLKSK8/MLKSK8_ENTRANCE.jpg" alt="MLKSK8"></div>
-        <div class="meta">
-          <div class="title">MLKSK8</div>
-        </div>
+        <div class="meta"><div class="title">MLKSK8</div></div>
       </a>
       <a href="INKSHK.html" class="location-card">
         <div class="art"><img src="images/Locations/INKSHK/INKSHK_ENTRANCE.jpg" alt="INKSHK"></div>
-        <div class="meta">
-          <div class="title">INKSHK</div>
-        </div>
+        <div class="meta"><div class="title">INKSHK</div></div>
       </a>
     </div>
   </section>
@@ -351,23 +414,23 @@ footer{
   </section>
 
   <div class="trans-log" id="transLog">
-    SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)
+    SYSTEM_STATUS: SECURE<br>FREQUENCY: 107.3 MHz (OVERRIDE DETECTED)
   </div>
 
   <section class="phase-artifact">
     <a href="phasemodulator.html">
       <img src="images/Universe/phase_modulator.png" alt="Phase Modulator Artifact">
     </a>
-    <p>Artifact detected — Phase Modulator online. Re-establish the signal.</p>
+    <p>// ARTIFACT CORRUPTION LOCATED. RE-ESTABLISH THE FEED BEFORE LOGOUT.</p>
   </section>
 
   <section class="mlk500-section">
-    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;height:auto;"></h2>
+    <h2><img src="images/Universe/MLK500-header.png" alt="MLK 500 Index" style="max-width:100%;height:auto;display:block;margin:0 auto;"></h2>
     <div class="stock-list" id="stocks-container"></div>
   </section>
 
   <div class="invest-section">
-    <button id="invest-button">INVEST IN THE MARKET</button>
+    <button id="invest-button">BYPASS WALL STREET</button>
     <div id="invest-message"></div>
   </div>
 </main>
@@ -375,8 +438,8 @@ footer{
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
-    <div class="player-artist">Live • Underground</div>
-    <div class="player-status" id="status">Ready</div>
+    <div class="player-artist">Live Underground Node</div>
+    <div class="player-status" id="status">Standby</div>
   </div>
   <div class="player-controls">
     <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
@@ -385,7 +448,7 @@ footer{
 </div>
 
 <footer>
-  MLKSHK — Built for the misfits. © <span id="year"></span>
+  MLKSHK — OPT_OUT // DISCONNECT THE PLATFORM. © <span id="year"></span>
 </footer>
 
 <script>
@@ -405,7 +468,8 @@ function playLiveStream() {
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Live';
+    statusEl.textContent = 'ONLINE // BEAMING';
+    statusEl.style.color = 'var(--signal-green)';
   }).catch(e => console.error(e));
 }
 function stopStream() {
@@ -413,7 +477,8 @@ function stopStream() {
   audio.src = '';
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'Stopped';
+  statusEl.textContent = 'DISCONNECTED';
+  statusEl.style.color = 'var(--accent)';
 }
 btn.addEventListener('click', () => !isPlaying ? playLiveStream() : stopStream());
 
@@ -426,19 +491,19 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Transmission Log
+// Transmission Log (Enhanced System Data Messages)
 const transLog = document.getElementById('transLog');
 const messages = [
-  "SIGNAL STATUS: LOCKED<br>FREQUENCY: 107.3 MHz (PIRATE)",
-  "CARRIER: STABLE — INTERFERENCE LOW<br>GHOSTS DETECTED: 3",
-  "LAST PING: 00:00:00 AGO<br>DO NOT ADJUST",
-  "THEY’RE STILL LISTENING<br>WAKE UP"
+  "CRITICAL: SECURITY CORRUPTION DETECTED<br>TRACE_ROUTE: FAILED // ROUTING THROUGH PROXIES",
+  "PIRATE FEED: 107.3 MHz<br>PACKETS INJECTED: 404 // DEFY THE ARCHITECTURE",
+  "THEY OWN THE NETWORKS. WE OWN THE STACKS.<br>STATUS: UNTETHERED",
+  "ALERT: FIREWALL BYPASSED.<br>STAY AWAKE. THEY DON'T WANT YOU TO SEE THIS."
 ];
 let index = 0;
 setInterval(() => {
   transLog.innerHTML = messages[index];
   index = (index + 1) % messages.length;
-}, 8000);
+}, 6000);
 
 // Ads
 const adImages = [
@@ -453,24 +518,36 @@ const adImages = [
 let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 function showAd() {
-  adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Ad">`;
-  adIndex = (adIndex + 1) % adImages.length;
+  if(adImages.length > 0) {
+    adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Ad">`;
+    adIndex = (adIndex + 1) % adImages.length;
+  }
 }
 showAd();
 setInterval(showAd, 10000);
 
-// Signal Meters
+// Signal Meters (Dynamic Strength & Fluctuation)
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
+const interferenceValEl = document.getElementById('interferenceVal');
+const interferenceBarEl = document.getElementById('interferenceBar');
+
 let currentStrength = 89;
-function updateStrength() {
+let currentInterference = 12;
+
+function updateMeters() {
   currentStrength += Math.floor(Math.random() * 13) - 6;
-  currentStrength = Math.max(18, Math.min(98, currentStrength));
+  currentStrength = Math.max(25, Math.min(99, currentStrength));
   signalStrengthEl.textContent = currentStrength + '%';
   strengthBarEl.style.width = currentStrength + '%';
+
+  currentInterference += Math.floor(Math.random() * 9) - 4;
+  currentInterference = Math.max(5, Math.min(65, currentInterference));
+  interferenceValEl.textContent = currentInterference + '%';
+  interferenceBarEl.style.width = currentInterference + '%';
 }
-updateStrength();
-setInterval(updateStrength, 3500);
+updateMeters();
+setInterval(updateMeters, 2500);
 
 // Stocks
 const stocks = [
@@ -482,18 +559,19 @@ const stocks = [
 ];
 function renderStocks() {
   const container = document.getElementById('stocks-container');
+  if(!container) return;
   container.innerHTML = '';
   stocks.forEach(stock => {
     const div = document.createElement('div');
     div.className = 'stock-item';
     const isPositive = stock.change >= 0;
-    const color = isPositive ? '#0f0' : '#f00';
+    const color = isPositive ? 'var(--signal-green)' : 'var(--system-red)';
     const arrow = isPositive ? '↑' : '↓';
     div.innerHTML = `
-      <div><strong>${stock.symbol}</strong><br><small>${stock.name}</small></div>
+      <div><strong>${stock.symbol}</strong><br><small style="color:var(--muted)">${stock.name}</small></div>
       <div style="text-align:right">
         <strong>£${stock.price.toFixed(2)}</strong><br>
-        <span style="color:${color}">${arrow} ${Math.abs(stock.change)}%</span>
+        <span style="color:${color}; font-family:monospace;">${arrow} ${Math.abs(stock.change)}%</span>
       </div>
     `;
     container.appendChild(div);
@@ -501,13 +579,13 @@ function renderStocks() {
 }
 renderStocks();
 
-// Invest Button
+// Invest Button Custom Alert
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "If you know, you know. MLKSHK Universe members only.";
+  investMessage.textContent = "SYSTEM WARNING: DECENTRALIZED DATA NODE CHOSEN. ACCESS GRANTED TO SYSTEM REBELS.";
   investMessage.style.opacity = '1';
-  setTimeout(() => investMessage.style.opacity = '0', 4000);
+  setTimeout(() => investMessage.style.opacity = '0', 5000);
 });
 </script>
 </body>
