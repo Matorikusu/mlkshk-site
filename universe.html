@@ -11,11 +11,12 @@
 :root{
   --bg: #000000;
   --text: #ffffff;
-  --muted: #444444;
-  --accent: #ff2aa1;
-  --card-radius: 0px; /* Sharp editorial brutalism edges */
+  --muted: #555555;
+  --accent: #ff2aa1; /* Signature MLKSHK Pink */
+  --glow: rgba(255, 42, 161, 0.25);
+  --card-radius: 0px; /* Brutalist sharp edges */
   --signal-green: #00ff66;
-  --border-color: #161616;
+  --border-color: #222222;
 }
 
 html, body {
@@ -30,9 +31,9 @@ html, body {
 
 a { color: inherit; text-decoration: none; }
 
-/* THE CONCIERGE NAVIGATION BAR */
+/* NAVIGATION FRAME */
 header.nav-bar {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--accent); /* Constant baseline brand accent */
   padding: 24px;
   background: rgba(0, 0, 0, 0.95);
   position: sticky;
@@ -50,13 +51,13 @@ header.nav-bar {
 }
 
 .logo-link img { height: 34px; display: block; cursor: pointer; transition: opacity 0.3s ease; }
-.logo-link:hover img { opacity: 0.7; }
+.logo-link:hover img { opacity: 0.8; }
 
 .nav-dropdown { position: relative; }
 
 .nav-toggle {
   background: none;
-  border: 1px solid #222;
+  border: 1px solid var(--border-color);
   padding: 8px 20px;
   border-radius: var(--card-radius);
   color: var(--text);
@@ -68,8 +69,8 @@ header.nav-bar {
   transition: all 0.2s ease;
 }
 .nav-toggle:hover {
-  border-color: #555;
-  color: #fff;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .dropdown-menu {
@@ -77,13 +78,13 @@ header.nav-bar {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
-  background: #050505;
-  border: 1px solid var(--border-color);
+  background: #000000;
+  border: 1px solid var(--accent); /* Pink framing for secret index */
   border-radius: var(--card-radius);
   min-width: 240px;
   z-index: 300;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.95);
+  box-shadow: 0 20px 50px rgba(255, 42, 161, 0.15);
 }
 
 .dropdown-menu a {
@@ -91,7 +92,7 @@ header.nav-bar {
   padding: 14px 20px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 12px;
-  color: #666;
+  color: #888;
   border-bottom: 1px solid #111;
   letter-spacing: 1px;
   transition: all 0.2s ease;
@@ -99,31 +100,31 @@ header.nav-bar {
 
 .dropdown-menu a:hover {
   background: #0d0d0d;
-  color: var(--text);
+  color: var(--accent);
   padding-left: 24px;
 }
 
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu { display: block; }
 
-/* PRIVATE ACCESS AUDIT METERS */
+/* INTERACTIVE STREET FEED METERS */
 .signal-meter {
   position: fixed;
   bottom: 115px;
   z-index: 199;
-  background: #050505;
+  background: #000000;
   border: 1px solid var(--border-color);
   border-radius: var(--card-radius);
   padding: 10px 14px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 11px;
-  color: #555;
+  color: var(--text);
   box-shadow: 0 15px 40px rgba(0,0,0,0.8);
   min-width: 170px;
   letter-spacing: 1px;
 }
-#signalStrengthMeter { left: 30px; }
-#interferenceMeter { right: 30px; }
+#signalStrengthMeter { left: 30px; border-left: 2px solid var(--signal-green); }
+#interferenceMeter { right: 30px; border-right: 2px solid var(--accent); }
 
 .signal-meter .bar-container {
   display: inline-block;
@@ -136,12 +137,12 @@ header.nav-bar {
 }
 .signal-meter .bar {
   height: 100%;
-  background: #fff;
+  background: currentColor;
   width: 0%;
   transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* THE GATEWAY HERO SCREEN */
+/* BRAND GATEWAY HERO */
 .hero-link { display: block; max-width: 1200px; margin: 40px auto; padding: 0 24px; }
 .hero {
   width: 100%;
@@ -150,28 +151,28 @@ header.nav-bar {
   border-radius: var(--card-radius);
   border: 1px solid var(--border-color);
   cursor: pointer;
-  filter: grayscale(0.1) brightness(0.95);
-  transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1), filter .6s ease;
+  transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, box-shadow 0.6s ease;
   will-change: transform;
 }
 .hero-link:hover .hero {
   transform: scale(1.005);
-  filter: grayscale(0) brightness(1.05);
+  border-color: var(--accent);
+  box-shadow: 0 0 40px var(--glow);
 }
 
 .wrap { max-width: 1200px; margin: 0 auto; padding: 20px 0; }
 
-/* THE ESTABLISHED CLUB HOUSES */
+/* ESTABLISHMENT GATEWAYS */
 .locations-section { max-width: 1200px; margin: 80px auto; padding: 0 24px; position: relative; }
 .locations-section h2 {
   text-align: left;
   font-family: 'Share Tech Mono', monospace;
   font-size: 13px;
-  color: #444;
+  color: var(--accent); /* Branding focus */
   margin-bottom: 30px;
   letter-spacing: 5px;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(255, 42, 161, 0.2);
   padding-bottom: 15px;
 }
 .locations-grid {
@@ -189,34 +190,36 @@ header.nav-bar {
   will-change: transform;
 }
 .location-card::before {
-  content: "ACCESS GATEWAY // APPROVED";
+  content: "ENTRY CONFIRMED";
   position: absolute;
   top: 15px;
   left: 15px;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  color: #ffffff;
-  background: #000;
-  padding: 4px 8px;
+  font-size: 10px;
+  color: #000;
+  background: var(--accent);
+  padding: 4px 10px;
   z-index: 10;
   letter-spacing: 1px;
+  font-weight: bold;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 .location-card:hover::before { opacity: 1; }
 .location-card:hover { 
-  border-color: #555;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(255, 42, 161, 0.12);
 }
 .location-card .art { height: 0; padding-top: 60%; position: relative; overflow: hidden; background: #000; }
-.location-card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.4) brightness(0.8); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; }
-.location-card:hover .art img { transform: scale(1.02); filter: grayscale(0) brightness(1); }
-.location-card .meta { padding: 24px; text-align: left; background: #020202; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.location-card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; }
+.location-card:hover .art img { transform: scale(1.02); filter: saturate(1.15); }
+.location-card .meta { padding: 24px; text-align: left; background: #020202; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; transition: border-color 0.4s ease; }
+.location-card:hover .meta { border-color: rgba(255, 42, 161, 0.3); }
 .location-card .title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; letter-spacing: 2px; }
-.location-card .enter-btn { font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #444; transition: color 0.3s ease; }
-.location-card:hover .enter-btn { color: var(--text); }
+.location-card .enter-btn { font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); transition: color 0.3s ease; }
+.location-card:hover .enter-btn { color: var(--accent); }
 
-/* COLLECTIBLES & CARTONS */
+/* CRATE RECORD SLOTS */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -227,7 +230,7 @@ header.nav-bar {
 }
 .card {
   background: #030303;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 42, 161, 0.15); /* Tinted subtle framing */
   border-radius: var(--card-radius);
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -236,16 +239,19 @@ header.nav-bar {
   will-change: transform;
 }
 .card:hover {
-  border-color: #444;
+  border-color: var(--accent);
+  box-shadow: 0 15px 30px rgba(255, 42, 161, 0.15);
   transform: translateY(-4px);
 }
 .card .art { height: 0; padding-top: 80%; position: relative; overflow: hidden; background: #000; }
-.card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.5) brightness(0.85); transition: all 0.4s ease; }
-.card:hover .art img { filter: grayscale(0) brightness(1); }
-.card .meta { padding: 16px; text-align: center; background: #000; border-top: 1px solid var(--border-color); }
-.card .title { font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #aaa; letter-spacing: 1px; text-transform: uppercase; }
+.card .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); transition: all 0.4s ease; }
+.card:hover .art img { filter: saturate(1.2); }
+.card .meta { padding: 16px; text-align: center; background: #000; border-top: 1px solid var(--border-color); transition: border-color 0.4s ease; }
+.card:hover .meta { border-color: rgba(255, 42, 161, 0.3); }
+.card .title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; letter-spacing: 1px; transition: color 0.3s ease; }
+.card:hover .title { color: var(--accent); }
 
-/* DATA LOGS & ENCRYPTED ARTIFACTS */
+/* INNER LEDGER SYSTEM MODULES */
 .ad-banner, .phase-artifact, .mlk500-section, .invest-section, .trans-log {
   max-width: 800px;
   margin: 60px auto;
@@ -253,16 +259,17 @@ header.nav-bar {
   box-sizing: border-box;
 }
 
-.ad-banner h2 { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #333; letter-spacing: 3px; margin-bottom: 16px; text-align: left; text-transform: uppercase; }
-#adImage img { width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: var(--card-radius); display: block; filter: grayscale(0.3); }
+.ad-banner h2 { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 3px; margin-bottom: 16px; text-align: left; text-transform: uppercase; }
+#adImage img { width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: var(--card-radius); display: block; transition: border-color 0.3s ease; }
+#adImage:hover img { border-color: var(--accent); }
 
 .trans-log { 
   background: #030303; 
   border: 1px solid var(--border-color); 
-  border-left: 2px solid #fff;
+  border-left: 3px solid var(--accent); /* Brand callout token */
   border-radius: var(--card-radius);
   font-family: 'Share Tech Mono', monospace; 
-  color: #888; 
+  color: #fff; 
   text-align: left;
   font-size: 12px;
   line-height: 1.6;
@@ -270,17 +277,17 @@ header.nav-bar {
   cursor: pointer;
 }
 
-/* THE PHASE MODULATOR - AUDIO VAULT ARTIFACT */
+/* THE PHASE MODULATOR VAULT SLOT */
 .phase-artifact { position: relative; border: 1px solid var(--border-color); background: #030303; border-radius: var(--card-radius); text-align: left; padding: 24px; }
-.phase-artifact::before { content: "VAULT ARTIFACT NO_089"; position: absolute; right: 24px; top: 24px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #444; letter-spacing: 2px; }
-.phase-artifact .img-container { width: 100%; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 16px; background: #000; position: relative; cursor: pointer; }
-.phase-artifact .img-container::after { content: "ACTIVATE DECK MODULE"; position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 3px; color: #fff; opacity: 0; transition: opacity 0.3s ease; }
+.phase-artifact::before { content: "VAULT PROTOCOL NO_089"; position: absolute; right: 24px; top: 24px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; }
+.phase-artifact .img-container { width: 100%; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 16px; background: #000; position: relative; cursor: pointer; transition: border-color 0.4s ease; }
+.phase-artifact .img-container:hover { border-color: var(--accent); }
+.phase-artifact .img-container::after { content: "ENGAGE RECORD MODULE"; position: absolute; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--accent); opacity: 0; transition: opacity 0.3s ease; font-weight: bold; }
 .phase-artifact .img-container:hover::after { opacity: 1; }
-.phase-artifact img { width: 100%; height: auto; display: block; filter: grayscale(0.5) brightness(0.8); transition: filter 0.4s ease; }
-.phase-artifact .img-container:hover img { filter: grayscale(0) brightness(1); }
-.phase-artifact p { font-family: 'Share Tech Mono', monospace; color: #555; margin: 12px 0 0 0; font-size: 12px; letter-spacing: 0.5px; line-height: 1.5; }
+.phase-artifact img { width: 100%; height: auto; display: block; filter: saturate(0.8); transition: filter 0.4s ease; }
+.phase-artifact p { font-family: 'Share Tech Mono', monospace; color: #888; margin: 12px 0 0 0; font-size: 12px; letter-spacing: 0.5px; line-height: 1.5; }
 
-/* THE LEDGER INDEX (MLK500) */
+/* THE INDEX LOG (MLK500) */
 .mlk500-section { background: #030303; border: 1px solid var(--border-color); border-radius: var(--card-radius); padding: 32px; }
 .stock-list { display: flex; flex-direction: column; gap: 4px; margin-top: 24px; }
 .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: #000; border: 1px solid var(--border-color); border-radius: var(--card-radius); font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 1px; }
@@ -291,41 +298,41 @@ header.nav-bar {
   letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: block; margin: 0 auto;
 }
-#invest-button:hover { border-color: #666; background: #050505; color: #fff; }
-#invest-message { font-family: 'Share Tech Mono', monospace; margin-top: 20px; color: #666; transition: opacity 0.3s ease; opacity: 0; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+#invest-button:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 20px var(--glow); }
+#invest-message { font-family: 'Share Tech Mono', monospace; margin-top: 20px; color: var(--accent); transition: opacity 0.3s ease; opacity: 0; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
 
 footer {
   padding: 60px 24px;
   text-align: center;
   font-family: 'Share Tech Mono', monospace;
   font-size: 11px;
-  color: #333;
+  color: var(--muted);
   border-top: 1px solid var(--border-color);
   letter-spacing: 2px;
 }
 
-/* THE CONTINENTAL OFF-GRID HUD PLAYER */
+/* HIGH-END CONSOLE UTILITY PLAYER */
 #floating-player {
   position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  width: 380px;
+  width: 360px;
   height: 72px;
   background: url('Player/PLAYER.png') center/cover no-repeat #050505;
   border-radius: 20px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 18px;
   box-shadow: 0 25px 60px rgba(0,0,0,0.95);
   z-index: 999;
   box-sizing: border-box;
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 252, 252, 0.04);
 }
-.player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 0 16px; }
-.player-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 12px; color: #fff; letter-spacing: 1px; }
-.player-artist { font-size: 11px; color: #555; margin-top: 2px; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; }
-.player-status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #444; margin-top: 4px; letter-spacing: 1px; }
+.player-meta { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 0 12px; }
+.player-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; color: #fff; letter-spacing: 1px; }
+.player-artist { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; }
+.player-status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; }
 .player-controls { display: flex; align-items: center; justify-content: center; }
 .player-controls img { width: 42px; height: 42px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .player-controls img:hover { transform: scale(1.08); }
@@ -380,28 +387,28 @@ footer {
         <div class="art"><img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" alt="The King Bear"></div>
         <div class="meta">
           <div class="title">THE KING BEAR</div>
-          <div class="enter-btn">[ OPEN ]</div>
+          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="aftercurfew.html" class="location-card">
         <div class="art"><img src="images/Locations/After Curfew/after-curfew-entrance.jpg" alt="After Curfew"></div>
         <div class="meta">
           <div class="title">AFTER CURFEW</div>
-          <div class="enter-btn">[ OPEN ]</div>
+          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="MLKSK8.html" class="location-card">
         <div class="art"><img src="images/Locations/MLKSK8/MLKSK8_ENTRANCE.jpg" alt="MLKSK8"></div>
         <div class="meta">
           <div class="title">MLKSK8</div>
-          <div class="enter-btn">[ OPEN ]</div>
+          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
       <a href="INKSHK.html" class="location-card">
         <div class="art"><img src="images/Locations/INKSHK/INKSHK_ENTRANCE.jpg" alt="INKSHK"></div>
         <div class="meta">
           <div class="title">INKSHK</div>
-          <div class="enter-btn">[ OPEN ]</div>
+          <div class="enter-btn">[ ACCESS CH ]</div>
         </div>
       </a>
     </div>
@@ -448,7 +455,7 @@ footer {
   </section>
 
   <div class="invest-section">
-    <button id="invest-button">REQUEST PROTOCOL REGISTRY</button>
+    <button id="invest-button">REQUEST REGISTER ACCESS</button>
     <div id="invest-message"></div>
   </div>
 </main>
@@ -472,7 +479,7 @@ footer {
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Stream Engine
+// Stream Logic
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
@@ -495,11 +502,11 @@ function stopStream() {
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
   statusEl.textContent = 'STANDBY';
-  statusEl.style.color = '#444';
+  statusEl.style.color = 'var(--muted)';
 }
 btn.addEventListener('click', () => !isPlaying ? playLiveStream() : stopStream());
 
-// Gated Nav UI
+// Nav Dropdown Operation
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 navToggle.addEventListener('click', (e) => {
@@ -508,7 +515,7 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => dropdownMenu.style.display = 'none');
 
-// Private Feed Logs
+// Secret Transmission Logs
 const transLog = document.getElementById('transLog');
 const messages = [
   "LOG LOAD: DECK_CONNECTED // FREQUENCY: 107.3 MHz (OFF-GRID FEED)",
@@ -522,18 +529,20 @@ setInterval(() => {
   index = (index + 1) % messages.length;
 }, 8000);
 
-// Exclusive Interactive Elements (Easter Eggs)
+// Easter Eggs (Activates color flashing on the console logs)
 function triggerEasterEgg(genre) {
   const logSection = document.getElementById('transLog');
-  logSection.style.borderColor = '#ffffff';
-  logSection.innerHTML = `ANOMALY DETECTED // RECORD OVERRIDE: [${genre}_CRATE_UNLOCKED] // SEARCHING ARCHIVES...`;
+  logSection.style.borderColor = 'var(--accent)';
+  logSection.style.color = 'var(--accent)';
+  logSection.innerHTML = `ANOMALY // UNINDEXED CRATE FILE UNLOCKED: [${genre}_VAULT_DATA] // LOADING...`;
   setTimeout(() => {
     logSection.style.borderColor = 'var(--border-color)';
-    logSection.innerHTML = "SYSTEM LOG RESET // TRANSMISSION ANONYMOUS.";
+    logSection.style.color = '#fff';
+    logSection.innerHTML = "SYSTEM DATA RESET // FEED CONTINUOUS.";
   }, 4000);
 }
 
-// Ads Rotate
+// Custom Classified Rotation
 const adImages = [
   "images/Universe/Ads/toejam-toothpaste.jpg",
   "images/Universe/Ads/nobbys-balloon.jpg",
@@ -547,14 +556,14 @@ let adIndex = 0;
 const adContainer = document.getElementById('adImage');
 function showAd() {
   if (adImages.length > 0) {
-    adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Classified Ledger Asset">`;
+    adContainer.innerHTML = `<img src="${adImages[adIndex]}" alt="Classified Asset Log">`;
     adIndex = (adIndex + 1) % adImages.length;
   }
 }
 showAd();
 setInterval(showAd, 11000);
 
-// Hardware Audio Gain Fluctuations
+// Hardware Deck Diagnostics Fluctuations
 const signalStrengthEl = document.getElementById('signalStrength');
 const strengthBarEl = document.getElementById('strengthBar');
 const interferenceValEl = document.getElementById('interferenceVal');
@@ -577,7 +586,7 @@ function updateMeters() {
 updateMeters();
 setInterval(updateMeters, 4000);
 
-// Ledger Indexes (Stocks)
+// Crate Value Indexes
 const stocks = [
   { symbol: "BFPD", name: "Barry’s Forgotten Pants Deodorant", price: 23.47, change: 0.9 },
   { symbol: "DDKG", name: "Dirty Dave’s Kebab Grease Candle", price: 8.12, change: -1.4 },
@@ -593,10 +602,10 @@ function renderStocks() {
     const div = document.createElement('div');
     div.className = 'stock-item';
     const isPositive = stock.change >= 0;
-    const color = isPositive ? '#ffffff' : '#444444';
+    const color = isPositive ? 'var(--signal-green)' : 'var(--accent)';
     const arrow = isPositive ? '▲' : '▼';
     div.innerHTML = `
-      <div><strong>${stock.symbol}</strong> — <span style="color:#444">${stock.name}</span></div>
+      <div><strong>${stock.symbol}</strong> — <span style="color:#666">${stock.name}</span></div>
       <div style="text-align:right">
         <strong>£${stock.price.toFixed(2)}</strong><br>
         <span style="color:${color}; font-size:11px; font-family:'Share Tech Mono', monospace">${arrow} ${Math.abs(stock.change)}%</span>
@@ -607,11 +616,11 @@ function renderStocks() {
 }
 renderStocks();
 
-// Ledger Overrides
+// Secure Protocol Access Trigger
 const investButton = document.getElementById('invest-button');
 const investMessage = document.getElementById('invest-message');
 investButton.addEventListener('click', () => {
-  investMessage.textContent = "REGISTRY REJECTED: INDEPENDENT LEDGER DETECTED. SEPARATE CLEARANCE RECORD MANDATORY.";
+  investMessage.textContent = "REGISTRY REJECTED: INDEPENDENT PRIV_NODE RECOGNIZED. SYSTEM ENTRY SHIELDED.";
   investMessage.style.opacity = '1';
   setTimeout(() => investMessage.style.opacity = '0', 4500);
 });
