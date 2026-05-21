@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK ESTATE // CCTV_ENTRY</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --estate-orange: #ff5500;
+    --cctv-green: #00ff44;
+    --raw-concrete: #1a1a1a;
+    --void-black: #080808;
+    --border-grit: #333333;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--void-black);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    color: #e0e0e0;
+}
+
+/* GRIT & NOISE OVERLAY (Replaces sci-fi scanlines with a raw CCTV vignette and grain) */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: 
+        radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.85) 100%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+    z-index: 99;
+    pointer-events: none;
+}
+
+/* LOW-RES SURVEILLANCE FEED BACKGROUND */
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+    filter: contrast(1.4) brightness(0.5) saturate(0.2) grayscale(0.5);
+}
+
+/* BRUTALIST CCTV TEXT OVERLAY */
+#hud-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border: 2px solid rgba(255, 85, 0, 0.15);
+    margin: 16px;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+#hud-overlay::before {
+    content: "● REC  BLOCK_CAM_07 // MLKSHK ESTATE // BLDG_B";
+    position: absolute;
+    top: 20px; left: 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--estate-orange);
+    font-weight: bold;
+}
+#hud-overlay::after {
+    content: "SIGNAL_LOSS: 2.4% // FEED_LIVE";
+    position: absolute;
+    bottom: 20px; right: 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: #666;
+}
+
+/* STARK SPLASH SCREEN */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.entrance {
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.98);
+    transition: all 1s ease-out;
+}
+
+.entrance.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* INDUSTRIAL IMAGE FRAME */
+.img-frame {
+    position: relative;
+    display: inline-block;
+    max-width: 850px;
+    width: 92%;
+    border: 1px solid var(--border-grit);
+    background: var(--raw-concrete);
+    padding: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+
+#entrance-img {
+    width: 100%;
+    display: block;
+    filter: grayscale(1) contrast(1.2) brightness(0.7);
+    transition: filter 0.4s ease;
+}
+.img-frame:hover #entrance-img {
+    filter: grayscale(0.6) contrast(1.3) brightness(0.8);
+}
+
+/* HARD surveillance LOGS */
+.terminal-output {
+    font-family: 'Courier Prime', monospace;
+    color: #777;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 28px;
+    height: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* RAW INDUSTRIAL INTERACTION BUTTON */
+#enter-btn {
+    margin-top: 28px;
+    padding: 18px 50px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    background: transparent;
+    border: 2px solid #444;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+}
+
+#enter-btn:hover {
+    color: #000;
+    background: var(--estate-orange);
+    border-color: var(--estate-orange);
+    box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline>
+    <source src="images/Locations/MLKSHK_ESTATE/ESTATE_MAIN.mp4" type="video/mp4">
+</video>
+
+<div id="hud-overlay"></div>
+
+<audio id="club-music" preload="auto" loop></audio>
+<audio id="radio-stream" preload="none"></audio>
+
+<div id="overlay">
+    <div class="entrance" id="entrance-container">
+        <div class="img-frame">
+            <img src="images/Locations/MLKSHK_ESTATE/ESTATE_ENTRANCE.jpg" id="entrance-img" alt="MLKSHK Estate Main Block Entrance">
+        </div>
+        <div class="terminal-output" id="log-display">TUNING LOCAL RECEIVER...</div>
+        <button id="enter-btn">PATCH INTO BLOCK FEED</button>
+    </div>
+</div>
+
+<script>
+const overlay = document.getElementById('overlay');
+const entrance = document.getElementById('entrance-container');
+const enterBtn = document.getElementById('enter-btn');
+const hud = document.getElementById('hud-overlay');
+const logDisplay = document.getElementById('log-display');
+
+const clubMusic = document.getElementById('club-music');
+const radioStream = document.getElementById('radio-stream');
+
+/* Updated paths to match the new location structure */
+const trackList = [
+    "Audio/Locations/MLKSHK_ESTATE/ESTATE_TRACK_1.mp3",
+    "Audio/Locations/MLKSHK_ESTATE/ESTATE_TRACK_1.mp3",
+    "Audio/Locations/MLKSHK_ESTATE/ESTATE_TRACK_1.mp3"
+];
+
+const STREAM_URL = "https://radio.mlkshkdigital.com/ESTATE.mp3";
+let isPlaying = false;
+
+/* Gritty, localized terminal logs */
+const logMessages = [
+    "INTERCEPTING PIRATE SIGNAL...",
+    "ACQUIRING FEED // RELAY NODE_STREET_LEVEL...",
+    "MAIN COMM_TOWER SYNCED. DECRUNCHING RAW STREAM...",
+    "FEED CONNECTED. MANUAL HANDSHAKE REQUIRED."
+];
+let messageIndex = 0;
+
+function typeLogs() {
+    if (messageIndex < logMessages.length) {
+        logDisplay.textContent = logMessages[messageIndex];
+        messageIndex++;
+        setTimeout(typeLogs, 1200);
+    }
+}
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        entrance.classList.add('show');
+        typeLogs();
+    }, 400);
+});
+
+/* GATE ENTRY SYSTEM EXECUTION */
+enterBtn.addEventListener('click', () => {
+    overlay.style.opacity = '0';
+    hud.style.opacity = '1'; 
+
+    const randomTrackIndex = Math.floor(Math.random() * trackList.length);
+    clubMusic.src = trackList[randomTrackIndex];
+    
+    clubMusic.play().catch((err) => {
+        console.log("Audio play blocked by device context:", err);
+    });
+
+    radioStream.src = STREAM_URL + "?t=" + Date.now();
+    radioStream.play().then(() => {
+        isPlaying = true;
+    }).catch(err => {
+        console.log("Stream access held until manual handshake:", err);
+    });
+
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 1200);
+});
+</script>
+
+</body>
+</html>
