@@ -21,22 +21,21 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    background: #111; /* Fallback before media loads */
+    background: #111;
     font-family: 'Space Grotesk', system-ui, sans-serif;
     color: var(--pure-white);
 }
 
-/* FESTIVE PAPEL PICADO / GARLAND OVERLAY */
+/* CLEAN FESTIVE PAPEL PICADO / GARLAND OVERLAY */
 body::before {
     content: " ";
     display: block;
     position: fixed;
     top: 0; left: 0; right: 0; height: 35px;
-    /* Creating a bright, stylized triangular bunting/garland pattern across the top */
     background-image: linear-gradient(135deg, var(--neon-pink) 25%, transparent 25%), 
                       linear-gradient(225deg, var(--marigold-orange) 25%, transparent 25%),
                       linear-gradient(45deg, var(--bright-teal) 25%, transparent 25%),
-                      linear-gradient(315deg, var(--sun-yellow) 25%, #transparent 25%);
+                      linear-gradient(315deg, var(--sun-yellow) 25%, transparent 25%);
     background-position: 0 0, 0 0, 10px 0, 10px 0;
     background-size: 20px 20px;
     background-repeat: repeat-x;
@@ -45,7 +44,7 @@ body::before {
     opacity: 0.9;
 }
 
-/* BRIGHT MEXICO STREET VIEW BACKGROUND */
+/* BACKGROUND VIDEO: Filters removed to show original colors completely untouched */
 video {
     position: fixed;
     top: 0;
@@ -54,8 +53,6 @@ video {
     height: 100vh;
     object-fit: cover;
     z-index: 1;
-    /* Vibrancy booster to make the street scene colors pop */
-    filter: contrast(1.1) brightness(1.05) saturate(1.4);
 }
 
 /* VIBRANT STREET FESTIVAL HUD */
@@ -91,15 +88,15 @@ video {
     color: var(--bright-teal);
 }
 
-/* SPLASH SCREEN CONTAINER */
+/* SPLASH SCREEN CONTAINER: Transparent enough to let your bright art show behind it */
 #overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(12, 5, 20, 0.75); /* Rich, translucent night-sky violet */
-    backdrop-filter: blur(4px);
+    background: rgba(12, 5, 20, 0.5); 
+    backdrop-filter: blur(2px);
     z-index: 10;
     display: flex;
     align-items: center;
@@ -131,14 +128,13 @@ video {
     box-shadow: 0 15px 40px rgba(255, 0, 127, 0.3), 0 0 0 4px var(--marigold-orange);
 }
 
+/* ENTRANCE IMAGE: Removed all tone and contrast filters */
 #entrance-img {
     width: 100%;
     display: block;
-    filter: saturate(1.1) brightness(0.95);
-    transition: transform 0.5s ease, filter 0.5s ease;
+    transition: transform 0.5s ease;
 }
 .img-frame:hover #entrance-img {
-    filter: saturate(1.3) brightness(1.05);
     transform: scale(1.01);
 }
 
@@ -153,7 +149,7 @@ video {
     height: 20px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
 }
 
 /* HIGH-ENERGY FESTIVAL ENTER BUTTON */
@@ -227,7 +223,6 @@ const trackList = [
 const STREAM_URL = "https://radio.mlkshkdigital.com/MTRTOS.mp3";
 let isPlaying = false;
 
-/* Bright, energetic entry updates */
 const logMessages = [
     "CATCHING THE RHYTHM...",
     "LIGHTING THE CANDLES...",
