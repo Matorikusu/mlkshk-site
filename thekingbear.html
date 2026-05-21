@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK // The King Bear</title>
+<title>The King Bear // ROCK_CLUB</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
@@ -11,7 +11,7 @@
 :root {
     --neon-red: #ff0033;
     --neon-glow: rgba(255, 0, 51, 0.6);
-    --dark-grit: #121212;
+    --dark-grit: #0d0d0d;
 }
 
 html, body {
@@ -24,7 +24,7 @@ html, body {
     color: white;
 }
 
-/* BACKGROUND VIDEO (No color filters applied to preserve your scene) */
+/* BACKGROUND VIDEO - Zero color filters to preserve native artwork palette */
 video {
     position: fixed;
     top: 0;
@@ -35,19 +35,19 @@ video {
     z-index: 1;
 }
 
-/* INDUSTRIAL HUD OVERLAY (Revealed after entry) */
+/* INDUSTRIAL HUD OVERLAY (Revealed after entry button trigger) */
 #hud-overlay {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    border: 1px solid rgba(255, 0, 51, 0.2);
+    border: 1px solid rgba(255, 0, 51, 0.25);
     margin: 20px;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 #hud-overlay::before {
-    content: "LIVE STAGE // AMPLIFIER FEED LINKED // KING BEAR MAIN";
+    content: "LIVE STAGE // MAIN DECK AMPLIFIER SYNCED // KING BEAR LIVE";
     position: absolute;
     top: 20px; left: 24px;
     font-family: 'Share Tech Mono', monospace;
@@ -57,7 +57,7 @@ video {
     text-shadow: 0 0 8px var(--neon-glow);
 }
 
-/* OVERLAY SPLASH CONTROLLER */
+/* OVERLAY SPLASH PANEL */
 #overlay {
     position: fixed;
     top: 0;
@@ -75,7 +75,7 @@ video {
 .entrance {
     text-align: center;
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.96);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -84,17 +84,17 @@ video {
     transform: scale(1);
 }
 
-/* RAW NEON SIGN FRAME WITH AN ANIMATED FLICKER EFFECT */
+/* RAW NEON STAGE FRAME WITH INTEGRATED LOAD FLICKER */
 .img-frame {
     position: relative;
     display: inline-block;
     max-width: 850px;
     width: 90%;
-    background: #000;
+    background: var(--dark-grit);
     padding: 10px;
     border: 3px solid var(--neon-red);
-    box-shadow: 0 0 20px rgba(255, 0, 51, 0.3), inset 0 0 15px rgba(255, 0, 51, 0.2);
-    animation: neon-wake 1.5s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.3), inset 0 0 15px rgba(255, 0, 51, 0.15);
+    animation: neon-wake 1.4s ease-out forwards;
 }
 
 #entrance-img {
@@ -102,7 +102,7 @@ video {
     display: block;
 }
 
-/* STARK LOG CONSOLE */
+/* STARK ROCK CONSOLE LOG GENERATOR */
 .terminal-output {
     font-family: 'Share Tech Mono', monospace;
     color: #888;
@@ -114,10 +114,10 @@ video {
     text-transform: uppercase;
 }
 
-/* RUGGED ROCK CLUB INTERACTION BUTTON */
+/* RUGGED STAGE OVERRIDE INTERACTION BUTTON */
 #enter-btn {
     margin-top: 24px;
-    padding: 18px 50px;
+    padding: 18px 54px;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     font-weight: 900;
@@ -137,11 +137,11 @@ video {
     box-shadow: 0 0 25px var(--neon-red);
 }
 
-/* Neon flicker animation simulation */
+/* Raw neon flicker wake-up sequences */
 @keyframes neon-wake {
-    0%, 4%, 10% { border-color: #33000a; box-shadow: none; }
-    2%, 6%, 12% { border-color: var(--neon-red); box-shadow: 0 0 20px var(--neon-glow); }
-    14%, 100% { border-color: var(--neon-red); box-shadow: 0 0 25px var(--neon-glow); }
+    0%, 5%, 11% { border-color: #220005; box-shadow: none; }
+    3%, 7%, 13% { border-color: var(--neon-red); box-shadow: 0 0 20px var(--neon-glow); }
+    15%, 100% { border-color: var(--neon-red); box-shadow: 0 0 25px var(--neon-glow); }
 }
 </style>
 </head>
@@ -162,7 +162,7 @@ video {
         <div class="img-frame">
             <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance View">
         </div>
-        <div class="terminal-output" id="log-display">POWERING SIGNAGE NODES...</div>
+        <div class="terminal-output" id="log-display">TUNING AUDIO DRIVERS...</div>
         <button id="enter-btn">ENTER THE CLUB</button>
     </div>
 </div>
@@ -177,7 +177,7 @@ const logDisplay = document.getElementById('log-display');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-/* Keeping space for 3 tracks, currently utilizing track 1 */
+/* Retaining the 3-track structure space, primed with your current track file */
 const trackList = [
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
@@ -187,12 +187,12 @@ const trackList = [
 const STREAM_URL = "https://radio.mlkshkdigital.com/KingBear.mp3";
 let isPlaying = false;
 
-/* Club environment initialization logs */
+/* Pre-show hardware level console log sequence */
 const logMessages = [
-    "WARMING TUBES & PRE-AMPS...",
-    "LINE INPUT CHECKS // MAIN STAGE CLIPPED RE-ROUTE...",
-    "RADIO TRANSCEIVER SYNCED // BOOTH BUFFER OK...",
-    "HANDSHAKE PROTOCOL ONLINE. READY TO ENGAGE."
+    "HEATING VACUUM TUBES & PRE-AMPS...",
+    "BALANCING EQUALIZER RAILS // FEEDER BUFFERS MATCHED...",
+    "LOCAL TRANSCEIVER SECURED // BOOTH MONITOR OK...",
+    "HANDSHAKE TERMINAL OPERATIONAL. READY TO PATCH."
 ];
 let messageIndex = 0;
 
@@ -216,23 +216,23 @@ enterBtn.addEventListener('click', () => {
     overlay.style.opacity = '0';
     hud.style.opacity = '1'; 
 
-    /* Select random local track and explicitly force refresh pipeline */
+    /* Select a random track from your paths array and refresh the node properties */
     const randomTrackIndex = Math.floor(Math.random() * trackList.length);
     clubMusic.src = trackList[randomTrackIndex];
-    clubMusic.load(); // Forces elements to re-read source properties before playback execution
+    clubMusic.load(); // Forces pipeline initialization to bypass modern hardware policy blocks
     
     clubMusic.play().catch((err) => {
-        console.log("Audio pipeline held back by browser matrix:", err);
+        console.log("Audio pipeline stream blocked by browser context:", err);
     });
 
-    /* Live background stream payload alignment */
+    /* Simultaneous radio background initialization sequence */
     radioStream.src = STREAM_URL + "?t=" + Date.now();
     radioStream.load();
     
     radioStream.play().then(() => {
         isPlaying = true;
     }).catch(err => {
-        console.log("Stream hot link waiting on physical engagement:", err);
+        console.log("Stream access held until manual handshake completes:", err);
     });
 
     setTimeout(() => {
