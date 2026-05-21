@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The King Bear // ROCK_CLUB</title>
+<title>THE KING BEAR // ENTRANCE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --neon-red: #ff0033;
-    --neon-glow: rgba(255, 0, 51, 0.6);
-    --dark-grit: #0d0d0d;
+    --neon-red: #ff0505;
+    --neon-dim: #550000;
+    --amp-chassis: #121212;
+    --border-grit: #333333;
 }
 
 html, body {
@@ -19,12 +20,25 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    background: #000;
-    font-family: 'Rajdhani', system-ui, sans-serif;
-    color: white;
+    background: #000000;
+    font-family: 'Oswald', system-ui, sans-serif;
+    color: #eeeeee;
 }
 
-/* BACKGROUND VIDEO - Zero color filters to preserve native artwork palette */
+/* GRITTY ANALOG CRT SCREEN HUM (REPLACED CAMERA SCANLINES) */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(rgba(18, 18, 18, 0) 50%, rgba(0, 0, 0, 0.5) 50%);
+    z-index: 99;
+    background-size: 100% 4px;
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+/* BACKGROUND VIDEO (NO COLOR OVERLAYS PER REQUEST) */
 video {
     position: fixed;
     top: 0;
@@ -33,115 +47,124 @@ video {
     height: 100vh;
     object-fit: cover;
     z-index: 1;
+    filter: contrast(1.15) brightness(0.75);
 }
 
-/* INDUSTRIAL HUD OVERLAY (Revealed after entry button trigger) */
+/* INDUSTRIAL STAGE / VENUE HUD OVERLAY */
 #hud-overlay {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    border: 1px solid rgba(255, 0, 51, 0.25);
-    margin: 20px;
+    border: 1px solid rgba(255, 5, 5, 0.2);
+    margin: 24px;
     opacity: 0;
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 #hud-overlay::before {
-    content: "LIVE STAGE // MAIN DECK AMPLIFIER SYNCED // KING BEAR LIVE";
+    content: "LIVE STAGE MONITORS  ●  VENUE: THE KING BEAR // COUPLING: OVERDRIVE";
     position: absolute;
     top: 20px; left: 24px;
     font-family: 'Share Tech Mono', monospace;
     font-size: 12px;
     letter-spacing: 2px;
     color: var(--neon-red);
-    text-shadow: 0 0 8px var(--neon-glow);
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--neon-dim);
+}
+#hud-overlay::after {
+    content: "MASTER_VOLUME: 11 // TUBE_AMP_STATUS: HOT";
+    position: absolute;
+    bottom: 20px; right: 24px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #555;
 }
 
-/* OVERLAY SPLASH PANEL */
+/* ENTRANCE DECK OVERLAY */
 #overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(5, 5, 5, 0.88);
+    background: radial-gradient(circle, #0a0a0a 0%, #000000 100%);
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .entrance {
     text-align: center;
     opacity: 0;
-    transform: scale(0.96);
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(15px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .entrance.show {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
 }
 
-/* RAW NEON STAGE FRAME WITH INTEGRATED LOAD FLICKER */
+/* AMP-CABINET STYLE FRAME */
 .img-frame {
     position: relative;
     display: inline-block;
-    max-width: 850px;
+    max-width: 800px;
     width: 90%;
-    background: var(--dark-grit);
-    padding: 10px;
-    border: 3px solid var(--neon-red);
-    box-shadow: 0 0 20px rgba(255, 0, 51, 0.3), inset 0 0 15px rgba(255, 0, 51, 0.15);
-    animation: neon-wake 1.4s ease-out forwards;
+    border: 2px solid var(--border-grit);
+    background: var(--amp-chassis);
+    padding: 12px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
 }
 
 #entrance-img {
     width: 100%;
     display: block;
+    filter: grayscale(0.4) brightness(0.85);
+    transition: filter 0.4s ease;
+}
+.img-frame:hover #entrance-img {
+    filter: grayscale(0) brightness(1);
 }
 
-/* STARK ROCK CONSOLE LOG GENERATOR */
+/* SOUNDBOARD STAGE LOGS */
 .terminal-output {
     font-family: 'Share Tech Mono', monospace;
-    color: #888;
-    font-size: 13px;
+    color: #777;
+    font-size: 12px;
     text-align: center;
     margin-top: 24px;
     height: 20px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-/* RUGGED STAGE OVERRIDE INTERACTION BUTTON */
+/* RAW NEON GLOW ENTER BUTTON */
 #enter-btn {
     margin-top: 24px;
-    padding: 18px 54px;
-    font-family: 'Orbitron', sans-serif;
+    padding: 20px 60px;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 14px;
-    font-weight: 900;
+    font-weight: 700;
     color: #fff;
-    background: transparent;
-    border: 2px solid var(--neon-red);
+    background: #000;
+    border: 1px solid var(--neon-red);
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 4px;
-    box-shadow: 0 0 10px rgba(255, 0, 51, 0.2);
+    box-shadow: 0 0 10px rgba(255, 5, 5, 0.2);
     transition: all 0.3s ease;
 }
 
 #enter-btn:hover {
     color: #000;
     background: var(--neon-red);
+    border-color: var(--neon-red);
     box-shadow: 0 0 25px var(--neon-red);
-}
-
-/* Raw neon flicker wake-up sequences */
-@keyframes neon-wake {
-    0%, 5%, 11% { border-color: #220005; box-shadow: none; }
-    3%, 7%, 13% { border-color: var(--neon-red); box-shadow: 0 0 20px var(--neon-glow); }
-    15%, 100% { border-color: var(--neon-red); box-shadow: 0 0 25px var(--neon-glow); }
 }
 </style>
 </head>
@@ -160,10 +183,10 @@ video {
 <div id="overlay">
     <div class="entrance" id="entrance-container">
         <div class="img-frame">
-            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance View">
+            <img src="images/Locations/The King Bear/KINGBEAR_ENTRANCE.jpg" id="entrance-img" alt="The King Bear Entrance">
         </div>
-        <div class="terminal-output" id="log-display">TUNING AUDIO DRIVERS...</div>
-        <button id="enter-btn">ENTER THE CLUB</button>
+        <div class="terminal-output" id="log-display">POWERING SATELLITE RIG...</div>
+        <button id="enter-btn">KICK THE JAM</button>
     </div>
 </div>
 
@@ -177,22 +200,20 @@ const logDisplay = document.getElementById('log-display');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-/* Retaining the 3-track structure space, primed with your current track file */
+// Updated to point directly to your raw classic rock track path
 const trackList = [
-    "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
-    "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3"
 ];
 
-const STREAM_URL = "https://radio.mlkshkdigital.com/KingBear.mp3";
+const STREAM_URL = "https://radio.mlkshkdigital.com/MLKSK8.mp3"; 
 let isPlaying = false;
 
-/* Pre-show hardware level console log sequence */
+// Custom Rock Venue / Soundcheck diagnostic logs
 const logMessages = [
-    "HEATING VACUUM TUBES & PRE-AMPS...",
-    "BALANCING EQUALIZER RAILS // FEEDER BUFFERS MATCHED...",
-    "LOCAL TRANSCEIVER SECURED // BOOTH MONITOR OK...",
-    "HANDSHAKE TERMINAL OPERATIONAL. READY TO PATCH."
+    "HEATING VACUUM TUBES...",
+    "BALANCING FRONT OF HOUSE MONITORS...",
+    "GROUND LOOP ISOLATED // SIGNAL PATH: CLEAN",
+    "AMPLIFIERS UNLEASHED. READY TO CRANK IT."
 ];
 let messageIndex = 0;
 
@@ -200,7 +221,7 @@ function typeLogs() {
     if (messageIndex < logMessages.length) {
         logDisplay.textContent = logMessages[messageIndex];
         messageIndex++;
-        setTimeout(typeLogs, 1200);
+        setTimeout(typeLogs, 1300);
     }
 }
 
@@ -211,33 +232,28 @@ window.addEventListener('load', () => {
     }, 400);
 });
 
-/* ENGAGE SYSTEMS */
+/* RE-ROUTED HANDSHAKE */
 enterBtn.addEventListener('click', () => {
     overlay.style.opacity = '0';
     hud.style.opacity = '1'; 
 
-    /* Select a random track from your paths array and refresh the node properties */
     const randomTrackIndex = Math.floor(Math.random() * trackList.length);
     clubMusic.src = trackList[randomTrackIndex];
-    clubMusic.load(); // Forces pipeline initialization to bypass modern hardware policy blocks
     
     clubMusic.play().catch((err) => {
-        console.log("Audio pipeline stream blocked by browser context:", err);
+        console.log("Audio play blocked by device context:", err);
     });
 
-    /* Simultaneous radio background initialization sequence */
     radioStream.src = STREAM_URL + "?t=" + Date.now();
-    radioStream.load();
-    
     radioStream.play().then(() => {
         isPlaying = true;
     }).catch(err => {
-        console.log("Stream access held until manual handshake completes:", err);
+        console.log("Stream access held until manual handshake:", err);
     });
 
     setTimeout(() => {
         overlay.style.display = 'none';
-    }, 1200);
+    }, 1000);
 });
 </script>
 
