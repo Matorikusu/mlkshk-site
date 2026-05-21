@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK DIGITAL // MTRTOS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --marigold-orange: #ff9100;
+    --neon-pink: #ff007f;
+    --bright-teal: #00f0ff;
+    --sun-yellow: #ffea00;
+    --pure-white: #ffffff;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #111; /* Fallback before media loads */
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    color: var(--pure-white);
+}
+
+/* FESTIVE PAPEL PICADO / GARLAND OVERLAY */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0; height: 35px;
+    /* Creating a bright, stylized triangular bunting/garland pattern across the top */
+    background-image: linear-gradient(135deg, var(--neon-pink) 25%, transparent 25%), 
+                      linear-gradient(225deg, var(--marigold-orange) 25%, transparent 25%),
+                      linear-gradient(45deg, var(--bright-teal) 25%, transparent 25%),
+                      linear-gradient(315deg, var(--sun-yellow) 25%, #transparent 25%);
+    background-position: 0 0, 0 0, 10px 0, 10px 0;
+    background-size: 20px 20px;
+    background-repeat: repeat-x;
+    z-index: 99;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+/* BRIGHT MEXICO STREET VIEW BACKGROUND */
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+    /* Vibrancy booster to make the street scene colors pop */
+    filter: contrast(1.1) brightness(1.05) saturate(1.4);
+}
+
+/* VIBRANT STREET FESTIVAL HUD */
+#hud-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border: 3px solid var(--marigold-orange);
+    margin: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+#hud-overlay::before {
+    content: "VIVA MTRTOS // CELEBRATION LIVE // MLKSHKDIGITAL.COM";
+    position: absolute;
+    top: 24px; left: 24px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--sun-yellow);
+    text-shadow: 2px 2px 0px var(--neon-pink);
+}
+#hud-overlay::after {
+    content: "EST. 2026 // OFRENDA_NODE";
+    position: absolute;
+    bottom: 24px; right: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--bright-teal);
+}
+
+/* SPLASH SCREEN CONTAINER */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 5, 20, 0.75); /* Rich, translucent night-sky violet */
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.entrance {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.entrance.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* FESTIVE IMAGE FRAME */
+.img-frame {
+    position: relative;
+    display: inline-block;
+    max-width: 850px;
+    width: 92%;
+    border: 4px solid var(--neon-pink);
+    background: #000;
+    padding: 8px;
+    box-shadow: 0 15px 40px rgba(255, 0, 127, 0.3), 0 0 0 4px var(--marigold-orange);
+}
+
+#entrance-img {
+    width: 100%;
+    display: block;
+    filter: saturate(1.1) brightness(0.95);
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+.img-frame:hover #entrance-img {
+    filter: saturate(1.3) brightness(1.05);
+    transform: scale(1.01);
+}
+
+/* FESTIVE SUBTEXT LOGS */
+.terminal-output {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--sun-yellow);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 28px;
+    height: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+}
+
+/* HIGH-ENERGY FESTIVAL ENTER BUTTON */
+#enter-btn {
+    margin-top: 28px;
+    padding: 20px 60px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    color: #000000;
+    background: var(--sun-yellow);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 4px 4px 0px var(--bright-teal);
+    transition: all 0.2s ease;
+}
+
+#enter-btn:hover {
+    background: var(--bright-teal);
+    color: #000000;
+    box-shadow: 4px 4px 0px var(--neon-pink);
+    transform: translate(-2px, -2px);
+}
+#enter-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px transparent;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline>
+    <source src="images/Locations/MTRTOS/MTRTOS_STREET.mp4" type="video/mp4">
+</video>
+
+<div id="hud-overlay"></div>
+
+<audio id="club-music" preload="auto" loop></audio>
+<audio id="radio-stream" preload="none"></audio>
+
+<div id="overlay">
+    <div class="entrance" id="entrance-container">
+        <div class="img-frame">
+            <img src="images/Locations/MTRTOS/MTRTOS_ENTRANCE.jpg" id="entrance-img" alt="MTRTOS Street Festival">
+        </div>
+        <div class="terminal-output" id="log-display">ARRIVING AT THE PLAZA...</div>
+        <button id="enter-btn">ENTER THE CELEBRATION</button>
+    </div>
+</div>
+
+<script>
+const overlay = document.getElementById('overlay');
+const entrance = document.getElementById('entrance-container');
+const enterBtn = document.getElementById('enter-btn');
+const hud = document.getElementById('hud-overlay');
+const logDisplay = document.getElementById('log-display');
+
+const clubMusic = document.getElementById('club-music');
+const radioStream = document.getElementById('radio-stream');
+
+const trackList = [
+    "Audio/Locations/MTRTOS/MTRTOS_TRACK_1.mp3",
+    "Audio/Locations/MTRTOS/MTRTOS_TRACK_2.mp3",
+    "Audio/Locations/MTRTOS/MTRTOS_TRACK_3.mp3"
+];
+
+const STREAM_URL = "https://radio.mlkshkdigital.com/MTRTOS.mp3";
+let isPlaying = false;
+
+/* Bright, energetic entry updates */
+const logMessages = [
+    "CATCHING THE RHYTHM...",
+    "LIGHTING THE CANDLES...",
+    "FLUTE AND BRASS FREQUENCIES SYNCED...",
+    "STREET FEED LIVE. JOIN THE DANCE."
+];
+let messageIndex = 0;
+
+function typeLogs() {
+    if (messageIndex < logMessages.length) {
+        logDisplay.textContent = logMessages[messageIndex];
+        messageIndex++;
+        setTimeout(typeLogs, 1100);
+    }
+}
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        entrance.classList.add('show');
+        typeLogs();
+    }, 400);
+});
+
+enterBtn.addEventListener('click', () => {
+    overlay.style.opacity = '0';
+    hud.style.opacity = '1'; 
+
+    const randomTrackIndex = Math.floor(Math.random() * trackList.length);
+    clubMusic.src = trackList[randomTrackIndex];
+    
+    clubMusic.play().catch((err) => {
+        console.log("Audio playback held for interaction:", err);
+    });
+
+    radioStream.src = STREAM_URL + "?t=" + Date.now();
+    radioStream.play().then(() => {
+        isPlaying = true;
+    }).catch(err => {
+        console.log("Stream sync active post-handshake:", err);
+    });
+
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 800);
+});
+</script>
+
+</body>
+</html>
