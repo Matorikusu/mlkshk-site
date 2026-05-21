@@ -26,20 +26,20 @@ html, body {
     color: #e0e0e0;
 }
 
-/* GRIT & NOISE OVERLAY (Replaces sci-fi scanlines with a raw CCTV vignette and grain) */
+/* TONED BACK FX: Light vignette and minimal scanline texture so the night BG is visible */
 body::before {
     content: " ";
     display: block;
     position: fixed;
     top: 0; left: 0; bottom: 0; right: 0;
     background: 
-        radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.85) 100%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+        radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.4) 100%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 3px);
     z-index: 99;
     pointer-events: none;
 }
 
-/* LOW-RES SURVEILLANCE FEED BACKGROUND */
+/* VIDEOS / BACKGROUNDS: Adjusted contrast and brightness to let the night footage pop */
 video {
     position: fixed;
     top: 0;
@@ -48,7 +48,7 @@ video {
     height: 100vh;
     object-fit: cover;
     z-index: 1;
-    filter: contrast(1.4) brightness(0.5) saturate(0.2) grayscale(0.5);
+    filter: contrast(1.1) brightness(0.9) saturate(0.8);
 }
 
 /* BRUTALIST CCTV TEXT OVERLAY */
@@ -57,7 +57,7 @@ video {
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    border: 2px solid rgba(255, 85, 0, 0.15);
+    border: 1px solid rgba(255, 85, 0, 0.2);
     margin: 16px;
     opacity: 0;
     transition: opacity 1s ease-out;
@@ -73,22 +73,22 @@ video {
     font-weight: bold;
 }
 #hud-overlay::after {
-    content: "SIGNAL_LOSS: 2.4% // FEED_LIVE";
+    content: "SIGNAL_LOSS: 0.2% // FEED_LIVE";
     position: absolute;
     bottom: 20px; right: 24px;
     font-family: 'Courier Prime', monospace;
     font-size: 12px;
-    color: #666;
+    color: #888;
 }
 
-/* STARK SPLASH SCREEN */
+/* STARK SPLASH SCREEN: Lifted from pure black to a subtle transparency */
 #overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #0a0a0a;
+    background: rgba(10, 10, 10, 0.85);
     z-index: 10;
     display: flex;
     align-items: center;
@@ -117,23 +117,23 @@ video {
     border: 1px solid var(--border-grit);
     background: var(--raw-concrete);
     padding: 6px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 #entrance-img {
     width: 100%;
     display: block;
-    filter: grayscale(1) contrast(1.2) brightness(0.7);
+    filter: grayscale(0.4) contrast(1.1) brightness(0.9);
     transition: filter 0.4s ease;
 }
 .img-frame:hover #entrance-img {
-    filter: grayscale(0.6) contrast(1.3) brightness(0.8);
+    filter: grayscale(0.1) contrast(1.1) brightness(1);
 }
 
-/* HARD surveillance LOGS */
+/* surveillance LOGS */
 .terminal-output {
     font-family: 'Courier Prime', monospace;
-    color: #777;
+    color: #aaa;
     font-size: 13px;
     text-align: center;
     margin-top: 28px;
@@ -149,8 +149,8 @@ video {
     font-size: 14px;
     font-weight: 700;
     color: #ffffff;
-    background: transparent;
-    border: 2px solid #444;
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #555;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -197,7 +197,6 @@ const logDisplay = document.getElementById('log-display');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-/* Updated paths to match the new location structure */
 const trackList = [
     "Audio/Locations/MLKSHK_ESTATE/ESTATE_TRACK_1.mp3",
     "Audio/Locations/MLKSHK_ESTATE/ESTATE_TRACK_1.mp3",
@@ -207,7 +206,6 @@ const trackList = [
 const STREAM_URL = "https://radio.mlkshkdigital.com/ESTATE.mp3";
 let isPlaying = false;
 
-/* Gritty, localized terminal logs */
 const logMessages = [
     "INTERCEPTING PIRATE SIGNAL...",
     "ACQUIRING FEED // RELAY NODE_STREET_LEVEL...",
@@ -231,7 +229,6 @@ window.addEventListener('load', () => {
     }, 400);
 });
 
-/* GATE ENTRY SYSTEM EXECUTION */
 enterBtn.addEventListener('click', () => {
     overlay.style.opacity = '0';
     hud.style.opacity = '1'; 
