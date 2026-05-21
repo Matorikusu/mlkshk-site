@@ -3,14 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>THE KING BEAR // ENTRANCE</title>
+<title>THE KING BEAR</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 :root {
     --neon-red: #ff0505;
-    --neon-dim: #550000;
     --amp-chassis: #121212;
     --border-grit: #333333;
 }
@@ -25,20 +24,7 @@ html, body {
     color: #eeeeee;
 }
 
-/* GRITTY ANALOG CRT SCREEN HUM (REPLACED CAMERA SCANLINES) */
-body::before {
-    content: " ";
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(rgba(18, 18, 18, 0) 50%, rgba(0, 0, 0, 0.5) 50%);
-    z-index: 99;
-    background-size: 100% 4px;
-    pointer-events: none;
-    opacity: 0.25;
-}
-
-/* BACKGROUND VIDEO (NO COLOR OVERLAYS PER REQUEST) */
+/* BACKGROUND VIDEO - CLEAN & UNFILTERED */
 video {
     position: fixed;
     top: 0;
@@ -47,10 +33,9 @@ video {
     height: 100vh;
     object-fit: cover;
     z-index: 1;
-    filter: contrast(1.15) brightness(0.75);
 }
 
-/* INDUSTRIAL STAGE / VENUE HUD OVERLAY */
+/* CLEAN OVERLAY PANEL */
 #hud-overlay {
     position: fixed;
     inset: 0;
@@ -70,7 +55,6 @@ video {
     letter-spacing: 2px;
     color: var(--neon-red);
     font-weight: bold;
-    text-shadow: 0 0 8px var(--neon-dim);
 }
 #hud-overlay::after {
     content: "MASTER_VOLUME: 11 // TUBE_AMP_STATUS: HOT";
@@ -109,7 +93,7 @@ video {
     transform: translateY(0);
 }
 
-/* AMP-CABINET STYLE FRAME */
+/* MINIMAL FRAMING */
 .img-frame {
     position: relative;
     display: inline-block;
@@ -121,17 +105,13 @@ video {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
 }
 
+/* ENTRANCE IMAGE - CLEAN & UNFILTERED */
 #entrance-img {
     width: 100%;
     display: block;
-    filter: grayscale(0.4) brightness(0.85);
-    transition: filter 0.4s ease;
-}
-.img-frame:hover #entrance-img {
-    filter: grayscale(0) brightness(1);
 }
 
-/* SOUNDBOARD STAGE LOGS */
+/* STATUS LOGS */
 .terminal-output {
     font-family: 'Share Tech Mono', monospace;
     color: #777;
@@ -143,7 +123,7 @@ video {
     text-transform: uppercase;
 }
 
-/* RAW NEON GLOW ENTER BUTTON */
+/* RAW NEON BUTTON */
 #enter-btn {
     margin-top: 24px;
     padding: 20px 60px;
@@ -156,7 +136,6 @@ video {
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 4px;
-    box-shadow: 0 0 10px rgba(255, 5, 5, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -200,7 +179,6 @@ const logDisplay = document.getElementById('log-display');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-// Updated to point directly to your raw classic rock track path
 const trackList = [
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3"
 ];
@@ -208,7 +186,6 @@ const trackList = [
 const STREAM_URL = "https://radio.mlkshkdigital.com/MLKSK8.mp3"; 
 let isPlaying = false;
 
-// Custom Rock Venue / Soundcheck diagnostic logs
 const logMessages = [
     "HEATING VACUUM TUBES...",
     "BALANCING FRONT OF HOUSE MONITORS...",
@@ -232,7 +209,6 @@ window.addEventListener('load', () => {
     }, 400);
 });
 
-/* RE-ROUTED HANDSHAKE */
 enterBtn.addEventListener('click', () => {
     overlay.style.opacity = '0';
     hud.style.opacity = '1'; 
