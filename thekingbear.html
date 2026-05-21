@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The King Bear // ROCK_CLUB</title>
+<title>MLKSHK // The King Bear</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
@@ -155,7 +155,6 @@ video {
 <div id="hud-overlay"></div>
 
 <audio id="club-music" preload="auto" loop></audio>
-
 <audio id="radio-stream" preload="none"></audio>
 
 <div id="overlay">
@@ -178,7 +177,7 @@ const logDisplay = document.getElementById('log-display');
 const clubMusic = document.getElementById('club-music');
 const radioStream = document.getElementById('radio-stream');
 
-/* 3-Track random logic added seamlessly */
+/* Keeping space for 3 tracks, currently utilizing track 1 */
 const trackList = [
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
     "Audio/Locations/The King Bear/KINGBEAR_TRACK_1.mp3",
@@ -217,16 +216,19 @@ enterBtn.addEventListener('click', () => {
     overlay.style.opacity = '0';
     hud.style.opacity = '1'; 
 
-    /* Random local track selection logic */
+    /* Select random local track and explicitly force refresh pipeline */
     const randomTrackIndex = Math.floor(Math.random() * trackList.length);
     clubMusic.src = trackList[randomTrackIndex];
+    clubMusic.load(); // Forces elements to re-read source properties before playback execution
     
     clubMusic.play().catch((err) => {
         console.log("Audio pipeline held back by browser matrix:", err);
     });
 
-    /* Simultaneous background stream loading */
+    /* Live background stream payload alignment */
     radioStream.src = STREAM_URL + "?t=" + Date.now();
+    radioStream.load();
+    
     radioStream.play().then(() => {
         isPlaying = true;
     }).catch(err => {
