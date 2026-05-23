@@ -1,416 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MLKSHK RADIO</title>
-  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
-  <!-- PWA Support -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="MLKSHK Pirate Radio">
-  <link rel="apple-touch-icon" href="images/LOGO_SMALL.png">
-  <style>
-    :root {
-      --bg: #000;
-      --text: #f5f5f5;
-      --muted: #c0c0c0;
-      --accent: #ff2aa1;
-      --glow: rgba(255,42,161,0.5);
-      --card-radius: 12px;
-      --transmission: #00ff00;
-    }
-    body {
-      margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
-      overflow-x: hidden;
-    }
-    /* NAVIGATION */
-    header.nav-bar {
-      border-bottom:1px solid rgba(255,42,161,0.04);
-      padding:18px 24px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
-      position: sticky; top:0; z-index:200;
-      backdrop-filter: blur(6px);
-    }
-    .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
-    .logo-link img { height:42px; display:block; cursor:pointer; }
-    .nav-dropdown { position: relative; display:inline-block; }
-    .nav-toggle {
-      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
-      color:var(--muted); font-weight:600; background:transparent; border:0;
-    }
-    .nav-toggle::after {
-      content:""; display:inline-block; width:8px; height:8px;
-      border-right:2px solid var(--muted);
-      border-bottom:2px solid var(--muted);
-      transform: rotate(45deg); margin-left:4px; transition:.18s ease;
-    }
-    .dropdown-menu {
-      display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
-      min-width:180px; background:#000;
-      border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
-      overflow:hidden; max-width:90vw;
-    }
-    .dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; text-decoration:none; }
-    .dropdown-menu a:hover { background:var(--accent); color:#000; }
-    .nav-dropdown:hover .dropdown-menu,
-    .nav-dropdown:focus-within .dropdown-menu { display:block; }
-    /* TRANSMITTER ROOM */
-    .transmitter-room {
-      position: relative;
-      min-height: 100vh;
-      padding: 50px 0;
-      background: url('images/Pirate Radio/mlkshkbunker.png') center/cover no-repeat fixed;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .transmitter-room::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: inherit;
-      filter: brightness(0.85) contrast(1.05);
-      z-index: 0;
-    }
-    .transmitter-room .crt-noise {
-      position: absolute;
-      inset: 0;
-      background: url('images/Pirate Radio/static1.png') repeat;
-      opacity: 0.40;
-      animation: scan 14s linear infinite;
-      pointer-events: none;
-      mix-blend-mode: overlay;
-      z-index: 1;
-    }
-    @keyframes scan {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 100%; }
-    }
-    .transmitter-room::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      box-shadow: inset 0 0 180px #000;
-      pointer-events: none;
-      z-index: 1;
-    }
-    /* PLAYER OVERLAY */
-    .player-overlay {
-      position: relative;
-      z-index: 10;
-      background: rgba(0,0,0,0.28);
-      padding: 25px 40px 40px;
-      border-radius: 16px;
-      border: 1px dashed var(--glow);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 50px var(--glow);
-      text-align: center;
-      max-width: 420px;
-    }
-    .player-overlay img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 20px;
-      filter: brightness(0.88) contrast(1.12) grayscale(0.1);
-      border: 1px solid rgba(255,42,161,0.25);
-      box-shadow: 0 0 20px var(--glow);
-    }
-    .player-overlay button {
-      padding:14px 40px;
-      border:none;
-      border-radius:30px;
-      background:var(--accent);
-      color:#000;
-      font-weight:700;
-      font-size:1.3rem;
-      cursor:pointer;
-      transition: all 0.3s;
-      box-shadow: 0 0 20px var(--glow);
-      margin: 10px;
-    }
-    .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
-    #installBtn {
-      background: var(--transmission);
-      color: #000;
-      padding: 12px 30px;
-      font-size: 1.1rem;
-      box-shadow: 0 0 20px var(--transmission);
-    }
-    #installBtn:hover {
-      background: #00cc00;
-      transform: scale(1.04);
-    }
-    .player-overlay #status {
-      margin-top:12px;
-      font-size:1rem;
-      opacity:0.9;
-      color: #fff;
-    }
-    /* TRANSMITTER STATUS */
-    #transmitter-status {
-      margin-top: 20px;
-      font-family: monospace;
-      font-size: 0.85rem;
-      color: var(--transmission);
-      opacity: 0.75;
-      text-align: center;
-      line-height: 1.4;
-      background: rgba(0,0,0,0.4);
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px dashed var(--transmission);
-    }
-    /* FOOTER */
-    footer.site-footer {
-      padding:18px 10px;
-      color:var(--muted);
-      text-align:center;
-      background: rgba(0,0,0,0.6);
-      position: relative;
-      z-index: 10;
-    }
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
-      header.nav-bar { padding: 12px 16px; }
-      .transmitter-room { min-height: 100vh; padding: 40px 0; }
-      .player-overlay {
-        padding: 20px 25px 35px;
-        max-width: 92%;
-        border-radius: 14px;
-      }
-      .player-overlay img { max-width: 85%; margin-bottom: 16px; }
-      .player-overlay button { padding:12px 36px; font-size:1.2rem; }
-      .player-overlay #status { font-size:0.95rem; }
-      #transmitter-status { font-size: 0.8rem; margin-top: 16px; padding: 6px 10px; }
-      .nav-dropdown .dropdown-menu {
-        right: 0;
-        left: auto;
-        min-width: 160px;
-        max-width: 90vw;
-      }
-    }
-    /* Floating Add to Home Screen button */
-    .add-to-home-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: none;
-      border: 1px solid var(--muted);
-      border-radius: 30px;
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      color: var(--muted);
-      cursor: pointer;
-      z-index: 999;
-      opacity: 0.6;
-      transition: all 0.2s ease;
-    }
-    .add-to-home-btn:hover {
-      opacity: 1;
-      color: var(--transmission);
-      border-color: var(--transmission);
-      box-shadow: 0 0 10px rgba(0,255,0,0.3);
-    }
-    @media (max-width: 768px) {
-      .add-to-home-btn {
-        bottom: 15px;
-        right: 15px;
-        padding: 6px 14px;
-        font-size: 0.8rem;
-      }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK | PIRATE RADIO</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #0a0a0c;
+  --panel-bg: rgba(17, 17, 21, 0.95); /* Slightly transparent to let back image blend natively */
+  --text: #ffffff;
+  --muted: #707080;
+  --accent: #ff2aa1;
+  --accent-glow: rgba(255, 42, 161, 0.25);
+  --signal-green: #00ff66;
+  --dropdown-bg: #0a0a0c;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* FULL PAGE DIMMED BACKGROUND IMAGE PORT */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('images/Pirate Radio/mlkshkbunker.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.90; /* Controls background dim level (0.0 = fully hidden, 1.0 = full bright) */
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* GRITTY INDUSTRIAL GRID OVERLAY */
+.grid-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* CRT EFFECT OVERLAY */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 9999;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Animated rolling scanline when rig is active */
+body.rig-active .scanline {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; right: 0; height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 42, 161, 0.04) 10%, transparent 20%);
+  animation: scanline-sweep 6s linear infinite;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+/* NAV BAR */
+header.nav-bar {
+  border-bottom: 1px solid rgba(255, 42, 161, 0.15);
+  padding: 18px 24px;
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.logo-link img { height: 42px; display: block; }
+.nav-dropdown { position: relative; }
+.nav-toggle {
+  background: rgba(255, 42, 161, 0.1);
+  border: 1px solid rgba(255, 42, 161, 0.3);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.nav-toggle:hover {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  min-width: 200px;
+  z-index: 100;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+}
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  color: #fff;
+  font-weight: 500;
+}
+.dropdown-menu a:hover {
+  background: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+/* DECK MAIN RIG */
+.deck-container {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.pirate-deck {
+  background: var(--panel-bg);
+  border: 2px solid #22222b;
+  border-top: 4px solid var(--accent);
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  backdrop-filter: blur(4px); /* Smooth out the custom background image depth */
+}
+
+/* Rig ID stamp - Now Centered Perfectly */
+.pirate-deck::before {
+  content: "SYS-LOC // LIVE BROADCAST RIG v2.6";
+  position: absolute;
+  top: -22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* TRANSMISSION MONITOR */
+.broadcast-monitor {
+  background: #050507;
+  border: 1px solid #22222b;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+  text-align: center; 
+}
+
+.broadcast-monitor::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.4));
+  pointer-events: none;
+}
+
+/* Album art window at the top of the deck */
+.player-art-frame {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px auto;
+  border: 1px solid #22222b;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  background: #111;
+  transition: all 0.4s ease;
+}
+
+.player-art-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  filter: grayscale(80%);
+  transition: all 0.4s ease;
+}
+
+/* Target transformations when stream is playing */
+.rig-active .player-art-frame {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+.rig-active .player-art-frame img {
+  opacity: 1;
+  filter: grayscale(0%);
+  animation: vinyl-spin 12s linear infinite; 
+}
+
+.station-identity {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.station-subtext {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+
+/* SIGNAL STATUS */
+.signal-status-line {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
+}
+
+.status-beacon {
+  width: 8px;
+  height: 8px;
+  background: #404050;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Active State Styles via parent token */
+.rig-active .status-beacon {
+  background: var(--signal-green);
+  box-shadow: 0 0 10px var(--signal-green);
+  animation: pulse 1.5s infinite;
+}
+
+/* Audio text glitched visual twitching when active */
+.rig-active .station-identity {
+  text-shadow: 0 0 8px var(--accent-glow);
+  animation: text-twitch 4s infinite;
+}
+
+/* INDUSTRIAL FX VISUALIZER WAVE (PURE CSS SIMULATION) */
+.wave-scope {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 35px;
+  margin-top: 15px;
+  padding: 0 5px;
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+}
+.rig-active .wave-scope { opacity: 0.85; }
+
+.scope-bar {
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+/* Visualizer animations when live */
+.rig-active .scope-bar { animation: jump 1.2s ease infinite alternate; }
+.rig-active .scope-bar:nth-child(2n) { animation-duration: 0.7s; background: #fff; }
+.rig-active .scope-bar:nth-child(3n) { animation-duration: 0.9s; }
+.rig-active .scope-bar:nth-child(4n) { animation-duration: 0.5s; background: var(--accent); }
+.rig-active .scope-bar:nth-child(5n) { animation-duration: 1.1s; }
+
+/* MAIN DECK ACTUATOR (BIG BUTTON) */
+.deck-controls {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px 0;
+}
+
+.master-switch {
+  width: 90px;
+  height: 90px;
+  background: #1c1c24;
+  border: 4px solid #2d2d3a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.master-switch::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #252530, #121217);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.master-switch img {
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.master-switch:hover {
+  transform: scale(1.04);
+  border-color: #3b3b4c;
+}
+
+.master-switch:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+}
+
+/* Active State Switch */
+.rig-active .master-switch {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* FOOTER */
+footer {
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  color: var(--muted);
+  border-top: 1px solid rgba(255,42,161,0.1);
+  background: rgba(10, 10, 12, 0.8);
+  position: relative;
+  z-index: 10;
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes jump {
+  0% { height: 4px; }
+  100% { height: 32px; }
+}
+
+@keyframes vinyl-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes scanline-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes text-twitch {
+  0%, 92%, 100% { transform: skewX(0deg); }
+  93% { transform: skewX(-4deg) scaleY(1.05); color: #00ff66; }
+  94% { transform: skewX(5deg); color: var(--accent); }
+  95% { transform: skewX(0deg); }
+}
+
+@media (max-width: 480px) {
+  .pirate-deck { padding: 20px; }
+  .station-identity { font-size: 18px; }
+  .master-switch { width: 80px; height: 80px; }
+  .player-art-frame { width: 100px; height: 100px; }
+}
+</style>
 </head>
 <body>
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="index.html" class="logo-link">
-        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
-      </a>
-      <nav class="nav-links">
-        <div class="nav-dropdown">
-          <button class="nav-toggle" aria-haspopup="true">Menu</button>
-          <div class="dropdown-menu">
-            <a href="index.html">Home</a>
-            <a href="access.html">Access</a>
-            <a href="archive.html">Archive</a>
-            <a href="lab.html">The Lab</a>
-            <a href="universe.html">The Universe</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
 
-  <div class="transmitter-room">
-    <div class="crt-noise"></div>
-    <div class="player-overlay">
-      <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
-      <button id="playBtn">▶ Play</button>
-      <button id="installBtn" style="display: none;">Install App</button>
-      <p id="status">Ready – click Play to connect live</p>
-      <div id="transmitter-status">
-        FREQ: 107.3 MHz (PIRATE)<br>
-        PWR: 52% (FLUCTUATING)<br>
-        NOISE: -41 dB
+<div class="grid-overlay"></div>
+<div class="scanline"></div>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+    <div class="nav-dropdown">
+      <button class="nav-toggle">Menu</button>
+      <div class="dropdown-menu">
+        <a href="access.html">Access</a>
+        <a href="archive.html">Archive</a>
+        <a href="pirateradio.html">Pirate Radio</a>
+        <a href="lab.html">The Lab</a>
+        <a href="universe.html">The Universe</a>
       </div>
-      
-      <!-- Audio element (no source here - managed by JS) -->
-      <audio id="radio" preload="none"></audio>
     </div>
   </div>
+</header>
 
-  <footer class="site-footer">
-    <div style="padding:18px 10px;color:var(--muted);text-align:center">
-      MLKSHK Digital — Built for the misfits. © <span id="year"></span>
-    </div>
-  </footer>
-
-  <!-- Floating minimal Add to Home Screen button -->
-  <button class="add-to-home-btn" onclick="alert('add to homescreen:\nAndroid: Chrome menu (three dots) → Add to home screen\niPhone: Safari Share → Add to Home Screen')">
-    Add to homescreen
-  </button>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const audio = document.getElementById('radio');
-    const btn = document.getElementById('playBtn');
-    const statusEl = document.getElementById('status');
-    const installBtn = document.getElementById('installBtn');
-    const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
-
-    let isPlaying = false;
-
-    function playLiveStream() {
-      audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live connection
-      audio.load();
+<main class="deck-container">
+  <!-- Interactive UI container class dynamically toggles state via JS -->
+  <div class="pirate-deck" id="pirateDeck">
+    
+    <!-- SIGNAL DISPLAY UNIT -->
+    <div class="broadcast-monitor">
       
-      audio.play().then(() => {
-        isPlaying = true;
-        btn.textContent = 'Pause';
-        statusEl.textContent = 'Live';
-      }).catch(e => {
-        console.error('Play failed:', e);
-        statusEl.textContent = 'Connection error – retrying...';
-        setTimeout(playLiveStream, 1500);
-      });
-    }
+      <!-- Artwork Port -->
+      <div class="player-art-frame">
+        <img src="images/Pirate Radio/pirateradio.png" alt="Broadcast Media Cover">
+      </div>
 
-    function stopStream() {
-      audio.pause();
-      audio.src = '';                    // Fully clear the stream
-      isPlaying = false;
-      btn.textContent = '▶ Play';
-      statusEl.textContent = 'Stopped';
-    }
+      <div class="station-identity">MLKSHK Pirate Radio</div>
+      <div class="station-subtext">Underground • Live • No Rules</div>
+      
+      <div class="signal-status-line">
+        <div class="status-beacon"></div>
+        <span id="status">DECK IS STANDING BY...</span>
+      </div>
 
-    // Play / Stop button
-    btn.addEventListener('click', () => {
-      if (!isPlaying) {
-        playLiveStream();
-      } else {
-        stopStream();
-      }
-    });
+      <!-- CSS Simulated Graphic equalizer spectrum -->
+      <div class="wave-scope">
+        <div class="scope-bar" style="animation-delay: 0.1s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.4s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.2s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.6s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.3s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.8s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.5s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.2s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.7s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.1s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.4s;"></div>
+      </div>
+    </div>
 
-    // Status & error handling
-    audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-    audio.addEventListener('playing', () => {
-      statusEl.textContent = 'Live';
-      isPlaying = true;
-    });
-    audio.addEventListener('error', () => {
-      if (isPlaying) {
-        statusEl.textContent = 'Stream dropped – reconnecting...';
-        setTimeout(playLiveStream, 2000);
-      }
-    });
-    audio.addEventListener('stalled', () => {
-      if (isPlaying) {
-        statusEl.textContent = 'Reconnecting...';
-        setTimeout(playLiveStream, 1500);
-      }
-    });
+    <!-- MECHANICAL ENGAGEMENT ACTUATOR -->
+    <div class="deck-controls">
+      <div class="master-switch" id="playPause" title="Engage Stream Broadcast">
+        <img id="switchIcon" src="Player/PLAY.png" alt="Play/Stop Link">
+      </div>
+    </div>
 
-    // Media Session (lock screen / notification)
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: "MLKSHK Pirate Radio",
-        artist: "Underground • Live • No Rules",
-        album: "MLKSHK Digital",
-        artwork: [
-          { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
-          { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
-          { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
-          { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
-        ]
-      });
+    <audio id="audio" preload="none"></audio>
+  </div>
+</main>
 
-      navigator.mediaSession.setActionHandler('play', playLiveStream);
-      navigator.mediaSession.setActionHandler('pause', stopStream);
-    }
+<footer>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+</footer>
 
-    // Random transmitter status
-    const statusOptions = [
-      "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
-      "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
-      "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED",
-      "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
-      "THEY’RE LISTENING<br>FREQUENCY LOCKED"
-    ];
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-    function updateTransmitterStatus() {
-      document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-    }
-    updateTransmitterStatus();
-    setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playPause');
+const switchIcon = document.getElementById('switchIcon');
+const statusEl = document.getElementById('status');
+const deck = document.getElementById('pirateDeck');
+const body = document.body;
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-    // Dropdown menu
-    const navToggle = document.querySelector('.nav-toggle');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    navToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-    });
-    document.addEventListener('click', (e) => {
-      if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.style.display = 'none';
-      }
-    });
+let isPlaying = false;
 
-    // PWA Install
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('Service Worker registered'))
-          .catch(err => console.log('Service Worker registration failed:', err));
-      });
-    }
+function playLiveStream() {
+  audio.src = STREAM_URL + "?t=" + Date.now(); // Decouple cache lines
+  audio.load();
+  
+  audio.play().then(() => {
+    isPlaying = true;
+    deck.classList.add('rig-active');
+    body.classList.add('rig-active');
+    switchIcon.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'TRANSMITTING LIVE //';
+  }).catch(e => {
+    console.error("Link drop:", e);
+    statusEl.textContent = 'ERR: SIGNAL LOST. RETRYING...';
+    deck.classList.remove('rig-active');
+    body.classList.remove('rig-active');
+    setTimeout(playLiveStream, 1500);
+  });
+}
 
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-    });
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log('User install choice:', outcome);
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
-    });
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA was installed!');
-      installBtn.style.display = 'none';
-    });
-  </script>
+function stopStream() {
+  audio.pause();
+  audio.src = ''; // Sever buffer pool immediately
+  isPlaying = false;
+  deck.classList.remove('rig-active');
+  body.classList.remove('rig-active');
+  switchIcon.src = 'Player/PLAY.png';
+  statusEl.textContent = 'BROADCAST KILLED.';
+}
+
+btn.onclick = () => {
+  if (!isPlaying) {
+    playLiveStream();
+  } else {
+    stopStream();
+  }
+};
+
+/* AUDIO CORE LISTENERS */
+audio.addEventListener('waiting', () => {
+  statusEl.textContent = 'TUNING SIGNAL...';
+});
+
+audio.addEventListener('playing', () => {
+  statusEl.textContent = 'TRANSMITTING LIVE //';
+  isPlaying = true;
+  deck.classList.add('rig-active');
+  body.classList.add('rig-active');
+});
+
+audio.addEventListener('error', () => {
+  if (isPlaying) {
+    statusEl.textContent = 'CRIT ERR: RE-ROUTING FREQ...';
+    deck.classList.remove('rig-active');
+    body.classList.remove('rig-active');
+    setTimeout(playLiveStream, 2000);
+  }
+});
+
+audio.addEventListener('stalled', () => {
+  if (isPlaying) {
+    statusEl.textContent = 'SIGNAL WEAK. RECONNECTING...';
+    setTimeout(playLiveStream, 1500);
+  }
+});
+
+/* MEDIA OS INTEGRATION */
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [{ src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }]
+  });
+
+  navigator.mediaSession.setActionHandler('play', playLiveStream);
+  navigator.mediaSession.setActionHandler('pause', stopStream);
+}
+
+/* INTERACTION DROPDOWN LOGIC */
+const navToggle = document.querySelector('.nav-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+navToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', () => {
+  dropdownMenu.style.display = 'none';
+});
+</script>
 </body>
 </html>
