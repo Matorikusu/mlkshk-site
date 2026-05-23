@@ -1,207 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>MLKSHK | PIRATE RADIO</title>
-
-<!-- PWA Meta Tags -->
-<meta name="theme-color" content="#0a0a0c">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MLKSHK Radio">
-
-<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-<link rel="manifest" href="manifest.json"> <!-- You'll need to create this file -->
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg: #0a0a0c;
-  --panel-bg: rgba(17, 17, 21, 0.95);
-  --text: #ffffff;
-  --muted: #707080;
-  --accent: #ff2aa1;
-  --accent-glow: rgba(255, 42, 161, 0.25);
-  --signal-green: #00ff66;
-}
-
-html, body {
-  margin: 0;
-  height: 100%;
-  font-family: 'Rajdhani', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Hide nav bar when running as installed PWA */
-@media all and (display-mode: standalone) {
-  header.nav-bar {
-    display: none !important;
-  }
-  .deck-container {
-    min-height: 100vh;
-  }
-}
-
-/* Rest of your original styles (unchanged) */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url('images/Pirate Radio/mlkshkbunker.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.90;
-  z-index: -2;
-  pointer-events: none;
-}
-
-.grid-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* ... [Your original CSS remains here] ... */
-header.nav-bar {
-  border-bottom: 1px solid rgba(255, 42, 161, 0.15);
-  padding: 18px 24px;
-  background: rgba(10, 10, 12, 0.85);
-  backdrop-filter: blur(8px);
-  position: sticky;
-  top: 0;
-  z-index: 30;
-}
-
-.pirate-deck { /* your existing styles */ }
-
-/* Reset Button - Only visible in app mode */
-.reset-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255, 42, 161, 0.15);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 10px 16px;
-  border-radius: 4px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 12px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  z-index: 100;
-  display: none;
-  transition: all 0.2s;
-}
-
-.reset-btn:hover {
-  background: var(--accent);
-  color: #000;
-}
-
-@media all and (display-mode: standalone) {
-  .reset-btn {
-    display: block;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLKSHK RADIO</title>
+  <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+  <!-- PWA Support -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="MLKSHK Pirate Radio">
+  <link rel="apple-touch-icon" href="images/LOGO_SMALL.png">
+  <style>
+    :root {
+      --bg: #000;
+      --text: #f5f5f5;
+      --muted: #c0c0c0;
+      --accent: #ff2aa1;
+      --glow: rgba(255,42,161,0.5);
+      --card-radius: 12px;
+      --transmission: #00ff00;
+    }
+    body {
+      margin:0; padding:0; font-family:'Rajdhani', sans-serif; background:var(--bg); color:var(--text);
+      overflow-x: hidden;
+    }
+    /* NAVIGATION */
+    header.nav-bar {
+      border-bottom:1px solid rgba(255,42,161,0.04);
+      padding:18px 24px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent);
+      position: sticky; top:0; z-index:200;
+      backdrop-filter: blur(6px);
+    }
+    .nav-content { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; gap:18px; }
+    .logo-link img { height:42px; display:block; cursor:pointer; }
+    .nav-dropdown { position: relative; display:inline-block; }
+    .nav-toggle {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; cursor:pointer;
+      color:var(--muted); font-weight:600; background:transparent; border:0;
+    }
+    .nav-toggle::after {
+      content:""; display:inline-block; width:8px; height:8px;
+      border-right:2px solid var(--muted);
+      border-bottom:2px solid var(--muted);
+      transform: rotate(45deg); margin-left:4px; transition:.18s ease;
+    }
+    .dropdown-menu {
+      display:none; position:absolute; top:calc(100% + 8px); right:0; left:auto;
+      min-width:180px; background:#000;
+      border:1px solid var(--accent); border-radius:8px; padding:6px 0; z-index:300;
+      overflow:hidden; max-width:90vw;
+    }
+    .dropdown-menu a { display:block; padding:10px 14px; color:#fff; font-size:14px; text-decoration:none; }
+    .dropdown-menu a:hover { background:var(--accent); color:#000; }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu { display:block; }
+    /* TRANSMITTER ROOM */
+    .transmitter-room {
+      position: relative;
+      min-height: 100vh;
+      padding: 50px 0;
+      background: url('images/Pirate Radio/mlkshkbunker.png') center/cover no-repeat fixed;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .transmitter-room::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: brightness(0.85) contrast(1.05);
+      z-index: 0;
+    }
+    .transmitter-room .crt-noise {
+      position: absolute;
+      inset: 0;
+      background: url('images/Pirate Radio/static1.png') repeat;
+      opacity: 0.40;
+      animation: scan 14s linear infinite;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 1;
+    }
+    @keyframes scan {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+    .transmitter-room::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 180px #000;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* PLAYER OVERLAY */
+    .player-overlay {
+      position: relative;
+      z-index: 10;
+      background: rgba(0,0,0,0.28);
+      padding: 25px 40px 40px;
+      border-radius: 16px;
+      border: 1px dashed var(--glow);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 50px var(--glow);
+      text-align: center;
+      max-width: 420px;
+    }
+    .player-overlay img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      filter: brightness(0.88) contrast(1.12) grayscale(0.1);
+      border: 1px solid rgba(255,42,161,0.25);
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .player-overlay button {
+      padding:14px 40px;
+      border:none;
+      border-radius:30px;
+      background:var(--accent);
+      color:#000;
+      font-weight:700;
+      font-size:1.3rem;
+      cursor:pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px var(--glow);
+      margin: 10px;
+    }
+    .player-overlay button:hover { background:#ff5bc3; transform: scale(1.04); }
+    #installBtn {
+      background: var(--transmission);
+      color: #000;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px var(--transmission);
+    }
+    #installBtn:hover {
+      background: #00cc00;
+      transform: scale(1.04);
+    }
+    .player-overlay #status {
+      margin-top:12px;
+      font-size:1rem;
+      opacity:0.9;
+      color: #fff;
+    }
+    /* TRANSMITTER STATUS */
+    #transmitter-status {
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--transmission);
+      opacity: 0.75;
+      text-align: center;
+      line-height: 1.4;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px dashed var(--transmission);
+    }
+    /* FOOTER */
+    footer.site-footer {
+      padding:18px 10px;
+      color:var(--muted);
+      text-align:center;
+      background: rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 10;
+    }
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      header.nav-bar { padding: 12px 16px; }
+      .transmitter-room { min-height: 100vh; padding: 40px 0; }
+      .player-overlay {
+        padding: 20px 25px 35px;
+        max-width: 92%;
+        border-radius: 14px;
+      }
+      .player-overlay img { max-width: 85%; margin-bottom: 16px; }
+      .player-overlay button { padding:12px 36px; font-size:1.2rem; }
+      .player-overlay #status { font-size:0.95rem; }
+      #transmitter-status { font-size: 0.8rem; margin-top: 16px; padding: 6px 10px; }
+      .nav-dropdown .dropdown-menu {
+        right: 0;
+        left: auto;
+        min-width: 160px;
+        max-width: 90vw;
+      }
+    }
+    /* Floating Add to Home Screen button */
+    .add-to-home-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: none;
+      border: 1px solid var(--muted);
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      z-index: 999;
+      opacity: 0.6;
+      transition: all 0.2s ease;
+    }
+    .add-to-home-btn:hover {
+      opacity: 1;
+      color: var(--transmission);
+      border-color: var(--transmission);
+      box-shadow: 0 0 10px rgba(0,255,0,0.3);
+    }
+    @media (max-width: 768px) {
+      .add-to-home-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="grid-overlay"></div>
-<div class="scanline"></div>
+  <header class="nav-bar">
+    <div class="nav-content">
+      <a href="index.html" class="logo-link">
+        <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+      </a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <button class="nav-toggle" aria-haspopup="true">Menu</button>
+          <div class="dropdown-menu">
+            <a href="index.html">Home</a>
+            <a href="access.html">Access</a>
+            <a href="archive.html">Archive</a>
+            <a href="lab.html">The Lab</a>
+            <a href="universe.html">The Universe</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<!-- Nav Bar (hidden in app mode) -->
-<header class="nav-bar">
-  <div class="nav-content">
-    <a href="index.html" class="logo-link">
-      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
-    </a>
-    <div class="nav-dropdown">
-      <button class="nav-toggle">Menu</button>
-      <div class="dropdown-menu">
-        <a href="access.html">Access</a>
-        <a href="archive.html">Archive</a>
-        <a href="pirateradio.html">Pirate Radio</a>
-        <a href="lab.html">The Lab</a>
-        <a href="universe.html">The Universe</a>
+  <div class="transmitter-room">
+    <div class="crt-noise"></div>
+    <div class="player-overlay">
+      <img src="images/Pirate Radio/pirateradio.png" alt="MLKSHK Pirate Radio">
+      <button id="playBtn">▶ Play</button>
+      <button id="installBtn" style="display: none;">Install App</button>
+      <p id="status">Ready – click Play to connect live</p>
+      <div id="transmitter-status">
+        FREQ: 107.3 MHz (PIRATE)<br>
+        PWR: 52% (FLUCTUATING)<br>
+        NOISE: -41 dB
       </div>
+      
+      <!-- Audio element (no source here - managed by JS) -->
+      <audio id="radio" preload="none"></audio>
     </div>
   </div>
-</header>
 
-<main class="deck-container">
-  <div class="pirate-deck" id="pirateDeck">
-    <!-- Your existing deck content -->
-    <div class="broadcast-monitor">
-      <div class="player-art-frame">
-        <img src="images/Pirate Radio/pirateradio.png" alt="Broadcast Media Cover">
-      </div>
-      <div class="station-identity">MLKSHK Pirate Radio</div>
-      <div class="station-subtext">Underground • Live • No Rules</div>
-     
-      <div class="signal-status-line">
-        <div class="status-beacon"></div>
-        <span id="status">DECK IS STANDING BY...</span>
-      </div>
-      <div class="wave-scope">
-        <!-- your scope bars -->
-      </div>
+  <footer class="site-footer">
+    <div style="padding:18px 10px;color:var(--muted);text-align:center">
+      MLKSHK Digital — Built for the misfits. © <span id="year"></span>
     </div>
+  </footer>
 
-    <div class="deck-controls">
-      <div class="master-switch" id="playPause">
-        <img id="switchIcon" src="Player/PLAY.png" alt="Play/Stop">
-      </div>
-    </div>
-    <audio id="audio" preload="none"></audio>
-  </div>
-</main>
+  <!-- Floating minimal Add to Home Screen button -->
+  <button class="add-to-home-btn" onclick="alert('add to homescreen:\nAndroid: Chrome menu (three dots) → Add to home screen\niPhone: Safari Share → Add to Home Screen')">
+    Add to homescreen
+  </button>
 
-<footer>
-  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
-</footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-<!-- Reset Button (only shows in installed app) -->
-<button class="reset-btn" id="resetBtn">REBOOT RIG</button>
+    const audio = document.getElementById('radio');
+    const btn = document.getElementById('playBtn');
+    const statusEl = document.getElementById('status');
+    const installBtn = document.getElementById('installBtn');
+    const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
+    let isPlaying = false;
 
-const audio = document.getElementById('audio');
-const btn = document.getElementById('playPause');
-const switchIcon = document.getElementById('switchIcon');
-const statusEl = document.getElementById('status');
-const deck = document.getElementById('pirateDeck');
-const body = document.body;
-const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
-let isPlaying = false;
+    function playLiveStream() {
+      audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live connection
+      audio.load();
+      
+      audio.play().then(() => {
+        isPlaying = true;
+        btn.textContent = 'Pause';
+        statusEl.textContent = 'Live';
+      }).catch(e => {
+        console.error('Play failed:', e);
+        statusEl.textContent = 'Connection error – retrying...';
+        setTimeout(playLiveStream, 1500);
+      });
+    }
 
-// Reset Button
-document.getElementById('resetBtn').addEventListener('click', () => {
-  location.reload();
-});
+    function stopStream() {
+      audio.pause();
+      audio.src = '';                    // Fully clear the stream
+      isPlaying = false;
+      btn.textContent = '▶ Play';
+      statusEl.textContent = 'Stopped';
+    }
 
-/* Rest of your existing JavaScript (play/pause logic, mediaSession, etc.) */
-function playLiveStream() { /* ... your code ... */ }
-function stopStream() { /* ... your code ... */ }
+    // Play / Stop button
+    btn.addEventListener('click', () => {
+      if (!isPlaying) {
+        playLiveStream();
+      } else {
+        stopStream();
+      }
+    });
 
-// ... (keep all your other script code unchanged)
+    // Status & error handling
+    audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+    audio.addEventListener('playing', () => {
+      statusEl.textContent = 'Live';
+      isPlaying = true;
+    });
+    audio.addEventListener('error', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Stream dropped – reconnecting...';
+        setTimeout(playLiveStream, 2000);
+      }
+    });
+    audio.addEventListener('stalled', () => {
+      if (isPlaying) {
+        statusEl.textContent = 'Reconnecting...';
+        setTimeout(playLiveStream, 1500);
+      }
+    });
 
-btn.onclick = () => {
-  if (!isPlaying) playLiveStream();
-  else stopStream();
-};
+    // Media Session (lock screen / notification)
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: "MLKSHK Pirate Radio",
+        artist: "Underground • Live • No Rules",
+        album: "MLKSHK Digital",
+        artwork: [
+          { src: "images/LOGO_SMALL.png", sizes: "96x96", type: "image/png" },
+          { src: "images/LOGO_SMALL.png", sizes: "128x128", type: "image/png" },
+          { src: "images/LOGO_SMALL.png", sizes: "192x192", type: "image/png" },
+          { src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }
+        ]
+      });
 
-// Your other event listeners...
-</script>
+      navigator.mediaSession.setActionHandler('play', playLiveStream);
+      navigator.mediaSession.setActionHandler('pause', stopStream);
+    }
+
+    // Random transmitter status
+    const statusOptions = [
+      "FREQ: 107.3 MHz (PIRATE)<br>PWR: 41–58% (FLUCTUATING)<br>NOISE: -38 dB",
+      "SIGNAL: 73%<br>CARRIER: DRIFTING<br>GHOST: INCOMING",
+      "DO NOT ADJUST<br>TEMPERATURE: 47°C<br>TAPE WARP: DETECTED",
+      "LAST LOCK: 00:14:22 AGO<br>INTERFERENCE: MINIMAL",
+      "THEY’RE LISTENING<br>FREQUENCY LOCKED"
+    ];
+
+    function updateTransmitterStatus() {
+      document.getElementById('transmitter-status').innerHTML = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+    }
+    updateTransmitterStatus();
+    setInterval(updateTransmitterStatus, 240000 + Math.random() * 120000);
+
+    // Dropdown menu
+    const navToggle = document.querySelector('.nav-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', (e) => {
+      if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+
+    // PWA Install
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registered'))
+          .catch(err => console.log('Service Worker registration failed:', err));
+      });
+    }
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('User install choice:', outcome);
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed!');
+      installBtn.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
