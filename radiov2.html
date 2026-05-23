@@ -3,232 +3,321 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK Pirate Radio</title>
+<title>MLKSHK | PIRATE RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050505;
-  --text:#fff;
-  --muted:#888;
-  --accent:#ff2aa1;
-  --panel-bg: rgba(15, 15, 15, 0.85);
-  --dropdown-bg:#000;
+  --bg: #0a0a0c;
+  --panel-bg: #111115;
+  --text: #ffffff;
+  --muted: #707080;
+  --accent: #ff2aa1;
+  --accent-glow: rgba(255, 42, 161, 0.25);
+  --signal-green: #00ff66;
+  --dropdown-bg: #0a0a0c;
 }
-html,body{
-  margin:0;
-  height:100%;
-  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Rajdhani', system-ui, -apple-system, sans-serif;
   background: var(--bg);
-  color:var(--text);
+  color: var(--text);
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+  /* Gritty industrial grid background overlay */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
-a{color:inherit;text-decoration:none}
+
+a { color: inherit; text-decoration: none; }
+
+/* CRT EFFECT OVERLAY */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 9999;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
 
 /* NAV BAR */
-header.nav-bar{
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  padding:18px 24px;
-  background:linear-gradient(180deg,rgba(0,0,0,.4),transparent);
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:30;
+header.nav-bar {
+  border-bottom: 1px solid rgba(255, 42, 161, 0.15);
+  padding: 18px 24px;
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
-.nav-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1200px;
-  margin:0 auto;
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.logo-link img{height:42px;display:block}
-.nav-dropdown{position:relative}
-.nav-toggle{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
-  padding:6px 10px;
-  font-size: 16px;
+.logo-link img { height: 42px; display: block; }
+.nav-dropdown { position: relative; }
+.nav-toggle {
+  background: rgba(255, 42, 161, 0.1);
+  border: 1px solid rgba(255, 42, 161, 0.3);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: 1px;
-  transition: color 0.3s;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 .nav-toggle:hover {
-  color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
 }
-.dropdown-menu{
-  display:none;
-  position:absolute;
-  top:calc(100% + 8px);
-  right:0;
-  background:var(--dropdown-bg);
-  border:1px solid var(--accent);
-  border-radius:8px;
-  min-width:200px;
-  z-index:100;
-  overflow:hidden;
-  max-width:90vw;
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  min-width: 200px;
+  z-index: 100;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.8);
 }
-.dropdown-menu a{
-  display:block;
-  padding:10px 14px;
-  color:#fff;
-  text-decoration:none;
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  color: #fff;
+  font-weight: 500;
 }
 .dropdown-menu a:hover {
-  background:var(--accent);
-  color:#000;
+  background: var(--accent);
+  color: #000;
+  font-weight: 600;
 }
 
-/* HERO BROADCAST HUB */
-.radio-container {
-  flex: 1;
+/* DECK MAIN RIG */
+.deck-container {
+  min-height: calc(100vh - 160px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px 60px 20px;
-  background: radial-gradient(circle at center, rgba(255, 42, 161, 0.1) 0%, rgba(5, 5, 5, 1) 70%), 
-              url('images/Home/mlkshk_header.png') center/cover no-repeat;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-/* CENTRALIZED UNDERGROUND PLAYER */
-.main-player {
+.pirate-deck {
   background: var(--panel-bg);
-  border: 1px solid rgba(255, 42, 161, 0.2);
-  border-radius: 24px;
-  padding: 40px;
+  border: 2px solid #22222b;
+  border-top: 4px solid var(--accent);
   width: 100%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(255, 42, 161, 0.05);
-  backdrop-filter: blur(12px);
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.05);
   position: relative;
 }
 
-.radio-badge {
+/* Rig ID stamp */
+.pirate-deck::before {
+  content: "SYS-LOC // LIVE BROADCAST RIG v2.6";
+  position: absolute;
+  top: -22px;
+  left: 0;
   font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* TRANSMISSION MONITOR */
+.broadcast-monitor {
+  background: #050507;
+  border: 1px solid #22222b;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.broadcast-monitor::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.4));
+  pointer-events: none;
+}
+
+.station-identity {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.station-subtext {
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  margin-bottom: 24px;
-  display: inline-block;
-  border: 1px solid var(--accent);
-  padding: 4px 12px;
-  border-radius: 50px;
-  box-shadow: 0 0 10px rgba(255, 42, 161, 0.2);
-}
-
-.player-title {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
-}
-
-.player-artist {
-  font-size: 16px;
   color: var(--muted);
-  letter-spacing: 0.5px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
-/* BIG STREAM TOGGLE BUTTON */
-.controls-wrapper {
-  margin-bottom: 30px;
-}
-
-.play-btn-container {
-  width: 96px;
-  height: 96px;
-  background: #111;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
+/* SIGNAL STATUS */
+.signal-status-line {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 0 0px rgba(255, 42, 161, 0);
-}
-
-.play-btn-container:hover {
-  border-color: var(--accent);
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255, 42, 161, 0.3);
-}
-
-.play-btn-container img {
-  width: 48px;
-  height: 48px;
-  transition: transform 0.2s;
-}
-
-.play-btn-container:active {
-  transform: scale(0.98);
-}
-
-/* REAL-TIME STATUS */
-.status-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-family: 'Orbitron', sans-serif;
+  gap: 10px;
+  font-family: monospace;
   font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
   color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
 }
 
-.status-dot {
-  width: 6px;
-  height: 6px;
-  background-color: var(--muted);
+.status-beacon {
+  width: 8px;
+  height: 8px;
+  background: #404050;
   border-radius: 50%;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
-/* Active / Streaming UI states */
-.main-player.is-streaming .status-dot {
-  background-color: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
+/* Active State Styles via parent token */
+.rig-active .status-beacon {
+  background: var(--signal-green);
+  box-shadow: 0 0 10px var(--signal-green);
   animation: pulse 1.5s infinite;
 }
 
-.main-player.is-streaming .status-indicator {
-  color: #fff;
+.rig-active .station-identity {
+  text-shadow: 0 0 8px var(--accent-glow);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
+/* INDUSTRIAL FX VISUALIZER WAVE (PURE CSS SIMULATION) */
+.wave-scope {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 35px;
+  margin-top: 15px;
+  padding: 0 5px;
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+}
+.rig-active .wave-scope { opacity: 0.85; }
+
+.scope-bar {
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+/* Visualizer animations when live */
+.rig-active .scope-bar { animation: jump 1.2s ease infinite alternate; }
+.rig-active .scope-bar:nth-child(2n) { animation-duration: 0.7s; background: #fff; }
+.rig-active .scope-bar:nth-child(3n) { animation-duration: 0.9s; }
+.rig-active .scope-bar:nth-child(4n) { animation-duration: 0.5s; background: var(--accent); }
+.rig-active .scope-bar:nth-child(5n) { animation-duration: 1.1s; }
+
+/* MAIN DECK ACTUATOR (BIG BUTTON) */
+.deck-controls {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px 0;
+}
+
+.master-switch {
+  width: 90px;
+  height: 90px;
+  background: #1c1c24;
+  border: 4px solid #2d2d3a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.master-switch::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #252530, #121217);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.master-switch img {
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.master-switch:hover {
+  transform: scale(1.04);
+  border-color: #3b3b4c;
+}
+
+.master-switch:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+}
+
+/* Active State Switch */
+.rig-active .master-switch {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
 /* FOOTER */
 footer {
-  padding: 24px 20px;
+  padding: 28px 20px;
   text-align: center;
   font-size: 13px;
-  border-top: 1px solid rgba(255,255,255,.03);
-  background: #000;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
   color: var(--muted);
-  letter-spacing: 0.5px;
+  border-top: 1px solid rgba(255,42,161,0.1);
+  background: rgba(10, 10, 12, 0.6);
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes jump {
+  0% { height: 4px; }
+  100% { height: 32px; }
 }
 
 @media (max-width: 480px) {
-  .main-player { padding: 30px 20px; }
-  .player-title { font-size: 22px; }
-  .play-btn-container { width: 80px; height: 80px; }
-  .play-btn-container img { width: 40px; height: 40px; }
+  .pirate-deck { padding: 20px; }
+  .station-identity { font-size: 18px; }
+  .master-switch { width: 80px; height: 80px; }
 }
 </style>
 </head>
@@ -240,7 +329,7 @@ footer {
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
     <div class="nav-dropdown">
-      <button class="nav-toggle">MENU</button>
+      <button class="nav-toggle">Menu</button>
       <div class="dropdown-menu">
         <a href="access.html">Access</a>
         <a href="archive.html">Archive</a>
@@ -252,26 +341,46 @@ footer {
   </div>
 </header>
 
-<section class="radio-container">
-  <div class="main-player" id="playerDeck">
-    <span class="radio-badge">24/7 Stream</span>
-    <div class="player-title">MLKSHK Pirate Radio</div>
-    <div class="player-artist">Underground Collective • Live</div>
+<main class="deck-container">
+  <!-- Interactive UI container class dynamically toggles state via JS -->
+  <div class="pirate-deck" id="pirateDeck">
     
-    <div class="controls-wrapper">
-      <div class="play-btn-container" id="playPauseBtn">
-        <img id="playIcon" src="Player/PLAY.png" alt="Control Action">
+    <!-- SIGNAL DISPLAY UNIT -->
+    <div class="broadcast-monitor">
+      <div class="station-identity">MLKSHK Pirate Radio</div>
+      <div class="station-subtext">Underground • Live • No Rules</div>
+      
+      <div class="signal-status-line">
+        <div class="status-beacon"></div>
+        <span id="status">DECK IS STANDING BY...</span>
+      </div>
+
+      <!-- CSS Simulated Graphic equalizer spectrum -->
+      <div class="wave-scope">
+        <div class="scope-bar" style="animation-delay: 0.1s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.4s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.2s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.6s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.3s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.8s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.5s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.2s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.7s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.1s;"></div>
+        <div class="scope-bar" style="animation-delay: 0.4s;"></div>
       </div>
     </div>
 
-    <div class="status-indicator">
-      <div class="status-dot" id="statusDot"></div>
-      <span id="statusTxt">Ready</span>
+    <!-- MECHANICAL ENGAGEMENT ACTUATOR -->
+    <div class="deck-controls">
+      <div class="master-switch" id="playPause" title="Engage Stream Broadcast">
+        <img id="switchIcon" src="Player/PLAY.png" alt="Play/Stop Link">
+      </div>
     </div>
-    
+
     <audio id="audio" preload="none"></audio>
   </div>
-</section>
+</main>
 
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
@@ -281,42 +390,41 @@ footer {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const audio = document.getElementById('audio');
-const playPauseBtn = document.getElementById('playPauseBtn');
-const playIcon = document.getElementById('playIcon');
-const statusTxt = document.getElementById('statusTxt');
-const playerDeck = document.getElementById('playerDeck');
+const btn = document.getElementById('playPause');
+const switchIcon = document.getElementById('switchIcon');
+const statusEl = document.getElementById('status');
+const deck = document.getElementById('pirateDeck');
 const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
 let isPlaying = false;
 
 function playLiveStream() {
-  // Append timestamp parameter to force a real-time frame buffer and bypass browser cache
-  audio.src = STREAM_URL + "?t=" + Date.now();   
+  audio.src = STREAM_URL + "?t=" + Date.now(); // Decouple cache lines
   audio.load();
   
   audio.play().then(() => {
     isPlaying = true;
-    playIcon.src = 'Player/PAUSE.png';
-    statusTxt.textContent = 'Live';
-    playerDeck.classList.add('is-streaming');
+    deck.classList.add('rig-active');
+    switchIcon.src = 'Player/PAUSE.png';
+    statusEl.textContent = 'TRANSMITTING LIVE //';
   }).catch(e => {
-    console.error("Playback interrupted:", e);
-    statusTxt.textContent = 'Retry Connecting...';
+    console.error("Link drop:", e);
+    statusEl.textContent = 'ERR: SIGNAL LOST. RETRYING...';
+    deck.classList.remove('rig-active');
     setTimeout(playLiveStream, 1500);
   });
 }
 
 function stopStream() {
   audio.pause();
-  audio.src = ''; // Sever the live pipeline connection completely
+  audio.src = ''; // Sever buffer pool immediately
   isPlaying = false;
-  playIcon.src = 'Player/PLAY.png';
-  statusTxt.textContent = 'Stopped';
-  playerDeck.classList.remove('is-streaming');
+  deck.classList.remove('rig-active');
+  switchIcon.src = 'Player/PLAY.png';
+  statusEl.textContent = 'BROADCAST KILLED.';
 }
 
-// Global UI interaction triggers
-playPauseBtn.onclick = () => {
+btn.onclick = () => {
   if (!isPlaying) {
     playLiveStream();
   } else {
@@ -324,27 +432,33 @@ playPauseBtn.onclick = () => {
   }
 };
 
-// Live Audio Engine Listeners
-audio.addEventListener('waiting', () => statusTxt.textContent = 'Buffering...');
-audio.addEventListener('playing', () => {
-  statusTxt.textContent = 'Live';
-  isPlaying = true;
-  playerDeck.classList.add('is-streaming');
+/* AUDIO CORE LISTENERS */
+audio.addEventListener('waiting', () => {
+  statusEl.textContent = 'TUNING SIGNAL...';
 });
+
+audio.addEventListener('playing', () => {
+  statusEl.textContent = 'TRANSMITTING LIVE //';
+  isPlaying = true;
+  deck.classList.add('rig-active');
+});
+
 audio.addEventListener('error', () => {
   if (isPlaying) {
-    statusTxt.textContent = 'Link Interrupted — Reconnecting...';
+    statusEl.textContent = 'CRIT ERR: RE-ROUTING FREQ...';
+    deck.classList.remove('rig-active');
     setTimeout(playLiveStream, 2000);
   }
 });
+
 audio.addEventListener('stalled', () => {
   if (isPlaying) {
-    statusTxt.textContent = 'Signal Dropped — Reconnecting...';
+    statusEl.textContent = 'SIGNAL WEAK. RECONNECTING...';
     setTimeout(playLiveStream, 1500);
   }
 });
 
-// Native Mobile Metadata Support
+/* MEDIA OS INTEGRATION */
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -357,7 +471,7 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
-// Navigation Dropdown Utility
+/* INTERACTION DROPDOWN LOGIC */
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
