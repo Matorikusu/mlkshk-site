@@ -56,25 +56,25 @@ body::before {
 
 a { color: inherit; text-decoration: none; }
 
-/* CRT EFFECT OVERLAY */
+/* CRT EFFECT OVERLAY - Toned down for readability */
 body::after {
   content: " ";
   display: block;
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
   z-index: 9999;
   background-size: 100% 4px, 6px 100%;
   pointer-events: none;
 }
 
-/* Animated rolling scanline when rig is active */
+/* Animated rolling scanline when rig is active - Softened opacity */
 body.rig-active .scanline {
   content: " ";
   display: block;
   position: fixed;
   top: 0; left: 0; right: 0; height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(255, 42, 161, 0.04) 10%, transparent 20%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 42, 161, 0.015) 10%, transparent 20%);
   animation: scanline-sweep 6s linear infinite;
   z-index: 9998;
   pointer-events: none;
@@ -440,13 +440,10 @@ footer {
 </header>
 
 <main class="deck-container">
-  <!-- Interactive UI container class dynamically toggles state via JS -->
   <div class="pirate-deck" id="pirateDeck">
     
-    <!-- SIGNAL DISPLAY UNIT -->
     <div class="broadcast-monitor">
       
-      <!-- Artwork Port -->
       <div class="player-art-frame">
         <img src="images/Pirate Radio/pirateradio.png" alt="Broadcast Media Cover">
       </div>
@@ -459,7 +456,6 @@ footer {
         <span id="status">DECK IS STANDING BY...</span>
       </div>
 
-      <!-- CSS Simulated Graphic equalizer spectrum -->
       <div class="wave-scope">
         <div class="scope-bar" style="animation-delay: 0.1s;"></div>
         <div class="scope-bar" style="animation-delay: 0.4s;"></div>
@@ -475,7 +471,6 @@ footer {
       </div>
     </div>
 
-    <!-- MECHANICAL ENGAGEMENT ACTUATOR -->
     <div class="deck-controls">
       <div class="master-switch" id="playPause" title="Engage Stream Broadcast">
         <img id="switchIcon" src="Player/PLAY.png" alt="Play/Stop Link">
