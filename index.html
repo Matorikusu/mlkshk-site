@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MLKSHK - Jukebox</title>
+<title>MLKSHK</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -23,7 +23,6 @@ html,body{
   overflow-x: hidden;
 }
 a{color:inherit;text-decoration:none}
-
 /* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
@@ -74,145 +73,44 @@ header.nav-bar{
   background:var(--accent);
   color:#000;
 }
-
 /* HERO */
 .hero{
-  height:400px;
-  background:linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)), url('images/Home/mlkshk_header.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  height:700px;
+  background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
-.hero h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  letter-spacing: 4px;
-  color: #fff;
-  text-shadow: 0 0 20px var(--accent);
+/* IMAGE LINKS */
+.image-link{
+  display:block;
+  margin:40px auto;
 }
-
-/* JUKEBOX SCROLLER CONTAINER */
-.jukebox-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px 140px 20px; /* Extra bottom padding so player doesn't block content */
-}
-.section-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-  color: var(--muted);
-  border-left: 3px solid var(--accent);
-  padding-left: 10px;
-}
-
-/* HORIZONTAL SCROLLER */
-.scroller-wrapper {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  padding: 20px 10px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-/* Hide scrollbar defaults while keeping functionality */
-.scroller-wrapper::-webkit-scrollbar {
-  height: 6px;
-}
-.scroller-wrapper::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.02);
-}
-.scroller-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-.scroller-wrapper::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* JUKEBOX ITEM */
-.jukebox-card {
-  display: inline-block;
-  width: 220px;
-  margin-right: 30px;
-  vertical-align: top;
-  white-space: normal;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.jukebox-card:hover {
-  transform: translateY(-8px);
-}
-.cover-art-wrapper {
-  position: relative;
+.image-section{
   width: 100%;
-  aspect-ratio: 1/1;
-  background: #111;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 420px;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
+  aspect-ratio: 2.38 / 1;
 }
-.jukebox-card:hover .cover-art-wrapper {
-  border-color: var(--accent);
-  box-shadow: 0 0 25px rgba(255, 42, 161, 0.4);
+.image-link:hover .image-section{
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px rgba(255,255,255,.35);
 }
-.cover-art-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/* Active Playing State Visual Indicator */
-.jukebox-card.playing .cover-art-wrapper {
-  border-color: var(--accent);
-  box-shadow: 0 0 30px rgba(255, 42, 161, 0.6);
-}
-.jukebox-card.playing .cover-art-wrapper::after {
-  content: 'NOW PLAYING';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 12px;
-  color: var(--accent);
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.track-info {
-  margin-top: 12px;
-}
-.track-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.track-artist {
-  font-size: 13px;
-  color: var(--muted);
-}
-
+/* BACKGROUNDS */
+.pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
+.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
+.catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
+.universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
+.lab-section{background-image:url('images/Home/LAB_HEADER.png');}
+.access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
 /* FOOTER */
-footer {
+footer{
   padding:28px 20px;
   text-align:center;
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
-
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -221,47 +119,34 @@ footer {
   transform:translateX(-50%);
   width:360px;
   height:72px;
-  background: #0d0d0d; /* Replaced static image background with flexible solid/border design to fit text changes */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:url('Player/PLAYER.png') center/cover no-repeat;
   border-radius:20px;
   display:flex;
   align-items:center;
   padding:0 18px;
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
-  transition: border-color 0.3s ease;
-}
-#floating-player.active-play {
-  border-color: var(--accent);
 }
 .player-meta{
   flex:1;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  text-align:left;
+  text-align:center;
   padding:0 12px;
-  overflow: hidden;
 }
 .player-title{
   font-weight:700;
   font-size:14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .player-artist{
   font-size:12px;
   color:var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .player-status{
   font-size:11px;
-  color:var(--accent);
-  margin-top:2px;
-  font-weight: 600;
+  color:var(--muted);
+  margin-top:4px;
 }
 .player-controls{
   display:flex;
@@ -273,27 +158,19 @@ footer {
   width:42px;
   height:42px;
   cursor:pointer;
-  transition: transform 0.2s ease;
 }
-.player-controls img:hover {
-  transform: scale(1.05);
-}
-
 @media (max-width: 768px) {
-  .hero { height: 35vh; }
-  .hero h1 { font-size: 1.8rem; }
-  .jukebox-card { width: 170px; margin-right: 20px; }
-  .track-title { font-size: 13px; }
-  .track-artist { font-size: 11px; }
-  #floating-player { width: 90%; height: 66px; padding: 0 12px; }
-  .player-title { font-size: 13px; }
-  .player-artist, .player-status { font-size: 11px; }
-  .player-controls img { width: 38px; height: 38px; }
+  .hero { height: 50vh; }
+  .image-section { height: auto; min-height: 200px; }
+  .image-link { margin: 20px auto; }
+  #floating-player { width: 90%; height: 60px; padding: 0 12px; }
+  .player-title { font-size: 12px; }
+  .player-artist, .player-status { font-size: 10px; }
+  .player-controls img { width: 36px; height: 36px; }
 }
 </style>
 </head>
 <body>
-
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -312,67 +189,23 @@ footer {
   </div>
 </header>
 
-<section class="hero">
-  <h1>SELECT YOUR FREQUENCY</h1>
-</section>
+<section class="hero"></section>
 
-<section class="jukebox-section">
-  <div class="section-title">Archived Transmissions</div>
-  
-  <div class="scroller-wrapper">
-    
-    <div class="jukebox-card" data-track="audio/mock_track1.mp3" data-title="Pirate Radio Archive" data-artist="Vol. 01 - Late Night">
-      <div class="cover-art-wrapper">
-        <img src="images/mock_cover1.png" alt="Pirate Radio Vol 1">
-      </div>
-      <div class="track-info">
-        <div class="track-title">Pirate Radio Archive</div>
-        <div class="track-artist">Vol. 01 - Late Night</div>
-      </div>
-    </div>
-
-    <div class="jukebox-card" data-track="audio/mock_track2.mp3" data-title="The Lab Sessions" data-artist="Sub-Freq Alpha">
-      <div class="cover-art-wrapper">
-        <img src="images/mock_cover2.png" alt="The Lab Sessions">
-      </div>
-      <div class="track-info">
-        <div class="track-title">The Lab Sessions</div>
-        <div class="track-artist">Sub-Freq Alpha</div>
-      </div>
-    </div>
-
-    <div class="jukebox-card" data-track="audio/mock_track3.mp3" data-title="Universe Exploration" data-artist="Deep Space Static">
-      <div class="cover-art-wrapper">
-        <img src="images/mock_cover3.png" alt="Universe Exploration">
-      </div>
-      <div class="track-info">
-        <div class="track-title">Universe Exploration</div>
-        <div class="track-artist">Deep Space Static</div>
-      </div>
-    </div>
-
-    <div class="jukebox-card" data-track="audio/mock_track4.mp3" data-title="System Access Beats" data-artist="Misfit Mainframe">
-      <div class="cover-art-wrapper">
-        <img src="images/mock_cover4.png" alt="System Access Beats">
-      </div>
-      <div class="track-info">
-        <div class="track-title">System Access Beats</div>
-        <div class="track-artist">Misfit Mainframe</div>
-      </div>
-    </div>
-
-    <div class="jukebox-card" data-track="audio/mock_track5.mp3" data-title="Vowel Extraction" data-artist="MLKSHK Core">
-      <div class="cover-art-wrapper">
-        <img src="images/mock_cover5.png" alt="Vowel Extraction">
-      </div>
-      <div class="track-info">
-        <div class="track-title">Vowel Extraction</div>
-        <div class="track-artist">MLKSHK Core</div>
-      </div>
-    </div>
-
-  </div>
-</section>
+<a href="pirateradio.html" class="image-link">
+  <section class="image-section pirate-radio-section"></section>
+</a>
+<a href="universe.html" class="image-link">
+  <section class="image-section universe-section"></section>
+</a>
+<a href="archive.html" class="image-link">
+  <section class="image-section brands-section"></section>
+</a>
+<a href="lab.html" class="image-link">
+  <section class="image-section lab-section"></section>
+</a>
+<a href="access.html" class="image-link">
+  <section class="image-section access-section"></section>
+</a>
 
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
@@ -380,8 +213,8 @@ footer {
 
 <div id="floating-player">
   <div class="player-meta">
-    <div class="player-title" id="p-title">MLKSHK Jukebox</div>
-    <div class="player-artist" id="p-artist">Select a track to spin</div>
+    <div class="player-title">MLKSHK Pirate Radio</div>
+    <div class="player-artist">Live • Underground</div>
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
@@ -397,116 +230,75 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
-const playerPanel = document.getElementById('floating-player');
-
-const playerTitle = document.getElementById('p-title');
-const playerArtist = document.getElementById('p-artist');
-const cards = document.querySelectorAll('.jukebox-card');
+const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 
 let isPlaying = false;
-let currentTrackUrl = "";
 
-// Initialize Jukebox Selection Engine
-cards.forEach(card => {
-  card.addEventListener('click', function() {
-    const trackUrl = this.getAttribute('data-track');
-    const title = this.getAttribute('data-title');
-    const artist = this.getAttribute('data-artist');
-
-    // If clicking the track that's already loaded, just toggle Play/Pause
-    if (currentTrackUrl === trackUrl) {
-      togglePlayback();
-      return;
-    }
-
-    // Update active visual classes
-    cards.forEach(c => c.classList.remove('playing'));
-    this.classList.add('playing');
-
-    // Update metadata properties
-    currentTrackUrl = trackUrl;
-    playerTitle.textContent = title;
-    playerArtist.textContent = artist;
-    playerPanel.classList.add('active-play');
-
-    // Load and play track
-    loadAndPlay(trackUrl, title, artist);
-  });
-});
-
-function loadAndPlay(url, title, artist) {
-  audio.src = url;
+function playLiveStream() {
+  audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live stream
   audio.load();
   
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
-    statusEl.textContent = 'Playing';
-    updateMediaSession(title, artist);
+    statusEl.textContent = 'Live';
   }).catch(e => {
-    console.error("Playback execution prevented:", e);
-    statusEl.textContent = 'Error loading track';
+    console.error("Play failed:", e);
+    statusEl.textContent = 'Connection error – retrying...';
+    setTimeout(playLiveStream, 1500);
   });
 }
 
-function togglePlayback() {
-  if (!currentTrackUrl) {
-    statusEl.textContent = "Select a track first!";
-    return;
-  }
-
-  if (isPlaying) {
-    audio.pause();
-    isPlaying = false;
-    btn.src = 'Player/PLAY.png';
-    statusEl.textContent = 'Paused';
-    // Remove "NOW PLAYING" overlay visibility when paused
-    cards.forEach(c => {
-      if(c.getAttribute('data-track') === currentTrackUrl) c.classList.remove('playing');
-    });
-  } else {
-    audio.play().then(() => {
-      isPlaying = true;
-      btn.src = 'Player/PAUSE.png';
-      statusEl.textContent = 'Playing';
-      // Restore "NOW PLAYING" visual overlay
-      cards.forEach(c => {
-        if(c.getAttribute('data-track') === currentTrackUrl) c.classList.add('playing');
-      });
-    });
-  }
-}
-
-// Master controller click
-btn.onclick = () => {
-  togglePlayback();
-};
-
-// Handle native media wrapper events
-audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-audio.addEventListener('playing', () => statusEl.textContent = 'Playing');
-audio.addEventListener('ended', () => {
+function stopStream() {
+  audio.pause();
+  audio.src = '';                    // Clear source completely
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'Track Finished';
-  cards.forEach(c => c.classList.remove('playing'));
-});
-
-function updateMediaSession(title, artist) {
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: title,
-      artist: artist,
-      album: "MLKSHK Jukebox",
-      artwork: [{ src: "images/LOGO_SMALL.png", sizes: "512x512", type: "image/png" }]
-    });
-
-    navigator.mediaSession.setActionHandler('play', togglePlayback);
-    navigator.mediaSession.setActionHandler('pause', togglePlayback);
-  }
+  statusEl.textContent = 'Stopped';
 }
 
-/* Dropdown responsive navigation system */
+// Toggle button
+btn.onclick = () => {
+  if (!isPlaying) {
+    playLiveStream();
+  } else {
+    stopStream();
+  }
+};
+
+// Status & error handling
+audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
+audio.addEventListener('playing', () => {
+  statusEl.textContent = 'Live';
+  isPlaying = true;
+});
+audio.addEventListener('error', () => {
+  if (isPlaying) {                    // Only auto-retry if we were actively playing
+    statusEl.textContent = 'Stream dropped – reconnecting...';
+    setTimeout(playLiveStream, 2000);
+  }
+});
+audio.addEventListener('stalled', () => {
+  if (isPlaying) {
+    statusEl.textContent = 'Reconnecting...';
+    setTimeout(playLiveStream, 1500);
+  }
+});
+
+// Media Session support
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "MLKSHK Pirate Radio",
+    artist: "Underground • Live • No Rules",
+    album: "MLKSHK Digital",
+    artwork: [{ src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }]
+  });
+
+  navigator.mediaSession.setActionHandler('play', playLiveStream);
+  navigator.mediaSession.setActionHandler('pause', stopStream);
+}
+
+// Dropdown menu
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
