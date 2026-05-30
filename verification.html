@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MLKSHK Digital — Label Verification</title>
+<link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000;
+  --text:#fff;
+  --muted:#ccc;
+  --accent:#ff2aa1;
+}
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Rajdhani',system-ui,-apple-system,'Helvetica Neue',Arial;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+header.nav-bar{
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding:18px 24px;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+  position:sticky;
+  top:0;
+  z-index:30;
+}
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1200px;
+  margin:0 auto;
+}
+.logo-link img{height:42px;display:block}
+
+.main-content{
+  max-width:800px;
+  margin:80px auto;
+  padding:0 24px;
+  text-align:center;
+}
+h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:2.8rem;
+  margin-bottom:20px;
+  color:var(--accent);
+}
+h2{
+  font-size:1.6rem;
+  margin:40px 0 20px;
+  color:#fff;
+}
+p{
+  font-size:1.1rem;
+  max-width:680px;
+  margin:0 auto 20px;
+  color:var(--muted);
+}
+.roster{
+  background:rgba(255,42,161,0.08);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  padding:30px;
+  margin:40px auto;
+  max-width:600px;
+}
+.roster ul{
+  list-style:none;
+  padding:0;
+  font-size:1.3rem;
+}
+.roster li{
+  margin:12px 0;
+}
+.note{
+  font-size:0.95rem;
+  color:#888;
+  font-style:italic;
+  margin:50px auto 30px;
+  max-width:600px;
+}
+footer{
+  padding:40px 20px;
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.05);
+  margin-top:80px;
+}
+.accent-text{
+  color:var(--accent);
+}
+</style>
+</head>
+<body>
+
+<header class="nav-bar">
+  <div class="nav-content">
+    <a href="index.html" class="logo-link">
+      <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
+    </a>
+  </div>
+</header>
+
+<div class="main-content">
+  <h1>MLKSHK DIGITAL</h1>
+  
+  <h2>Label &amp; Digital Brand Verification</h2>
+  
+  <p>Hey Mabel and the Spotify team,</p>
+  
+  <p>Thank you for getting back to us.</p>
+  
+  <p>We are confirming that <strong class="accent-text">MLKSHK Digital</strong> is an active independent record label, virtual world, and underground radio broadcast platform.</p>
+  
+  <div class="roster">
+    <h2>Current Roster</h2>
+    <ul>
+      <li>Shockaddict</li>
+      <li>CPH4</li>
+      <li>Blaqq Shifu</li>
+      <li>Furbyz Rvenge</li>
+      <li>Frankie Velvet</li>
+    </ul>
+  </div>
+
+  <p>This page serves as direct verification of our label identity and ownership of the MLKSHK brand.</p>
+  
+  <p class="note">
+    Due to the anonymous and underground nature of our brand, this verification page will only be available for a limited time.
+  </p>
+
+  <p>Best regards,<br><br>
+  <strong>MLKSHK TEAM</strong></p>
+</div>
+
+<footer>
+  MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
