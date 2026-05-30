@@ -448,7 +448,7 @@ footer {
           <div class="track-artist">Blaqq Shifu</div>
         </div>
       </div>
-            
+          
       <div class="jukebox-card" data-track="Audio/Tracks/Red and Green.mp3" data-title="Red & Green" data-artist="Shockaddict" data-cover="images/Cover/BZ1979.jpg">
         <div class="cover-art-wrapper">
           <img src="images/Cover/BZ1979.jpg" alt="Mbz1979">
@@ -548,30 +548,39 @@ const playerTitle = document.getElementById('p-title');
 const playerArtist = document.getElementById('p-artist');
 const scroller = document.getElementById('scroller');
 
-// Global index lookup needs to watch dynamic array objects because of cloned elements
-let cards = Array.from(document.querySelectorAll('.jukebox-card'));
-let originalCardsCount = cards.length;
+/* ==========================================================================
+   RANDOM SHUFFLE SYSTEM (ON-LOAD ENGINE)
+   ========================================================================== */
+// Target baseline setup entries prior to processing duplication clones
+let originalCards = Array.from(scroller.querySelectorAll('.jukebox-card'));
+let originalCardsCount = originalCards.length;
 
-let isPlaying = false;
-let currentTrackIndex = -1;
-let isSeeking = false;
+// Fisher-Yates Shuffle Execution
+for (let i = originalCards.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  // Swap elements within array
+  [originalCards[i], originalCards[j]] = [originalCards[j], originalCards[i]];
+}
+
+// Clear out old static layout elements and inject randomized order sequence
+scroller.innerHTML = '';
+originalCards.forEach(card => scroller.appendChild(card));
 
 /* ==========================================================================
    CAROUSEL CLONING ENGINE FOR AN INFINITE DIRECTIONAL CRAWL LOOP
    ========================================================================== */
-// Clone cards to pad the trailing right side seamlessly
-cards.forEach(card => {
+// Clone shuffled cards to pad trailing right side seamlessly
+originalCards.forEach(card => {
   const duplicate = card.cloneNode(true);
   scroller.appendChild(duplicate);
 });
 
-// Refresh card reference array lists to include duplicates
-cards = Array.from(document.querySelectorAll('.jukebox-card'));
+// Update global operational arrays referencing current dynamic elements
+let cards = Array.from(document.querySelectorAll('.jukebox-card'));
 
-// Centralized dynamic tracking binder safely references original data array maps
+// Centralized tracking loop binding click callbacks accurately to mod indexes
 cards.forEach((card, index) => {
   card.addEventListener('click', function() {
-    // Treat matching duplicates and original entries as the same active track index
     const normalizedIndex = index % originalCardsCount;
     if (currentTrackIndex === normalizedIndex) {
       togglePlayback();
@@ -580,6 +589,10 @@ cards.forEach((card, index) => {
     changeTrack(normalizedIndex);
   });
 });
+
+let isPlaying = false;
+let currentTrackIndex = -1;
+let isSeeking = false;
 
 function changeTrack(index) {
   if (index < 0 || index >= originalCardsCount) return;
@@ -595,6 +608,7 @@ function changeTrack(index) {
     }
   });
 
+  // Pick track attributes out of the randomized operational array index setup
   const card = cards[currentTrackIndex];
   const trackUrl = card.getAttribute('data-track');
   const title = card.getAttribute('data-title');
@@ -759,21 +773,16 @@ document.addEventListener('click', () => {
 /* ==========================================================================
    INFINITE ONE-DIRECTIONAL AUTO-SCROLL LOOP ENGINE (RIGHT TO LEFT)
    ========================================================================== */
-let scrollSpeed = 0.5; // Constant rightwards glide speed velocity
+let scrollSpeed = 0.5;
 let autoScrollActive = true;
 let scrollAnimationFrame;
 
 function runAutoScroll() {
   if (!autoScrollActive) return;
 
-  // Advance right step parameters
   scroller.scrollLeft += scrollSpeed;
-
-  // Calculate mid-point boundary marker where cloned nodes duplicate the grid layout
-  // (Total layout width / 2 gives us the exact cut-off point of the original tracks)
   const loopResetPoint = scroller.scrollWidth / 2;
 
-  // Seamless jump trick: when we scroll past the original tracks, warp back to 0
   if (scroller.scrollLeft >= loopResetPoint) {
     scroller.scrollLeft -= loopResetPoint;
   }
@@ -781,13 +790,11 @@ function runAutoScroll() {
   scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
 }
 
-// Interactivity Check: Halt animation loop on cursor overlap hover actions
 scroller.addEventListener('mouseenter', () => {
   autoScrollActive = false;
   cancelAnimationFrame(scrollAnimationFrame);
 });
 
-// Resume continuous roll loops upon pointer exit states
 scroller.addEventListener('mouseleave', () => {
   if (!autoScrollActive) {
     autoScrollActive = true;
@@ -795,13 +802,11 @@ scroller.addEventListener('mouseleave', () => {
   }
 });
 
-// Stop loop on physical touch device manual scroll execution swipes
 scroller.addEventListener('touchstart', () => {
   autoScrollActive = false;
   cancelAnimationFrame(scrollAnimationFrame);
 }, { passive: true });
 
-// Fire up infinite layout framework loops natively on load
 scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
 </script>
 </body>
