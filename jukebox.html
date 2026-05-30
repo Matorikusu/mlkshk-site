@@ -79,17 +79,6 @@ header.nav-bar{
 .hero{
   height:400px;
   background:linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)), url('images/Home/mlkshk_header.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-.hero h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  letter-spacing: 4px;
-  color: #fff;
-  text-shadow: 0 0 20px var(--accent);
 }
 
 /* JUKEBOX SCROLLER CONTAINER */
@@ -187,6 +176,7 @@ header.nav-bar{
 
 .track-info {
   margin-top: 12px;
+  text-align: center; /* Centered track titles and artist names */
 }
 .track-title {
   font-family: 'Orbitron', sans-serif;
@@ -221,7 +211,7 @@ footer {
   transform:translateX(-50%);
   width:360px;
   height:72px;
-  background: #0d0d0d; /* Replaced static image background with flexible solid/border design to fit text changes */
+  background: #0d0d0d;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius:20px;
   display:flex;
@@ -281,7 +271,6 @@ footer {
 
 @media (max-width: 768px) {
   .hero { height: 35vh; }
-  .hero h1 { font-size: 1.8rem; }
   .jukebox-card { width: 170px; margin-right: 20px; }
   .track-title { font-size: 13px; }
   .track-artist { font-size: 11px; }
@@ -312,9 +301,7 @@ footer {
   </div>
 </header>
 
-<section class="hero">
-  <h1></h1>
-</section>
+<section class="hero"></section>
 
 <section class="jukebox-section">
   <div class="section-title">Archived Transmissions</div>
@@ -333,7 +320,7 @@ footer {
 
     <div class="jukebox-card" data-track="Audio/Tracks/Too Much.mp3" data-title="Too Much" data-artist="Furbyz Rvenge">
       <div class="cover-art-wrapper">
-        <img src="images/Covers/MLK:004" alt="MLK/004">
+        <img src="images/Cover/MLK:004.jpg" alt="MLK/004">
       </div>
       <div class="track-info">
         <div class="track-title">Too Much</div>
@@ -366,7 +353,7 @@ footer {
         <img src="images/Cover/NY1967.jpg" alt="MLK/021">
       </div>
       <div class="track-info">
-        <div class="track-title">Dime Cómo Has Estado </div>
+        <div class="track-title">Dime Cómo Has Estado</div>
         <div class="track-artist">Shockaddict x Blaqq Shifu</div>
       </div>
     </div>
@@ -406,30 +393,25 @@ const cards = document.querySelectorAll('.jukebox-card');
 let isPlaying = false;
 let currentTrackUrl = "";
 
-// Initialize Jukebox Selection Engine
 cards.forEach(card => {
   card.addEventListener('click', function() {
     const trackUrl = this.getAttribute('data-track');
     const title = this.getAttribute('data-title');
     const artist = this.getAttribute('data-artist');
 
-    // If clicking the track that's already loaded, just toggle Play/Pause
     if (currentTrackUrl === trackUrl) {
       togglePlayback();
       return;
     }
 
-    // Update active visual classes
     cards.forEach(c => c.classList.remove('playing'));
     this.classList.add('playing');
 
-    // Update metadata properties
     currentTrackUrl = trackUrl;
     playerTitle.textContent = title;
     playerArtist.textContent = artist;
     playerPanel.classList.add('active-play');
 
-    // Load and play track
     loadAndPlay(trackUrl, title, artist);
   });
 });
@@ -460,7 +442,6 @@ function togglePlayback() {
     isPlaying = false;
     btn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
-    // Remove "NOW PLAYING" overlay visibility when paused
     cards.forEach(c => {
       if(c.getAttribute('data-track') === currentTrackUrl) c.classList.remove('playing');
     });
@@ -469,7 +450,6 @@ function togglePlayback() {
       isPlaying = true;
       btn.src = 'Player/PAUSE.png';
       statusEl.textContent = 'Playing';
-      // Restore "NOW PLAYING" visual overlay
       cards.forEach(c => {
         if(c.getAttribute('data-track') === currentTrackUrl) c.classList.add('playing');
       });
@@ -477,12 +457,10 @@ function togglePlayback() {
   }
 }
 
-// Master controller click
 btn.onclick = () => {
   togglePlayback();
 };
 
-// Handle native media wrapper events
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Playing');
 audio.addEventListener('ended', () => {
@@ -506,7 +484,6 @@ function updateMediaSession(title, artist) {
   }
 }
 
-/* Dropdown responsive navigation system */
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
