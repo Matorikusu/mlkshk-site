@@ -86,7 +86,7 @@ header.nav-bar{
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px 140px 20px;
-  position: relative; /* Position context for the fade indicator overlay */
+  position: relative;
 }
 .section-title {
   font-family: 'Orbitron', sans-serif;
@@ -110,7 +110,7 @@ header.nav-bar{
   overflow-y: hidden;
   white-space: nowrap;
   padding: 20px 10px;
-  scroll-behavior: auto; /* Changed to auto so our JavaScript loop runs dynamically smooth */
+  scroll-behavior: auto; /* Required for snapping trick */
   -webkit-overflow-scrolling: touch;
 }
 .scroller-wrapper::-webkit-scrollbar {
@@ -127,7 +127,7 @@ header.nav-bar{
   background: var(--accent);
 }
 
-/* Visual Hint: Neon fade showing there's more items to the right */
+/* Glowing edges showing depth */
 .scroller-relative-container::after {
   content: '';
   position: absolute;
@@ -135,14 +135,20 @@ header.nav-bar{
   right: 0;
   height: 100%;
   width: 80px;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(255, 42, 161, 0.05) 50%, transparent 100%);
-  pointer-events: none; /* Allows users to click through the glow safely */
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(255, 42, 161, 0.03) 50%, transparent 100%);
+  pointer-events: none;
   z-index: 2;
-  transition: opacity 0.5s ease;
 }
-/* Hide the glow when the user has scrolled near the absolute end */
-.scroller-relative-container.scrolled-end::after {
-  opacity: 0;
+.scroller-relative-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 80px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(255, 42, 161, 0.03) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* JUKEBOX ITEM */
@@ -510,36 +516,60 @@ const totalDurEl = document.getElementById('total-dur');
 
 const playerTitle = document.getElementById('p-title');
 const playerArtist = document.getElementById('p-artist');
-const cards = Array.from(document.querySelectorAll('.jukebox-card'));
+const scroller = document.getElementById('scroller');
+
+// Global index lookup needs to watch dynamic array objects because of cloned elements
+let cards = Array.from(document.querySelectorAll('.jukebox-card'));
+let originalCardsCount = cards.length;
 
 let isPlaying = false;
 let currentTrackIndex = -1;
 let isSeeking = false;
 
-// Track Selection Mapping Engine
+/* ==========================================================================
+   CAROUSEL CLONING ENGINE FOR AN INFINITE DIRECTIONAL CRAWL LOOP
+   ========================================================================== */
+// Clone cards to pad the trailing right side seamlessly
+cards.forEach(card => {
+  const duplicate = card.cloneNode(true);
+  scroller.appendChild(duplicate);
+});
+
+// Refresh card reference array lists to include duplicates
+cards = Array.from(document.querySelectorAll('.jukebox-card'));
+
+// Centralized dynamic tracking binder safely references original data array maps
 cards.forEach((card, index) => {
   card.addEventListener('click', function() {
-    if (currentTrackIndex === index) {
+    // Treat matching duplicates and original entries as the same active track index
+    const normalizedIndex = index % originalCardsCount;
+    if (currentTrackIndex === normalizedIndex) {
       togglePlayback();
       return;
     }
-    changeTrack(index);
+    changeTrack(normalizedIndex);
   });
 });
 
 function changeTrack(index) {
-  if (index < 0 || index >= cards.length) return;
+  if (index < 0 || index >= originalCardsCount) return;
   
   currentTrackIndex = index;
-  const card = cards[currentTrackIndex];
   
+  // Update UI styling state globally across original elements and their duplicates
+  cards.forEach((c, idx) => {
+    if (idx % originalCardsCount === currentTrackIndex) {
+      c.classList.add('playing');
+    } else {
+      c.classList.remove('playing');
+    }
+  });
+
+  const card = cards[currentTrackIndex];
   const trackUrl = card.getAttribute('data-track');
   const title = card.getAttribute('data-title');
   const artist = card.getAttribute('data-artist');
   const cover = card.getAttribute('data-cover') || "images/LOGO_SMALL.png";
-
-  cards.forEach(c => c.classList.remove('playing'));
-  card.classList.add('playing');
 
   playerTitle.textContent = title;
   playerArtist.textContent = artist;
@@ -576,22 +606,24 @@ function togglePlayback() {
     btn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
     if('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
-    cards[currentTrackIndex].classList.remove('playing');
+    cards.forEach(c => c.classList.remove('playing'));
   } else {
     audio.play().then(() => {
       isPlaying = true;
       btn.src = 'Player/PAUSE.png';
       statusEl.textContent = 'Playing';
       if('mediaSession' in navigator) navigator.mediaSession.playbackState = "playing";
-      cards[currentTrackIndex].classList.add('playing');
+      cards.forEach((c, idx) => {
+        if (idx % originalCardsCount === currentTrackIndex) c.classList.add('playing');
+      });
     });
   }
 }
 
 function skipNext() {
-  if (cards.length <= 1) return;
+  if (originalCardsCount <= 1) return;
   let nextIndex = currentTrackIndex + 1;
-  if (nextIndex >= cards.length) nextIndex = 0;
+  if (nextIndex >= originalCardsCount) nextIndex = 0;
   changeTrack(nextIndex);
 }
 
@@ -602,18 +634,18 @@ function skipPrevious() {
     if (!isPlaying) togglePlayback();
   } else {
     let prevIndex = currentTrackIndex - 1;
-    if (prevIndex < 0) prevIndex = cards.length - 1;
+    if (prevIndex < 0) prevIndex = originalCardsCount - 1;
     changeTrack(prevIndex);
   }
 }
 
 function playRandomTrack() {
-  if (cards.length <= 1) {
+  if (originalCardsCount <= 1) {
     audio.currentTime = 0;
     audio.play();
     return;
   }
-  let pool = cards.map((_, i) => i).filter(i => i !== currentTrackIndex);
+  let pool = Array.from({length: originalCardsCount}, (_, i) => i).filter(i => i !== currentTrackIndex);
   let randomIdx = pool[Math.floor(Math.random() * pool.length)];
   changeTrack(randomIdx);
 }
@@ -695,48 +727,37 @@ document.addEventListener('click', () => {
 });
 
 /* ==========================================================================
-   SMOOTH CINEMATIC AUTO-SCROLL LOOPER
+   INFINITE ONE-DIRECTIONAL AUTO-SCROLL LOOP ENGINE (RIGHT TO LEFT)
    ========================================================================== */
-const scroller = document.getElementById('scroller');
-const scrollerContainer = document.getElementById('scrollerContainer');
-
-let scrollSpeed = 0.45; // Speed of the crawl loop (Adjust lower or higher)
-let scrollDirection = 1; // 1 = forward right, -1 = reverse back left
+let scrollSpeed = 0.5; // Constant rightwards glide speed velocity
 let autoScrollActive = true;
 let scrollAnimationFrame;
 
 function runAutoScroll() {
   if (!autoScrollActive) return;
 
-  // Advance scroll handle coordinates smoothly
-  scroller.scrollLeft += scrollSpeed * scrollDirection;
+  // Advance right step parameters
+  scroller.scrollLeft += scrollSpeed;
 
-  const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+  // Calculate mid-point boundary marker where cloned nodes duplicate the grid layout
+  // (Total layout width / 2 gives us the exact cut-off point of the original tracks)
+  const loopResetPoint = scroller.scrollWidth / 2;
 
-  // Toggle fade glow overlay indicator if player reaches near the right edge boundary
-  if (scroller.scrollLeft >= maxScrollLeft - 15) {
-    scrollerContainer.classList.add('scrolled-end');
-  } else {
-    scrollerContainer.classList.remove('scrolled-end');
-  }
-
-  // Ping-pong boundary bounce calculation loop
-  if (scroller.scrollLeft >= maxScrollLeft - 1) {
-    scrollDirection = -1; // Hit the right end, reverse backward slowly
-  } else if (scroller.scrollLeft <= 0) {
-    scrollDirection = 1;  // Hit the start, turn right forward again
+  // Seamless jump trick: when we scroll past the original tracks, warp back to 0
+  if (scroller.scrollLeft >= loopResetPoint) {
+    scroller.scrollLeft -= loopResetPoint;
   }
 
   scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
 }
 
-// Kill loop completely if mouse pointer interacts with the grid area
+// Interactivity Check: Halt animation loop on cursor overlap hover actions
 scroller.addEventListener('mouseenter', () => {
   autoScrollActive = false;
   cancelAnimationFrame(scrollAnimationFrame);
 });
 
-// Restart loop naturally if mouse exits bounds and user isn't clicking anything
+// Resume continuous roll loops upon pointer exit states
 scroller.addEventListener('mouseleave', () => {
   if (!autoScrollActive) {
     autoScrollActive = true;
@@ -744,13 +765,13 @@ scroller.addEventListener('mouseleave', () => {
   }
 });
 
-// Support for Mobile/Touch gestures (kill auto-scroll on manual swipe action)
+// Stop loop on physical touch device manual scroll execution swipes
 scroller.addEventListener('touchstart', () => {
   autoScrollActive = false;
   cancelAnimationFrame(scrollAnimationFrame);
 }, { passive: true });
 
-// Fire up loop right when page finishes initializing
+// Fire up infinite layout framework loops natively on load
 scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
 </script>
 </body>
