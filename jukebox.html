@@ -85,7 +85,7 @@ header.nav-bar{
 .jukebox-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px 140px 20px; /* Extra bottom padding so player doesn't block content */
+  padding: 40px 20px 140px 20px;
 }
 .section-title {
   font-family: 'Orbitron', sans-serif;
@@ -107,7 +107,6 @@ header.nav-bar{
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
-/* Hide scrollbar defaults while keeping functionality */
 .scroller-wrapper::-webkit-scrollbar {
   height: 6px;
 }
@@ -154,7 +153,6 @@ header.nav-bar{
   height: 100%;
   object-fit: cover;
 }
-/* Active Playing State Visual Indicator */
 .jukebox-card.playing .cover-art-wrapper {
   border-color: var(--accent);
   box-shadow: 0 0 30px rgba(255, 42, 161, 0.6);
@@ -176,7 +174,7 @@ header.nav-bar{
 
 .track-info {
   margin-top: 12px;
-  text-align: center; /* Centered track titles and artist names */
+  text-align: center;
 }
 .track-title {
   font-family: 'Orbitron', sans-serif;
@@ -209,7 +207,7 @@ footer {
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  width:360px;
+  width:420px; /* Slightly wider layout to easily fit extra control keys */
   height:72px;
   background: #0d0d0d;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -257,16 +255,21 @@ footer {
   display:flex;
   align-items:center;
   justify-content:center;
-  margin-left:12px;
+  gap: 8px;
+  margin-left:8px;
 }
 .player-controls img{
-  width:42px;
-  height:42px;
+  width:34px;
+  height:34px;
   cursor:pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 .player-controls img:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+.player-controls img#playPause {
+  width: 44px;
+  height: 44px;
 }
 
 @media (max-width: 768px) {
@@ -274,10 +277,12 @@ footer {
   .jukebox-card { width: 170px; margin-right: 20px; }
   .track-title { font-size: 13px; }
   .track-artist { font-size: 11px; }
-  #floating-player { width: 90%; height: 66px; padding: 0 12px; }
+  #floating-player { width: 92%; height: 70px; padding: 0 10px; }
   .player-title { font-size: 13px; }
   .player-artist, .player-status { font-size: 11px; }
-  .player-controls img { width: 38px; height: 38px; }
+  .player-controls { gap: 4px; }
+  .player-controls img { width: 30px; height: 30px; }
+  .player-controls img#playPause { width: 38px; height: 38px; }
 }
 </style>
 </head>
@@ -308,7 +313,7 @@ footer {
   
   <div class="scroller-wrapper">
     
-    <div class="jukebox-card" data-track="Audio/Tracks/Large Amounts.mp3" data-title="Large Amounts" data-artist="Frankie Velvet">
+    <div class="jukebox-card" data-track="Audio/Tracks/Large Amounts.mp3" data-title="Large Amounts" data-artist="Frankie Velvet" data-cover="images/Cover/MLK:021.jpg">
       <div class="cover-art-wrapper">
         <img src="images/Cover/MLK:021.jpg" alt="MLK/021">
       </div>
@@ -318,7 +323,7 @@ footer {
       </div>
     </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Too Much.mp3" data-title="Too Much" data-artist="Furbyz Rvenge">
+    <div class="jukebox-card" data-track="Audio/Tracks/Too Much.mp3" data-title="Too Much" data-artist="Furbyz Rvenge" data-cover="images/Cover/MLK:004.jpg">
       <div class="cover-art-wrapper">
         <img src="images/Cover/MLK:004.jpg" alt="MLK/004">
       </div>
@@ -328,7 +333,7 @@ footer {
       </div>
     </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Free Again.mp3" data-title="Free Again" data-artist="CPH4">
+    <div class="jukebox-card" data-track="Audio/Tracks/Free Again.mp3" data-title="Free Again" data-artist="CPH4" data-cover="images/Cover/MLK:006.jpg">
       <div class="cover-art-wrapper">
         <img src="images/Cover/MLK:006.jpg" alt="MLK/006">
       </div>
@@ -338,7 +343,7 @@ footer {
       </div>
     </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Play No Games.mp3" data-title="Play No Games" data-artist="Blaqq Shifu">
+    <div class="jukebox-card" data-track="Audio/Tracks/Play No Games.mp3" data-title="Play No Games" data-artist="Blaqq Shifu" data-cover="images/Cover/MLK:003.jpg">
       <div class="cover-art-wrapper">
         <img src="images/Cover/MLK:003.jpg" alt="MLK/003">
       </div>
@@ -348,7 +353,7 @@ footer {
       </div>
     </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Dime Cómo Has Estado.mp3" data-title="Dime Cómo Has Estado" data-artist="Shockaddict x Blaqq Shifu">
+    <div class="jukebox-card" data-track="Audio/Tracks/Dime Cómo Has Estado.mp3" data-title="Dime Cómo Has Estado" data-artist="Shockaddict x Blaqq Shifu" data-cover="images/Cover/NY1967.jpg">
       <div class="cover-art-wrapper">
         <img src="images/Cover/NY1967.jpg" alt="MLK/021">
       </div>
@@ -372,7 +377,9 @@ footer {
     <div class="player-status" id="status">Ready</div>
   </div>
   <div class="player-controls">
-    <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
+    <img id="prevTrack" src="Player/PREV.png" alt="Previous" title="Previous Track / Restart">
+    <img id="playPause" src="Player/PLAY.png" alt="Play/Pause">
+    <img id="nextTrack" src="Player/NEXT.png" alt="Next" title="Skip Track">
   </div>
   
   <audio id="audio" preload="none"></audio>
@@ -383,56 +390,65 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
+const prevBtn = document.getElementById('prevTrack');
+const nextBtn = document.getElementById('nextTrack');
 const statusEl = document.getElementById('status');
 const playerPanel = document.getElementById('floating-player');
 
 const playerTitle = document.getElementById('p-title');
 const playerArtist = document.getElementById('p-artist');
-const cards = document.querySelectorAll('.jukebox-card');
+const cards = Array.from(document.querySelectorAll('.jukebox-card'));
 
 let isPlaying = false;
-let currentTrackUrl = "";
+let currentTrackIndex = -1;
 
-cards.forEach(card => {
+// Global track picker and setup selector engine
+cards.forEach((card, index) => {
   card.addEventListener('click', function() {
-    const trackUrl = this.getAttribute('data-track');
-    const title = this.getAttribute('data-title');
-    const artist = this.getAttribute('data-artist');
-
-    if (currentTrackUrl === trackUrl) {
+    if (currentTrackIndex === index) {
       togglePlayback();
       return;
     }
-
-    cards.forEach(c => c.classList.remove('playing'));
-    this.classList.add('playing');
-
-    currentTrackUrl = trackUrl;
-    playerTitle.textContent = title;
-    playerArtist.textContent = artist;
-    playerPanel.classList.add('active-play');
-
-    loadAndPlay(trackUrl, title, artist);
+    changeTrack(index);
   });
 });
 
-function loadAndPlay(url, title, artist) {
-  audio.src = url;
+function changeTrack(index) {
+  if (index < 0 || index >= cards.length) return;
+  
+  currentTrackIndex = index;
+  const card = cards[currentTrackIndex];
+  
+  const trackUrl = card.getAttribute('data-track');
+  const title = card.getAttribute('data-title');
+  const artist = card.getAttribute('data-artist');
+  const cover = card.getAttribute('data-cover') || "images/LOGO_SMALL.png";
+
+  // Visual card selection tracking
+  cards.forEach(c => c.classList.remove('playing'));
+  card.classList.add('playing');
+
+  playerTitle.textContent = title;
+  playerArtist.textContent = artist;
+  playerPanel.classList.add('active-play');
+
+  // Load execution
+  audio.src = trackUrl;
   audio.load();
   
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
     statusEl.textContent = 'Playing';
-    updateMediaSession(title, artist);
+    updateMediaSession(title, artist, cover);
   }).catch(e => {
-    console.error("Playback execution prevented:", e);
+    console.error("Playback execution failed:", e);
     statusEl.textContent = 'Error loading track';
   });
 }
 
 function togglePlayback() {
-  if (!currentTrackUrl) {
+  if (currentTrackIndex === -1) {
     statusEl.textContent = "Select a track first!";
     return;
   }
@@ -442,48 +458,95 @@ function togglePlayback() {
     isPlaying = false;
     btn.src = 'Player/PLAY.png';
     statusEl.textContent = 'Paused';
-    cards.forEach(c => {
-      if(c.getAttribute('data-track') === currentTrackUrl) c.classList.remove('playing');
-    });
+    if('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
+    cards[currentTrackIndex].classList.remove('playing');
   } else {
     audio.play().then(() => {
       isPlaying = true;
       btn.src = 'Player/PAUSE.png';
       statusEl.textContent = 'Playing';
-      cards.forEach(c => {
-        if(c.getAttribute('data-track') === currentTrackUrl) c.classList.add('playing');
-      });
+      if('mediaSession' in navigator) navigator.mediaSession.playbackState = "playing";
+      cards[currentTrackIndex].classList.add('playing');
     });
   }
 }
 
-btn.onclick = () => {
-  togglePlayback();
-};
+// Next Logic: Skip manual controller execution
+function skipNext() {
+  if (cards.length <= 1) return;
+  // Chronological step up loop
+  let nextIndex = currentTrackIndex + 1;
+  if (nextIndex >= cards.length) nextIndex = 0;
+  changeTrack(nextIndex);
+}
 
+// Previous Logic: Smart Return / Restart Track execution
+function skipPrevious() {
+  if (currentTrackIndex === -1) return;
+  
+  // If song has played for more than 3 seconds, restart current track
+  if (audio.currentTime > 3) {
+    audio.currentTime = 0;
+    if (!isPlaying) togglePlayback();
+  } else {
+    // Jump back to the previous chronological entry
+    let prevIndex = currentTrackIndex - 1;
+    if (prevIndex < 0) prevIndex = cards.length - 1;
+    changeTrack(prevIndex);
+  }
+}
+
+// Auto-advance Randomizer Shuffle Engine
+function playRandomTrack() {
+  if (cards.length <= 1) {
+    // Fallback if only 1 track total exists
+    audio.currentTime = 0;
+    audio.play();
+    return;
+  }
+
+  let pool = cards.map((_, i) => i).filter(i => i !== currentTrackIndex);
+  let randomIdx = pool[Math.floor(Math.random() * pool.length)];
+  changeTrack(randomIdx);
+}
+
+// Click Event Handling Bindings
+btn.onclick = () => togglePlayback();
+nextBtn.onclick = () => skipNext();
+prevBtn.onclick = () => skipPrevious();
+
+// Handle system pipeline wrappers
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => statusEl.textContent = 'Playing');
 audio.addEventListener('ended', () => {
-  isPlaying = false;
-  btn.src = 'Player/PLAY.png';
-  statusEl.textContent = 'Track Finished';
-  cards.forEach(c => c.classList.remove('playing'));
+  statusEl.textContent = 'Intermission...';
+  playRandomTrack(); // Fires off random selection when current track naturally completes
 });
 
-function updateMediaSession(title, artist) {
+// Full Hardware Lockscreen Metadata Broadcast Engine
+function updateMediaSession(title, artist, cover) {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: title,
       artist: artist,
       album: "MLKSHK Jukebox",
-      artwork: [{ src: "images/LOGO_SMALL.png", sizes: "512x512", type: "image/png" }]
+      artwork: [
+        { src: cover, sizes: '300x300', type: 'image/jpeg' },
+        { src: cover, sizes: '512x512', type: 'image/jpeg' }
+      ]
     });
 
+    navigator.mediaSession.playbackState = "playing";
+
+    // Native mobile system action integration bindings
     navigator.mediaSession.setActionHandler('play', togglePlayback);
     navigator.mediaSession.setActionHandler('pause', togglePlayback);
+    navigator.mediaSession.setActionHandler('previoustrack', skipPrevious);
+    navigator.mediaSession.setActionHandler('nexttrack', skipNext);
   }
 }
 
+/* Dropdown Menu System Toggle */
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
