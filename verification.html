@@ -109,6 +109,19 @@ p{
   margin:0 auto 20px;
   color:var(--muted);
 }
+.email-box{
+  background:rgba(255,42,161,0.12);
+  border:2px solid var(--accent);
+  border-radius:8px;
+  padding:25px;
+  margin:35px auto;
+  max-width:520px;
+  font-size:1.35rem;
+}
+.email-box strong{
+  color:var(--accent);
+  font-size:1.45rem;
+}
 .roster{
   background:rgba(255,42,161,0.08);
   border:1px solid var(--accent);
@@ -171,11 +184,16 @@ footer{
  
   <h2>Label &amp; Digital Brand Verification</h2>
  
-  <p>Hey Mabel and the Spotify team,</p>
+  <p>Hey Rajesh and the Spotify team,</p>
  
   <p>Thank you for getting back to us.</p>
  
   <p>We are confirming that <strong class="accent-text">MLKSHK Digital</strong> is an active independent record label, virtual world, and underground radio broadcast platform.</p>
+
+  <div class="email-box">
+    <strong>Requesting Access Email:</strong><br>
+    mlkshkmedia@hotmail.com
+  </div>
  
   <div class="roster">
     <h2>Current Roster</h2>
@@ -189,8 +207,6 @@ footer{
   </div>
 
   <p>This page serves as direct verification of our label identity and ownership of the MLKSHK brand.</p>
-  
-  <p>Contact — mlkshkmedia@hotmail.com</p>
  
   <p class="note">
     Due to the anonymous and underground nature of our brand, this verification page will only be available for a limited time.
@@ -207,7 +223,7 @@ footer{
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Dropdown Menu Functionality
+// Dropdown Menu
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
