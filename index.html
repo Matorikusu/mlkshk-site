@@ -102,6 +102,7 @@ header.nav-bar{
 .brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
 .catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
 .universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
+.jukebox-image-section{background-image:url('images/Home/JUKEBOX_HEADER.png');} /* Added background image path here */
 .lab-section{background-image:url('images/Home/LAB_HEADER.png');}
 .access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
 /* FOOTER */
@@ -197,6 +198,11 @@ footer{
 <a href="universe.html" class="image-link">
   <section class="image-section universe-section"></section>
 </a>
+
+<a href="jukebox.html" class="image-link">
+  <section class="image-section jukebox-image-section"></section>
+</a>
+
 <a href="archive.html" class="image-link">
   <section class="image-section brands-section"></section>
 </a>
@@ -235,7 +241,7 @@ const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
 let isPlaying = false;
 
 function playLiveStream() {
-  audio.src = STREAM_URL + "?t=" + Date.now();   // Force fresh live stream
+  audio.src = STREAM_URL + "?t=" + Date.now();
   audio.load();
   
   audio.play().then(() => {
@@ -251,13 +257,12 @@ function playLiveStream() {
 
 function stopStream() {
   audio.pause();
-  audio.src = '';                    // Clear source completely
+  audio.src = '';
   isPlaying = false;
   btn.src = 'Player/PLAY.png';
   statusEl.textContent = 'Stopped';
 }
 
-// Toggle button
 btn.onclick = () => {
   if (!isPlaying) {
     playLiveStream();
@@ -266,14 +271,13 @@ btn.onclick = () => {
   }
 };
 
-// Status & error handling
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
 audio.addEventListener('playing', () => {
   statusEl.textContent = 'Live';
   isPlaying = true;
 });
 audio.addEventListener('error', () => {
-  if (isPlaying) {                    // Only auto-retry if we were actively playing
+  if (isPlaying) {
     statusEl.textContent = 'Stream dropped – reconnecting...';
     setTimeout(playLiveStream, 2000);
   }
@@ -285,7 +289,6 @@ audio.addEventListener('stalled', () => {
   }
 });
 
-// Media Session support
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: "MLKSHK Pirate Radio",
@@ -298,7 +301,6 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
-// Dropdown menu
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
