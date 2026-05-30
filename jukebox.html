@@ -86,6 +86,7 @@ header.nav-bar{
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px 140px 20px;
+  position: relative; /* Position context for the fade indicator overlay */
 }
 .section-title {
   font-family: 'Orbitron', sans-serif;
@@ -98,13 +99,18 @@ header.nav-bar{
   padding-left: 10px;
 }
 
-/* HORIZONTAL SCROLLER */
+/* HORIZONTAL SCROLLER WRAPPER */
+.scroller-relative-container {
+  position: relative;
+  width: 100%;
+}
+
 .scroller-wrapper {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   padding: 20px 10px;
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Changed to auto so our JavaScript loop runs dynamically smooth */
   -webkit-overflow-scrolling: touch;
 }
 .scroller-wrapper::-webkit-scrollbar {
@@ -119,6 +125,24 @@ header.nav-bar{
 }
 .scroller-wrapper::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+}
+
+/* Visual Hint: Neon fade showing there's more items to the right */
+.scroller-relative-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 80px;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(255, 42, 161, 0.05) 50%, transparent 100%);
+  pointer-events: none; /* Allows users to click through the glow safely */
+  z-index: 2;
+  transition: opacity 0.5s ease;
+}
+/* Hide the glow when the user has scrolled near the absolute end */
+.scroller-relative-container.scrolled-end::after {
+  opacity: 0;
 }
 
 /* JUKEBOX ITEM */
@@ -208,13 +232,13 @@ footer {
   left:50%;
   transform:translateX(-50%);
   width:440px; 
-  height:88px; /* Slightly taller to comfortably house the scrub architecture */
+  height:88px;
   background: #0d0d0d;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius:20px;
   display:flex;
   align-items:center;
-  padding:12px 18px 0 18px; /* Top heavy padding offsets the progress bar placement */
+  padding:12px 18px 0 18px;
   box-shadow:0 12px 40px rgba(0,0,0,.85);
   z-index:999;
   transition: border-color 0.3s ease;
@@ -246,13 +270,12 @@ footer {
   transition: height 0.1s;
 }
 #floating-player:hover .progress-slider {
-  height: 6px; /* Grow slightly on player hover for easier manipulation */
+  height: 6px;
 }
 .progress-slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 100%;
 }
-/* Progress filling logic across target engines */
 .progress-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -266,7 +289,7 @@ footer {
   transition: opacity 0.1s;
 }
 #floating-player:hover .progress-slider::-webkit-slider-thumb {
-  opacity: 1; /* Show thumb controller pointer handle when focused */
+  opacity: 1;
 }
 .progress-slider::-moz-range-thumb {
   width: 12px;
@@ -377,68 +400,70 @@ footer {
 <section class="jukebox-section">
   <div class="section-title">Archived Transmissions</div>
   
-  <div class="scroller-wrapper">
-    
-    <div class="jukebox-card" data-track="Audio/Tracks/Large Amounts.mp3" data-title="Large Amounts" data-artist="Frankie Velvet" data-cover="images/Cover/MLK:021.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/MLK:021.jpg" alt="MLK/021">
+  <div class="scroller-relative-container" id="scrollerContainer">
+    <div class="scroller-wrapper" id="scroller">
+      
+      <div class="jukebox-card" data-track="Audio/Tracks/Large Amounts.mp3" data-title="Large Amounts" data-artist="Frankie Velvet" data-cover="images/Cover/MLK:021.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/MLK:021.jpg" alt="MLK/021">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Large Amounts</div>
+          <div class="track-artist">Frankie Velvet</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Large Amounts</div>
-        <div class="track-artist">Frankie Velvet</div>
-      </div>
-    </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Too Much.mp3" data-title="Too Much" data-artist="Furbyz Rvenge" data-cover="images/Cover/MLK:004.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/MLK:004.jpg" alt="MLK/004">
+      <div class="jukebox-card" data-track="Audio/Tracks/Too Much.mp3" data-title="Too Much" data-artist="Furbyz Rvenge" data-cover="images/Cover/MLK:004.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/MLK:004.jpg" alt="MLK/004">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Too Much</div>
+          <div class="track-artist">Furbyz Rvenge</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Too Much</div>
-        <div class="track-artist">Furbyz Rvenge</div>
-      </div>
-    </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Free Again.mp3" data-title="Free Again" data-artist="CPH4" data-cover="images/Cover/MLK:006.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/MLK:006.jpg" alt="MLK/006">
+      <div class="jukebox-card" data-track="Audio/Tracks/Free Again.mp3" data-title="Free Again" data-artist="CPH4" data-cover="images/Cover/MLK:006.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/MLK:006.jpg" alt="MLK/006">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Free Again</div>
+          <div class="track-artist">CPH4</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Free Again</div>
-        <div class="track-artist">CPH4</div>
-      </div>
-    </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Play No Games.mp3" data-title="Play No Games" data-artist="Blaqq Shifu" data-cover="images/Cover/MLK:003.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/MLK:003.jpg" alt="MLK/003">
+      <div class="jukebox-card" data-track="Audio/Tracks/Play No Games.mp3" data-title="Play No Games" data-artist="Blaqq Shifu" data-cover="images/Cover/MLK:003.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/MLK:003.jpg" alt="MLK/003">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Play No Games</div>
+          <div class="track-artist">Blaqq Shifu</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Play No Games</div>
-        <div class="track-artist">Blaqq Shifu</div>
-      </div>
-    </div>
 
-    <div class="jukebox-card" data-track="Audio/Tracks/Dime Como Has Estado.mp3" data-title="Dime Cómo Has Estado" data-artist="Shockaddict x Blaqq Shifu" data-cover="images/Cover/NY1967.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/NY1967.jpg" alt="MLK/021">
+      <div class="jukebox-card" data-track="Audio/Tracks/Dime Como Has Estado.mp3" data-title="Dime Cómo Has Estado" data-artist="Shockaddict x Blaqq Shifu" data-cover="images/Cover/NY1967.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/NY1967.jpg" alt="MLK/021">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Dime Cómo Has Estado</div>
+          <div class="track-artist">Shockaddict x Blaqq Shifu</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Dime Cómo Has Estado</div>
-        <div class="track-artist">Shockaddict x Blaqq Shifu</div>
-      </div>
-    </div>
 
-        <div class="jukebox-card" data-track="Audio/Tracks/Hannya (Remix).mp3" data-title="Hannya (Remix)" data-artist="Shockaddict" data-cover="images/Cover/NY1967.jpg">
-      <div class="cover-art-wrapper">
-        <img src="images/Cover/MLK:020.jpg" alt="MLK/021">
+      <div class="jukebox-card" data-track="Audio/Tracks/Hannya (Remix).mp3" data-title="Hannya (Remix)" data-artist="Shockaddict" data-cover="images/Cover/NY1967.jpg">
+        <div class="cover-art-wrapper">
+          <img src="images/Cover/MLK:020.jpg" alt="MLK/021">
+        </div>
+        <div class="track-info">
+          <div class="track-title">Hannya (Remix)</div>
+          <div class="track-artist">Shockaddict</div>
+        </div>
       </div>
-      <div class="track-info">
-        <div class="track-title">Hannya (Remix)</div>
-        <div class="track-artist">Shockaddict</div>
-      </div>
-    </div>
 
+    </div>
   </div>
 </section>
 
@@ -489,7 +514,7 @@ const cards = Array.from(document.querySelectorAll('.jukebox-card'));
 
 let isPlaying = false;
 let currentTrackIndex = -1;
-let isSeeking = false; // Flag check stops slider jumping back and forth while pulling it around
+let isSeeking = false;
 
 // Track Selection Mapping Engine
 cards.forEach((card, index) => {
@@ -520,7 +545,6 @@ function changeTrack(index) {
   playerArtist.textContent = artist;
   playerPanel.classList.add('active-play');
   
-  // Reset scrub elements safely
   progressBar.value = 0;
   timeSplit.style.display = "inline";
   currTimeEl.textContent = "0:00";
@@ -594,7 +618,6 @@ function playRandomTrack() {
   changeTrack(randomIdx);
 }
 
-// Format Seconds to neat 0:00 syntax
 function formatTime(secs) {
   if (isNaN(secs)) return "0:00";
   const m = Math.floor(secs / 60);
@@ -605,21 +628,16 @@ function formatTime(secs) {
 /* REAL-TIME AUDIO SCROLL ENGINE LOGIC */
 audio.addEventListener('timeupdate', () => {
   if (!audio.duration || isSeeking) return;
-  // Calculate relative percent allocation
   const pct = (audio.currentTime / audio.duration) * 100;
   progressBar.value = pct;
   currTimeEl.textContent = formatTime(audio.currentTime);
-  
-  // Custom linear fill coloring calculation (simulating standard slider fill limits)
   progressBar.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${pct}%, rgba(255,255,255,0.15) ${pct}%, rgba(255,255,255,0.15) 100%)`;
 });
 
-// Update final duration when stream structural boundaries load safely
 audio.addEventListener('durationchange', () => {
   totalDurEl.textContent = formatTime(audio.duration);
 });
 
-// User grabs Slider Thumb
 progressBar.addEventListener('input', () => {
   isSeeking = true;
   const targetPct = progressBar.value;
@@ -629,14 +647,12 @@ progressBar.addEventListener('input', () => {
   }
 });
 
-// User releases Slider Thumb
 progressBar.addEventListener('change', () => {
   if (audio.duration) {
     audio.currentTime = (progressBar.value / 100) * audio.duration;
   }
   isSeeking = false;
 });
-
 
 btn.onclick = () => togglePlayback();
 nextBtn.onclick = () => skipNext();
@@ -677,6 +693,65 @@ navToggle.addEventListener('click', (e) => {
 document.addEventListener('click', () => {
   dropdownMenu.style.display = 'none';
 });
+
+/* ==========================================================================
+   SMOOTH CINEMATIC AUTO-SCROLL LOOPER
+   ========================================================================== */
+const scroller = document.getElementById('scroller');
+const scrollerContainer = document.getElementById('scrollerContainer');
+
+let scrollSpeed = 0.45; // Speed of the crawl loop (Adjust lower or higher)
+let scrollDirection = 1; // 1 = forward right, -1 = reverse back left
+let autoScrollActive = true;
+let scrollAnimationFrame;
+
+function runAutoScroll() {
+  if (!autoScrollActive) return;
+
+  // Advance scroll handle coordinates smoothly
+  scroller.scrollLeft += scrollSpeed * scrollDirection;
+
+  const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+
+  // Toggle fade glow overlay indicator if player reaches near the right edge boundary
+  if (scroller.scrollLeft >= maxScrollLeft - 15) {
+    scrollerContainer.classList.add('scrolled-end');
+  } else {
+    scrollerContainer.classList.remove('scrolled-end');
+  }
+
+  // Ping-pong boundary bounce calculation loop
+  if (scroller.scrollLeft >= maxScrollLeft - 1) {
+    scrollDirection = -1; // Hit the right end, reverse backward slowly
+  } else if (scroller.scrollLeft <= 0) {
+    scrollDirection = 1;  // Hit the start, turn right forward again
+  }
+
+  scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
+}
+
+// Kill loop completely if mouse pointer interacts with the grid area
+scroller.addEventListener('mouseenter', () => {
+  autoScrollActive = false;
+  cancelAnimationFrame(scrollAnimationFrame);
+});
+
+// Restart loop naturally if mouse exits bounds and user isn't clicking anything
+scroller.addEventListener('mouseleave', () => {
+  if (!autoScrollActive) {
+    autoScrollActive = true;
+    scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
+  }
+});
+
+// Support for Mobile/Touch gestures (kill auto-scroll on manual swipe action)
+scroller.addEventListener('touchstart', () => {
+  autoScrollActive = false;
+  cancelAnimationFrame(scrollAnimationFrame);
+}, { passive: true });
+
+// Fire up loop right when page finishes initializing
+scrollAnimationFrame = requestAnimationFrame(runAutoScroll);
 </script>
 </body>
 </html>
