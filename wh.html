@@ -9,7 +9,7 @@
             --bg-color: #ffffff;
             --text-color: #1a1a1a;
             --text-muted: #767676;
-            --line-color: #e0e0e0;
+            --line-color: #e2e2e2;
             --font-serif: "Times New Roman", Times, Baskerville, Georgia, serif;
             --font-mono: "Courier New", Courier, Monaco, monospace;
         }
@@ -29,7 +29,7 @@
             padding: 0 2rem;
         }
 
-        /* Technical Grid Lines */
+        /* Master Blueprint Framework */
         .grid-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -40,19 +40,19 @@
             flex-direction: column;
         }
 
-        /* Header / Navigation */
+        /* Header / Registry Banner */
         header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            padding: 2.5rem 2rem;
+            padding: 3rem 2rem;
             border-bottom: 1px solid var(--line-color);
         }
 
         .brand-title {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 400;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.35em;
             text-transform: uppercase;
             text-decoration: none;
             color: var(--text-color);
@@ -68,7 +68,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         nav a {
@@ -77,33 +77,34 @@
             text-decoration: none;
             color: var(--text-color);
             letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         nav a span {
             color: var(--text-muted);
-            margin-right: 0.25rem;
+            margin-right: 0.4rem;
         }
 
         nav a:hover {
             text-decoration: underline;
         }
 
-        /* Hero Section */
+        /* Hero / Umbrella Statement */
         .hero {
-            padding: 6rem 2rem;
+            padding: 8rem 2rem;
             border-bottom: 1px solid var(--line-color);
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 4rem;
             align-items: end;
         }
 
         .hero-statement h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 400;
-            line-height: 1.2;
-            margin-top: 1.5rem;
-            max-width: 540px;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            max-width: 700px;
         }
 
         .hero-statement .label {
@@ -111,47 +112,25 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
+            display: block;
+            margin-bottom: 1.5rem;
         }
 
-        .hero-triptych {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            background-color: var(--line-color);
-            border: 1px solid var(--line-color);
-        }
-
-        .triptych-panel {
-            background-color: #f9f9f9;
-            aspect-ratio: 3/4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Visual placeholder lines acting as technical drawing drafts */
-        .triptych-panel::before, .triptych-panel::after {
-            content: '';
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        .triptych-panel::before { width: 100%; height: 1px; top: 50%; left: 0; }
-        .triptych-panel::after { width: 1px; height: 100%; left: 50%; top: 0; }
-
-        .panel-label {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
+        .hero-meta-block {
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            text-transform: uppercase;
+            border-left: 1px solid var(--line-color);
+            padding-left: 2rem;
         }
 
-        /* Core Pillars Section */
+        .hero-meta-block p {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Reconfigured Pillars Section */
         .pillar {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -159,7 +138,7 @@
         }
 
         .pillar-meta {
-            padding: 4rem 2rem;
+            padding: 5rem 3rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -176,22 +155,24 @@
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.05em;
         }
 
         .pillar-title {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 400;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
             text-transform: uppercase;
             margin-bottom: 1.5rem;
         }
 
         .pillar-description {
-            font-size: 1.05rem;
-            max-width: 440px;
-            color: #333;
-            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            max-width: 460px;
+            color: var(--text-color);
+            margin-bottom: 4rem;
+            text-align: justify;
         }
 
         .pillar-link {
@@ -207,43 +188,65 @@
             text-decoration: underline;
         }
 
+        /* Schematic Render Placeholders */
         .pillar-visual {
-            padding: 4rem;
+            padding: 5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #fafafa;
+            background-color: #fbfbfb;
         }
 
-        .technical-schematic {
+        .technical-blueprint {
             width: 100%;
             height: 100%;
-            min-height: 300px;
-            border: 1px dashed #ccc;
+            min-height: 350px;
+            border: 1px solid rgba(0, 0, 0, 0.07);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #ffffff;
         }
 
-        .technical-schematic::before {
+        /* Crosshair markers simulating drafting bounds */
+        .technical-blueprint::before {
             content: '';
             position: absolute;
-            width: 80%;
-            height: 80%;
-            border: 1px solid rgba(0,0,0,0.03);
-            border-radius: 50%;
+            width: 90%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.05) 90%, transparent);
+        }
+        
+        .technical-blueprint::after {
+            content: '';
+            position: absolute;
+            height: 90%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.05) 90%, transparent);
         }
 
-        /* Manifesto Section */
+        .blueprint-label {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Technical Manifesto Section */
         .manifesto {
-            padding: 8rem 2rem;
+            padding: 9rem 2rem;
             text-align: center;
             border-bottom: 1px solid var(--line-color);
+            background-color: #ffffff;
         }
 
         .manifesto-container {
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto;
         }
 
@@ -252,36 +255,35 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             display: block;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .manifesto p {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             line-height: 1.8;
             color: var(--text-color);
             text-align: justify;
             text-justify: inter-word;
         }
 
-        /* Footer */
+        /* Footer / The Title Block */
         footer {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            grid-template-columns: 1.221fr 0.779fr 1fr;
+            gap: 4rem;
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--text-muted);
             background-color: #fff;
-            margin-top: auto;
         }
 
         .footer-col h4 {
             color: var(--text-color);
             font-weight: 400;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
@@ -308,20 +310,23 @@
             padding: 0.5rem 0;
             color: var(--text-color);
             font-family: var(--font-mono);
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .ledger-input:focus {
             outline: none;
         }
 
-        @media (max-width: 900px) {
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
             body { padding: 0; }
             .grid-container { border: none; }
-            .hero, .pillar { grid-template-columns: 1fr; }
-            .hero-triptych { display: none; }
+            .hero { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 2rem; }
+            .hero-meta-block { border-left: none; padding-left: 0; border-top: 1px solid var(--line-color); padding-top: 2rem; }
+            .pillar { grid-template-columns: 1fr; }
             .pillar:nth-child(even) .pillar-meta { order: 0; border-left: none; border-bottom: 1px solid var(--line-color); }
-            .pillar-meta { border-right: none; border-bottom: 1px solid var(--line-color); }
+            .pillar-meta { border-right: none; border-bottom: 1px solid var(--line-color); padding: 4rem 2rem; }
+            .pillar-visual { padding: 2rem; }
             footer { grid-template-columns: 1fr; gap: 3rem; }
         }
     </style>
@@ -335,22 +340,21 @@
             <div class="coordinates">52.1307° N, 0.4628° W</div>
             <nav>
                 <ul>
-                    <li><a href="#"><span>01</span>Automotive</a></li>
-                    <li><a href="#"><span>02</span>Audio</a></li>
-                    <li><a href="#"><span>03</span>Equine</a></li>
+                    <li><a href="#"><span>01</span>Design & Eng.</a></li>
+                    <li><a href="#"><span>02</span>Automotive</a></li>
+                    <li><a href="#"><span>03</span>Equine Clinical</a></li>
                 </ul>
             </nav>
         </header>
 
         <section class="hero">
             <div class="hero-statement">
-                <span class="label">Master Framework</span>
-                <h1>Where engineering, acoustics, and equestrian heritage converge under a single standard of craftsmanship.</h1>
+                <span class="label">Systemic Overview // Concept Blueprint</span>
+                <h1>A multi-disciplinary estate unified by precise engineering standards, mechanical restoration, and veterinary research.</h1>
             </div>
-            <div class="hero-triptych">
-                <div class="triptych-panel"><span class="panel-label">Fig. A // Chassis</span></div>
-                <div class="triptych-panel"><span class="panel-label">Fig. B // Frequency</span></div>
-                <div class="triptych-panel"><span class="panel-label">Fig. C // Anatomical</span></div>
+            <div class="hero-meta-block">
+                <p><strong>REVISION LOG // 01</strong></p>
+                <p>Operational frameworks consolidated under the master estate ledger. Stripped of superficial compromise; structured entirely on demonstrable capability and rigorous case analysis.</p>
             </div>
         </section>
 
@@ -359,15 +363,15 @@
             <div class="pillar">
                 <div class="pillar-meta">
                     <div>
-                        <div class="pillar-index">FIG. 01 // CATEGORY: MECHANICAL</div>
-                        <h2 class="pillar-title">Whorton Automotive</h2>
-                        <p class="pillar-description">Restoration, precision tuning, and vehicular design. Built entirely for those who understand and command mechanical sympathy.</p>
+                        <div class="pillar-index">INDEX SYSTEM [ 01 ] // SOLIDWORKS / FUSION / CNC FABRICATION</div>
+                        <h2 class="pillar-title">Engineering &amp; Design</h2>
+                        <p class="pillar-description">Bespoke mechanical CAD modeling, assemblies, and complete CNC manufacturing programming. Transitioning directly from mathematical definitions in software to toolpathed physical realities in raw metals.</p>
                     </div>
-                    <a href="#" class="pillar-link">Access Automotive Ledger &rarr;</a>
+                    <a href="#" class="pillar-link">View CAD/CAM Repository &rarr;</a>
                 </div>
                 <div class="pillar-visual">
-                    <div class="technical-schematic">
-                        <span class="panel-label">Scale 1:10 / Technical Dimensioning Block</span>
+                    <div class="technical-blueprint">
+                        <span class="blueprint-label">FIG 1.1 // TOOLPATH VECTOR MATRIX [X, Y, Z]</span>
                     </div>
                 </div>
             </div>
@@ -375,15 +379,15 @@
             <div class="pillar">
                 <div class="pillar-meta">
                     <div>
-                        <div class="pillar-index">FIG. 02 // CATEGORY: ACOUSTIC</div>
-                        <h2 class="pillar-title">Whorton Audio</h2>
-                        <p class="pillar-description">Acoustic engineering stripped entirely of gimmicks. Pure signal paths, machined enclosures, and uncompromising fidelity to the master tape.</p>
+                        <div class="pillar-index">INDEX SYSTEM [ 02 ] // HISTORIC REGISTRY LOG</div>
+                        <h2 class="pillar-title">Automotive Archive</h2>
+                        <p class="pillar-description">Active historical ledger mapping the meticulous, step-by-step restoration of our 1934 Standard Nine. Documenting part replication, reverse-engineering vintage assemblies, and long-form historical tracking.</p>
                     </div>
-                    <a href="#" class="pillar-link">Access Audio Ledger &rarr;</a>
+                    <a href="#" class="pillar-link">Access 1934 Standard Nine Logbook &rarr;</a>
                 </div>
                 <div class="pillar-visual">
-                    <div class="technical-schematic">
-                        <span class="panel-label">Harmonic Distortion Mapping / 0.001% Variance Matrix</span>
+                    <div class="technical-blueprint">
+                        <span class="blueprint-label">FIG 2.1 // REVERSE-ENGINEERED HUB ASSEMBLY</span>
                     </div>
                 </div>
             </div>
@@ -391,15 +395,15 @@
             <div class="pillar">
                 <div class="pillar-meta">
                     <div>
-                        <div class="pillar-index">FIG. 03 // CATEGORY: EQUESTRIAN</div>
-                        <h2 class="pillar-title">Whorton Equine</h2>
-                        <p class="pillar-description">Traditional bespoke saddlery and comprehensive equine management. Where old-world bench work meets modern anatomical performance standards.</p>
+                        <div class="pillar-index">INDEX SYSTEM [ 03 ] // CLINICAL RESEARCH JOURNAL</div>
+                        <h2 class="pillar-title">Equine Clinical</h2>
+                        <p class="pillar-description">A veterinary science repository tracking innovative drug testing, pathological data, and in-depth clinical case studies. Built to record complex diagnoses and advance empirical performance methodologies.</p>
                     </div>
-                    <a href="#" class="pillar-link">Access Equine Ledger &rarr;</a>
+                    <a href="#" class="pillar-link">Read Clinical Research Papers &rarr;</a>
                 </div>
                 <div class="pillar-visual">
-                    <div class="technical-schematic">
-                        <span class="panel-label">Tensile Stitch Vector / Cranial Clearance Spec</span>
+                    <div class="technical-blueprint">
+                        <span class="blueprint-label">FIG 3.1 // COMPARTMENTAL PHARMACOKINETICS DATA</span>
                     </div>
                 </div>
             </div>
@@ -408,30 +412,30 @@
 
         <section class="manifesto">
             <div class="manifesto-container">
-                <span class="label">[ Specification Note // 00-A ]</span>
-                <p>We do not design for trends, nor do we dilute for scale. Whether machining an engine component to a fraction of a millimeter, tuning a frequency response curve, or shaping a custom timber tree for a saddle, our philosophy remains absolute: Respect the materials. Honor the utility. Revere the craft.</p>
+                <span class="label">[ SYSTEM METRIC NOTE // 00-A1 ]</span>
+                <p>We work from first principles. Whether modeling an assembly component to sub-millimeter tolerances, tracking the exact structural load of a pre-war chassis, or parsing clinical indicators in modern veterinary medicine, the rule remains absolute: The data dictates the execution. True craftsmanship is defined by the absolute absence of decoration.</p>
             </div>
         </section>
 
         <footer>
             <div class="footer-col">
-                <h4>Registry Offices</h4>
-                <p>Whorton Estate Holdings Ltd.<br>
-                Architectural Block 4, North Wing<br>
-                United Kingdom</p>
+                <h4>Whorton Estate Registry</h4>
+                <p>Private Operational Ledger<br>
+                Staffordshire / United Kingdom Office<br>
+                Established 2026</p>
             </div>
             <div class="footer-col">
-                <h4>Index Matrix</h4>
+                <h4>Data Matrix Index</h4>
                 <ul>
-                    <li><a href="#">Terms of Specification</a></li>
-                    <li><a href="#">Material Provenance Ledger</a></li>
-                    <li><a href="#">Archival Records</a></li>
+                    <li><a href="#">CAD Model Archives</a></li>
+                    <li><a href="#">Veterinary Case Logs</a></li>
+                    <li><a href="#">Restoration Part Registries</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Communications</h4>
-                <p>Request entry to the private estate register:</p>
-                <input type="email" placeholder="[ Enter Verified Email Address ]" class="ledger-input">
+                <h4>Private Ledger Enrolment</h4>
+                <p>Submit identification for access to raw technical document revisions:</p>
+                <input type="email" placeholder="[ Enter Academic or Engineering Email ]" class="ledger-input">
             </div>
         </footer>
 
