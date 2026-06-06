@@ -73,6 +73,36 @@ header.nav-bar{
   background:var(--accent);
   color:#000;
 }
+
+/* POSTER SHOWCASE */
+.poster-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.poster-card {
+  flex: 1;
+  aspect-ratio: 1080 / 1920; /* Enforces 1080x1920 proportions */
+  background-color: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.poster-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.8s ease-in-out;
+  opacity: 1;
+}
+.poster-card img.fade-out {
+  opacity: 0;
+}
+
 /* HERO */
 .hero{
   height:700px;
@@ -161,6 +191,7 @@ footer{
   cursor:pointer;
 }
 @media (max-width: 768px) {
+  .poster-container { flex-direction: column; gap: 15px; }
   .hero { height: 50vh; }
   .image-section { height: auto; min-height: 200px; }
   .image-link { margin: 20px auto; }
@@ -190,6 +221,18 @@ footer{
     </div>
   </div>
 </header>
+
+<section class="poster-container">
+  <div class="poster-card">
+    <img id="poster1" src="mock1.jpg" alt="Poster 1">
+  </div>
+  <div class="poster-card">
+    <img id="poster2" src="mock2.jpg" alt="Poster 2">
+  </div>
+  <div class="poster-card">
+    <img id="poster3" src="mock3.jpg" alt="Poster 3">
+  </div>
+</section>
 
 <section class="hero"></section>
 
@@ -313,6 +356,39 @@ navToggle.addEventListener('click', (e) => {
 document.addEventListener('click', () => {
   dropdownMenu.style.display = 'none';
 });
+
+// POSTER IMAGE ROTATOR LOGIC
+// Add paths to your image arrays below
+const pool1 = ['mock1.jpg', 'mock4.jpg', 'mock7.jpg'];
+const pool2 = ['mock2.jpg', 'mock5.jpg', 'mock8.jpg'];
+const pool3 = ['mock3.jpg', 'mock6.jpg', 'mock9.jpg'];
+
+let idx1 = 0, idx2 = 0, idx3 = 0;
+
+function rotatePoster(elementId, pool, currentIdxObj, key) {
+  const imgEl = document.getElementById(elementId);
+  if(!imgEl) return;
+  
+  // Fade out
+  imgEl.classList.add('fade-out');
+  
+  setTimeout(() => {
+    // Advance index loop
+    currentIdxObj[key] = (currentIdxObj[key] + 1) % pool.length;
+    // Swap source
+    imgEl.src = pool[currentIdxObj[key]];
+    // Fade back in
+    imgEl.classList.remove('fade-out');
+  }, 800); // Matches the 0.8s CSS transition length
+}
+
+// Track state indices in an object to pass by reference easily
+const stateIndices = { i1: 0, i2: 0, i3: 0 };
+
+// Cycle every 4 seconds (staggered slightly for dynamic visual effect)
+setInterval(() => rotatePoster('poster1', pool1, stateIndices, 'i1'), 4000);
+setInterval(() => rotatePoster('poster2', pool2, stateIndices, 'i2'), 4500);
+setInterval(() => rotatePoster('poster3', pool3, stateIndices, 'i3'), 5000);
 </script>
 </body>
 </html>
