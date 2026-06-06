@@ -23,6 +23,7 @@ html,body{
   overflow-x: hidden;
 }
 a{color:inherit;text-decoration:none}
+
 /* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
@@ -80,21 +81,21 @@ header.nav-bar{
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
 
-/* POSTER SHOWCASE */
+/* POSTER SHOWCASE (4 COLUMNS - 1080x1920 PORTRAIT) */
 .poster-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
   max-width: 1200px;
-  margin: 40px auto 10px auto; /* Margin matches your layout flow */
+  margin: 40px auto 10px auto;
   padding: 0 20px;
 }
 .poster-card {
   flex: 1;
-  aspect-ratio: 1080 / 1920; /* Enforces 1080x1920 proportions */
+  aspect-ratio: 1080 / 1920; 
   background-color: #111;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
 }
@@ -128,14 +129,15 @@ header.nav-bar{
   filter:brightness(1.15);
   box-shadow:0 0 40px rgba(255,255,255,.35);
 }
+
 /* BACKGROUNDS */
 .pirate-radio-section{background-image:url('images/Pirate Radio/pirateradio_header.png');}
-.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
-.catalogue-section{background-image:url('images/Home/CATALOGUE_HEADER_3.png');}
 .universe-section{background-image:url('images/Home/UNIVERSE_HEADER2.png');}
 .jukebox-image-section{background-image:url('images/Home/MLKSHK JUKEBOX.jpg');}
+.brands-section{background-image:url('images/Home/MLKSHK_ARCHIVE_HEADER.png');}
 .lab-section{background-image:url('images/Home/LAB_HEADER.png');}
 .access-section{background-image:url('images/Home/MLKSHK_ACCESS.png');}
+
 /* FOOTER */
 footer{
   padding:28px 20px;
@@ -143,6 +145,7 @@ footer{
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
+
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -191,8 +194,14 @@ footer{
   height:42px;
   cursor:pointer;
 }
-@media (max-width: 768px) {
-  .poster-container { flex-direction: column; gap: 15px; }
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 900px) {
+  .poster-container { flex-wrap: wrap; }
+  .poster-card { flex: 1 0 calc(50% - 16px); }
+}
+@media (max-width: 600px) {
+  .poster-card { flex: 1 0 100%; }
   .hero { height: 50vh; }
   .image-section { height: auto; min-height: 200px; }
   .image-link { margin: 20px auto; }
@@ -204,6 +213,7 @@ footer{
 </style>
 </head>
 <body>
+
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
@@ -227,13 +237,16 @@ footer{
 
 <section class="poster-container">
   <div class="poster-card">
-    <img id="poster1" src="mock1.jpg" alt="Poster 1">
+    <img id="poster1" src="images/Posters/MLKSHK1.jpg" alt="Poster 1">
   </div>
   <div class="poster-card">
-    <img id="poster2" src="mock2.jpg" alt="Poster 2">
+    <img id="poster2" src="images/Posters/MLKSHK2.jpg" alt="Poster 2">
   </div>
   <div class="poster-card">
-    <img id="poster3" src="mock3.jpg" alt="Poster 3">
+    <img id="poster3" src="images/Posters/MLKSHK3.jpg" alt="Poster 3">
+  </div>
+  <div class="poster-card">
+    <img id="poster4" src="images/Posters/MLKSHK4.jpg" alt="Poster 4">
   </div>
 </section>
 
@@ -243,11 +256,9 @@ footer{
 <a href="universe.html" class="image-link">
   <section class="image-section universe-section"></section>
 </a>
-
 <a href="jukebox.html" class="image-link">
   <section class="image-section jukebox-image-section"></section>
 </a>
-
 <a href="archive.html" class="image-link">
   <section class="image-section brands-section"></section>
 </a>
@@ -271,24 +282,22 @@ footer{
   <div class="player-controls">
     <img id="playPause" src="Player/PLAY.png" alt="Play/Stop">
   </div>
-  
   <audio id="audio" preload="none"></audio>
 </div>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// AUDIO STREAM PLAYER ENGINE
 const audio = document.getElementById('audio');
 const btn = document.getElementById('playPause');
 const statusEl = document.getElementById('status');
 const STREAM_URL = "https://radio.mlkshkdigital.com/stream.mp3";
-
 let isPlaying = false;
 
 function playLiveStream() {
   audio.src = STREAM_URL + "?t=" + Date.now();
   audio.load();
-  
   audio.play().then(() => {
     isPlaying = true;
     btn.src = 'Player/PAUSE.png';
@@ -309,18 +318,11 @@ function stopStream() {
 }
 
 btn.onclick = () => {
-  if (!isPlaying) {
-    playLiveStream();
-  } else {
-    stopStream();
-  }
+  if (!isPlaying) { playLiveStream(); } else { stopStream(); }
 };
 
 audio.addEventListener('waiting', () => statusEl.textContent = 'Buffering...');
-audio.addEventListener('playing', () => {
-  statusEl.textContent = 'Live';
-  isPlaying = true;
-});
+audio.addEventListener('playing', () => { statusEl.textContent = 'Live'; isPlaying = true; });
 audio.addEventListener('error', () => {
   if (isPlaying) {
     statusEl.textContent = 'Stream dropped – reconnecting...';
@@ -341,11 +343,11 @@ if ('mediaSession' in navigator) {
     album: "MLKSHK Digital",
     artwork: [{ src: "images/Pirate Radio/pirateradio.png", sizes: "512x512", type: "image/png" }]
   });
-
   navigator.mediaSession.setActionHandler('play', playLiveStream);
   navigator.mediaSession.setActionHandler('pause', stopStream);
 }
 
+// HEADER DROPDOWN CONFIG
 const navToggle = document.querySelector('.nav-toggle');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
@@ -353,34 +355,42 @@ navToggle.addEventListener('click', (e) => {
   e.stopPropagation();
   dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
 });
+document.addEventListener('click', () => { dropdownMenu.style.display = 'none'; });
 
-document.addEventListener('click', () => {
-  dropdownMenu.style.display = 'none';
-});
+// DYNAMIC POSTER LOOP ROTATOR (5 IMAGES OVER 4 WINDOWS)
+const posterPool = [
+  'images/Posters/MLKSHK1.jpg',
+  'images/Posters/MLKSHK2.jpg',
+  'images/Posters/MLKSHK3.jpg',
+  'images/Posters/MLKSHK4.jpg',
+  'images/Posters/MLKSHK5.jpg'
+];
 
-// POSTER IMAGE ROTATOR LOGIC
-const pool1 = ['mock1.jpg', 'mock4.jpg', 'mock7.jpg'];
-const pool2 = ['mock2.jpg', 'mock5.jpg', 'mock8.jpg'];
-const pool3 = ['mock3.jpg', 'mock6.jpg', 'mock9.jpg'];
+const posterStates = {
+  poster1: { currentIdx: 0 },
+  poster2: { currentIdx: 1 },
+  poster3: { currentIdx: 2 },
+  poster4: { currentIdx: 3 }
+};
 
-function rotatePoster(elementId, pool, currentIdxObj, key) {
+function rotatePoster(elementId) {
   const imgEl = document.getElementById(elementId);
-  if(!imgEl) return;
+  if (!imgEl) return;
   
   imgEl.classList.add('fade-out');
   
   setTimeout(() => {
-    currentIdxObj[key] = (currentIdxObj[key] + 1) % pool.length;
-    imgEl.src = pool[currentIdxObj[key]];
+    posterStates[elementId].currentIdx = (posterStates[elementId].currentIdx + 1) % posterPool.length;
+    imgEl.src = posterPool[posterStates[elementId].currentIdx];
     imgEl.classList.remove('fade-out');
-  }, 800);
+  }, 800); 
 }
 
-const stateIndices = { i1: 0, i2: 0, i3: 0 };
-
-setInterval(() => rotatePoster('poster1', pool1, stateIndices, 'i1'), 4000);
-setInterval(() => rotatePoster('poster2', pool2, stateIndices, 'i2'), 4500);
-setInterval(() => rotatePoster('poster3', pool3, stateIndices, 'i3'), 5000);
+// Intermittent triggers to ensure smooth asymmetry
+setInterval(() => rotatePoster('poster1'), 4000);
+setInterval(() => rotatePoster('poster2'), 4800);
+setInterval(() => rotatePoster('poster3'), 5600);
+setInterval(() => rotatePoster('poster4'), 6400);
 </script>
 </body>
 </html>
