@@ -74,13 +74,19 @@ header.nav-bar{
   color:#000;
 }
 
+/* HERO */
+.hero{
+  height:700px;
+  background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
+}
+
 /* POSTER SHOWCASE */
 .poster-container {
   display: flex;
   justify-content: center;
   gap: 20px;
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 40px auto 10px auto; /* Margin matches your layout flow */
   padding: 0 20px;
 }
 .poster-card {
@@ -103,11 +109,6 @@ header.nav-bar{
   opacity: 0;
 }
 
-/* HERO */
-.hero{
-  height:700px;
-  background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
-}
 /* IMAGE LINKS */
 .image-link{
   display:block;
@@ -222,6 +223,8 @@ footer{
   </div>
 </header>
 
+<section class="hero"></section>
+
 <section class="poster-container">
   <div class="poster-card">
     <img id="poster1" src="mock1.jpg" alt="Poster 1">
@@ -233,8 +236,6 @@ footer{
     <img id="poster3" src="mock3.jpg" alt="Poster 3">
   </div>
 </section>
-
-<section class="hero"></section>
 
 <a href="pirateradio.html" class="image-link">
   <section class="image-section pirate-radio-section"></section>
@@ -358,34 +359,25 @@ document.addEventListener('click', () => {
 });
 
 // POSTER IMAGE ROTATOR LOGIC
-// Add paths to your image arrays below
 const pool1 = ['mock1.jpg', 'mock4.jpg', 'mock7.jpg'];
 const pool2 = ['mock2.jpg', 'mock5.jpg', 'mock8.jpg'];
 const pool3 = ['mock3.jpg', 'mock6.jpg', 'mock9.jpg'];
-
-let idx1 = 0, idx2 = 0, idx3 = 0;
 
 function rotatePoster(elementId, pool, currentIdxObj, key) {
   const imgEl = document.getElementById(elementId);
   if(!imgEl) return;
   
-  // Fade out
   imgEl.classList.add('fade-out');
   
   setTimeout(() => {
-    // Advance index loop
     currentIdxObj[key] = (currentIdxObj[key] + 1) % pool.length;
-    // Swap source
     imgEl.src = pool[currentIdxObj[key]];
-    // Fade back in
     imgEl.classList.remove('fade-out');
-  }, 800); // Matches the 0.8s CSS transition length
+  }, 800);
 }
 
-// Track state indices in an object to pass by reference easily
 const stateIndices = { i1: 0, i2: 0, i3: 0 };
 
-// Cycle every 4 seconds (staggered slightly for dynamic visual effect)
 setInterval(() => rotatePoster('poster1', pool1, stateIndices, 'i1'), 4000);
 setInterval(() => rotatePoster('poster2', pool2, stateIndices, 'i2'), 4500);
 setInterval(() => rotatePoster('poster3', pool3, stateIndices, 'i3'), 5000);
