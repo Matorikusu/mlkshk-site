@@ -38,7 +38,7 @@ header.nav-bar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  max-width:1200px;
+  max-width:1400px; /* Expanded navigation boundary */
   margin:0 auto;
 }
 .logo-link img{height:42px;display:block}
@@ -48,7 +48,7 @@ header.nav-bar{
   gap: 20px;
 }
 
-/* FEATURE 4: SYSTEM CLOCK */
+/* SYSTEM CLOCK */
 .system-clock {
   font-family: 'Orbitron', sans-serif;
   font-size: 12px;
@@ -100,14 +100,14 @@ header.nav-bar{
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
 
-/* POSTER SHOWCASE (4 COLUMNS) */
+/* POSTER SHOWCASE (EXPANDED TO FILL MORE WIDTH) */
 .poster-container {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  max-width: 1200px;
-  margin: 40px auto 10px auto;
-  padding: 0 20px;
+  gap: 20px;
+  max-width: 1400px; /* Increased from 1200px so posters take up more real estate */
+  margin: 50px auto 10px auto;
+  padding: 0 24px;
 }
 .poster-card {
   flex: 1;
@@ -117,10 +117,10 @@ header.nav-bar{
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  transition: border .3s ease;
+  transition: border .3s ease, box-shadow .3s ease;
 }
 
-/* FEATURE 2: GLITCH HOVER ON POSTERS */
+/* GLITCH HOVER ON POSTERS */
 .poster-card::after {
   content: '';
   position: absolute;
@@ -133,13 +133,14 @@ header.nav-bar{
 }
 .poster-card:hover {
   border-color: var(--accent);
+  box-shadow: 0 0 25px rgba(255, 42, 161, 0.25);
 }
 .poster-card:hover::after {
   opacity: 1;
 }
 .poster-card:hover img {
-  transform: scale(1.03) skewX(-0.5deg);
-  filter: hue-rotate(10deg) contrast(1.1);
+  transform: scale(1.04) skewX(-0.5deg);
+  filter: hue-rotate(10deg) contrast(1.15);
 }
 .poster-card img {
   width: 100%;
@@ -152,22 +153,24 @@ header.nav-bar{
   opacity: 0;
 }
 
-/* FEATURE 1: TERMINAL COMMAND TICKER */
+/* FIXED & CENTERED TERMINAL COMMAND TICKER */
 .ticker-wrap {
-  max-width: 1200px;
-  margin: 15px auto 30px auto;
-  padding: 0 20px;
+  max-width: 1400px;
+  margin: 25px auto 45px auto;
+  padding: 0 24px;
 }
 .ticker-bg {
   background: #080808;
-  border: 1px solid rgba(255,255,255,0.03);
-  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 10px 20px;
   border-radius: 6px;
   display: flex;
+  justify-content: center; /* Centers items inside the flexbox */
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-family: monospace;
   font-size: 13px;
+  text-align: center;
 }
 .ticker-label {
   color: var(--accent);
@@ -182,7 +185,7 @@ header.nav-bar{
   animation: blink 0.75s step-end infinite;
 }
 
-/* FEATURE 5: HIDDEN TERMINAL PROMPT OVERLAY */
+/* HIDDEN TERMINAL PROMPT OVERLAY */
 #terminal-overlay {
   display: none;
   position: fixed;
@@ -254,7 +257,6 @@ footer{
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
 }
-/* FEATURE 3: HIDDEN TRANSMISSION STYLING */
 .cryptic-trigger {
   color: rgba(255,255,255,0.2);
   margin-left: 15px;
@@ -507,41 +509,33 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => { dropdownMenu.style.display = 'none'; });
 
-// DYNAMIC POSTER LOOP ROTATOR
-const posterPool = [
-  'images/Posters/MLKSHK1.jpg',
-  'images/Posters/MLKSHK2.jpg',
-  'images/Posters/MLKSHK3.jpg',
-  'images/Posters/MLKSHK4.jpg',
-  'images/Posters/MLKSHK5.jpg'
-];
+// ASYMMETRIC POSTER INDEPENDENT CYCLE LOGIC
+const poster1Pool = ['images/Posters/MLKSHK1.jpg', 'images/Posters/MLKSHK2.jpg'];
+const poster2Pool = ['images/Posters/MLKSHK2.jpg', 'images/Posters/MLKSHK3.jpg'];
+const poster3Pool = ['images/Posters/MLKSHK3.jpg', 'images/Posters/MLKSHK4.jpg'];
+const poster4Pool = ['images/Posters/MLKSHK4.jpg', 'images/Posters/MLKSHK1.jpg'];
 
-const posterStates = {
-  poster1: { currentIdx: 0 },
-  poster2: { currentIdx: 1 },
-  poster3: { currentIdx: 2 },
-  poster4: { currentIdx: 3 }
-};
+const stateIndices = { i1: 0, i2: 0, i3: 0, i4: 0 };
 
-function rotatePoster(elementId) {
+function rotatePoster(elementId, pool, currentIdxObj, key) {
   const imgEl = document.getElementById(elementId);
-  if (!imgEl) return;
+  if(!imgEl) return;
   
   imgEl.classList.add('fade-out');
   
   setTimeout(() => {
-    posterStates[elementId].currentIdx = (posterStates[elementId].currentIdx + 1) % posterPool.length;
-    imgEl.src = posterPool[posterStates[elementId].currentIdx];
+    currentIdxObj[key] = (currentIdxObj[key] + 1) % pool.length;
+    imgEl.src = pool[currentIdxObj[key]];
     imgEl.classList.remove('fade-out');
-  }, 800); 
+  }, 800);
 }
 
-setInterval(() => rotatePoster('poster1'), 4000);
-setInterval(() => rotatePoster('poster2'), 4800);
-setInterval(() => rotatePoster('poster3'), 5600);
-setInterval(() => rotatePoster('poster4'), 6400);
+setInterval(() => rotatePoster('poster1', poster1Pool, stateIndices, 'i1'), 4000);
+setInterval(() => rotatePoster('poster2', poster2Pool, stateIndices, 'i2'), 4700);
+setInterval(() => rotatePoster('poster3', poster3Pool, stateIndices, 'i3'), 5400);
+setInterval(() => rotatePoster('poster4', poster4Pool, stateIndices, 'i4'), 6100);
 
-// FEATURE 1: COMMAND LOG TERMINAL TICKER LOGIC
+// COMMAND LOG TERMINAL TICKER LOGIC
 const logs = [
   "BROADCAST_NODE_04 ONLINE...",
   "MLKSHK005 master rendering package tracking: STABLE.",
@@ -563,7 +557,7 @@ function printTickerText(text) {
       i++;
     } else {
       clearInterval(tickerTarget.typeInterval);
-      setTimeout(nextLog, 5000); // Wait 5s before switching lines
+      setTimeout(nextLog, 5000);
     }
   }, 50);
 }
@@ -573,7 +567,7 @@ function nextLog() {
 }
 nextLog();
 
-// FEATURE 3: INTERACTIVE SECURE SAMPLE LOOP EXTRACTION
+// INTERACTIVE SECURE SAMPLE LOOP EXTRACTION
 const signalAudio = document.getElementById('secret-signal');
 const transTrigger = document.getElementById('trans-trigger');
 let transmissionPlaying = false;
@@ -593,7 +587,7 @@ transTrigger.onclick = () => {
   }
 };
 
-// FEATURE 4: DIGITAL UTC CORE SYSTEM CLOCK
+// DIGITAL UTC CORE SYSTEM CLOCK
 function updateClock() {
   const clockEl = document.getElementById('sys-clock');
   if(!clockEl) return;
@@ -604,14 +598,13 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// FEATURE 5: EXPERIMENTAL EASTER EGG CONSOLE MATRIX INTERFACE
+// EXPERIMENTAL EASTER EGG CONSOLE MATRIX INTERFACE
 const termOverlay = document.getElementById('terminal-overlay');
 const termInput = document.getElementById('terminal-input');
 const termOutput = document.getElementById('terminal-output');
 
 window.addEventListener('keydown', (e) => {
   if (e.key === '~' || e.key === '`' || e.key.toLowerCase() === 't') {
-    // Prevent default context window binding if focusing away
     if(document.activeElement !== termInput) {
       e.preventDefault();
       termOverlay.style.display = 'block';
