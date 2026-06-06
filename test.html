@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK | PIRATE RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg: #070509;
-  --panel-bg: rgba(20, 18, 22, 0.88); /* Matches the dark metallic density of the room gear */
-  --text: #e2dfe5;
-  --muted: #8b7e95;
-  --accent: #df49be; /* Neon magenta sampled from the bunker's central sign */
-  --accent-glow: rgba(223, 73, 190, 0.4);
-  --signal-green: #39ff14; /* Hot terminal green for active meters and statuses */
-  --dropdown-bg: #120f14;
+  --bg: #060407;
+  --panel-bg: rgba(14, 11, 16, 0.85); /* Dark raw concrete/metal tint */
+  --text: #f0eaf4;
+  --muted: #8b7d93;
+  --accent: #ff007f; /* Aggressive street-art pink graffiti neon */
+  --accent-glow: rgba(255, 0, 127, 0.45);
+  --signal-green: #39ff14; /* Toxic warning green */
+  --dropdown-bg: #0d0a10;
 }
 
 html, body {
@@ -28,64 +28,66 @@ html, body {
   position: relative;
 }
 
-/* FULL PAGE DIMMED BACKGROUND IMAGE PORT */
+/* BACKGROUND IMAGE OVERRIDE */
 body::before {
   content: "";
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url('image.png');
+  background-image: url('images/Pirate Radio/pirateradio_header.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 1.0; /* Full opacity to showcase the gorgeous bunker room artwork */
+  opacity: 1.0; 
   z-index: -2;
   pointer-events: none;
 }
 
-/* GRITTY INDUSTRIAL GRID OVERLAY */
+/* HALF-TONE / POSTER PRINT STREET PATTERN */
 .grid-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background-image: 
-    linear-gradient(rgba(223, 73, 190, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(223, 73, 190, 0.015) 1px, transparent 1px);
-  background-size: 25px 25px;
+    radial-gradient(rgba(255, 0, 127, 0.02) 2px, transparent 2px),
+    linear-gradient(rgba(0, 0, 0, 0.25) 1px, transparent 1px);
+  background-size: 16px 16px, 100% 3px;
   z-index: -1;
   pointer-events: none;
 }
 
 a { color: inherit; text-decoration: none; }
 
-/* CRT EFFECT OVERLAY - Tailored for hardware-screen immersion */
+/* CRT/VHS GLITCH OVERLAY - Raw street broadcast tape style */
 body::after {
   content: " ";
   display: block;
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 14, 20, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 128, 0.01), rgba(0, 255, 100, 0.01), rgba(0, 100, 255, 0.01));
+  background: linear-gradient(rgba(18, 14, 20, 0) 50%, rgba(0, 0, 0, 0.2) 50%), linear-gradient(90deg, rgba(255, 0, 128, 0.02), rgba(0, 255, 100, 0.01), rgba(0, 100, 255, 0.02));
   z-index: 9999;
-  background-size: 100% 4px, 6px 100%;
+  background-size: 100% 6px, 8px 100%;
   pointer-events: none;
 }
 
-/* Animated rolling scanline when rig is active */
+/* VHS tracking static sweep when transmitting */
 body.rig-active .scanline {
   content: " ";
   display: block;
   position: fixed;
-  top: 0; left: 0; right: 0; height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(223, 73, 190, 0.03) 10%, transparent 20%);
-  animation: scanline-sweep 4s linear infinite;
+  top: 0; left: 0; right: 0; height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  filter: blur(2px);
+  animation: static-sweep 3.5s linear infinite;
   z-index: 9998;
   pointer-events: none;
 }
 
-/* NAV BAR */
+/* NAV BAR - Street Punk Contrast border */
 header.nav-bar {
-  border-bottom: 1px solid rgba(223, 73, 190, 0.2);
+  border-bottom: 2px solid #000;
+  box-shadow: 0 4px 0 var(--accent);
   padding: 15px 24px;
-  background: rgba(14, 11, 16, 0.75);
-  backdrop-filter: blur(10px);
+  background: #0e0b10;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -97,50 +99,52 @@ header.nav-bar {
   max-width: 1200px;
   margin: 0 auto;
 }
-.logo-link img { height: 38px; display: block; filter: drop-shadow(0 0 4px rgba(223, 73, 190, 0.3)); }
+.logo-link img { height: 38px; display: block; }
 .nav-dropdown { position: relative; }
 .nav-toggle {
-  background: rgba(223, 73, 190, 0.1);
-  border: 1px solid rgba(223, 73, 190, 0.4);
+  background: #000;
+  border: 2px solid var(--text);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 2px;
-  transition: all 0.2s ease;
+  border-radius: 0px; /* Sharp street angles */
+  box-shadow: 3px 3px 0px var(--accent);
+  transition: all 0.1s ease-in-out;
 }
 .nav-toggle:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--accent);
   background: var(--accent);
   color: #000;
-  box-shadow: 0 0 15px var(--accent-glow);
 }
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
-  background: var(--dropdown-bg);
-  border: 1px solid var(--accent);
-  border-radius: 2px;
+  background: #000;
+  border: 3px solid var(--accent);
+  border-radius: 0px;
   min-width: 200px;
   z-index: 100;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.9);
 }
 .dropdown-menu a {
   display: block;
   padding: 12px 16px;
   color: #fff;
-  font-weight: 500;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #1a1522;
 }
 .dropdown-menu a:hover {
-  background: var(--accent);
+  background: var(--text);
   color: #000;
-  font-weight: 600;
 }
 
 /* DECK MAIN RIG */
@@ -153,115 +157,99 @@ header.nav-bar {
   box-sizing: border-box;
 }
 
-/* Styled like a custom rack terminal built inside the bunker workbench */
+/* Street flyer / Underground hardware style */
 .pirate-deck {
   background: var(--panel-bg);
-  border: 2px solid #2d2635;
-  border-top: 4px solid var(--accent);
+  border: 3px solid #000;
   width: 100%;
-  max-width: 440px;
-  padding: 35px 30px 25px 30px;
-  border-radius: 4px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.95), inset 0 1px 2px rgba(255,255,255,0.05);
+  max-width: 430px;
+  padding: 35px 25px 25px 25px;
+  border-radius: 0px; /* Hard industrial raw edges */
+  box-shadow: 12px 12px 0px #000; /* Brutalist shadow */
   position: relative;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
 }
 
-/* Exposed Corner Screws for industrial skeuomorphism */
-.pirate-deck::after {
-  content: "•       •";
-  position: absolute;
-  bottom: 6px;
-  left: 12px;
-  right: 12px;
-  font-size: 14px;
-  color: #3d3447;
-  letter-spacing: 0.1em;
-  display: flex;
-  justify-content: space-between;
-  font-family: serif;
-  pointer-events: none;
-}
-
-/* Rig ID stamp */
+/* Tape/Sticker Label detailing */
 .pirate-deck::before {
-  content: "BUNKER_NODE // FREQ_DECK_v2.6";
+  content: "PROPERTY OF MLKSHK NOISE Underground // AUTH_REQ";
   position: absolute;
-  top: -24px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  top: -15px;
+  left: 15px;
+  background: var(--accent);
+  padding: 2px 10px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 2px;
-  text-shadow: 0 0 8px rgba(223, 73, 190, 0.6);
+  font-weight: 700;
+  font-size: 9px;
+  color: #000;
+  letter-spacing: 1px;
+  transform: rotate(-1.5deg);
+  box-shadow: 2px 2px 0 #000;
 }
 
 /* TRANSMISSION MONITOR */
 .broadcast-monitor {
-  background: #09070c;
-  border: 1px solid #231d2a;
-  padding: 22px;
-  border-radius: 4px;
-  margin-bottom: 25px;
+  background: #040306;
+  border: 2px solid #000;
+  padding: 25px 20px;
   position: relative;
   overflow: hidden;
   text-align: center; 
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
 }
 
-/* Album art window styled like a terminal radar/gauge scope */
+/* Cover Window framed like a distressed stencil cutout */
 .player-art-frame {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   margin: 0 auto 20px auto;
-  border: 2px solid #2e2436;
-  border-radius: 50%;
+  border: 3px solid #000;
+  border-radius: 0px; /* Square cut */
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  background: #0d0a10;
-  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  background: #110d16;
+  transform: rotate(1deg);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .player-art-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.35;
-  filter: grayscale(100%) contrast(120%);
-  transition: all 0.4s ease;
+  opacity: 0.4;
+  filter: grayscale(100%) contrast(150%);
+  transition: all 0.3s ease;
 }
 
-/* Target transformations when stream is playing */
+/* Triggered transformations on active broadcast */
 .rig-active .player-art-frame {
   border-color: var(--accent);
-  box-shadow: 0 0 20px var(--accent-glow), inset 0 0 15px rgba(223, 73, 190, 0.3);
+  transform: rotate(-1deg) scale(1.02);
+  box-shadow: 6px 6px 0px #000;
 }
 .rig-active .player-art-frame img {
-  opacity: 0.85;
-  filter: grayscale(20%) contrast(100%);
-  animation: vinyl-spin 15s linear infinite; 
+  opacity: 0.9;
+  filter: grayscale(0%) contrast(110%);
 }
 
+/* Graffiti Font style for the core crew emblem */
 .station-identity {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-family: 'Permanent Marker', 'Orbitron', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
   color: #fff;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
+  transform: scaleY(1.05);
+  text-shadow: 3px 3px 0px #000;
 }
 
 .station-subtext {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  color: var(--muted);
-  margin-bottom: 18px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 20px;
 }
 
 /* SIGNAL STATUS */
@@ -271,163 +259,148 @@ header.nav-bar {
   justify-content: center; 
   gap: 10px;
   font-family: monospace;
-  font-size: 12px;
-  letter-spacing: 1px;
-  color: #9c8da7;
-  border-top: 1px solid rgba(223, 73, 190, 0.1);
-  padding-top: 15px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  background: #110d16;
+  border: 1px solid #231c2c;
+  padding: 8px;
 }
 
 .status-beacon {
-  width: 7px;
-  height: 7px;
-  background: #3a2e44;
-  border-radius: 50%;
-  transition: all 0.3s ease;
+  width: 9px;
+  height: 9px;
+  background: #3c1024;
+  border: 1px solid #000;
+  transition: all 0.2s ease;
 }
 
-/* Active State Styles via parent token */
+/* Active State Signal Styles */
 .rig-active .status-beacon {
   background: var(--signal-green);
-  box-shadow: 0 0 12px var(--signal-green);
-  animation: pulse 1.2s infinite;
+  box-shadow: 0 0 10px var(--signal-green);
+  animation: pulse 1s infinite steps(2); /* Raw, un-smoothed steps animation */
 }
 
-/* Audio text glitched visual twitching when active */
+/* Glitched visual twitching when active */
 .rig-active .station-identity {
-  text-shadow: 0 0 10px rgba(223, 73, 190, 0.8);
-  animation: text-twitch 3.5s infinite;
+  color: #fff;
+  animation: text-twitch 2.5s infinite;
 }
 
-/* VISUALIZER WAVE (PURE CSS SIMULATION) */
+/* AUDIO METERS */
 .wave-scope {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  height: 40px;
-  margin-top: 18px;
-  padding: 0 10px;
-  opacity: 0.15;
-  transition: opacity 0.3s ease;
+  height: 35px;
+  margin-top: 20px;
+  padding: 0 5px;
+  opacity: 0.2;
 }
-.rig-active .wave-scope { opacity: 0.9; }
+.rig-active .wave-scope { opacity: 1; }
 
 .scope-bar {
-  width: 4px;
-  height: 5px;
-  background: var(--accent);
-  border-radius: 1px;
+  width: 6px;
+  height: 4px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-/* Alternate visualizer hues to mimic hardware monitoring hardware */
-.rig-active .scope-bar { animation: jump 1s ease infinite alternate; }
-.rig-active .scope-bar:nth-child(2n) { animation-duration: 0.6s; background: var(--signal-green); }
-.rig-active .scope-bar:nth-child(3n) { animation-duration: 0.8s; background: #ffffff; }
-.rig-active .scope-bar:nth-child(4n) { animation-duration: 0.4s; background: var(--accent); }
-.rig-active .scope-bar:nth-child(5n) { animation-duration: 1.1s; background: var(--signal-green); }
+/* Brutalist brick-style signal EQ stacks */
+.rig-active .scope-bar { animation: jump 0.8s ease infinite alternate; }
+.rig-active .scope-bar:nth-child(odd) { background: var(--accent); }
+.rig-active .scope-bar:nth-child(even) { background: var(--signal-green); animation-duration: 0.5s; }
+.rig-active .scope-bar:nth-child(3n) { background: #ffffff; animation-duration: 0.7s; }
 
-/* MAIN DECK ACTUATOR (BIG SWITCH) */
+/* THE INITIATION ACTUATOR */
 .deck-controls {
   display: flex;
   justify-content: center;
-  margin: 25px 0 15px 0;
+  margin: 25px 0 5px 0;
 }
 
 .master-switch {
-  width: 84px;
-  height: 84px;
-  background: #201a26;
-  border: 4px solid #33293d;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background: #17121e;
+  border: 3px solid #000;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   position: relative;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.05);
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.master-switch::before {
-  content: "";
-  position: absolute;
-  top: 5px; left: 5px; right: 5px; bottom: 5px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #2b2234, #120d18);
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.1s ease-in-out;
 }
 
 .master-switch img {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   z-index: 2;
-  transition: transform 0.2s ease;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)) turnPink;
 }
 
 .master-switch:hover {
-  transform: scale(1.05);
-  border-color: #493b58;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px var(--accent);
+  background: #221a2c;
 }
 
 .master-switch:active {
-  transform: scale(0.95);
-  box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+  transform: translate(4px, 4px);
+  box-shadow: 1px 1px 0px #000;
 }
 
 /* Active State Switch */
 .rig-active .master-switch {
-  border-color: var(--accent);
-  box-shadow: 0 0 25px var(--accent-glow), inset 0 0 10px rgba(223, 73, 190, 0.4);
+  background: var(--accent);
+  border-color: #000;
+}
+.rig-active .master-switch img {
+  filter: invert(1); /* Flips icon to black against neon pink background */
 }
 
 /* FOOTER */
 footer {
   padding: 30px 20px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
   letter-spacing: 2px;
   color: var(--muted);
-  border-top: 1px solid rgba(223, 73, 190, 0.1);
-  background: rgba(10, 8, 12, 0.9);
+  border-top: 2px solid #000;
+  background: #0a080d;
   position: relative;
   z-index: 10;
 }
 
-/* ANIMATIONS */
+/* STYLED STREET ANIMATIONS */
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.25); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.1); }
 }
 
 @keyframes jump {
   0% { height: 4px; }
-  100% { height: 38px; }
+  100% { height: 35px; }
 }
 
-@keyframes vinyl-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes scanline-sweep {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+@keyframes static-sweep {
+  0% { top: -5%; }
+  100% { top: 105%; }
 }
 
 @keyframes text-twitch {
-  0%, 91%, 100% { transform: skewX(0deg); filter: blur(0px); }
-  92% { transform: skewX(-6deg) scaleY(1.05); color: var(--signal-green); filter: blur(0.5px); }
-  94% { transform: skewX(7deg); color: var(--accent); }
-  95% { transform: skewX(0deg); filter: blur(0px); }
+  0%, 93%, 98%, 100% { transform: skewX(0deg) scale(1); filter: drop-shadow(0 0 0px transparent); }
+  94% { transform: skewX(-12deg) scaleY(1.1); color: var(--signal-green); text-shadow: -3px -3px 0 #000; }
+  96% { transform: skewX(12deg) scaleX(0.9); color: var(--accent); text-shadow: 4px 2px 0 #000; }
 }
 
 @media (max-width: 480px) {
-  .pirate-deck { padding: 25px 20px 20px 20px; }
-  .station-identity { font-size: 19px; }
-  .master-switch { width: 76px; height: 76px; }
-  .player-art-frame { width: 110px; height: 110px; }
+  .pirate-deck { padding: 30px 15px 20px 15px; box-shadow: 8px 8px 0px #000; }
+  .station-identity { font-size: 24px; }
+  .master-switch { width: 70px; height: 70px; }
+  .player-art-frame { width: 120px; height: 120px; }
 }
 </style>
 </head>
@@ -469,7 +442,7 @@ footer {
       
       <div class="signal-status-line">
         <div class="status-beacon"></div>
-        <span id="status">DECK IS STANDING BY...</span>
+        <span id="status">LINE STANDING BY...</span>
       </div>
 
       <div class="wave-scope">
@@ -526,7 +499,7 @@ function playLiveStream() {
     statusEl.textContent = 'TRANSMITTING LIVE //';
   }).catch(e => {
     console.error("Link drop:", e);
-    statusEl.textContent = 'ERR: SIGNAL LOST. RETRYING...';
+    statusEl.textContent = 'ERR: DROP OUT. RETRYING...';
     deck.classList.remove('rig-active');
     body.classList.remove('rig-active');
     setTimeout(playLiveStream, 1500);
@@ -553,7 +526,7 @@ btn.onclick = () => {
 
 /* AUDIO CORE LISTENERS */
 audio.addEventListener('waiting', () => {
-  statusEl.textContent = 'TUNING SIGNAL...';
+  statusEl.textContent = 'HIJACKING SIGNAL...';
 });
 
 audio.addEventListener('playing', () => {
