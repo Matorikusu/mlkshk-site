@@ -13,6 +13,7 @@
   --muted:#ccc;
   --accent:#ff2aa1;
   --dropdown-bg:#000;
+  --terminal-green: #00ff66;
 }
 html,body{
   margin:0;
@@ -41,6 +42,24 @@ header.nav-bar{
   margin:0 auto;
 }
 .logo-link img{height:42px;display:block}
+.nav-actions {
+  display: flex;
+  align-items:center;
+  gap: 20px;
+}
+
+/* FEATURE 4: SYSTEM CLOCK */
+.system-clock {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  background: rgba(255, 42, 161, 0.05);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 42, 161, 0.15);
+}
+
 .nav-dropdown{position:relative}
 .nav-toggle{
   background:none;
@@ -81,7 +100,7 @@ header.nav-bar{
   background:url('images/Home/mlkshk_header.png') center/cover no-repeat;
 }
 
-/* POSTER SHOWCASE (4 COLUMNS - 1080x1920 PORTRAIT) */
+/* POSTER SHOWCASE (4 COLUMNS) */
 .poster-container {
   display: flex;
   justify-content: center;
@@ -98,16 +117,106 @@ header.nav-bar{
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  transition: border .3s ease;
+}
+
+/* FEATURE 2: GLITCH HOVER ON POSTERS */
+.poster-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 6px 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.poster-card:hover {
+  border-color: var(--accent);
+}
+.poster-card:hover::after {
+  opacity: 1;
+}
+.poster-card:hover img {
+  transform: scale(1.03) skewX(-0.5deg);
+  filter: hue-rotate(10deg) contrast(1.1);
 }
 .poster-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.8s ease-in-out, transform 0.3s ease, filter 0.3s ease;
   opacity: 1;
 }
 .poster-card img.fade-out {
   opacity: 0;
+}
+
+/* FEATURE 1: TERMINAL COMMAND TICKER */
+.ticker-wrap {
+  max-width: 1200px;
+  margin: 15px auto 30px auto;
+  padding: 0 20px;
+}
+.ticker-bg {
+  background: #080808;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: monospace;
+  font-size: 13px;
+}
+.ticker-label {
+  color: var(--accent);
+  font-weight: bold;
+  white-space: nowrap;
+}
+.ticker-text {
+  color: var(--terminal-green);
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--terminal-green);
+  animation: blink 0.75s step-end infinite;
+}
+
+/* FEATURE 5: HIDDEN TERMINAL PROMPT OVERLAY */
+#terminal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 220px;
+  background: rgba(5, 5, 5, 0.95);
+  border-bottom: 2px solid var(--accent);
+  z-index: 10000;
+  font-family: monospace;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--terminal-green);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+#terminal-output {
+  height: 140px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#terminal-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
 }
 
 /* IMAGE LINKS */
@@ -144,6 +253,18 @@ footer{
   text-align:center;
   font-size:13px;
   border-top:1px solid rgba(255,255,255,.05);
+}
+/* FEATURE 3: HIDDEN TRANSMISSION STYLING */
+.cryptic-trigger {
+  color: rgba(255,255,255,0.2);
+  margin-left: 15px;
+  cursor: pointer;
+  font-family: monospace;
+  transition: color 0.3s;
+}
+.cryptic-trigger:hover {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
 }
 
 /* FLOATING PLAYER */
@@ -195,6 +316,12 @@ footer{
   cursor:pointer;
 }
 
+/* ANIMATIONS */
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: currentColor; }
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 900px) {
   .poster-container { flex-wrap: wrap; }
@@ -209,25 +336,38 @@ footer{
   .player-title { font-size: 12px; }
   .player-artist, .player-status { font-size: 10px; }
   .player-controls img { width: 36px; height: 36px; }
+  .system-clock { display: none; }
 }
 </style>
 </head>
 <body>
+
+<div id="terminal-overlay">
+  <div id="terminal-output">MLKSHK_OS v4.19 - SECURE TERMINAL LINK OPENED.<br>Type 'help' for available diagnostic commands. Press 'Esc' to exit.</div>
+  <div class="terminal-input-line">
+    <span>guest@mlkshk:~$</span>
+    <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false">
+  </div>
+</div>
 
 <header class="nav-bar">
   <div class="nav-content">
     <a href="index.html" class="logo-link">
       <img src="images/MLKSHK_LOGO_1500_X_500.png" alt="MLKSHK Logo">
     </a>
-    <div class="nav-dropdown">
-      <button class="nav-toggle">Menu</button>
-      <div class="dropdown-menu">
-        <a href="access.html">Access</a>
-        <a href="archive.html">Archive</a>
-        <a href="jukebox.html">Jukebox</a>
-        <a href="pirateradio.html">Pirate Radio</a>
-        <a href="lab.html">The Lab</a>
-        <a href="universe.html">The Universe</a>
+    <div class="nav-actions">
+      <div class="system-clock" id="sys-clock">00:00:00 UTC</div>
+      
+      <div class="nav-dropdown">
+        <button class="nav-toggle">Menu</button>
+        <div class="dropdown-menu">
+          <a href="access.html">Access</a>
+          <a href="archive.html">Archive</a>
+          <a href="jukebox.html">Jukebox</a>
+          <a href="pirateradio.html">Pirate Radio</a>
+          <a href="lab.html">The Lab</a>
+          <a href="universe.html">The Universe</a>
+        </div>
       </div>
     </div>
   </div>
@@ -250,6 +390,13 @@ footer{
   </div>
 </section>
 
+<div class="ticker-wrap">
+  <div class="ticker-bg">
+    <span class="ticker-label">[SYS_LOG]:</span>
+    <span class="ticker-text" id="ticker-target">Initializing secure link feed...</span>
+  </div>
+</div>
+
 <a href="pirateradio.html" class="image-link">
   <section class="image-section pirate-radio-section"></section>
 </a>
@@ -271,6 +418,7 @@ footer{
 
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
+  <span class="cryptic-trigger" id="trans-trigger">[+] MATRIX_NODE_0x7F</span>
 </footer>
 
 <div id="floating-player">
@@ -284,6 +432,8 @@ footer{
   </div>
   <audio id="audio" preload="none"></audio>
 </div>
+
+<audio id="secret-signal" loop preload="none" src="https://actions.google.com/sounds/v1/ambiences/sine_wave_am_radio_static.ogg"></audio>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -357,7 +507,7 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => { dropdownMenu.style.display = 'none'; });
 
-// DYNAMIC POSTER LOOP ROTATOR (5 IMAGES OVER 4 WINDOWS)
+// DYNAMIC POSTER LOOP ROTATOR
 const posterPool = [
   'images/Posters/MLKSHK1.jpg',
   'images/Posters/MLKSHK2.jpg',
@@ -386,11 +536,126 @@ function rotatePoster(elementId) {
   }, 800); 
 }
 
-// Intermittent triggers to ensure smooth asymmetry
 setInterval(() => rotatePoster('poster1'), 4000);
 setInterval(() => rotatePoster('poster2'), 4800);
 setInterval(() => rotatePoster('poster3'), 5600);
 setInterval(() => rotatePoster('poster4'), 6400);
+
+// FEATURE 1: COMMAND LOG TERMINAL TICKER LOGIC
+const logs = [
+  "BROADCAST_NODE_04 ONLINE...",
+  "MLKSHK005 master rendering package tracking: STABLE.",
+  "Data stream structural packet confirmation verified.",
+  "Signal interference localized in terminal grid quadrant 9...",
+  "Awaiting next broadcast command phase...",
+  "Core systems nominal. Connection loop secure."
+];
+let logIndex = 0;
+const tickerTarget = document.getElementById('ticker-target');
+
+function printTickerText(text) {
+  tickerTarget.textContent = "";
+  let i = 0;
+  clearInterval(tickerTarget.typeInterval);
+  tickerTarget.typeInterval = setInterval(() => {
+    if (i < text.length) {
+      tickerTarget.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(tickerTarget.typeInterval);
+      setTimeout(nextLog, 5000); // Wait 5s before switching lines
+    }
+  }, 50);
+}
+function nextLog() {
+  printTickerText(`[SYS] ${logs[logIndex]}`);
+  logIndex = (logIndex + 1) % logs.length;
+}
+nextLog();
+
+// FEATURE 3: INTERACTIVE SECURE SAMPLE LOOP EXTRACTION
+const signalAudio = document.getElementById('secret-signal');
+const transTrigger = document.getElementById('trans-trigger');
+let transmissionPlaying = false;
+
+transTrigger.onclick = () => {
+  if(!transmissionPlaying) {
+    signalAudio.volume = 0.25;
+    signalAudio.play().catch(e => console.log("Audio contextual lock applied."));
+    transTrigger.textContent = "[-] NODE_LINK_ESTABLISHED (DECRYPTING)";
+    transTrigger.style.color = "var(--terminal-green)";
+    transmissionPlaying = true;
+  } else {
+    signalAudio.pause();
+    transTrigger.textContent = "[+] MATRIX_NODE_0x7F";
+    transTrigger.style.color = "rgba(255,255,255,0.2)";
+    transmissionPlaying = false;
+  }
+};
+
+// FEATURE 4: DIGITAL UTC CORE SYSTEM CLOCK
+function updateClock() {
+  const clockEl = document.getElementById('sys-clock');
+  if(!clockEl) return;
+  const now = new Date();
+  const timeString = now.toISOString().substr(11, 8) + " UTC";
+  clockEl.textContent = timeString;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// FEATURE 5: EXPERIMENTAL EASTER EGG CONSOLE MATRIX INTERFACE
+const termOverlay = document.getElementById('terminal-overlay');
+const termInput = document.getElementById('terminal-input');
+const termOutput = document.getElementById('terminal-output');
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === '~' || e.key === '`' || e.key.toLowerCase() === 't') {
+    // Prevent default context window binding if focusing away
+    if(document.activeElement !== termInput) {
+      e.preventDefault();
+      termOverlay.style.display = 'block';
+      termInput.focus();
+    }
+  }
+  if (e.key === 'Escape') {
+    termOverlay.style.display = 'none';
+    termInput.blur();
+  }
+});
+
+termInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const command = termInput.value.trim().toLowerCase();
+    termOutput.innerHTML += `<br><span style="color:#fff">guest@mlkshk:~$ ${termInput.value}</span>`;
+    
+    switch(command) {
+      case 'help':
+        termOutput.innerHTML += `<br>Available commands:<br> - <b>catalog</b>: Access digital release database parameters.<br> - <b>radio</b>: Force fire pirate transmitter stream engine.<br> - <b>secret</b>: Pull server-side encrypted transmission log.<br> - <b>clear</b>: Purge standard terminal diagnostic layout.`;
+        break;
+      case 'clear':
+        termOutput.innerHTML = "MLKSHK_OS v4.19 - Cache flushed.";
+        break;
+      case 'catalog':
+        termOutput.innerHTML += `<br>[CATALOG FILE EXPORT]:<br> - MLKSHK001 // DIGITAL MATRIX ANOMALY [RELEASED]<br> - MLKSHK002 // PIRATE FREQUENCY CODES [RELEASED]<br> - MLKSHK005 // VINYL MASTER DISK PACK [PENDING]`;
+        break;
+      case 'radio':
+        termOutput.innerHTML += `<br>Forcing remote radio deployment sequence...`;
+        playLiveStream();
+        break;
+      case 'secret':
+        termOutput.innerHTML += `<br><span style="color:var(--accent)">[DECRYPT ERROR]: Terminal missing level-3 encryption handshake token key. Check code: 0x7F.</span>`;
+        break;
+      case '':
+        break;
+      default:
+        termOutput.innerHTML += `<br>Command execution fallback fault: '${command}' not recognized in local root parameters.`;
+    }
+    
+    termInput.value = "";
+    termOutput.scrollTop = termOutput.scrollHeight;
+  }
+});
 </script>
 </body>
 </html>
