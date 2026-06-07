@@ -97,7 +97,7 @@ header.nav-bar{
 }
 /* ARCHIVE GRID - single cards with glow hover */
 .brands-archive{
-  padding:40px 20px 120px;
+  padding:40px 20px 60px;
   background:#111;
 }
 .brands-grid{
@@ -131,16 +131,71 @@ header.nav-bar{
   text-align:center;
 }
 .brand-info h2{
-  margin:0 0 8px;
+  margin:0;
   font-family:'Orbitron',sans-serif;
   font-size:22px;
   color:var(--accent);
 }
-.brand-info p{
-  margin:0 0 14px;
-  font-size:14px;
-  color:var(--muted);
+
+/* RECORD LABEL RELEASES SECTION */
+.label-releases {
+  background: #080808;
+  padding: 60px 20px 120px;
+  border-top: 1px solid rgba(255,42,161,0.1);
 }
+.releases-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.releases-container h2.section-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-left: 4px solid var(--accent);
+  padding-left: 15px;
+}
+.release-item {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: .25s ease;
+}
+.release-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(255,42,161,0.2);
+  background: rgba(255,255,255,0.04);
+}
+.release-art {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.release-details {
+  flex-grow: 1;
+}
+.release-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  color: var(--accent);
+  margin: 0 0 6px 0;
+}
+.release-meta {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 4px 0;
+}
+
 /* FLOATING PLAYER */
 #floating-player{
   position:fixed;
@@ -191,6 +246,9 @@ footer{
   .hero-link,.brands-archive { margin:20px auto; padding:0 15px; }
   .hero,.brand-card img { height:auto; min-height:180px; }
   .brands-grid { gap:20px; }
+  .release-item { gap: 16px; padding: 12px; }
+  .release-art { width: 80px; height: 80px; }
+  .release-name { font-size: 18px; }
   #floating-player { width:90%; height:60px; padding:0 12px; }
   .player-title { font-size:12px; }
   .player-artist,.player-status { font-size:10px; }
@@ -224,7 +282,6 @@ footer{
   </div>
 </header>
 
-<!-- HERO -->
 <a href="archive.html" class="hero-link">
   <section class="hero"></section>
 </a>
@@ -232,60 +289,84 @@ footer{
 <section class="brands-archive">
   <div class="brands-grid">
     <article class="brand-card">
+      <img src="images/Brand_Banners/spanishharlem1967banner.png" alt="Spanish Harlem 1967">
+      <div class="brand-info">
+        <h2>Spanish Harlem 1967</h2>
+      </div>
+    </article>
+    
+    <article class="brand-card">
       <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977">
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
-        <p>Chicago nightclub culture, the birthplace of house music. Dim lights, sweat, 4/4 pulse. Frankie Knuckles built the religion here.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987">
       <div class="brand-info">
         <h2>Shoom 1987</h2>
-        <p>London acid house energy, captured at its rawest. Danny Rampling, acid tabs, sunrise sets. The smiley became the flag.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979">
       <div class="brand-info">
         <h2>Blitz 1979</h2>
-        <p>New Romantic style, sound and cultural rebellion. Steve Strange at the door. Glamour as armor.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/rumrunner1967banner.png" alt="Rum Runner 1967">
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
-        <p>Birmingham nightlife and the roots of future pop. The Beat, UB40, Dexys started here.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/southbank1973banner.png" alt="Southbank Undercroft 1973">
       <div class="brand-info">
         <h2>Southbank Undercroft 1973</h2>
-        <p>London skate culture — concrete, community and sound. Pillars tagged over years.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/venice1979banner.png" alt="Venice Beach Skatepark 1979">
       <div class="brand-info">
         <h2>Venice Beach Skatepark 1979</h2>
-        <p>California sun, asphalt rebellion and street rhythm. Empty bowl echoes at 3am.</p>
       </div>
     </article>
     <article class="brand-card">
       <img src="images/Brand_Banners/shibuya1985banner.png" alt="Shibuya Street 1985">
       <div class="brand-info">
         <h2>Shibuya Street 1985</h2>
-        <p>Neon nights and urban movement — Tokyo preserved in sound. Rain-soaked crowds dissolve.</p>
       </div>
     </article>
   </div>
 </section>
 
+<section class="label-releases">
+  <div class="releases-container">
+    <h2 class="section-title">Label Releases</h2>
+    
+    <div class="release-item">
+      <img src="images/Releases/cover1.png" alt="Project Cover" class="release-art">
+      <div class="release-details">
+        <h3 class="release-name">Project Title One</h3>
+        <p class="release-meta">Artist Name</p>
+        <p class="release-meta">Catalog: MLK001 • Format: Vinyl / Digital</p>
+      </div>
+    </div>
+
+    <div class="release-item">
+      <img src="images/Releases/cover2.png" alt="Project Cover" class="release-art">
+      <div class="release-details">
+        <h3 class="release-name">Project Title Two</h3>
+        <p class="release-meta">Artist Name</p>
+        <p class="release-meta">Catalog: MLK002 • Format: Digital</p>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
 <div class="crt-overlay"></div>
 
-<!-- FLOATING PLAYER - IMPROVED LIVE RADIO -->
 <div id="floating-player">
   <div class="player-meta">
     <div class="player-title">MLKSHK Pirate Radio</div>
