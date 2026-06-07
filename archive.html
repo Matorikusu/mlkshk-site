@@ -81,29 +81,27 @@ header.nav-bar{
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown:focus-within .dropdown-menu{display:block}
 
-/* HERO CONTAINER */
+/* ORIGINAL HERO HEADER RESTORED */
 .hero-link{
   display:block;
   max-width:1000px;
   margin:40px auto;
-  padding:0 20px;
 }
 .hero{
   width:100%;
-  height:220px;
+  height:420px;
   background:url('images/Home/MLKSHK_ARCHIVE_HEADER.png') center/cover no-repeat;
   cursor:pointer;
   transition:transform .35s ease,filter .35s ease,box-shadow .35s ease;
-  filter:grayscale(0.5);
-  border:1px solid rgba(255,42,161,0.1);
+  aspect-ratio:2.38 / 1;
 }
 .hero-link:hover .hero{
-  transform:scale(1.01);
-  filter:grayscale(0) brightness(1.1);
-  box-shadow:0 0 30px var(--glow);
+  transform:scale(1.02);
+  filter:brightness(1.15);
+  box-shadow:0 0 40px var(--glow);
 }
 
-/* ARCHIVE MATRIX (FORMERLY GRID) */
+/* ARCHIVE MATRIX LIST */
 .brands-archive{
   padding:40px 20px;
   max-width:1000px;
@@ -126,16 +124,37 @@ header.nav-bar{
 .brand-card{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:20px;
   background:var(--panel);
   border:1px solid rgba(255,255,255,0.05);
-  padding:14px 20px;
+  padding:10px 20px;
   transition:.2s ease;
 }
 .brand-card:hover{
   background:rgba(255,42,161,0.02);
   border-color:var(--accent);
   box-shadow:inset 0 0 10px rgba(255,42,161,0.1);
+}
+.brand-art-wrapper {
+  width:120px;
+  height:50px;
+  flex-shrink:0;
+  background:#111;
+  border:1px solid rgba(255,255,255,0.08);
+  overflow:hidden;
+}
+.brand-art {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(0.8);
+  transition:.3s ease;
+}
+.brand-card:hover .brand-art {
+  filter:grayscale(0) brightness(1.1);
+}
+.brand-info {
+  flex-grow:1;
 }
 .brand-info h2{
   margin:0;
@@ -158,7 +177,7 @@ header.nav-bar{
 
 /* SIGNAL LEDGER SECTION */
 .signal-ledger {
-  padding:60px 20px 140px;
+  padding:40px 20px 140px;
   max-width:1000px;
   margin:0 auto;
 }
@@ -292,10 +311,11 @@ footer{
 /* RESPONSIVE SUB-SYSTEM */
 @media (max-width:768px){
   header.nav-bar { padding:12px 16px; }
-  .hero-link { margin:20px auto; }
-  .hero { height:140px; }
+  .hero-link { margin:20px auto; padding:0 15px; }
+  .hero { height:auto; min-height:180px; }
   .brands-archive, .signal-ledger { padding:20px 15px; }
-  .brand-card { padding:12px; }
+  .brand-card { padding:10px; gap:12px; }
+  .brand-art-wrapper { width:80px; height:40px; }
   .brand-info h2 { font-size:15px; }
   .ledger-item { gap:16px; padding:12px; }
   .ledger-art-wrapper { width:60px; height:60px; }
@@ -336,48 +356,72 @@ footer{
   <div class="matrix-legend">SYSTEM_LOG // ARCHIVE_INDEX</div>
   <div class="brands-grid">
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/harlem1967banner.png" alt="Spanish Harlem 1967" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Spanish Harlem 1967</h2>
       </div>
       <div class="brand-meta-tag">LOC_01</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/thewarehouse1977banner.png" alt="The Warehouse 1977" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>The Warehouse 1977</h2>
       </div>
       <div class="brand-meta-tag">LOC_02</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/shoom1987banner.png" alt="Shoom 1987" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Shoom 1987</h2>
       </div>
       <div class="brand-meta-tag">LOC_03</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/blitz1979banner.png" alt="Blitz 1979" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Blitz 1979</h2>
       </div>
       <div class="brand-meta-tag">LOC_04</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/rumrunner1967banner.png" alt="Rum Runner 1967" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Rum Runner 1967</h2>
       </div>
       <div class="brand-meta-tag">LOC_05</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/southbank1973banner.png" alt="Southbank Undercroft 1973" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Southbank Undercroft 1973</h2>
       </div>
       <div class="brand-meta-tag">LOC_06</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/venice1979banner.png" alt="Venice Beach Skatepark 1979" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Venice Beach Skatepark 1979</h2>
       </div>
       <div class="brand-meta-tag">LOC_07</div>
     </article>
     <article class="brand-card">
+      <div class="brand-art-wrapper">
+        <img src="images/Brand_Banners/shibuya1985banner.png" alt="Shibuya Street 1985" class="brand-art">
+      </div>
       <div class="brand-info">
         <h2>Shibuya Street 1985</h2>
       </div>
