@@ -25,18 +25,6 @@ html,body{
 }
 a{color:inherit;text-decoration:none}
 
-/* CRT SCANLINE UNDERGROUND EFFECT */
-body::before {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-  z-index: 9999;
-  background-size: 100% 4px, 3px 100%;
-  pointer-events: none;
-}
-
 /* NAV BAR */
 header.nav-bar{
   border-bottom:1px solid rgba(255,255,255,0.05);
@@ -107,11 +95,11 @@ header.nav-bar{
   background:url('images/Home/MLKSHK_HEADER.jpg') center/cover no-repeat;
 }
 
-/* POSTER SHOWCASE (EXPANDED TO 5 CARDS) */
+/* POSTER SHOWCASE (RETURNED TO 4 CARDS) */
 .poster-container {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
   max-width: 1400px;
   margin: 50px auto 10px auto;
   padding: 0 24px;
@@ -132,7 +120,7 @@ header.nav-bar{
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(rgba(255, 42, 161, 0.1) 50%, rgba(0, 255, 102, 0.1) 50%);
+  background: linear-gradient(rgba(255, 42, 161, 0.05) 50%, rgba(0, 255, 102, 0.05) 50%);
   background-size: 100% 10px;
   opacity: 0;
   pointer-events: none;
@@ -332,18 +320,15 @@ footer{
   50% { border-color: currentColor; }
 }
 
-/* RESPONSIVE DESIGN (UPDATED FOR 5 POSTERS) */
-@media (max-width: 1100px) {
+/* RESPONSIVE DESIGN */
+@media (max-width: 900px) {
   .poster-container { flex-wrap: wrap; }
-  .poster-card { flex: 1 0 calc(33.333% - 12px); }
+  .poster-card { flex: 1 0 calc(50% - 16px); }
 }
-@media (max-width: 750px) {
-  .poster-card { flex: 1 0 calc(50% - 12px); }
-}
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .poster-card { flex: 1 0 100%; }
-  .hero { height: 45vh; }
-  .image-section { height: auto; min-height: 180px; }
+  .hero { height: 50vh; }
+  .image-section { height: auto; min-height: 200px; }
   .image-link { margin: 20px auto; }
   #floating-player { width: 90%; height: 60px; padding: 0 12px; }
   .player-title { font-size: 12px; }
@@ -398,9 +383,6 @@ footer{
   </div>
   <div class="poster-card interactivity-trigger">
     <img id="poster4" src="images/Posters/MLKSHK4.jpg" alt="Poster 4">
-  </div>
-  <div class="poster-card interactivity-trigger">
-    <img id="poster5" src="images/Posters/MLKSHK1.jpg" alt="Poster 5">
   </div>
 </section>
 
@@ -521,14 +503,13 @@ navToggle.addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => { dropdownMenu.style.display = 'none'; });
 
-// ASYMMETRIC POSTER INDEPENDENT CYCLE LOGIC (EXPANDED TO 5)
+// ASYMMETRIC POSTER INDEPENDENT CYCLE LOGIC
 const poster1Pool = ['images/Posters/MLKSHK1.jpg', 'images/Posters/MLKSHK2.jpg'];
 const poster2Pool = ['images/Posters/MLKSHK2.jpg', 'images/Posters/MLKSHK3.jpg'];
 const poster3Pool = ['images/Posters/MLKSHK3.jpg', 'images/Posters/MLKSHK4.jpg'];
 const poster4Pool = ['images/Posters/MLKSHK4.jpg', 'images/Posters/MLKSHK1.jpg'];
-const poster5Pool = ['images/Posters/MLKSHK1.jpg', 'images/Posters/MLKSHK3.jpg'];
 
-const stateIndices = { i1: 0, i2: 0, i3: 0, i4: 0, i5: 0 };
+const stateIndices = { i1: 0, i2: 0, i3: 0, i4: 0 };
 
 function rotatePoster(elementId, pool, currentIdxObj, key) {
   const imgEl = document.getElementById(elementId);
@@ -547,7 +528,6 @@ setInterval(() => rotatePoster('poster1', poster1Pool, stateIndices, 'i1'), 4000
 setInterval(() => rotatePoster('poster2', poster2Pool, stateIndices, 'i2'), 4700);
 setInterval(() => rotatePoster('poster3', poster3Pool, stateIndices, 'i3'), 5400);
 setInterval(() => rotatePoster('poster4', poster4Pool, stateIndices, 'i4'), 6100);
-setInterval(() => rotatePoster('poster5', poster5Pool, stateIndices, 'i5'), 6800);
 
 // COMMAND LOG TERMINAL TICKER LOGIC
 const logs = [
@@ -601,7 +581,7 @@ transTrigger.onclick = () => {
   }
 };
 
-// UNDERGROUND INTERACTION: STATIC HOVER AUDIO feedback
+// INTERACTION FEEDBACK: SHORT STATIC HUM ON HOVER
 const triggers = document.querySelectorAll('.interactivity-trigger');
 triggers.forEach(trigger => {
   trigger.addEventListener('mouseenter', () => {
