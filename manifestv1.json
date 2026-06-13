@@ -1,6 +1,7 @@
 {
   "short_name": "Pirate Radio",
   "name": "MLKSHK Pirate Radio",
+  "description": "Underground Live Stream Radio. No Rules.",
   "icons": [
     {
       "src": "images/LOGO_SMALL.png",
@@ -10,12 +11,13 @@
     {
       "src": "images/LOGO_SMALL.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": "/index.html",
-  "background_color": "#0a0a0c",
-  "theme_color": "#ff2aa1",
+  "start_url": "/pirateradio-standalone.html",
+  "background_color": "#060407",
+  "theme_color": "#08050a",
   "display": "standalone",
   "orientation": "portrait"
 }
