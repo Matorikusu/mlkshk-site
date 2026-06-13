@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK | PIRATE RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pirate Radio">
+<link rel="apple-touch-icon" href="images/Pirate Radio/pirateradio_header.png">
+
 <link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
@@ -83,7 +89,7 @@ body.rig-active .scanline {
   pointer-events: none;
 }
 
-/* DECK MAIN RIG - Adjusted height to center perfectly without nav bar present */
+/* DECK MAIN RIG */
 .deck-container {
   min-height: 100vh;
   display: flex;
@@ -344,38 +350,6 @@ body.rig-active .scanline {
   border-radius: 1px;
 }
 
-/* FLOATING PWA INSTALL BUTTON - Stays visible on desktop / mobile */
-.pwa-install-btn {
-  display: block; 
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #000;
-  border: 2px solid var(--text);
-  color: #fff;
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 12px 20px;
-  border-radius: 0px; 
-  box-shadow: 4px 4px 0px var(--accent);
-  z-index: 999;
-  transition: all 0.1s ease-in-out;
-}
-.pwa-install-btn:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px var(--accent);
-  background: var(--accent);
-  color: #000;
-}
-.pwa-install-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0px var(--accent);
-}
-
 /* STYLED STREET ANIMATIONS */
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -403,12 +377,6 @@ body.rig-active .scanline {
   .station-identity { font-size: 24px; }
   .deck-controls { flex-direction: column; gap: 15px; }
   .hardware-rack { width: 100%; justify-content: space-around; }
-  .pwa-install-btn {
-    bottom: 15px;
-    right: 15px;
-    padding: 10px 16px;
-    font-size: 11px;
-  }
 }
 </style>
 </head>
@@ -472,8 +440,6 @@ body.rig-active .scanline {
     <audio id="audio" preload="none"></audio>
   </div>
 </main>
-
-<button class="pwa-install-btn" id="pwaInstallBtn">Install App</button>
 
 <script>
 const audio = document.getElementById('audio');
@@ -631,31 +597,6 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('play', playLiveStream);
   navigator.mediaSession.setActionHandler('pause', stopStream);
 }
-
-/* PWA INSTALL SYSTEM OVERRIDE */
-let deferredPrompt;
-const installBtn = document.getElementById('pwaInstallBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) {
-    alert("To add this station directly to your home screen:\n\n• iOS Safari: Tap the Share icon at the bottom of your browser window, then select 'Add to Home Screen'.\n• Chrome / Android: Tap the 3-dots menu button near the address bar, then choose 'Install app' or 'Add to Home screen'.");
-    return;
-  }
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log(`User response to install request: ${outcome}`);
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  deferredPrompt = null;
-  console.log('PWA installation processed successfully.');
-});
 
 /* SERVICE WORKER REGISTRATION */
 if ('serviceWorker' in navigator) {
