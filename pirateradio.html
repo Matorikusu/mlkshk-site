@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MLKSHK | PIRATE RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
+<link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -414,7 +415,7 @@ header.nav-bar {
 
 /* FLOATING PWA INSTALL BUTTON */
 .pwa-install-btn {
-  display: none; /* Controlled via JS lifecycle */
+  display: block; /* Modified: locked open to remain visible all the time */
   position: fixed;
   bottom: 25px;
   right: 25px;
@@ -762,37 +763,34 @@ document.addEventListener('click', () => {
   dropdownMenu.style.display = 'none';
 });
 
-/* PWA INSTALL LOGIC */
+/* PWA INSTALL LOGIC WITH OVERRIDE FALLBACKS */
 let deferredPrompt;
 const installBtn = document.getElementById('pwaInstallBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  // Prevent older Android setups from forcing default banner UI
   e.preventDefault();
-  // Stash the event so it can be triggered later.
+  // Stash system trigger internally
   deferredPrompt = e;
-  // Update UI to notify the user they can install the PWA
-  installBtn.style.display = 'block';
 });
 
 installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  // Show the install prompt
+  // If browser installation status isn't primed yet (or running iOS Safari), activate modal instructions
+  if (!deferredPrompt) {
+    alert("To add this station directly to your home screen:\n\n• iOS Safari: Tap the Share icon at the bottom of your screen, then select 'Add to Home Screen'.\n• Chrome / Android: Tap the three dots menu button in the browser address bar, then choose 'Install app' or 'Add to Home screen'.");
+    return;
+  }
+  
+  // Trigger system app shell prompt wrapper
   deferredPrompt.prompt();
-  // Wait for the user to respond to the prompt
   const { outcome } = await deferredPrompt.userChoice;
-  console.log(`User response to the install prompt: ${outcome}`);
-  // We've used the prompt, and can't use it again, discard it
+  console.log(`User response to install request: ${outcome}`);
   deferredPrompt = null;
-  // Hide our install button
-  installBtn.style.display = 'none';
 });
 
 window.addEventListener('appinstalled', () => {
-  // Clear the deferredPrompt and hide the button
   deferredPrompt = null;
-  installBtn.style.display = 'none';
-  console.log('PWA was installed successfully');
+  console.log('PWA installation processed successfully.');
 });
 
 /* SERVICE WORKER REGISTRATION */
