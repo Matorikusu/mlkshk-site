@@ -1,21 +1,23 @@
-const CACHE_NAME = 'mlkshk-pirate-radio-v1';
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
-        'pirateradio-standalone.html',
-        'images/Pirate Radio/pirateradio.png',
-        'images/LOGO_SMALL.png'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
+{
+  "short_name": "Pirate Radio",
+  "name": "MLKSHK Pirate Radio",
+  "description": "Underground Live Stream Radio. No Rules.",
+  "icons": [
+    {
+      "src": "images/LOGO_SMALL.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/LOGO_SMALL.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/pirateradio-standalone.html",
+  "background_color": "#060407",
+  "theme_color": "#08050a",
+  "display": "standalone",
+  "orientation": "portrait"
+}
