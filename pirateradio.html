@@ -412,6 +412,38 @@ header.nav-bar {
   border-radius: 1px;
 }
 
+/* FLOATING PWA INSTALL BUTTON */
+.pwa-install-btn {
+  display: none; /* Controlled via JS lifecycle */
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #000;
+  border: 2px solid var(--text);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 0px; 
+  box-shadow: 4px 4px 0px var(--accent);
+  z-index: 999;
+  transition: all 0.1s ease-in-out;
+}
+.pwa-install-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--accent);
+  background: var(--accent);
+  color: #000;
+}
+.pwa-install-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--accent);
+}
+
 /* FOOTER */
 footer {
   padding: 30px 20px;
@@ -454,6 +486,12 @@ footer {
   .station-identity { font-size: 24px; }
   .deck-controls { flex-direction: column; gap: 15px; }
   .hardware-rack { width: 100%; justify-content: space-around; }
+  .pwa-install-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 11px;
+  }
 }
 </style>
 </head>
@@ -537,6 +575,8 @@ footer {
     <audio id="audio" preload="none"></audio>
   </div>
 </main>
+
+<button class="pwa-install-btn" id="pwaInstallBtn">Install App</button>
 
 <footer>
   MLKSHK Digital — Built for the misfits. © <span id="year"></span>
@@ -721,6 +761,48 @@ navToggle.addEventListener('click', (e) => {
 document.addEventListener('click', () => {
   dropdownMenu.style.display = 'none';
 });
+
+/* PWA INSTALL LOGIC */
+let deferredPrompt;
+const installBtn = document.getElementById('pwaInstallBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+  // Update UI to notify the user they can install the PWA
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  // Show the install prompt
+  deferredPrompt.prompt();
+  // Wait for the user to respond to the prompt
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(`User response to the install prompt: ${outcome}`);
+  // We've used the prompt, and can't use it again, discard it
+  deferredPrompt = null;
+  // Hide our install button
+  installBtn.style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+  // Clear the deferredPrompt and hide the button
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+  console.log('PWA was installed successfully');
+});
+
+/* SERVICE WORKER REGISTRATION */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registered.', reg))
+      .catch(err => console.log('Service Worker registration failed: ', err));
+  });
+}
 </script>
 </body>
 </html>
