@@ -1,0 +1,22 @@
+{
+  "name": "MLKSHK Pirate Radio",
+  "short_name": "Pirate Radio",
+  "description": "Underground Live Radio • No Rules",
+  "start_url": "pirateradio-standalone.html",
+  "display": "standalone",
+  "background_color": "#060407",
+  "theme_color": "#060407",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/LOGO_SMALL.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/LOGO_SMALL.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
