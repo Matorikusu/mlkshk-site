@@ -113,6 +113,67 @@ header.nav-bar {
   cursor: pointer;
 }
 
+/* --- TUNE IN CALL TO ACTION --- */
+.tune-in-section {
+  max-width: 1400px;
+  margin: 40px auto 10px auto;
+  padding: 0 24px;
+  text-align: center;
+}
+.tune-in-card {
+  background: linear-gradient(135deg, #050505 0%, #020202 100%);
+  border: 1px solid rgba(139, 0, 255, 0.2);
+  box-shadow: 0 0 30px rgba(139, 0, 255, 0.05);
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.tune-in-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+}
+.tune-in-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 0 0 8px 0;
+  color: var(--text);
+}
+.tune-in-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 24px 0;
+}
+.tune-in-btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--accent-bright);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 14px 36px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(188, 19, 254, 0.1);
+  transition: all 0.3s ease;
+}
+.tune-in-btn:hover {
+  background: var(--accent-bright);
+  color: #000;
+  box-shadow: 0 0 25px var(--accent-bright);
+  transform: translateY(-2px);
+}
+.tune-in-btn:active {
+  transform: translateY(0);
+}
+
 /* --- AMBIENT LOW-GLOW STREET TICKER --- */
 .ticker-wrap {
   background: #050505;
@@ -351,6 +412,16 @@ footer {
 <main>
   <section class="hero" aria-label="Showcase Layout"></section>
 
+<section class="tune-in-section">
+    <div class="tune-in-card">
+      <h2 class="tune-in-title">MLKSHK PIRATE RADIO</h2>
+      <p class="tune-in-subtitle">24/7 Underground Pirate Transmission</p>
+      <a href="pirateradio.html" style="text-decoration: none; display: inline-block;">
+        <button class="tune-in-btn" id="cta-stream-btn">Don't listen, you'll go blind.</button>
+      </a>
+    </div>
+  </section>
+
   <div class="ticker-wrap">
     <div class="ticker-marquee">
       <span>MLKSHK DIGITAL // DON'T FOLLOW US</span>
@@ -453,6 +524,9 @@ btn.onclick = () => { if (!isPlaying) { playLiveStream(); } else { stopStream();
 
 audio.addEventListener('waiting', () => statusEl.textContent = 'BUFFERING DATA...');
 audio.addEventListener('playing', () => { statusEl.textContent = 'TRANSMITTING LIVE'; isPlaying = true; });
+
+// Hook the new center button up to the same radio control engine
+document.getElementById('cta-stream-btn').onclick = () => { btn.click(); };
 
 // ASYMMETRIC DECK IMAGE SHUFFLE DECK LOGIC
 const poster1Pool = ['images/Posters/MLKSHK1.jpg', 'images/Posters/MLKSHK2.jpg'];
