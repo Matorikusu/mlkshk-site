@@ -6,7 +6,7 @@
 <title>MLKSHK | PIRATE RADIO</title>
 <link rel="icon" href="images/LOGO_SMALL.png" type="image/png">
 <link rel="manifest" href="/manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=500;600;700&family=Rajdhani:wght=500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg: #060407;
@@ -415,7 +415,7 @@ header.nav-bar {
 
 /* FLOATING PWA INSTALL BUTTON */
 .pwa-install-btn {
-  display: block; /* Modified: locked open to remain visible all the time */
+  display: block;
   position: fixed;
   bottom: 25px;
   right: 25px;
@@ -443,6 +443,46 @@ header.nav-bar {
 .pwa-install-btn:active {
   transform: translate(4px, 4px);
   box-shadow: 0px 0px 0px var(--accent);
+}
+
+/* FLOATING AD MODULE STYLES */
+.floating-ad-box {
+  position: fixed;
+  bottom: 95px; /* Nested neatly above the Install button */
+  right: 25px;
+  width: 160px; 
+  background: rgba(10, 6, 12, 0.85);
+  border: 2px solid #000;
+  border-radius: 0px;
+  padding: 6px;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  font-family: 'Orbitron', sans-serif;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease;
+}
+.floating-ad-box:hover {
+  border-color: var(--accent);
+}
+.floating-ad-header {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  text-align: center;
+}
+#radioAdImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #000;
+  filter: brightness(0.85) contrast(110%);
+  transition: filter 0.2s ease;
+}
+#radioAdImage img:hover {
+  filter: brightness(1) contrast(100%);
 }
 
 /* FOOTER */
@@ -493,6 +533,7 @@ footer {
     padding: 10px 16px;
     font-size: 11px;
   }
+  .floating-ad-box { display: none; }
 }
 </style>
 </head>
@@ -576,6 +617,11 @@ footer {
     <audio id="audio" preload="none"></audio>
   </div>
 </main>
+
+<div class="floating-ad-box">
+  <div class="floating-ad-header">[ UNINDEXED_AD ]</div>
+  <div id="radioAdImage"></div>
+</div>
 
 <button class="pwa-install-btn" id="pwaInstallBtn">Install App</button>
 
@@ -669,12 +715,11 @@ let startAngle = 0;
 
 // Initialize starting positions/values matching CSS variables
 const knobStates = {
-  color: { angle: 0, minAngle: -150, maxAngle: 150, valMin: 260, valMax: 330, currentVal: 280 }, // HSL Hue values (Purples/Pinks)
-  opacity: { angle: -30, minAngle: -150, maxAngle: 150, valMin: 0.1, valMax: 0.95, currentVal: 0.45 }, // Translucency mix
-  glow: { angle: 0, minAngle: -150, maxAngle: 150, valMin: 0.05, valMax: 0.8, currentVal: 0.35 } // Glow intensity
+  color: { angle: 0, minAngle: -150, maxAngle: 150, valMin: 260, valMax: 330, currentVal: 280 }, 
+  opacity: { angle: -30, minAngle: -150, maxAngle: 150, valMin: 0.1, valMax: 0.95, currentVal: 0.45 }, 
+  glow: { angle: 0, minAngle: -150, maxAngle: 150, valMin: 0.05, valMax: 0.8, currentVal: 0.35 } 
 };
 
-// Apply initial rotations to hardware interfaces
 knobs.forEach(knob => {
   const type = knob.dataset.type;
   knob.style.transform = `rotate(${knobStates[type].angle}deg)`;
@@ -686,7 +731,6 @@ knobs.forEach(knob => {
     e.preventDefault();
   });
   
-  // Touch support for mobile layouts
   knob.addEventListener('touchstart', (e) => {
     currentKnob = knob;
     startY = e.touches[0].clientY;
@@ -713,21 +757,18 @@ function handleKnobMove(clientY) {
   const state = knobStates[type];
   
   const deltaY = startY - clientY; 
-  let targetAngle = startAngle + (deltaY * 1.5); // Sensitivity modifier
+  let targetAngle = startAngle + (deltaY * 1.5); 
   
-  // Strict physical rotational constraints
   if (targetAngle < state.minAngle) targetAngle = state.minAngle;
   if (targetAngle > state.maxAngle) targetAngle = state.maxAngle;
   
   state.angle = targetAngle;
   currentKnob.style.transform = `rotate(${targetAngle}deg)`;
   
-  // Calculate percentage mapping to interface variables
   const pct = (targetAngle - state.minAngle) / (state.maxAngle - state.minAngle);
   const calculatedValue = state.valMin + (pct * (state.valMax - state.valMin));
   state.currentVal = calculatedValue;
   
-  // Map parameters live into CSS operational variables
   if (type === 'color') {
     document.documentElement.style.setProperty('--accent-hue', calculatedValue);
   } else if (type === 'opacity') {
@@ -763,25 +804,21 @@ document.addEventListener('click', () => {
   dropdownMenu.style.display = 'none';
 });
 
-/* PWA INSTALL LOGIC WITH OVERRIDE FALLBACKS */
+/* PWA INSTALL LOGIC */
 let deferredPrompt;
 const installBtn = document.getElementById('pwaInstallBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent older Android setups from forcing default banner UI
   e.preventDefault();
-  // Stash system trigger internally
   deferredPrompt = e;
 });
 
 installBtn.addEventListener('click', async () => {
-  // If browser installation status isn't primed yet (or running iOS Safari), activate modal instructions
   if (!deferredPrompt) {
     alert("To add this station directly to your home screen:\n\n• iOS Safari: Tap the Share icon at the bottom of your screen, then select 'Add to Home Screen'.\n• Chrome / Android: Tap the three dots menu button in the browser address bar, then choose 'Install app' or 'Add to Home screen'.");
     return;
   }
   
-  // Trigger system app shell prompt wrapper
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
   console.log(`User response to install request: ${outcome}`);
@@ -793,7 +830,6 @@ window.addEventListener('appinstalled', () => {
   console.log('PWA installation processed successfully.');
 });
 
-/* SERVICE WORKER REGISTRATION */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -801,6 +837,28 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('Service Worker registration failed: ', err));
   });
 }
+
+/* CLEANED FLOATING AD ENGINE */
+const radioAds = [
+  "images/Universe/Ads/toejam-toothpaste.jpg",
+  "images/Universe/Ads/nobbys-balloon.jpg",
+  "images/Universe/Ads/daves-candles.jpg",
+  "images/Universe/Ads/Micks-Rum.jpg",
+  "images/Universe/Ads/Sharons-Knickers.jpg",
+  "images/Universe/Ads/kevin-hotline.jpg"
+];
+let radioAdIdx = 0;
+const radioAdContainer = document.getElementById('radioAdImage');
+
+function rotateRadioAd() {
+  if (radioAds.length > 0 && radioAdContainer) {
+    radioAdContainer.innerHTML = `<img src="${radioAds[radioAdIdx]}" alt="Ad Asset">`;
+    radioAdIdx = (radioAdIdx + 1) % radioAds.length;
+  }
+}
+
+rotateRadioAd();
+setInterval(rotateRadioAd, 10000);
 </script>
 </body>
 </html>
